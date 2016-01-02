@@ -1,0 +1,37 @@
+#!/bin/bash
+#PBS -N MAGMA_LU
+#PBS -l nodes=ivy
+#PBS -l walltime=29:29:29
+#PBS -e $PBS_JOBNAME-$PBS_JOBID.err
+#PBS -o $PBS_JOBNAME-$PBS_JOBID.out
+#PBS -V
+
+PBS_O_WORKDIR=.
+cd $PBS_O_WORKDIR
+
+module load cuda/5.0
+
+case=MAGMA_LU_GPUDVFS
+
+##/apps/power-bench/setcpuspeed sandy 2600000
+#sleep 9
+
+/apps/power-bench/mclient -H 10.1.1.29 -d /home/lchen/MAGMA/magma-1.5.0/results
+/apps/power-bench/mclient -H 10.1.1.29 -l ${case}.total.pwr
+
+nvidia-smi -q -d POWER -lms 100 -f /home/lchen/MAGMA/magma-1.5.0/results/${case}.gpu.pwr 2>&1 1>/dev/null &
+smi_pid=$!
+#echo $smi_pid
+/usr/local/bin/rapl -c 0,10 -f /home/lchen/MAGMA/magma-1.5.0/results/${case}.cpu.pwr 2>&1 1>/dev/null &
+rapl_pid=$!
+#echo $rapl_pid
+
+ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.5.0/testing/testing_dgetrf -N 5120,5120
+
+/apps/power-bench/mclient -H 10.1.1.29 -e log
+
+kill ${smi_pid}
+kill ${rapl_pid}
+
+#sleep 9
+##/apps/power-bench/setcpuspeed sandy 2600000

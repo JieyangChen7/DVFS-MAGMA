@@ -1,0 +1,67 @@
+send out message: 24 37 /home/lchen/MAGMA/magma-1.3.0/results
+send out message: 20 26 MAGMA_LU_GPUDVFS.total.pwr
+MAGMA 1.3.0
+device 0: Tesla K20c, 705.5 MHz clock, 4799.6 MB memory, capability 3.5
+
+Usage: /home/lchen/MAGMA/magma-1.3.0/testing/testing_dgetrf -N <m,n> -c -c2 -l
+  -N  can be repeated up to 10 times. If only m is given, then m=n.
+  -c  or setting $MAGMA_TESTINGS_CHECK checks result, PA - LU.
+  -c2 for square matrices, solves one RHS and checks residual, Ax - b.
+  -l  or setting $MAGMA_RUN_LAPACK runs LAPACK.
+
+    M     N   CPU GFlop/s (sec)   GPU GFlop/s (sec)   |PA-LU|/(N*|A|)
+=========================================================================
+init_time = 12.909240
+iter575: 0.000552TX0.000599
+iter576: 0.000567TX0.000585
+iter577: 0.000569TX0.000575
+iter578: 0.000549TX0.000563
+iter579: 0.000543TX0.000549
+iter580: 0.000513TX0.000540
+iter581: 0.000459TX0.000527
+iter582: 0.000460TX0.000505
+iter583: 0.000480TX0.000496
+iter584: 0.000456TX0.000474
+iter585: 0.000422TX0.000467
+iter586: 0.000369TX0.000458
+iter587: 0.000390TX0.000437
+iter588: 0.000338TX0.000428
+iter589: 0.000359TX0.000424
+iter590: 0.000324TX0.000414
+iter591: 0.000323TX0.000385
+iter592: 0.000320TX0.000375
+iter593: 0.000320TX0.000372
+iter594: 0.000288TX0.000361
+iter595: 0.000288TX0.000351
+iter596: 0.000280TX0.000340
+iter597: 0.000252TX0.000330
+iter598: 0.000248TX0.000312
+iter599: 0.000227TX0.000299
+iter600: 0.000205TX0.000291
+iter601: 0.000183TX0.000278
+iter602: 0.000194TX0.000271
+iter603: 0.000182TX0.000273
+iter604: 0.000156TX0.000266
+iter605: 0.000176TX0.000239
+iter606: 0.000138TX0.000229
+iter607: 0.000155TX0.000219
+iter608: 0.000134TX0.000219
+iter609: 0.000135TX0.000200
+iter610: 0.000124TX0.000200
+iter611: 0.000123TX0.000181
+iter612: 0.000097TX0.000170
+iter613: 0.000086TX0.000161
+iter614: 0.000083TX0.000164
+iter615: 0.000081TX0.000141
+iter616: 0.000080TX0.000131
+iter617: 0.000072TX0.000120
+iter618: 0.000071TX0.000110
+iter619: 0.000067TX0.000099
+iter620: 0.000067TX0.000089
+iter621: 0.000066TX0.000078
+iter622: 0.000066TX0.000067
+20000 20000     ---   (  ---  )    282.48 (  18.88)     ---   
+total_time = 31.792421
+27.77user 6.22system 0:34.96elapsed 97%CPU (0avgtext+0avgdata 13124064maxresident)k
+0inputs+0outputs (0major+802134minor)pagefaults 0swaps
+send out message: 22 3 log

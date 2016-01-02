@@ -1,0 +1,64 @@
+send out message: 24 37 /home/lchen/MAGMA/magma-1.3.0/results
+send out message: 20 26 MAGMA_LU_GPUDVFS.total.pwr
+MAGMA 1.3.0
+device 0: Tesla K20c, 705.5 MHz clock, 4799.6 MB memory, capability 3.5
+
+Usage: /home/lchen/MAGMA/magma-1.3.0/testing/testing_dgetrf -N <m,n> -c -c2 -l
+  -N  can be repeated up to 10 times. If only m is given, then m=n.
+  -c  or setting $MAGMA_TESTINGS_CHECK checks result, PA - LU.
+  -c2 for square matrices, solves one RHS and checks residual, Ax - b.
+  -l  or setting $MAGMA_RUN_LAPACK runs LAPACK.
+
+    M     N   CPU GFlop/s (sec)   GPU GFlop/s (sec)   |PA-LU|/(N*|A|)
+=========================================================================
+init_time = 12.882848
+iter575: 0.000570TX0.000591
+iter579: 0.000487TX0.000546
+iter580: 0.000529TX0.000543
+iter581: 0.000451TX0.000522
+iter582: 0.000490TX0.000514
+iter583: 0.000467TX0.000485
+iter584: 0.000465TX0.000482
+iter585: 0.000422TX0.000468
+iter586: 0.000378TX0.000442
+iter587: 0.000392TX0.000430
+iter588: 0.000339TX0.000435
+iter589: 0.000325TX0.000423
+iter590: 0.000328TX0.000396
+iter591: 0.000326TX0.000384
+iter592: 0.000292TX0.000373
+iter593: 0.000303TX0.000372
+iter594: 0.000289TX0.000362
+iter595: 0.000283TX0.000355
+iter596: 0.000278TX0.000344
+iter597: 0.000256TX0.000335
+iter598: 0.000245TX0.000332
+iter599: 0.000229TX0.000315
+iter600: 0.000207TX0.000291
+iter601: 0.000186TX0.000278
+iter602: 0.000190TX0.000266
+iter603: 0.000202TX0.000261
+iter604: 0.000155TX0.000241
+iter605: 0.000171TX0.000250
+iter606: 0.000137TX0.000229
+iter607: 0.000148TX0.000217
+iter608: 0.000142TX0.000206
+iter609: 0.000135TX0.000208
+iter610: 0.000124TX0.000200
+iter611: 0.000122TX0.000181
+iter612: 0.000098TX0.000183
+iter613: 0.000085TX0.000161
+iter614: 0.000083TX0.000152
+iter615: 0.000081TX0.000141
+iter616: 0.000078TX0.000131
+iter617: 0.000071TX0.000133
+iter618: 0.000071TX0.000110
+iter619: 0.000069TX0.000099
+iter620: 0.000067TX0.000089
+iter621: 0.000067TX0.000078
+iter622: 0.000066TX0.000067
+20000 20000     ---   (  ---  )    282.43 (  18.88)     ---   
+total_time = 31.769466
+28.01user 6.16system 0:34.95elapsed 97%CPU (0avgtext+0avgdata 13124512maxresident)k
+4344inputs+0outputs (1major+802132minor)pagefaults 0swaps
+send out message: 22 3 log

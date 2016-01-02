@@ -1,0 +1,15 @@
+send out message: 24 37 /home/lchen/MAGMA/magma-1.5.0/results
+send out message: 20 26 MAGMA_LU_GPUDVFS.total.pwr
+MAGMA 1.6.1  compiled for CUDA capability >= 3.0
+CUDA runtime 5000, driver 6050. MAGMA not compiled with OpenMP. 
+ndevices 1
+device 0: Tesla K20c, 705.5 MHz clock, 4799.6 MB memory, capability 3.5
+Usage: /home/lchen/MAGMA/test/magma-1.6.1/testing/testing_dpotrf [options] [-h|--help]
+
+ngpu = 1, uplo = Lower
+    N   CPU GFlop/s (sec)   GPU GFlop/s (sec)   ||R_magma - R_lapack||_F / ||R_lapack||_F
+========================================================
+20480     ---   (  ---  )    598.87 (   4.78)     ---  
+17.22user 3.43system 0:21.68elapsed 95%CPU (0avgtext+0avgdata 6708840maxresident)k
+5736inputs+0outputs (1major+842941minor)pagefaults 0swaps
+send out message: 22 3 log

@@ -1,0 +1,94 @@
+#//////////////////////////////////////////////////////////////////////////////
+#   -- MAGMA (version 1.3.0) --
+#      Univ. of Tennessee, Knoxville
+#      Univ. of California, Berkeley
+#      Univ. of Colorado, Denver
+#      November 2012
+#//////////////////////////////////////////////////////////////////////////////
+
+include $(MAGMA_DIR)/make.inc
+
+OPTS += -DHAVE_CUBLAS
+
+#
+# Set default values if they are not set in make.inc
+#
+PGIFORTRAN   ?= 0
+GPU_TARGET   ?= Fermi
+LIBMAGMA     ?= $(MAGMA_DIR)/lib/libmagma.a
+LIBMAGMABLAS ?= $(MAGMA_DIR)/lib/libmagmablas.a
+
+prefix ?= ./install
+#prefix :=`($(prefix) && pwd)`
+
+#
+# Quark
+#
+#QUARKDIR ?= $(MAGMA_DIR)/quark
+#INC += -I$(QUARKDIR)/include
+#LIB += -L$(QUARKDIR)/lib -lquark
+
+#
+# NVCC options for the different cards
+#
+ifeq (${GPU_TARGET}, Tesla)
+	NVOPTS += -DGPUSHMEM=130 -arch sm_13 \
+	          -gencode arch=compute_13,code=compute_13 \
+	          -gencode arch=compute_10,code=compute_10
+	OPTS   += -DGPUSHMEM=130
+	LDOPTS += -DGPUSHMEM=130
+else ifeq (${GPU_TARGET}, Fermi)
+	NVOPTS += -DGPUSHMEM=200 -arch sm_20
+	OPTS   += -DGPUSHMEM=200
+	LDOPTS += -DGPUSHMEM=200
+else ifeq (${GPU_TARGET}, Kepler)
+        NVOPTS += -DGPUSHMEM=300 -arch sm_35
+	OPTS   += -DGPUSHMEM=300
+        LDOPTS += -DGPUSHMEM=300
+else
+$(error GPU_TARGET, currently ${GPU_TARGET}, must be one of Tesla, Fermi, or Kepler. Please edit your make.inc file)
+endif
+
+INC += -I$(MAGMA_DIR)/include
+
+LIBEXT = $(LIBDIR) $(LIB)
+
+# Use Plasma to compile zgetfl and ztstrf
+PLASMA = $(shell pkg-config --libs plasma 2> /dev/null )
+ifeq (1, $(words $(findstring plasma, $(PLASMA))))
+	OPTS    := $(OPTS) -DMAGMA_WITH_PLASMA
+	INC     := $(INC) $(shell pkg-config --cflags-only-I plasma)
+	LIBEXT  := $(LIBEXT) $(shell pkg-config --libs plasma)
+	require := plasma
+endif
+
+# Define the pointer size for fortran compilation
+PTRFILE = $(MAGMA_DIR)/control/sizeptr.c
+PTREXEC = $(MAGMA_DIR)/control/sizeptr
+PTRSIZE = $(shell $(PTREXEC))
+PTROPT  = -Dmagma_devptr_t="integer(kind=$(PTRSIZE))"
+
+FOPTS += $(PTROPT)
+
+#
+# Rules to compile object files
+#
+%.o: %.cpp
+	$(CC) $(OPTS) $(INC) -c $< -o $@
+
+%.o: %.c
+	$(CC) $(OPTS) $(INC) -c $< -o $@
+
+%.cu_o: %.cu
+	$(NVCC) $(NVOPTS) $(INC) -c $< -o $@
+
+%.o: %.f90  $(PTREXEC)
+	$(FORT) $(FOPTS) $(INC) -c $< -o $@
+
+%.o: %.F90  $(PTREXEC)
+	$(FORT) $(FOPTS) $(INC) -c $< -o $@
+
+%.o: %.f    $(PTREXEC)
+	$(FORT) $(F77OPTS) $(INC) -c $< -o $@
+
+-include $(MAGMA_DIR)/Makefile.gen

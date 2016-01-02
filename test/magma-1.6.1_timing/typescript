@@ -1,0 +1,2461 @@
+Script started on Sun 20 Dec 2015 07:57:14 PM EST
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing[lchen@ivy magma-1.6.1_timing]$ cd[K[Kcd scripts/
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ ls
+MAGMA_LU_GPUDVFS_ivy.pbs  [0m[38;5;34mMAGMA_LU_GPUDVFS_ivy.sh[0m
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ ./MAGMA_LU_GPUDVFS_ivy.sh 
+send out message: 24 49 /home/lchen/MAGMA/test/magma-1.6.1_timing/results
+send out message: 20 26 MAGMA_LU_GPUDVFS.total.pwr
+./MAGMA_LU_GPUDVFS_ivy.sh: line 17: /usr/local/bin/rapl: No such file or directory
+/home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf: error while loading shared libraries: libcublas.so.7.0: cannot open shared object file: No such file or directory
+0.00user 0.00system 0:00.00elapsed 82%CPU (0avgtext+0avgdata 444maxresident)k
+0inputs+0outputs (0major+30minor)pagefaults 0swaps
+send out message: 22 3 log
+./MAGMA_LU_GPUDVFS_ivy.sh: line 45: kill: (12830) - No such process
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ ./MAGMA_LU_GPUDVFS_ivy.sh [C[C[1P[1P[1@l[1@d[1@d[1@ 
+	not a dynamic executable
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ emacs */[K.sh
+[?1049h[?12;25h[?1h=[H[2J[49d[K[?1l>[?12l[?25h[?1049l[39;49m[?1049h[?12;25h[?1h=[>0c[H[2J[49d[K[H[?25l[7mFile Edit Options Buffers Tools Lisp-Interaction Help                                                                                  [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m*scratch*   [0m[39;49m[30m[48;5;250m   All L1     (Lisp Interaction) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[H
+[?12l[?25h[?12;25h[49d[?25lSetting up indent for shell type bash[K[H
+[?12l[?25h[?12;25h[49d[?25lIndentation variables are now local.[K[H
+[?12l[?25h[?12;25h[49;13H[?25lsetup for shell type bash[H
+[?12l[?25h[?12;25h[49d[?25lIndentation setup for shell type bash[K[H[7mFile Edit Options Buffers Tools Sh-Script Help                                                                                         [0m[39;49m[27m
+[A
+[38;5;124m#!/bin/[39;49m[38;5;129mbash[39;49m[38;5;124m                                                                                                                            [39;49m
+[A
+[K
+module load cuda/7.0[K
+[K
+[38;5;130mcase[39;49m=MAGMA_LU_GPUDVFS[K
+[K
+[38;5;124m#/opt/power-bench/cpuspeed-set.pl --all 1200000                                                                                        [39;49m
+[A
+[38;5;124m#/home/lchen/cpu_l_ivy.sh                                                                                                              [39;49m
+[A
+[38;5;124m#sleep 9                                                                                                                               [39;49m
+[A
+[K
+/opt/power-bench/mclient -H 130.127.48.185 -d /home/lchen/MAGMA/test/magma-1.6.1_timing/results[K
+/opt/power-bench/mclient -H 130.127.48.185 -l ${[38;5;129mcase[39;49m}.total.pwr[K
+[K
+nvidia-smi -q -d POWER -lms 100 -f /home/lchen/MAGMA/test/magma-1.6.1_timing/results/${[38;5;129mcase[39;49m}.gpu.pwr 2>&1 1>/dev/null &[K
+[38;5;130msmi_pid[39;49m=$[38;5;130m![39;49m[K
+[38;5;124m#echo $smi_pid                                                                                                                         [39;49m
+[A
+/usr/local/bin/rapl -c 0,10 -f /home/lchen/MAGMA/test/magma-1.6.1_timing/results/${[38;5;129mcase[39;49m}.cpu.pwr 2>&1 1>/dev/null &[K
+[38;5;130mrapl_pid[39;49m=$[38;5;130m![39;49m[K
+[38;5;124m#echo $rapl_pid                                                                                                                        [39;49m
+[A
+[K
+[38;5;124m#time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 3000,3000 -c                                                             [39;49m
+[A
+[38;5;124m#sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 20000,20000                                                         [39;49m
+[A
+[K
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 5120,5120                                             [39;49m
+[A
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 10240,10240                                           [39;49m
+[A
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 15360,15360                                           [39;49m
+[A
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 20480,20480                                           [39;49m
+[A
+[38;5;124m##ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 25600,25600                                          [39;49m
+[A
+[K
+sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 5120,5120[K
+[38;5;124m#sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 10240,10240                                             [39;49m
+[A
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 15360,15360                                           [39;49m
+[A
+[38;5;124m#sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 20480,20480                                             [39;49m
+[A
+[38;5;124m##ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 25600,25600                                          [39;49m
+[A
+[K
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 5120,5120                                             [39;49m
+[A
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 10240,10240                                           [39;49m
+[A
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 15360,15360                                           [39;49m
+[A
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 20480,20480                                           [39;49m
+[A
+[38;5;124m#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 25600,25600                                           [39;49m
+[A
+[K
+/opt/power-bench/mclient -H 130.127.48.185 -e log[K
+[K
+[38;5;60mkill[39;49m ${[38;5;130msmi_pid[39;49m}[K
+[38;5;60mkill[39;49m ${[38;5;130mrapl_pid[39;49m}[K
+[K
+[30m[48;5;250m-UU-:----F1  [39;49m[1m[30m[48;5;250mMAGMA_LU_GPUDVFS_ivy.sh[0m[39;49m[30m[48;5;250m   Top L1     (Shell-script[bash]) ----------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[K[48;45H[?25l[30m[48;5;250m2[39;49m[H
+
+[?12l[?25h[?12;25h[48;45H[?25l[30m[48;5;250m3[39;49m[4;1H[?12l[?25h[?12;25h[48;45H[?25l[30m[48;5;250m5[39;49m[6;1H[?12l[?25h[?12;25h[48;45H[?25l[30m[48;5;250m8[39;49m[9;1H[?12l[?25h[?12;25h[48;45H[?25l[30m[48;5;250m10[39;49m[11;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m1[39;49m[12;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m2[39;49m[13;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m5[39;49m[16;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m6[39;49m[17;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m7[39;49m[18;1H[?12l[?25h[?12;25h[48;45H[?25l[30m[48;5;250m20[39;49m[21;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m5[39;49m[26;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m6[39;49m[27;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m7[39;49m[28;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m8[39;49m[29;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m9[39;49m[30;1H[?12l[?25h[?12;25h[48;45H[?25l[30m[48;5;250m31[39;49m[32;1H[?12l[?25h[?12;25h[48;46H[?25l[30m[48;5;250m0[39;49m[31;1H[?12l[?25h[?12;25h[49d[?25l(No files need saving)[31;1H[?12l[?25h[?12;25h[49d[K[?1l>[?12l[?25h[?1049l[39;49m]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 5120,5120
+/home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf: error while loading shared libraries: libcublas.so.7.0: cannot open shared object file: No such file or directory
+0.00user 0.00system 0:00.00elapsed 83%CPU (0avgtext+0avgdata 536maxresident)k
+0inputs+0outputs (0major+32minor)pagefaults 0swaps
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 5120,5120[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1@.
+bash: ./home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf: No such file or directory
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ ./home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 5120,5120[C[1P
+MAGMA 1.6.1  compiled for CUDA capability >= 3.0
+CUDA runtime 7000, driver 7000. MAGMA not compiled with OpenMP. 
+ndevices 1
+device 0: Tesla K20c, 705.5 MHz clock, 4799.6 MB memory, capability 3.5
+Usage: /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf [options] [-h|--help]
+
+ngpu 1
+    M     N   CPU GFlop/s (sec)   GPU GFlop/s (sec)   |PA-LU|/(N*|A|)
+=========================================================================
+init_time = 0.815733
+Failed to set GPU core and memory frequencies: Insufficient Permissions
+iter 1: cpu_time_cuda = 0.014054
+iter 1: gpu_time_cuda = 0.007886
+iter 2: cpu_time_cuda = 0.013722
+iter 2: gpu_time_cuda = 0.007569
+iter 3: cpu_time_cuda = 0.013447
+iter 3: gpu_time_cuda = 0.007174
+iter 4: cpu_time_cuda = 0.013176
+iter 4: gpu_time_cuda = 0.007093
+iter 5: cpu_time_cuda = 0.012905
+iter 5: gpu_time_cuda = 0.006750
+iter 6: cpu_time_cuda = 0.012895
+iter 6: gpu_time_cuda = 0.006456
+iter 7: cpu_time_cuda = 0.012357
+iter 7: gpu_time_cuda = 0.006142
+iter 8: cpu_time_cuda = 0.012479
+iter 8: gpu_time_cuda = 0.005970
+iter 9: cpu_time_cuda = 0.011783
+iter 9: gpu_time_cuda = 0.005649
+iter 10: cpu_time_cuda = 0.011462
+iter 10: gpu_time_cuda = 0.005422
+iter 11: cpu_time_cuda = 0.011249
+iter 11: gpu_time_cuda = 0.005206
+iter 12: cpu_time_cuda = 0.010906
+iter 12: gpu_time_cuda = 0.004981
+iter 13: cpu_time_cuda = 0.010629
+iter 13: gpu_time_cuda = 0.004772
+iter 14: cpu_time_cuda = 0.010363
+iter 14: gpu_time_cuda = 0.004587
+iter 15: cpu_time_cuda = 0.010065
+iter 15: gpu_time_cuda = 0.004203
+iter 16: cpu_time_cuda = 0.009813
+iter 16: gpu_time_cuda = 0.004078
+iter 17: cpu_time_cuda = 0.009538
+iter 17: gpu_time_cuda = 0.003875
+iter 18: cpu_time_cuda = 0.009261
+iter 18: gpu_time_cuda = 0.003665
+iter 19: cpu_time_cuda = 0.008979
+iter 19: gpu_time_cuda = 0.003372
+iter 20: cpu_time_cuda = 0.008701
+iter 20: gpu_time_cuda = 0.003278
+iter 21: cpu_time_cuda = 0.008452
+iter 21: gpu_time_cuda = 0.003049
+iter 22: cpu_time_cuda = 0.008164
+iter 22: gpu_time_cuda = 0.002979
+iter 23: cpu_time_cuda = 0.007869
+iter 23: gpu_time_cuda = 0.002859
+iter 24: cpu_time_cuda = 0.007556
+iter 24: gpu_time_cuda = 0.002616
+iter 25: cpu_time_cuda = 0.007282
+iter 25: gpu_time_cuda = 0.002403
+iter 26: cpu_time_cuda = 0.007024
+iter 26: gpu_time_cuda = 0.002249
+iter 27: cpu_time_cuda = 0.006757
+iter 27: gpu_time_cuda = 0.002114
+iter 28: cpu_time_cuda = 0.006481
+iter 28: gpu_time_cuda = 0.002009
+iter 29: cpu_time_cuda = 0.006212
+iter 29: gpu_time_cuda = 0.001841
+iter 30: cpu_time_cuda = 0.005916
+iter 30: gpu_time_cuda = 0.001705
+iter 31: cpu_time_cuda = 0.005677
+iter 31: gpu_time_cuda = 0.001564
+iter 32: cpu_time_cuda = 0.005397
+iter 32: gpu_time_cuda = 0.001440
+iter 33: cpu_time_cuda = 0.005131
+iter 33: gpu_time_cuda = 0.001344
+iter 34: cpu_time_cuda = 0.004845
+iter 34: gpu_time_cuda = 0.001218
+iter 35: cpu_time_cuda = 0.004569
+iter 35: gpu_time_cuda = 0.001032
+iter 36: cpu_time_cuda = 0.004293
+iter 36: gpu_time_cuda = 0.000976
+iter 37: cpu_time_cuda = 0.003989
+iter 37: gpu_time_cuda = 0.000946
+iter 38: cpu_time_cuda = 0.003689
+iter 38: gpu_time_cuda = 0.000779
+iter 39: cpu_time_cuda = 0.003419
+iter 39: gpu_time_cuda = 0.000732
+iter 40: cpu_time_cuda = 0.003136
+iter 40: gpu_time_cuda = 0.000615
+iter 41: cpu_time_cuda = 0.002866
+iter 41: gpu_time_cuda = 0.000572
+iter 42: cpu_time_cuda = 0.002615
+iter 42: gpu_time_cuda = 0.000489
+iter 43: cpu_time_cuda = 0.002360
+iter 43: gpu_time_cuda = 0.000405
+iter 44: cpu_time_cuda = 0.002092
+iter 44: gpu_time_cuda = 0.000356
+iter 45: cpu_time_cuda = 0.001839
+iter 45: gpu_time_cuda = 0.000354
+iter 46: cpu_time_cuda = 0.001573
+iter 46: gpu_time_cuda = 0.000265
+iter 47: cpu_time_cuda = 0.001322
+iter 47: gpu_time_cuda = 0.000206
+iter 48: cpu_time_cuda = 0.001059
+iter 48: gpu_time_cuda = 0.000184
+iter 49: cpu_time_cuda = 0.000789
+iter 49: gpu_time_cuda = 0.000162
+iter 50: cpu_time_cuda = 0.000583
+iter 50: gpu_time_cuda = 0.000158
+ 5120  5120     ---   (  ---  )    138.10 (   0.65)     ---   
+total_time = 1.584963
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ emacs /etc/ld.so.conf
+[?1049h[?12;25h[?1h=[H[2J[49d[K[?1l>[?12l[?25h[?1049l[39;49m[?1049h[?12;25h[?1h=[>0c[H[2J[49d[K[H[?25l[7mFile Edit Options Buffers Tools Lisp-Interaction Help                                                                                  [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m*scratch*   [0m[39;49m[30m[48;5;250m   All L1     (Lisp Interaction) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[H
+[?12l[?25h[?12;25h[49d[?25lNote: file is write protected[K[H
+[?12l[?25h[?12;25h[49d[?25lNote: file is write protected[K[H[7mFile Edit Options Buffers Tools Conf Help                                                                                              [0m[39;49m[27m
+[A
+[38;5;130minclude[39;49m ld.so.conf.d/*.conf[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UU-:%%--F1  [39;49m[1m[30m[48;5;250mld.so.conf  [0m[39;49m[30m[48;5;250m   All L1     (Conf[Space]) ----------------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lBeginning of buffer[K[H
+[?12l[?25h[?12;25h[49d[K[48;34H[?25l[30m[48;5;250m2[39;49m[H
+
+[?12l[?25h[?12;25h[48;34H[?25l[30m[48;5;250m1[39;49m[H
+[?12l[?25h[?12;25h[49d[?25l(No files need saving)[H
+[?12l[?25h[?12;25h[49d[K[?1l>[?12l[?25h[?1049l[39;49m]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ emacs ld.so.conf.d
+[?1049h[?12;25h[?1h=[H[2J[49d[K[?1l>[?12l[?25h[?1049l[39;49m[?1049h[?12;25h[?1h=[>0c[H[2J[49d[K[H[?25l[7mFile Edit Options Buffers Tools Lisp-Interaction Help                                                                                  [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m*scratch*   [0m[39;49m[30m[48;5;250m   All L1     (Lisp Interaction) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[H
+[?12l[?25h[?12;25h[49d[?25l(New file)[K[H
+[?12l[?25h[?12;25h[49d[?25l(New file)[K[H[7mFile Edit Options Buffers Tools Conf Help                                                                                              [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250mld.so.conf.d[0m[39;49m[30m[48;5;250m   All L1     (Conf[Unix]) -----------------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[K[2d[49d[?25l(No files need saving)[H
+[?12l[?25h[?12;25h[49d[K[?1l>[?12l[?25h[?1049l[39;49m]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ cd e[K/etc/
+]0;lchen@ivy:/etc[lchen@ivy etc]$ ls
+[0m[38;5;27mabrt[0m                   [38;5;27mdhcp[0m                        hosts.allow               [38;5;27mmock[0m               [38;5;27mprofile.d[0m         sos.conf
+adjtime                DIR_COLORS                  hosts.deny                [38;5;27mmodprobe.d[0m         protocols         [38;5;27mspeech-dispatcher[0m
+aliases                DIR_COLORS.256color         [38;5;27mhp[0m                        [38;5;27mmodulefiles[0m        [38;5;27mpulse[0m             [38;5;27mssh[0m
+[38;5;27malsa[0m                   DIR_COLORS.lightbgcolor     [38;5;27mhttpd[0m                     [38;5;27mmodules-load.d[0m     [38;5;27mpurple[0m            [38;5;27mssl[0m
+[38;5;27malternatives[0m           dleyna-server-service.conf  idmapd.conf               motd               [38;5;27mqemu[0m              [38;5;27mssmtp[0m
+anacrontab             [38;5;27mdnf[0m                         [38;5;51minit.d[0m                    [38;5;51mmtab[0m               radvd.conf        [38;5;27msssd[0m
+asound.conf            dnsmasq.conf                inittab                   mtools.conf        [38;5;51mrc0.d[0m             statetab
+at.deny                [38;5;27mdnsmasq.d[0m                   inputrc                   [38;5;27mmultipath[0m          [38;5;51mrc1.d[0m             [38;5;27mstatetab.d[0m
+[38;5;27mat-spi2[0m                dracut.conf                 [38;5;27mipa[0m                       [38;5;27mmunge[0m              [38;5;51mrc2.d[0m             [38;5;27mstunnel[0m
+[38;5;27maudisp[0m                 [38;5;27mdracut.conf.d[0m               [38;5;27miproute2[0m                  nanorc             [38;5;51mrc3.d[0m             [38;5;27msubversion[0m
+[38;5;27maudit[0m                  drirc                       [38;5;27miscsi[0m                     netconfig          [38;5;51mrc4.d[0m             sudoers
+autofs.conf            dumpdates                   issue                     [38;5;27mNetworkManager[0m     [38;5;51mrc5.d[0m             [38;5;27msudoers.d[0m
+autofs_ldap_auth.conf  e2fsck.conf                 issue.net                 networks           [38;5;51mrc6.d[0m             [38;5;27msysconfig[0m
+auto.master            environment                 [38;5;27mjava[0m                      nfsmount.conf      [38;5;27mrc.d[0m              sysctl.conf
+[38;5;27mauto.master.d[0m          ethertypes                  [38;5;27mjvm[0m                       nsswitch.conf      [38;5;27mreader.conf.d[0m     [38;5;27msysctl.d[0m
+auto.misc              exports                     [38;5;27mjvm-commmon[0m               nsswitch.conf.bak  [38;5;51mredhat-release[0m    [38;5;27msystemd[0m
+[38;5;34mauto.net[0m               [38;5;27mexports.d[0m                   jwhois.conf               [38;5;27mntp[0m                request-key.conf  [38;5;51msystem-release[0m
+[38;5;34mauto.smb[0m               [38;5;51mfavicon.png[0m                 kdump.conf                ntp.conf           [38;5;27mrequest-key.d[0m     system-release-cpe
+[38;5;27mavahi[0m                  fedora-release              [38;5;27mkernel[0m                    [38;5;27mnvidia[0m             resolv.conf       tcsd.conf
+[38;5;27mbash_completion.d[0m      [38;5;27mfestival[0m                    [38;5;27mkoji[0m                      [38;5;27mnvidia-healthmon[0m   [38;5;51mrmt[0m               [38;5;27mterminfo[0m
+bashrc                 filesystems                 koji.conf                 [38;5;27moddjob[0m             [38;5;27mrolekit[0m           [38;5;27mtmpfiles.d[0m
+[38;5;27mbinfmt.d[0m               [38;5;27mfirewalld[0m                   [38;5;27mkoji.conf.d[0m               oddjobd.conf       rpc               [38;5;27mtorque[0m
+brlapi.key             [38;5;27mfonts[0m                       krb5.conf                 [38;5;27moddjobd.conf.d[0m     [38;5;27mrpkg[0m              Trolltech.conf
+[38;5;27mbrltty[0m                 [38;5;27mfoomatic[0m                    ld.so.cache               [38;5;27mOpenCL[0m             [38;5;27mrpm[0m               trusted-key.key
+brltty.conf            fprintd.conf                ld.so.conf                [38;5;27mopenldap[0m           [38;5;27mrpmdevtools[0m       [38;5;27mudev[0m
+[38;5;27mcertmonger[0m             fstab                       [38;5;27mld.so.conf.d[0m              [38;5;27mopenlmi[0m            [38;5;27mrpmlint[0m           [38;5;27mudisks2[0m
+[38;5;27mchkconfig.d[0m            fuse.conf                   lftp.conf                 [38;5;27mopenmpi-x86_64[0m     rsyncd.conf       [38;5;27munbound[0m
+chrony.conf            [38;5;27mgconf[0m                       libaudit.conf             [38;5;27mopenvpn[0m            rsyslog.conf      updatedb.conf
+chrony.keys            [38;5;27mgcrypt[0m                      [38;5;27mlibibverbs.d[0m              [38;5;27mopt[0m                [38;5;27mrsyslog.d[0m         [38;5;27mUPower[0m
+[38;5;27mcifs-utils[0m             gdbinit                     [38;5;27mlibnl[0m                     os-release         rwtab             usb_modeswitch.conf
+[38;5;27mcockpit[0m                [38;5;27mgdbinit.d[0m                   [38;5;27mlibreport[0m                 [38;5;27mPackageKit[0m         [38;5;27mrwtab.d[0m           [38;5;27musb_modeswitch.d[0m
+[38;5;27mcorosync[0m               [38;5;27mgdm[0m                         libuser.conf              [38;5;27mpam.d[0m              rygel.conf        vconsole.conf
+[38;5;27mcron.d[0m                 [38;5;27mgeoclue[0m                     [38;5;27mlibvirt[0m                   [38;5;27mpam_pkcs11[0m         [38;5;27msamba[0m             vdpau_wrapper.cfg
+[38;5;27mcron.daily[0m             [38;5;27mghostscript[0m                 locale.conf               passwd             [38;5;27msane.d[0m            vimrc
+cron.deny              [38;5;27mgnupg[0m                       [38;5;51mlocaltime[0m                 passwd-            [38;5;27msasl2[0m             virc
+[38;5;27mcron.hourly[0m            GREP_COLORS                 login.defs                passwdqc.conf      [38;5;27mscl[0m               [38;5;27mvmware-tools[0m
+[38;5;27mcron.monthly[0m           [38;5;27mgroff[0m                       logrotate.conf            [38;5;27mpcmcia[0m             [38;5;27msecurity[0m          [38;5;27mvpnc[0m
+crontab                group                       [38;5;27mlogrotate.d[0m               [38;5;27mPegasus[0m            [38;5;27mselinux[0m           wgetrc
+[38;5;27mcron.weekly[0m            group-                      [38;5;27mlvm[0m                       pinforc            services          [38;5;27mwpa_supplicant[0m
+[38;5;27mcrypto-policies[0m        [38;5;51mgrub2.cfg[0m                   machine-id                [38;5;27mpkcs11[0m             sestatus.conf     wvdial.conf
+crypttab               [38;5;27mgrub.d[0m                      magic                     [38;5;27mpki[0m                [38;5;27msetroubleshoot[0m    [38;5;27mX11[0m
+csh.cshrc              gshadow                     mailcap                   [38;5;27mplymouth[0m           [38;5;27msetuptool.d[0m       xattr.conf
+csh.login              gshadow-                    mail.rc                   [38;5;27mpm[0m                 [38;5;27msgml[0m              [38;5;27mxdg[0m
+[38;5;27mcups[0m                   [38;5;27mgss[0m                         makedumpfile.conf.sample  [38;5;27mpolkit-1[0m           shadow            [38;5;27mxinetd.d[0m
+[38;5;27mcupshelpers[0m            [38;5;27mgssproxy[0m                    man_db.conf               [38;5;27mpopt.d[0m             shadow-           [38;5;27mxml[0m
+[38;5;27mdbus-1[0m                 [38;5;27mhighlight[0m                   [38;5;27mmaven[0m                     [38;5;27mppp[0m                shells            [38;5;27myum[0m
+[38;5;27mdconf[0m                  host.conf                   [38;5;27mmcelog[0m                    [38;5;27mprelink.conf.d[0m     [38;5;27mskel[0m              yum.conf
+[38;5;27mdefault[0m                hostname                    mime.types                printcap           slp.conf          [38;5;27myum.repos.d[0m
+[38;5;27mdepmod.d[0m               hosts                       mke2fs.conf               profile            [38;5;27msmartmontools[0m
+]0;lchen@ivy:/etc[lchen@ivy etc]$ e[Klscd /etc/emacs ld.so.conf.d/etc/ld.so.conf[3Pld.so.conf.d
+[?1049h[?12;25h[?1h=[H[2J[49d[K[?1l>[?12l[?25h[?1049l[39;49m[?1049h[?12;25h[?1h=[>0c[H[2J[49d[K[H[?25l[7mFile Edit Options Buffers Tools Lisp-Interaction Help                                                                                  [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m*scratch*   [0m[39;49m[30m[48;5;250m   All L1     (Lisp Interaction) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[H
+[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[K[H[7mFile Edit Options Buffers Tools Operate Mark Regexp Immediate Subdir Help                                                              [0m[39;49m[27m
+[A
+  [38;5;28m/etc/ld.so.conf.d[39;49m:[K
+  total used in directory 52 available 27847760[K
+  drwxr-xr-x.   2 root root 4096 Sep 30 22:28 [38;5;21m.[39;49m[K
+  drwxr-xr-x. 156 root root 8192 Dec 20 19:15 [38;5;21m..[39;49m[K
+  -rw-r--r--.   1 root root   17 Feb  7  2015 atlas-x86_64.conf[K
+  -rw-r--r--.   1 root root   42 Sep 30 22:28 cuda.conf[K
+  -rw-r--r--.   1 root root   19 Oct 31  2014 dyninst-x86_64.conf[K
+  -r--r--r--.   1 root root   63 Nov 27  2014 kernel-3.17.4-301.fc21.x86_64.conf[K
+  -r--r--r--.   1 root root   63 May 27  2015 kernel-4.0.4-202.fc21.x86_64.conf[K
+  -rw-r--r--.   1 root root   17 Aug 17  2014 libiscsi-x86_64.conf[K
+  -rw-r--r--.   1 root root   16 Dec 25  2014 llvm-x86_64.conf[K
+  -rw-r--r--.   1 root root   18 May 20  2015 nvidia-lib64.conf[K
+  -rw-r--r--.   1 root root   15 Sep 30 12:43 torque.conf[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:%%--F1  [39;49m[1m[30m[48;5;250mld.so.conf.d     [0m[39;49m[30m[48;5;250m   All L5     (Dired by name) ---------------------------------------------------------------------------[39;49m
+[A[6;47H[?12l[?25h[?12;25h[49;1H[K[6;47H[49;1H[?25lC-c[6;47H[?12l[?25h[?12;25h[49;4H[?25l-[6;47H[?12l[?25h[?12;25h[49;4H[?25l C-x[6;47H[?12l[?25h[?12;25h[49;8H[?25l-[6;47H[?12l[?25h[?12;25h[49;8H[?25l C-c[6;47H[?12l[?25h[?12;25h[49;13H[?25lis undefined[6;47H[?12l[?25h[?12;25h[49;1H[K[6;47H[49;1H[?25l(No files need saving)[6;47H[?12l[?25h[?12;25h[49;1H[K[?1l>[?12l[?25h[?1049l[39;49m]0;lchen@ivy:/etc[lchen@ivy etc]$ cd ld.so.conf.d/
+]0;lchen@ivy:/etc/ld.so.conf.d[lchen@ivy ld.so.conf.d]$ ls
+atlas-x86_64.conf  dyninst-x86_64.conf                 kernel-4.0.4-202.fc21.x86_64.conf  llvm-x86_64.conf   torque.conf
+cuda.conf          kernel-3.17.4-301.fc21.x86_64.conf  libiscsi-x86_64.conf               nvidia-lib64.conf
+]0;lchen@ivy:/etc/ld.so.conf.d[lchen@ivy ld.so.conf.d]$ emacs cuda.conf 
+[?1049h[?12;25h[?1h=[H[2J[49d[K[?1l>[?12l[?25h[?1049l[39;49m[?1049h[?12;25h[?1h=[>0c[H[2J[49d[K[H[?25l[7mFile Edit Options Buffers Tools Lisp-Interaction Help                                                                                  [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m*scratch*   [0m[39;49m[30m[48;5;250m   All L1     (Lisp Interaction) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[H
+[?12l[?25h[?12;25h[49d[?25lNote: file is write protected[K[H
+[?12l[?25h[?12;25h[49d[?25lNote: file is write protected[K[H[7mFile Edit Options Buffers Tools Conf Help                                                                                              [0m[39;49m[27m
+[A
+[38;5;130m/usr/local/cuda/lib[39;49m[K
+[38;5;130m/usr/local/cuda/lib64[39;49m[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UU-:%%--F1  [39;49m[1m[30m[48;5;250mcuda.conf   [0m[39;49m[30m[48;5;250m   All L1     (Conf[Space]) ----------------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lBeginning of buffer[K[H
+[?12l[?25h[?12;25h[49d[K[48;34H[?25l[30m[48;5;250m2[39;49m[H
+
+[?12l[?25h[?12;25h[48;34H[?25l[30m[48;5;250m3[39;49m[4;1H[?12l[?25h[?12;25h[48;34H[?25l[30m[48;5;250m2[39;49m[H
+
+[?12l[?25h[?12;25h[48;34H[?25l[30m[48;5;250m1[39;49m[H
+[?12l[?25h[?12;25h[C[C[C[C[C[C		[C[C[C[C[C[C	[49;1H[?25l(No files need saving)[2;16H[?12l[?25h[?12;25h[49;1H[K[?1l>[?12l[?25h[?1049l[39;49m]0;lchen@ivy:/etc/ld.so.conf.d[lchen@ivy ld.so.conf.d]$ emacs nvidia-lib64.conf 
+[?1049h[?12;25h[?1h=[H[2J[49d[K[?1l>[?12l[?25h[?1049l[39;49m[?1049h[?12;25h[?1h=[>0c[H[2J[49d[K[H[?25l[7mFile Edit Options Buffers Tools Lisp-Interaction Help                                                                                  [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m*scratch*   [0m[39;49m[30m[48;5;250m   All L1     (Lisp Interaction) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[H
+[?12l[?25h[?12;25h[49d[?25lNote: file is write protected[K[H
+[?12l[?25h[?12;25h[49d[?25lNote: file is write protected[K[H[7mFile Edit Options Buffers Tools Conf Help                                                                                              [0m[39;49m[27m
+[A
+[38;5;130m/usr/lib64/nvidia[39;49m[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UU-:%%--F1  [39;49m[1m[30m[48;5;250mnvidia-lib64.conf[0m[39;49m[30m[48;5;250m   All L1     (Conf[Space]) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[K[2d[49d[?25l(No files need saving)[H
+[?12l[?25h[?12;25h[49d[K[?1l>[?12l[?25h[?1049l[39;49m]0;lchen@ivy:/etc/ld.so.conf.d[lchen@ivy ld.so.conf.d]$ cd '[K[K[K[Kemacs nvidia-lib64.conf 
+[?1049h[?12;25h[?1h=[H[2J[49d[K[?1l>[?12l[?25h[?1049l[39;49m[?1049h[?12;25h[?1h=[>0c[H[2J[49d[K[H[?25l[7mFile Edit Options Buffers Tools Lisp-Interaction Help                                                                                  [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m*scratch*   [0m[39;49m[30m[48;5;250m   All L1     (Lisp Interaction) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[H
+[?12l[?25h[?12;25h[49d[?25lNote: file is write protected[K[H
+[?12l[?25h[?12;25h[49d[?25lNote: file is write protected[K[H[7mFile Edit Options Buffers Tools Conf Help                                                                                              [0m[39;49m[27m
+[A
+[38;5;130m/usr/lib64/nvidia[39;49m[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UU-:%%--F1  [39;49m[1m[30m[48;5;250mnvidia-lib64.conf[0m[39;49m[30m[48;5;250m   All L1     (Conf[Space]) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[K[2d[49d[?25l(No files need saving)[H
+[?12l[?25h[?12;25h[49d[K[?1l>[?12l[?25h[?1049l[39;49m]0;lchen@ivy:/etc/ld.so.conf.d[lchen@ivy ld.so.conf.d]$ cd u[K/usr/
+]0;lchen@ivy:/usr[lchen@ivy usr]$ ls
+[0m[38;5;27mbin[0m  [38;5;27mgames[0m  [38;5;27minclude[0m  [38;5;27mlib[0m  [38;5;27mlib64[0m  [38;5;27mlibexec[0m  [38;5;27mlocal[0m  [38;5;27msbin[0m  [38;5;27mshare[0m  [38;5;27msrc[0m  [38;5;51mtmp[0m
+]0;lchen@ivy:/usr[lchen@ivy usr]$ cd lib64/
+]0;lchen@ivy:/usr/lib64[lchen@ivy lib64]$ ls
+[0m[38;5;27malsa-lib[0m                                    [38;5;51mlibgstcodecparsers-0.10.so.23[0m            [38;5;34mlibQtOpenGL.so.4.8.6[0m
+[38;5;27mao[0m                                          [38;5;34mlibgstcodecparsers-0.10.so.23.0.0[0m        [38;5;51mlibQtScript.so.4[0m
+[38;5;27mapr-util-1[0m                                  [38;5;51mlibgstcodecparsers-1.0.so.0[0m              [38;5;51mlibQtScript.so.4.8[0m
+[38;5;27matlas[0m                                       [38;5;34mlibgstcodecparsers-1.0.so.0.405.0[0m        [38;5;34mlibQtScript.so.4.8.6[0m
+[38;5;27maudit[0m                                       [38;5;51mlibgstcontroller-0.10.so.0[0m               [38;5;51mlibQtScriptTools.so.4[0m
+[38;5;27mautofs[0m                                      [38;5;34mlibgstcontroller-0.10.so.0.30.0[0m          [38;5;51mlibQtScriptTools.so.4.8[0m
+[38;5;27mavahi[0m                                       [38;5;51mlibgstcontroller-1.0.so.0[0m                [38;5;34mlibQtScriptTools.so.4.8.6[0m
+[38;5;27mbluetooth[0m                                   [38;5;34mlibgstcontroller-1.0.so.0.405.0[0m          [38;5;51mlibQtSql.so.4[0m
+[38;5;27mbrltty[0m                                      [38;5;51mlibgstdataprotocol-0.10.so.0[0m             [38;5;51mlibQtSql.so.4.8[0m
+[38;5;27mcifs-utils[0m                                  [38;5;34mlibgstdataprotocol-0.10.so.0.30.0[0m        [38;5;34mlibQtSql.so.4.8.6[0m
+[38;5;27mcmake[0m                                       [38;5;51mlibgstfft-0.10.so.0[0m                      [38;5;51mlibQtSvg.so.4[0m
+[38;5;27mcmpi[0m                                        [38;5;34mlibgstfft-0.10.so.0.25.0[0m                 [38;5;51mlibQtSvg.so.4.8[0m
+[38;5;27mcolord-plugins[0m                              [38;5;51mlibgstfft-1.0.so.0[0m                       [38;5;34mlibQtSvg.so.4.8.6[0m
+[38;5;27mcolord-sensors[0m                              [38;5;34mlibgstfft-1.0.so.0.405.0[0m                 [38;5;51mlibQtTest.so.4[0m
+[38;5;51mcracklib_dict.hwm[0m                           [38;5;51mlibgstgl-1.0.so.0[0m                        [38;5;51mlibQtTest.so.4.8[0m
+[38;5;51mcracklib_dict.pwd[0m                           [38;5;34mlibgstgl-1.0.so.0.405.0[0m                  [38;5;34mlibQtTest.so.4.8.6[0m
+[38;5;51mcracklib_dict.pwi[0m                           [38;5;51mlibgstinsertbin-1.0.so.0[0m                 [38;5;51mlibQtXmlPatterns.so.4[0m
+crt1.o                                      [38;5;34mlibgstinsertbin-1.0.so.0.405.0[0m           [38;5;51mlibQtXmlPatterns.so.4.8[0m
+crti.o                                      [38;5;51mlibgstinterfaces-0.10.so.0[0m               [38;5;34mlibQtXmlPatterns.so.4.8.6[0m
+crtn.o                                      [38;5;34mlibgstinterfaces-0.10.so.0.25.0[0m          [38;5;51mlibQtXml.so.4[0m
+[38;5;27mdbus-1[0m                                      [38;5;51mlibgstmpegts-1.0.so.0[0m                    [38;5;51mlibQtXml.so.4.8[0m
+[38;5;27mdevice-mapper[0m                               [38;5;34mlibgstmpegts-1.0.so.0.405.0[0m              [38;5;34mlibQtXml.so.4.8.6[0m
+[38;5;27mdleyna-1.0[0m                                  [38;5;51mlibgstnet-0.10.so.0[0m                      [38;5;51mlibquadmath.so.0[0m
+[38;5;27mdleyna-server[0m                               [38;5;34mlibgstnet-0.10.so.0.30.0[0m                 [38;5;34mlibquadmath.so.0.0.0[0m
+[38;5;27mdri[0m                                         [38;5;51mlibgstnet-1.0.so.0[0m                       [38;5;51mlibquorum.so.5[0m
+[38;5;27mdyninst[0m                                     [38;5;34mlibgstnet-1.0.so.0.405.0[0m                 [38;5;34mlibquorum.so.5.0.0[0m
+[38;5;27mebtables[0m                                    [38;5;51mlibgstnetbuffer-0.10.so.0[0m                [38;5;34mlibquvi-0.9-0.9.4.so[0m
+[38;5;27melfutils[0m                                    [38;5;34mlibgstnetbuffer-0.10.so.0.25.0[0m           [38;5;51mlibrados.so.2[0m
+[38;5;27mempathy[0m                                     [38;5;51mlibgstpbutils-0.10.so.0[0m                  [38;5;34mlibrados.so.2.0.0[0m
+[38;5;27menchant[0m                                     [38;5;34mlibgstpbutils-0.10.so.0.25.0[0m             [38;5;51mlibraptor2.so.0[0m
+[38;5;27meog[0m                                         [38;5;51mlibgstpbutils-1.0.so.0[0m                   [38;5;34mlibraptor2.so.0.0.0[0m
+[38;5;27mepiphany[0m                                    [38;5;34mlibgstpbutils-1.0.so.0.405.0[0m             [38;5;51mlibrasqal.so.3[0m
+[38;5;27mevince[0m                                      [38;5;51mlibgstphotography-0.10.so.23[0m             [38;5;34mlibrasqal.so.3.0.0[0m
+[38;5;27mevolution[0m                                   [38;5;34mlibgstphotography-0.10.so.23.0.0[0m         [38;5;51mlibraw1394.so.11[0m
+[38;5;27mevolution-data-server[0m                       [38;5;51mlibgstphotography-1.0.so.0[0m               [38;5;34mlibraw1394.so.11.1.0[0m
+[38;5;27mfarstream-0.1[0m                               [38;5;34mlibgstphotography-1.0.so.0.405.0[0m         [38;5;51mlibraw_r.so.10[0m
+[38;5;27mfarstream-0.2[0m                               [38;5;51mlibgstreamer-0.10.so.0[0m                   [38;5;34mlibraw_r.so.10.0.0[0m
+[38;5;27mfestival[0m                                    [38;5;34mlibgstreamer-0.10.so.0.30.0[0m              [38;5;51mlibraw.so.10[0m
+[38;5;27mfipscheck[0m                                   [38;5;51mlibgstreamer-1.0.so.0[0m                    [38;5;34mlibraw.so.10.0.0[0m
+[38;5;27mfirefox[0m                                     [38;5;34mlibgstreamer-1.0.so.0.405.0[0m              [38;5;51mlibrbd.so.1[0m
+[38;5;27mfolks[0m                                       [38;5;51mlibgstriff-0.10.so.0[0m                     [38;5;34mlibrbd.so.1.0.0[0m
+[38;5;27mfreerdp[0m                                     [38;5;34mlibgstriff-0.10.so.0.25.0[0m                [38;5;51mlibrdf.so.0[0m
+[38;5;27mfrei0r-1[0m                                    [38;5;51mlibgstriff-1.0.so.0[0m                      [38;5;34mlibrdf.so.0.0.0[0m
+[38;5;27mfs[0m                                          [38;5;34mlibgstriff-1.0.so.0.405.0[0m                [38;5;51mlibrdmacm.so.1[0m
+[38;5;27mgallium-pipe[0m                                [38;5;51mlibgstrtp-0.10.so.0[0m                      [38;5;34mlibrdmacm.so.1.0.0[0m
+[38;5;27mgames[0m                                       [38;5;34mlibgstrtp-0.10.so.0.25.0[0m                 [38;5;51mlibreadline.so.6[0m
+[38;5;27mgawk[0m                                        [38;5;51mlibgstrtp-1.0.so.0[0m                       [38;5;34mlibreadline.so.6.3[0m
+[38;5;27mGConf[0m                                       [38;5;34mlibgstrtp-1.0.so.0.405.0[0m                 [38;5;51mlibref_array.so.1[0m
+[38;5;27mgconv[0m                                       [38;5;51mlibgstrtsp-0.10.so.0[0m                     [38;5;34mlibref_array.so.1.2.0[0m
+gcrt1.o                                     [38;5;34mlibgstrtsp-0.10.so.0.25.0[0m                [38;5;51mlibregistry.so.0[0m
+[38;5;27mgdk-pixbuf-2.0[0m                              [38;5;51mlibgstrtsp-1.0.so.0[0m                      [38;5;34mlibregistry.so.0.0.1[0m
+[38;5;27mgedit[0m                                       [38;5;34mlibgstrtsp-1.0.so.0.405.0[0m                [38;5;34mlibreg.so[0m
+[38;5;27mgettext[0m                                     [38;5;51mlibgstsdp-0.10.so.0[0m                      [38;5;27mlibreoffice[0m
+[38;5;27mgfortran[0m                                    [38;5;34mlibgstsdp-0.10.so.0.25.0[0m                 [38;5;51mlibreport-gtk.so.0[0m
+[38;5;27mghostscript[0m                                 [38;5;51mlibgstsdp-1.0.so.0[0m                       [38;5;34mlibreport-gtk.so.0.0.1[0m
+[38;5;27mgio[0m                                         [38;5;34mlibgstsdp-1.0.so.0.405.0[0m                 [38;5;51mlibreport.so.0[0m
+[38;5;27mgirepository-1.0[0m                            [38;5;51mlibgstsignalprocessor-0.10.so.23[0m         [38;5;34mlibreport.so.0.0.1[0m
+[38;5;27mgjs[0m                                         [38;5;34mlibgstsignalprocessor-0.10.so.23.0.0[0m     [38;5;51mlibreport-web.so.0[0m
+[38;5;27mglusterfs[0m                                   [38;5;51mlibgsttag-0.10.so.0[0m                      [38;5;34mlibreport-web.so.0.0.1[0m
+[38;5;27mgnome-documents[0m                             [38;5;34mlibgsttag-0.10.so.0.25.0[0m                 [38;5;34mlibrepo.so.0[0m
+[38;5;27mgnome-keyring[0m                               [38;5;51mlibgsttag-1.0.so.0[0m                       [38;5;34mlibresolv-2.20.so[0m
+[38;5;27mgnome-online-miners[0m                         [38;5;34mlibgsttag-1.0.so.0.405.0[0m                 [38;5;51mlibresolv.so[0m
+[38;5;27mgnome-settings-daemon-3.0[0m                   [38;5;51mlibgsturidownloader-1.0.so.0[0m             [38;5;51mlibresolv.so.2[0m
+[38;5;27mgnome-shell[0m                                 [38;5;34mlibgsturidownloader-1.0.so.0.405.0[0m       [38;5;51mlibrest-0.7.so.0[0m
+[38;5;27mgolang[0m                                      [38;5;51mlibgstvdp-0.10.so.23[0m                     [38;5;34mlibrest-0.7.so.0.0.0[0m
+[38;5;27mgrilo-0.2[0m                                   [38;5;34mlibgstvdp-0.10.so.23.0.0[0m                 [38;5;51mlibrest-extras-0.7.so.0[0m
+[38;5;27mgs-plugins-7[0m                                [38;5;51mlibgstvideo-0.10.so.0[0m                    [38;5;34mlibrest-extras-0.7.so.0.0.0[0m
+[38;5;27mgssproxy[0m                                    [38;5;34mlibgstvideo-0.10.so.0.25.0[0m               [38;5;51mlibrevenge-0.0.so.0[0m
+[38;5;27mgstreamer-0.10[0m                              [38;5;51mlibgstvideo-1.0.so.0[0m                     [38;5;34mlibrevenge-0.0.so.0.0.2[0m
+[38;5;27mgstreamer-1.0[0m                               [38;5;34mlibgstvideo-1.0.so.0.405.0[0m               [38;5;51mlibrevenge-generators-0.0.so.0[0m
+[38;5;27mgtk-2.0[0m                                     [38;5;51mlibgstwayland-1.0.so.0[0m                   [38;5;34mlibrevenge-generators-0.0.so.0.0.2[0m
+[38;5;27mgtk-3.0[0m                                     [38;5;34mlibgstwayland-1.0.so.0.405.0[0m             [38;5;51mlibrevenge-stream-0.0.so.0[0m
+[38;5;27mgupnp-dlna[0m                                  [38;5;51mlibgsystem.so.0[0m                          [38;5;34mlibrevenge-stream-0.0.so.0.0.2[0m
+[38;5;27mgutenprint[0m                                  [38;5;34mlibgsystem.so.0.0.0[0m                      [38;5;51mlibrhythmbox-core.so[0m
+[38;5;27mgvfs[0m                                        [38;5;51mlibgthread-2.0.so.0[0m                      [38;5;51mlibrhythmbox-core.so.8[0m
+[38;5;27mhttpd[0m                                       [38;5;34mlibgthread-2.0.so.0.4200.1[0m               [38;5;34mlibrhythmbox-core.so.8.0.0[0m
+[38;5;27mibus-hangul[0m                                 [38;5;51mlibgtk-3.so.0[0m                            [38;5;51mlibrom1394.so.0[0m
+[38;5;27micu[0m                                         [38;5;34mlibgtk-3.so.0.1400.13[0m                    [38;5;34mlibrom1394.so.0.3.0[0m
+[38;5;27miscsi[0m                                       [38;5;51mlibgtkhtml-4.0.so.0[0m                      librpcsvc.a
+[38;5;27mkrb5[0m                                        [38;5;34mlibgtkhtml-4.0.so.0.0.0[0m                  [38;5;51mlibrpmbuild.so.3[0m
+[38;5;34mld-2.20.so[0m                                  [38;5;51mlibgtkhtml-editor-4.0.so.0[0m               [38;5;34mlibrpmbuild.so.3.3.1[0m
+[38;5;27mldb[0m                                         [38;5;34mlibgtkhtml-editor-4.0.so.0.0.0[0m           [38;5;51mlibrpmio.so.3[0m
+[38;5;51mld-linux-x86-64.so.2[0m                        [38;5;51mlibgtkmm-2.4.so.1[0m                        [38;5;34mlibrpmio.so.3.3.1[0m
+[38;5;27mlftp[0m                                        [38;5;34mlibgtkmm-2.4.so.1.1.0[0m                    [38;5;51mlibrpmsign.so.3[0m
+[38;5;51mlibabrt_dbus.so.0[0m                           [38;5;51mlibgtkmm-3.0.so.1[0m                        [38;5;34mlibrpmsign.so.3.3.1[0m
+[38;5;34mlibabrt_dbus.so.0.0.1[0m                       [38;5;34mlibgtkmm-3.0.so.1.1.0[0m                    [38;5;51mlibrpm.so.3[0m
+[38;5;51mlibabrt_gui.so.0[0m                            [38;5;51mlibgtksourceview-3.0.so.1[0m                [38;5;34mlibrpm.so.3.3.1[0m
+[38;5;34mlibabrt_gui.so.0.0.1[0m                        [38;5;34mlibgtksourceview-3.0.so.1.3.0[0m            [38;5;51mlibrsvg-2.so.2[0m
+[38;5;51mlibabrt.so.0[0m                                [38;5;51mlibgtkspell3-3.so.0[0m                      [38;5;34mlibrsvg-2.so.2.40.9[0m
+[38;5;34mlibabrt.so.0.0.1[0m                            [38;5;34mlibgtkspell3-3.so.0.1.0[0m                  [38;5;34mlibrt-2.20.so[0m
+[38;5;51mlibabw-0.1.so.1[0m                             [38;5;51mlibgtk-vnc-2.0.so.0[0m                      [38;5;51mlibrt.so[0m
+[38;5;34mlibabw-0.1.so.1.0.1[0m                         [38;5;34mlibgtk-vnc-2.0.so.0.0.2[0m                  [38;5;51mlibrt.so.1[0m
+[38;5;51mlibaccountsservice.so.0[0m                     [38;5;51mlibgtk-x11-2.0.so.0[0m                      [38;5;51mlibrygel-core-2.4.so.2[0m
+[38;5;34mlibaccountsservice.so.0.0.0[0m                 [38;5;34mlibgtk-x11-2.0.so.0.2400.27[0m              [38;5;34mlibrygel-core-2.4.so.2.0.4[0m
+[38;5;51mlibacl.so.1[0m                                 [38;5;51mlibgtop-2.0.so.10[0m                        [38;5;51mlibrygel-renderer-2.4.so.2[0m
+[38;5;34mlibacl.so.1.1.0[0m                             [38;5;34mlibgtop-2.0.so.10.0.0[0m                    [38;5;34mlibrygel-renderer-2.4.so.2.0.4[0m
+[38;5;51mlibaio.so.1[0m                                 [38;5;51mlibgucharmap_2_90.so.7[0m                   [38;5;51mlibrygel-renderer-gst-2.4.so.2[0m
+[38;5;34mlibaio.so.1.0.0[0m                             [38;5;34mlibgucharmap_2_90.so.7.0.0[0m               [38;5;34mlibrygel-renderer-gst-2.4.so.2.0.4[0m
+[38;5;34mlibaio.so.1.0.1[0m                             [38;5;51mlibgudev-1.0.so.0[0m                        [38;5;51mlibrygel-server-2.4.so.2[0m
+[38;5;34mlibanl-2.20.so[0m                              [38;5;34mlibgudev-1.0.so.0.2.0[0m                    [38;5;34mlibrygel-server-2.4.so.2.0.4[0m
+[38;5;51mlibanl.so[0m                                   [38;5;51mlibguestlib.so.0[0m                         [38;5;51mlibsamba-credentials.so.0[0m
+[38;5;51mlibanl.so.1[0m                                 [38;5;34mlibguestlib.so.0.0.0[0m                     [38;5;34mlibsamba-credentials.so.0.0.1[0m
+[38;5;51mlibao.so.4[0m                                  [38;5;51mlibgupnp-1.0.so.4[0m                        [38;5;51mlibsamba-hostconfig.so.0[0m
+[38;5;34mlibao.so.4.1.0[0m                              [38;5;34mlibgupnp-1.0.so.4.0.0[0m                    [38;5;34mlibsamba-hostconfig.so.0.0.1[0m
+[38;5;51mlibapol.so.4[0m                                [38;5;51mlibgupnp-av-1.0.so.2[0m                     [38;5;51mlibsamba-policy.so.0[0m
+[38;5;34mlibapol.so.4.4[0m                              [38;5;34mlibgupnp-av-1.0.so.2.0.0[0m                 [38;5;34mlibsamba-policy.so.0.0.1[0m
+[38;5;51mlibappstream-glib.so.1[0m                      [38;5;51mlibgupnp-dlna-2.0.so.3[0m                   [38;5;51mlibsamba-util.so.0[0m
+[38;5;34mlibappstream-glib.so.1.5.7[0m                  [38;5;34mlibgupnp-dlna-2.0.so.3.0.0[0m               [38;5;34mlibsamba-util.so.0.0.1[0m
+[38;5;51mlibapr-1.so.0[0m                               [38;5;51mlibgupnp-dlna-gst-2.0.so.3[0m               [38;5;51mlibsamdb.so.0[0m
+[38;5;34mlibapr-1.so.0.5.1[0m                           [38;5;34mlibgupnp-dlna-gst-2.0.so.3.0.0[0m           [38;5;34mlibsamdb.so.0.0.1[0m
+[38;5;51mlibaprutil-1.so.0[0m                           [38;5;51mlibgupnp-igd-1.0.so.4[0m                    [38;5;51mlibsamplerate.so.0[0m
+[38;5;34mlibaprutil-1.so.0.5.4[0m                       [38;5;34mlibgupnp-igd-1.0.so.4.1.1[0m                [38;5;34mlibsamplerate.so.0.1.8[0m
+[38;5;51mlibarchive.so.13[0m                            [38;5;51mlibgusb.so.2[0m                             [38;5;51mlibsam.so.4[0m
+[38;5;34mlibarchive.so.13.1.2[0m                        [38;5;34mlibgusb.so.2.0.8[0m                         [38;5;34mlibsam.so.4.4.0[0m
+[38;5;51mlibargyllicc.so.0[0m                           [38;5;51mlibgutenprint.so.2[0m                       [38;5;51mlibsane.so.1[0m
+libargyllicc.so.0.0.0                       [38;5;34mlibgutenprint.so.2.3.0[0m                   [38;5;34mlibsane.so.1.0.24[0m
+[38;5;51mlibargyll.so.0[0m                              [38;5;51mlibgvnc-1.0.so.0[0m                         [38;5;51mlibsasl2.so.3[0m
+libargyll.so.0.0.0                          [38;5;34mlibgvnc-1.0.so.0.0.1[0m                     [38;5;34mlibsasl2.so.3.0.0[0m
+[38;5;34mlibasm-0.160.so[0m                             [38;5;51mlibgweather-3.so.6[0m                       [38;5;51mlibsatyr.so.3[0m
+[38;5;51mlibasm.so.1[0m                                 [38;5;34mlibgweather-3.so.6.3.2[0m                   [38;5;34mlibsatyr.so.3.0.0[0m
+[38;5;51mlibasound.so.2[0m                              [38;5;51mlibgxps.so.2[0m                             [38;5;51mlibsbc.so.1[0m
+[38;5;34mlibasound.so.2.0.0[0m                          [38;5;34mlibgxps.so.2.1.1[0m                         [38;5;34mlibsbc.so.1.2.0[0m
+[38;5;51mlibasprintf.so.0[0m                            [38;5;51mlibhandle.so.1[0m                           [38;5;51mlibsctp.so.1[0m
+[38;5;34mlibasprintf.so.0.0.0[0m                        [38;5;34mlibhandle.so.1.0.3[0m                       [38;5;34mlibsctp.so.1.0.16[0m
+[38;5;51mlibassuan.so.0[0m                              [38;5;51mlibhangul.so.1[0m                           [38;5;51mlibSDL2-2.0.so.0[0m
+[38;5;34mlibassuan.so.0.4.0[0m                          [38;5;34mlibhangul.so.1.0.0[0m                       [38;5;34mlibSDL2-2.0.so.0.2.1[0m
+[38;5;51mlibasyncns.so.0[0m                             [38;5;51mlibharfbuzz-icu.so.0[0m                     [38;5;51mlibseaudit.so.4[0m
+[38;5;34mlibasyncns.so.0.3.1[0m                         [38;5;34mlibharfbuzz-icu.so.0.936.0[0m               [38;5;34mlibseaudit.so.4.5[0m
+[38;5;51mlibatasmart.so.4[0m                            [38;5;51mlibharfbuzz.so.0[0m                         [38;5;51mlibseccomp.so.2[0m
+[38;5;34mlibatasmart.so.4.0.5[0m                        [38;5;34mlibharfbuzz.so.0.936.0[0m                   [38;5;34mlibseccomp.so.2.1.1[0m
+[38;5;51mlibatk-1.0.so.0[0m                             [38;5;34mlibhawkey.so.1[0m                           [38;5;51mlibsecret-1.so.0[0m
+[38;5;34mlibatk-1.0.so.0.21409.1[0m                     [38;5;51mlibhesiod.so.0[0m                           [38;5;34mlibsecret-1.so.0.0.0[0m
+[38;5;51mlibatk-bridge-2.0.so.0[0m                      [38;5;34mlibhesiod.so.0.0.0[0m                       [38;5;51mlibseed-gtk3.so.0[0m
+[38;5;34mlibatk-bridge-2.0.so.0.0.0[0m                  [38;5;51mlibhgfs.so.0[0m                             [38;5;34mlibseed-gtk3.so.0.0.0[0m
+[38;5;51mlibatkmm-1.6.so.1[0m                           [38;5;34mlibhgfs.so.0.0.0[0m                         [38;5;51mlibsefs.so.4[0m
+[38;5;34mlibatkmm-1.6.so.1.1.0[0m                       [38;5;51mlibhif.so.1[0m                              [38;5;34mlibsefs.so.4.0.4[0m
+[38;5;51mlibatm.so.1[0m                                 [38;5;34mlibhif.so.1.0.5[0m                          [38;5;34mlibSegFault.so[0m
+[38;5;34mlibatm.so.1.0.0[0m                             [38;5;51mlibhistory.so.6[0m                          [38;5;51mlibselinux.so[0m
+[38;5;51mlibatomic_ops_gpl.so.1[0m                      [38;5;34mlibhistory.so.6.3[0m                        [38;5;34mlibselinux.so.1[0m
+[38;5;34mlibatomic_ops_gpl.so.1.0.3[0m                  [38;5;51mlibhogweed.so.2[0m                          [38;5;34mlibsemanage.so.1[0m
+[38;5;51mlibatomic_ops.so.1[0m                          [38;5;34mlibhogweed.so.2.5[0m                        [38;5;51mlibsensors.so.4[0m
+[38;5;34mlibatomic_ops.so.1.0.3[0m                      [38;5;51mlibhpip.so.0[0m                             [38;5;34mlibsensors.so.4.3.2[0m
+[38;5;51mlibatspi.so.0[0m                               [38;5;34mlibhpip.so.0.0.1[0m                         [38;5;51mlibsepol.so[0m
+[38;5;34mlibatspi.so.0.0.1[0m                           [38;5;51mlibhpmud.so[0m                              [38;5;34mlibsepol.so.1[0m
+[38;5;51mlibattr.so.1[0m                                [38;5;51mlibhpmud.so.0[0m                            [38;5;51mlibserf-1.so.0[0m
+[38;5;34mlibattr.so.1.1.0[0m                            [38;5;34mlibhpmud.so.0.0.6[0m                        [38;5;34mlibserf-1.so.0.3.0[0m
+[38;5;51mlibaudit.so.1[0m                               [38;5;51mlibhunspell-1.3.so.0[0m                     [38;5;51mlibsgutils2.so.2[0m
+[38;5;34mlibaudit.so.1.0.0[0m                           [38;5;34mlibhunspell-1.3.so.0.0.0[0m                 [38;5;34mlibsgutils2.so.2.0.0[0m
+[38;5;51mlibaugeas.so.0[0m                              [38;5;51mlibhwloc.so.5[0m                            [38;5;51mlibshout.so.3[0m
+[38;5;34mlibaugeas.so.0.19.0[0m                         [38;5;34mlibhwloc.so.5.6.6[0m                        [38;5;34mlibshout.so.3.2.0[0m
+[38;5;51mlibauparse.so.0[0m                             [38;5;51mlibhyphen.so.0[0m                           [38;5;51mlibsigc-2.0.so.0[0m
+[38;5;34mlibauparse.so.0.0.0[0m                         [38;5;34mlibhyphen.so.0.3.0[0m                       [38;5;34mlibsigc-2.0.so.0.0.0[0m
+[38;5;51mlibavahi-client.so.3[0m                        [38;5;51mlibibumad.so.3[0m                           [38;5;51mlibsilc-1.1.so.2[0m
+[38;5;34mlibavahi-client.so.3.2.9[0m                    [38;5;34mlibibumad.so.3.0.4[0m                       [38;5;34mlibsilc-1.1.so.2.1.0[0m
+[38;5;51mlibavahi-common.so.3[0m                        [38;5;51mlibibus-1.0.so.5[0m                         [38;5;51mlibsilcclient-1.1.so.3[0m
+[38;5;34mlibavahi-common.so.3.5.3[0m                    [38;5;34mlibibus-1.0.so.5.0.510[0m                   [38;5;34mlibsilcclient-1.1.so.3.0.0[0m
+[38;5;51mlibavahi-core.so.7[0m                          [38;5;51mlibibverbs.so.1[0m                          [38;5;51mlibslang.so.2[0m
+[38;5;34mlibavahi-core.so.7.0.2[0m                      [38;5;34mlibibverbs.so.1.0.0[0m                      [38;5;34mlibslang.so.2.2.4[0m
+[38;5;51mlibavahi-glib.so.1[0m                          [38;5;51mlibical.so.1[0m                             [38;5;51mlibslapi-2.4.so.2[0m
+[38;5;34mlibavahi-glib.so.1.0.2[0m                      [38;5;34mlibical.so.1.0.0[0m                         [38;5;34mlibslapi-2.4.so.2.10.3[0m
+[38;5;51mlibavahi-gobject.so.0[0m                       [38;5;51mlibicalss.so.1[0m                           [38;5;51mlibslp.so.1[0m
+[38;5;34mlibavahi-gobject.so.0.0.4[0m                   [38;5;34mlibicalss.so.1.0.0[0m                       [38;5;34mlibslp.so.1.0.0[0m
+[38;5;51mlibavahi-ui-gtk3.so.0[0m                       [38;5;51mlibicalvcal.so.1[0m                         [38;5;51mlibsmartcols.so.1[0m
+[38;5;34mlibavahi-ui-gtk3.so.0.1.4[0m                   [38;5;34mlibicalvcal.so.1.0.0[0m                     [38;5;34mlibsmartcols.so.1.1.0[0m
+[38;5;51mlibavc1394.so.0[0m                             [38;5;51mlibICE.so[0m                                [38;5;51mlibsmbclient-raw.so.0[0m
+[38;5;34mlibavc1394.so.0.3.0[0m                         [38;5;51mlibICE.so.6[0m                              [38;5;34mlibsmbclient-raw.so.0.0.1[0m
+[38;5;51mlibbabeltrace-ctf-metadata.so.1[0m             [38;5;34mlibICE.so.6.3.0[0m                          [38;5;51mlibsmbclient.so.0[0m
+[38;5;34mlibbabeltrace-ctf-metadata.so.1.0.0[0m         [38;5;51mlibicudata.so[0m                            [38;5;34mlibsmbclient.so.0.2.1[0m
+[38;5;51mlibbabeltrace-ctf.so.1[0m                      [38;5;51mlibicudata.so.52[0m                         [38;5;34mlibsmbconf.so.0[0m
+[38;5;34mlibbabeltrace-ctf.so.1.0.0[0m                  [38;5;34mlibicudata.so.52.1[0m                       [38;5;34mlibsmbldap.so.0[0m
+[38;5;51mlibbabeltrace-ctf-text.so.1[0m                 [38;5;51mlibicui18n.so[0m                            [38;5;34mlibsmbsharemodes.so.0[0m
+[38;5;34mlibbabeltrace-ctf-text.so.1.0.0[0m             [38;5;51mlibicui18n.so.52[0m                         [38;5;34mlibsmime3.so[0m
+[38;5;51mlibbabeltrace-dummy.so.1[0m                    [38;5;34mlibicui18n.so.52.1[0m                       [38;5;51mlibSM.so[0m
+[38;5;34mlibbabeltrace-dummy.so.1.0.0[0m                [38;5;51mlibicuio.so[0m                              [38;5;51mlibSM.so.6[0m
+[38;5;51mlibbabeltrace-lttng-live.so.1[0m               [38;5;51mlibicuio.so.52[0m                           [38;5;34mlibSM.so.6.0.1[0m
+[38;5;34mlibbabeltrace-lttng-live.so.1.0.0[0m           [38;5;34mlibicuio.so.52.1[0m                         [38;5;51mlibsnappy.so.1[0m
+[38;5;51mlibbabeltrace.so.1[0m                          [38;5;51mlibicule.so[0m                              [38;5;34mlibsnappy.so.1.2.0[0m
+[38;5;34mlibbabeltrace.so.1.0.0[0m                      [38;5;51mlibicule.so.52[0m                           [38;5;51mlibsndfile.so.1[0m
+[38;5;51mlibbasicobjects.so.0[0m                        [38;5;34mlibicule.so.52.1[0m                         [38;5;34mlibsndfile.so.1.0.25[0m
+[38;5;34mlibbasicobjects.so.0.1.0[0m                    [38;5;51mlibiculx.so[0m                              [38;5;51mlibsnmpIndicationHandler.so[0m
+[38;5;34mlibbfd-2.24.so[0m                              [38;5;51mlibiculx.so.52[0m                           [38;5;34mlibsnmpIndicationHandler.so.1[0m
+[38;5;51mlibbind9.so.90[0m                              [38;5;34mlibiculx.so.52.1[0m                         libsoftokn3.chk
+[38;5;34mlibbind9.so.90.0.11[0m                         [38;5;51mlibicutest.so[0m                            [38;5;34mlibsoftokn3.so[0m
+[38;5;51mlibblas.so.3[0m                                [38;5;51mlibicutest.so.52[0m                         [38;5;34mlibsolvext.so.0[0m
+[38;5;51mlibblas.so.3.5[0m                              [38;5;34mlibicutest.so.52.1[0m                       [38;5;34mlibsolv.so.0[0m
+[38;5;34mlibblas.so.3.5.0[0m                            [38;5;51mlibicutu.so[0m                              [38;5;51mlibSoundTouch.so.1[0m
+[38;5;51mlibblkid.so.1[0m                               [38;5;51mlibicutu.so.52[0m                           [38;5;34mlibSoundTouch.so.1.4.0[0m
+[38;5;34mlibblkid.so.1.1.0[0m                           [38;5;34mlibicutu.so.52.1[0m                         [38;5;51mlibsoup-2.4.so.1[0m
+[38;5;51mlibblktapctl.so.1.0[0m                         [38;5;51mlibicuuc.so[0m                              [38;5;34mlibsoup-2.4.so.1.7.0[0m
+[38;5;34mlibblktapctl.so.1.0.0[0m                       [38;5;51mlibicuuc.so.52[0m                           [38;5;51mlibsoup-gnome-2.4.so.1[0m
+[38;5;51mlibbluetooth.so.3[0m                           [38;5;34mlibicuuc.so.52.1[0m                         [38;5;34mlibsoup-gnome-2.4.so.1.7.0[0m
+[38;5;34mlibbluetooth.so.3.18.2[0m                      [38;5;51mlibidn2.so.0[0m                             [38;5;51mlibsox.so.2[0m
+[38;5;51mlibbluray.so.1[0m                              [38;5;34mlibidn2.so.0.0.10[0m                        [38;5;34mlibsox.so.2.0.1[0m
+[38;5;34mlibbluray.so.1.7.0[0m                          [38;5;51mlibidn.so.11[0m                             [38;5;51mlibspectre.so.1[0m
+[38;5;51mlibboost_atomic.so[0m                          [38;5;34mlibidn.so.11.6.11[0m                        [38;5;34mlibspectre.so.1.1.7[0m
+[38;5;34mlibboost_atomic.so.1.55.0[0m                   [38;5;51mlibiec61883.so.0[0m                         [38;5;51mlibspeechd.so.2[0m
+[38;5;51mlibboost_chrono.so[0m                          [38;5;34mlibiec61883.so.0.1.1[0m                     [38;5;34mlibspeechd.so.2.5.0[0m
+[38;5;34mlibboost_chrono.so.1.55.0[0m                   [38;5;51mlibieee1284.so.3[0m                         [38;5;51mlibspeexdsp.so.1[0m
+[38;5;51mlibboost_context.so[0m                         [38;5;34mlibieee1284.so.3.2.2[0m                     [38;5;34mlibspeexdsp.so.1.5.0[0m
+[38;5;34mlibboost_context.so.1.55.0[0m                  libieee.a                                [38;5;51mlibspeex.so.1[0m
+[38;5;51mlibboost_coroutine.so[0m                       [38;5;34mlibijs-0.35.so[0m                           [38;5;34mlibspeex.so.1.5.0[0m
+[38;5;34mlibboost_coroutine.so.1.55.0[0m                [38;5;51mlibimobiledevice.so.5[0m                    [38;5;51mlibspice-client-glib-2.0.so.8[0m
+[38;5;51mlibboost_date_time.so[0m                       [38;5;34mlibimobiledevice.so.5.0.0[0m                [38;5;34mlibspice-client-glib-2.0.so.8.5.0[0m
+[38;5;34mlibboost_date_time.so.1.55.0[0m                [38;5;51mlibini_config.so.5[0m                       [38;5;51mlibspice-client-gtk-3.0.so.4[0m
+[38;5;51mlibboost_filesystem.so[0m                      [38;5;34mlibini_config.so.5.0.0[0m                   [38;5;34mlibspice-client-gtk-3.0.so.4.0.0[0m
+[38;5;34mlibboost_filesystem.so.1.55.0[0m               [38;5;34mlibiniparser.so.0[0m                        [38;5;51mlibspice-controller.so.0[0m
+[38;5;51mlibboost_graph.so[0m                           [38;5;51mlibinput.so.5[0m                            [38;5;34mlibspice-controller.so.0.0.0[0m
+[38;5;34mlibboost_graph.so.1.55.0[0m                    [38;5;34mlibinput.so.5.1.0[0m                        [38;5;51mlibspice-server.so.1[0m
+[38;5;51mlibboost_iostreams.so[0m                       [38;5;51mlibIntelXvMC.so.1[0m                        [38;5;34mlibspice-server.so.1.9.0[0m
+[38;5;34mlibboost_iostreams.so.1.55.0[0m                [38;5;34mlibIntelXvMC.so.1.0.0[0m                    [38;5;51mlibsqlite3.so.0[0m
+[38;5;51mlibboost_locale.so[0m                          [38;5;34mlibInteropProvider.so.1[0m                  [38;5;34mlibsqlite3.so.0.8.6[0m
+[38;5;34mlibboost_locale.so.1.55.0[0m                   [38;5;51mlibip4tc.so.0[0m                            [38;5;51mlibsrtp.so.0[0m
+[38;5;51mlibboost_log_setup.so[0m                       [38;5;34mlibip4tc.so.0.1.0[0m                        [38;5;34mlibsrtp.so.0.0.0[0m
+[38;5;34mlibboost_log_setup.so.1.55.0[0m                [38;5;51mlibip6tc.so.0[0m                            [38;5;51mlibssh2.so.1[0m
+[38;5;51mlibboost_log.so[0m                             [38;5;34mlibip6tc.so.0.1.0[0m                        [38;5;34mlibssh2.so.1.0.1[0m
+[38;5;34mlibboost_log.so.1.55.0[0m                      [38;5;51mlibipa_hbac.so.0[0m                         [38;5;51mlibssh.so.4[0m
+[38;5;51mlibboost_math_c99f.so[0m                       [38;5;34mlibipa_hbac.so.0.0.1[0m                     [38;5;34mlibssh.so.4.4.1[0m
+[38;5;34mlibboost_math_c99f.so.1.55.0[0m                [38;5;51mlibiptcdata.so.0[0m                         [38;5;51mlibssh_threads.so.4[0m
+[38;5;51mlibboost_math_c99l.so[0m                       [38;5;34mlibiptcdata.so.0.3.3[0m                     [38;5;34mlibssh_threads.so.4.4.1[0m
+[38;5;34mlibboost_math_c99l.so.1.55.0[0m                [38;5;51mlibiptc.so.0[0m                             [38;5;34mlibssl3.so[0m
+[38;5;51mlibboost_math_c99.so[0m                        [38;5;34mlibiptc.so.0.0.0[0m                         [38;5;51mlibssl.so[0m
+[38;5;34mlibboost_math_c99.so.1.55.0[0m                 [38;5;51mlibirs-export.so.91[0m                      [38;5;51mlibssl.so.10[0m
+[38;5;51mlibboost_math_tr1f.so[0m                       [38;5;34mlibirs-export.so.91.0.1[0m                  [38;5;34mlibssl.so.1.0.1k[0m
+[38;5;34mlibboost_math_tr1f.so.1.55.0[0m                [38;5;51mlibisccc.so.90[0m                           [38;5;51mlibsss_idmap.so.0[0m
+[38;5;51mlibboost_math_tr1l.so[0m                       [38;5;34mlibisccc.so.90.0.6[0m                       [38;5;34mlibsss_idmap.so.0.4.0[0m
+[38;5;34mlibboost_math_tr1l.so.1.55.0[0m                [38;5;51mlibisccfg-export.so.90[0m                   [38;5;51mlibsss_nss_idmap.so.0[0m
+[38;5;51mlibboost_math_tr1.so[0m                        [38;5;34mlibisccfg-export.so.90.2.2[0m               [38;5;34mlibsss_nss_idmap.so.0.1.0[0m
+[38;5;34mlibboost_math_tr1.so.1.55.0[0m                 [38;5;51mlibisccfg.so.90[0m                          [38;5;51mlibss.so.2[0m
+[38;5;51mlibboost_prg_exec_monitor.so[0m                [38;5;34mlibisccfg.so.90.2.2[0m                      [38;5;34mlibss.so.2.0[0m
+[38;5;34mlibboost_prg_exec_monitor.so.1.55.0[0m         [38;5;51mlibisc-export.so.95[0m                      [38;5;34mlibsss_sudo.so[0m
+[38;5;51mlibboost_program_options.so[0m                 [38;5;34mlibisc-export.so.95.7.0[0m                  [38;5;51mlibstartup-notification-1.so.0[0m
+[38;5;34mlibboost_program_options.so.1.55.0[0m          [38;5;34mlibiscsi.so.0[0m                            [38;5;34mlibstartup-notification-1.so.0.0.0[0m
+[38;5;51mlibboost_python.so[0m                          [38;5;51mlibisc.so.95[0m                             [38;5;51mlibstdc++.so.6[0m
+[38;5;34mlibboost_python.so.1.55.0[0m                   [38;5;34mlibisc.so.95.7.0[0m                         [38;5;34mlibstdc++.so.6.0.20[0m
+[38;5;51mlibboost_random.so[0m                          [38;5;51mlibiso9660++.so.0[0m                        [38;5;51mlibstoken.so.1[0m
+[38;5;34mlibboost_random.so.1.55.0[0m                   [38;5;34mlibiso9660++.so.0.0.0[0m                    [38;5;34mlibstoken.so.1.3.0[0m
+[38;5;51mlibboost_regex.so[0m                           [38;5;51mlibiso9660.so.9[0m                          [38;5;51mlibsubunit.so.0[0m
+[38;5;34mlibboost_regex.so.1.55.0[0m                    [38;5;34mlibiso9660.so.9.0.0[0m                      [38;5;34mlibsubunit.so.0.0.0[0m
+[38;5;51mlibboost_serialization.so[0m                   [38;5;34mlibiw.so.29[0m                              [38;5;51mlibsvn_client-1.so.0[0m
+[38;5;34mlibboost_serialization.so.1.55.0[0m            [38;5;51mlibjansson.so.4[0m                          [38;5;34mlibsvn_client-1.so.0.0.0[0m
+[38;5;51mlibboost_signals.so[0m                         [38;5;34mlibjansson.so.4.6.0[0m                      [38;5;51mlibsvn_delta-1.so.0[0m
+[38;5;34mlibboost_signals.so.1.55.0[0m                  [38;5;51mlibjasper.so.1[0m                           [38;5;34mlibsvn_delta-1.so.0.0.0[0m
+[38;5;51mlibboost_system.so[0m                          [38;5;34mlibjasper.so.1.0.0[0m                       [38;5;51mlibsvn_diff-1.so.0[0m
+[38;5;34mlibboost_system.so.1.55.0[0m                   [38;5;51mlibjavascriptcoregtk-3.0.so.0[0m            [38;5;34mlibsvn_diff-1.so.0.0.0[0m
+libboost_thread.so                          [38;5;34mlibjavascriptcoregtk-3.0.so.0.16.16[0m      [38;5;51mlibsvn_fs-1.so.0[0m
+[38;5;34mlibboost_thread.so.1.55.0[0m                   [38;5;51mlibjavascriptcoregtk-4.0.so.18[0m           [38;5;34mlibsvn_fs-1.so.0.0.0[0m
+[38;5;51mlibboost_timer.so[0m                           [38;5;34mlibjavascriptcoregtk-4.0.so.18.0.10[0m      [38;5;51mlibsvn_fs_base-1.so.0[0m
+[38;5;34mlibboost_timer.so.1.55.0[0m                    [38;5;34mlibjbig85.so.2.1[0m                         [38;5;34mlibsvn_fs_base-1.so.0.0.0[0m
+[38;5;51mlibboost_unit_test_framework.so[0m             [38;5;34mlibjbig.so.2.1[0m                           [38;5;51mlibsvn_fs_fs-1.so.0[0m
+[38;5;34mlibboost_unit_test_framework.so.1.55.0[0m      [38;5;34mlibjim.so.0.75[0m                           [38;5;34mlibsvn_fs_fs-1.so.0.0.0[0m
+[38;5;51mlibboost_wave.so[0m                            [38;5;51mlibjpeg.so.62[0m                            [38;5;51mlibsvn_fs_util-1.so.0[0m
+[38;5;34mlibboost_wave.so.1.55.0[0m                     [38;5;34mlibjpeg.so.62.1.0[0m                        [38;5;34mlibsvn_fs_util-1.so.0.0.0[0m
+[38;5;51mlibboost_wserialization.so[0m                  [38;5;51mlibjson-c.so.2[0m                           [38;5;51mlibsvn_ra-1.so.0[0m
+[38;5;34mlibboost_wserialization.so.1.55.0[0m           [38;5;34mlibjson-c.so.2.0.1[0m                       [38;5;34mlibsvn_ra-1.so.0.0.0[0m
+[38;5;51mlibbrasero-burn3.so.1[0m                       [38;5;51mlibjson-glib-1.0.so.0[0m                    [38;5;51mlibsvn_ra_local-1.so.0[0m
+[38;5;34mlibbrasero-burn3.so.1.2.6[0m                   [38;5;34mlibjson-glib-1.0.so.0.0.2[0m                [38;5;34mlibsvn_ra_local-1.so.0.0.0[0m
+[38;5;51mlibbrasero-media3.so.1[0m                      [38;5;51mlibk5crypto.so[0m                           [38;5;51mlibsvn_ra_serf-1.so.0[0m
+[38;5;34mlibbrasero-media3.so.1.2.6[0m                  [38;5;51mlibk5crypto.so.3[0m                         [38;5;34mlibsvn_ra_serf-1.so.0.0.0[0m
+[38;5;51mlibbrasero-utils3.so.1[0m                      [38;5;34mlibk5crypto.so.3.1[0m                       [38;5;51mlibsvn_ra_svn-1.so.0[0m
+[38;5;34mlibbrasero-utils3.so.1.2.6[0m                  [38;5;51mlibkadm5clnt_mit.so[0m                      [38;5;34mlibsvn_ra_svn-1.so.0.0.0[0m
+[38;5;51mlibbrlapi.so.0.6[0m                            [38;5;51mlibkadm5clnt_mit.so.9[0m                    [38;5;51mlibsvn_repos-1.so.0[0m
+[38;5;34mlibbrlapi.so.0.6.3[0m                          [38;5;34mlibkadm5clnt_mit.so.9.0[0m                  [38;5;34mlibsvn_repos-1.so.0.0.0[0m
+[38;5;34mlibBrokenLocale-2.20.so[0m                     [38;5;51mlibkadm5clnt.so[0m                          [38;5;51mlibsvn_subr-1.so.0[0m
+[38;5;51mlibBrokenLocale.so[0m                          [38;5;51mlibkadm5srv_mit.so[0m                       [38;5;34mlibsvn_subr-1.so.0.0.0[0m
+[38;5;51mlibBrokenLocale.so.1[0m                        [38;5;51mlibkadm5srv_mit.so.9[0m                     [38;5;51mlibsvn_swig_py-1.so.0[0m
+[48;5;232;38;5;9mlibbsd.a[0m                                    [38;5;34mlibkadm5srv_mit.so.9.0[0m                   [38;5;34mlibsvn_swig_py-1.so.0.0.0[0m
+[38;5;51mlibbtrfs.so.0[0m                               [38;5;51mlibkadm5srv.so[0m                           [38;5;51mlibsvn_wc-1.so.0[0m
+[38;5;34mlibbtrfs.so.0.1[0m                             [38;5;51mlibkdb5.so[0m                               [38;5;34mlibsvn_wc-1.so.0.0.0[0m
+[38;5;34mlibbuffer.so.0.2[0m                            [38;5;51mlibkdb5.so.7[0m                             [38;5;51mlibsysfs.so.2[0m
+[38;5;51mlibbz2.so.1[0m                                 [38;5;34mlibkdb5.so.7.0[0m                           [38;5;34mlibsysfs.so.2.0.1[0m
+[38;5;34mlibbz2.so.1.0.6[0m                             [38;5;51mlibkeyutils.so[0m                           [38;5;51mlibsystemd-daemon.so.0[0m
+[38;5;34mlibc-2.20.so[0m                                [38;5;51mlibkeyutils.so.1[0m                         [38;5;34mlibsystemd-daemon.so.0.0.12[0m
+[38;5;51mlibcacard.so.0[0m                              [38;5;34mlibkeyutils.so.1.5[0m                       [38;5;51mlibsystemd-id128.so.0[0m
+[38;5;34mlibcacard.so.0.0.0[0m                          [38;5;27mlibkkc[0m                                   [38;5;34mlibsystemd-id128.so.0.0.28[0m
+[38;5;51mlibcairo-gobject.so.2[0m                       [38;5;51mlibkkc.so.2[0m                              [38;5;51mlibsystemd-journal.so.0[0m
+[38;5;34mlibcairo-gobject.so.2.11301.0[0m               [38;5;34mlibkkc.so.2.0.0[0m                          [38;5;34mlibsystemd-journal.so.0.11.5[0m
+[38;5;51mlibcairomm-1.0.so.1[0m                         [38;5;51mlibkmod.so.2[0m                             [38;5;51mlibsystemd-login.so.0[0m
+[38;5;34mlibcairomm-1.0.so.1.4.0[0m                     [38;5;34mlibkmod.so.2.2.8[0m                         [38;5;34mlibsystemd-login.so.0.9.3[0m
+[38;5;51mlibcairo-script-interpreter.so.2[0m            [38;5;51mlibkms.so[0m                                [38;5;51mlibsystemd.so.0[0m
+[38;5;34mlibcairo-script-interpreter.so.2.11301.0[0m    [38;5;51mlibkms.so.1[0m                              [38;5;34mlibsystemd.so.0.5.0[0m
+[38;5;51mlibcairo.so.2[0m                               [38;5;34mlibkms.so.1.0.0[0m                          [38;5;51mlibtag_c.so.0[0m
+[38;5;34mlibcairo.so.2.11301.0[0m                       [38;5;51mlibkonkretmof.so.0[0m                       [38;5;34mlibtag_c.so.0.0.0[0m
+[38;5;51mlibcamel-1.2.so.49[0m                          [38;5;34mlibkonkretmof.so.0.0.1[0m                   [38;5;51mlibtag.so.1[0m
+[38;5;34mlibcamel-1.2.so.49.0.0[0m                      [38;5;51mlibkonkret.so.0[0m                          [38;5;34mlibtag.so.1.14.0[0m
+[38;5;27mlibcanberra-0.30[0m                            [38;5;34mlibkonkret.so.0.0.1[0m                      [38;5;51mlibtalloc.so.2[0m
+[38;5;51mlibcanberra-gtk3.so.0[0m                       [38;5;51mlibkrad.so[0m                               [38;5;34mlibtalloc.so.2.1.1[0m
+[38;5;34mlibcanberra-gtk3.so.0.1.9[0m                   [38;5;51mlibkrad.so.0[0m                             [38;5;51mlibtar.so.1[0m
+[38;5;51mlibcanberra-gtk.so.0[0m                        [38;5;34mlibkrad.so.0.0[0m                           [38;5;34mlibtar.so.1.2.20[0m
+[38;5;34mlibcanberra-gtk.so.0.1.9[0m                    [38;5;51mlibkrb5.so[0m                               [38;5;51mlibtasn1.so.6[0m
+[38;5;51mlibcanberra.so.0[0m                            [38;5;51mlibkrb5.so.3[0m                             [38;5;34mlibtasn1.so.6.4.1[0m
+[38;5;34mlibcanberra.so.0.2.5[0m                        [38;5;34mlibkrb5.so.3.3[0m                           [38;5;34mlibtcl8.6.so[0m
+[38;5;51mlibcap-ng.so.0[0m                              [38;5;51mlibkrb5support.so[0m                        [38;5;51mlibtdb.so.1[0m
+[38;5;34mlibcap-ng.so.0.0.0[0m                          [38;5;51mlibkrb5support.so.0[0m                      [38;5;34mlibtdb.so.1.3.1[0m
+[38;5;51mlibcap.so.2[0m                                 [38;5;34mlibkrb5support.so.0.1[0m                    [38;5;51mlibteamdctl.so.0[0m
+[38;5;34mlibcap.so.2.24[0m                              [38;5;27mliblangtag[0m                               [38;5;34mlibteamdctl.so.0.1.2[0m
+[38;5;51mlibcares.so.2[0m                               [38;5;51mliblangtag.so.1[0m                          [38;5;51mlibteam.so.5[0m
+[38;5;34mlibcares.so.2.1.0[0m                           [38;5;34mliblangtag.so.1.3.1[0m                      [38;5;34mlibteam.so.5.2.0[0m
+[38;5;51mlibcaribou.so.0[0m                             [38;5;51mliblapacke.so.3[0m                          [38;5;51mlibtelepathy-farstream.so.3[0m
+[38;5;34mlibcaribou.so.0.0.0[0m                         [38;5;51mliblapacke.so.3.5[0m                        [38;5;34mlibtelepathy-farstream.so.3.0.1[0m
+[38;5;51mlibcdda_interface.so.0[0m                      [38;5;34mliblapacke.so.3.5.0[0m                      [38;5;51mlibtelepathy-glib.so.0[0m
+[38;5;34mlibcdda_interface.so.0.10.2[0m                 [38;5;51mliblapack.so.3[0m                           [38;5;34mlibtelepathy-glib.so.0.84.1[0m
+[38;5;51mlibcdda_paranoia.so.0[0m                       [38;5;51mliblapack.so.3.5[0m                         [38;5;51mlibtelepathy-logger.so.3[0m
+[38;5;34mlibcdda_paranoia.so.0.10.2[0m                  [38;5;34mliblapack.so.3.5.0[0m                       [38;5;34mlibtelepathy-logger.so.3.3.0[0m
+[38;5;51mlibcdio_cdda.so.1[0m                           [38;5;51mliblber-2.4.so.2[0m                         libtermcap.so
+[38;5;34mlibcdio_cdda.so.1.0.0[0m                       [38;5;34mliblber-2.4.so.2.10.3[0m                    [38;5;51mlibtevent.so.0[0m
+[38;5;51mlibcdio_paranoia.so.1[0m                       [38;5;51mliblcms2.so.2[0m                            [38;5;34mlibtevent.so.0.9.21[0m
+[38;5;34mlibcdio_paranoia.so.1.0.0[0m                   [38;5;34mliblcms2.so.2.0.6[0m                        [38;5;51mlibtevent-util.so.0[0m
+[38;5;51mlibcdio++.so.0[0m                              [38;5;51mlibldap-2.4.so.2[0m                         [38;5;34mlibtevent-util.so.0.0.1[0m
+[38;5;34mlibcdio++.so.0.0.2[0m                          [38;5;34mlibldap-2.4.so.2.10.3[0m                    [38;5;51mlibthai.so.0[0m
+[38;5;51mlibcdio.so.15[0m                               [38;5;51mlibldap_r-2.4.so.2[0m                       [38;5;34mlibthai.so.0.2.0[0m
+[38;5;34mlibcdio.so.15.0.0[0m                           [38;5;34mlibldap_r-2.4.so.2.10.3[0m                  [38;5;51mlibtheoradec.so.1[0m
+[38;5;51mlibcdr-0.1.so.1[0m                             [38;5;51mlibldb.so.1[0m                              [38;5;34mlibtheoradec.so.1.1.4[0m
+[38;5;34mlibcdr-0.1.so.1.0.1[0m                         [38;5;34mlibldb.so.1.1.17[0m                         [38;5;51mlibtheoraenc.so.1[0m
+[38;5;51mlibcelt051.so.0[0m                             [38;5;51mliblftp-jobs.so.0[0m                        [38;5;34mlibtheoraenc.so.1.1.2[0m
+[38;5;34mlibcelt051.so.0.0.0[0m                         [38;5;34mliblftp-jobs.so.0.0.0[0m                    [38;5;51mlibtheora.so.0[0m
+[38;5;34mlibCertificateProvider.so.1[0m                 [38;5;51mliblftp-tasks.so.0[0m                       [38;5;34mlibtheora.so.0.3.10[0m
+[38;5;51mlibcfg.so.6[0m                                 [38;5;34mliblftp-tasks.so.0.0.0[0m                   [38;5;34mlibthread_db-1.0.so[0m
+[38;5;34mlibcfg.so.6.0.0[0m                             [38;5;51mliblockdev.so.1[0m                          [38;5;51mlibthread_db.so[0m
+[38;5;51mlibcgroup.so.1[0m                              [38;5;34mliblockdev.so.1.0.0[0m                      [38;5;51mlibthread_db.so.1[0m
+[38;5;34mlibcgroup.so.1.0.41[0m                         [38;5;51mliblogging-stdlog.so.0[0m                   [38;5;51mlibtic.so[0m
+[38;5;51mlibchamplain-0.12.so.0[0m                      [38;5;34mliblogging-stdlog.so.0.0.0[0m               [38;5;51mlibtic.so.5[0m
+[38;5;34mlibchamplain-0.12.so.0.4.4[0m                  [38;5;51mliblouis.so.2[0m                            [38;5;34mlibtic.so.5.9[0m
+[38;5;51mlibchamplain-gtk-0.12.so.0[0m                  [38;5;34mliblouis.so.2.5.0[0m                        [38;5;51mlibtiff.so.5[0m
+[38;5;34mlibchamplain-gtk-0.12.so.0.4.4[0m              [38;5;34mliblpsolve55.so[0m                          [38;5;34mlibtiff.so.5.2.0[0m
+[38;5;51mlibcheck.so.0[0m                               [38;5;51mlibltdl.so.7[0m                             [38;5;51mlibtiffxx.so.5[0m
+[38;5;34mlibcheck.so.0.0.0[0m                           [38;5;34mlibltdl.so.7.3.0[0m                         [38;5;34mlibtiffxx.so.5.2.0[0m
+[38;5;51mlibcheese-gtk.so.23[0m                         [38;5;34mliblua-5.2.so[0m                            [38;5;51mlibtinfo.so[0m
+[38;5;34mlibcheese-gtk.so.23.1.15[0m                    [38;5;34mliblvm2app.so.2.2[0m                        [38;5;51mlibtinfo.so.5[0m
+[38;5;51mlibcheese.so.7[0m                              [38;5;34mliblvm2cmd.so.2.02[0m                       [38;5;34mlibtinfo.so.5.9[0m
+[38;5;34mlibcheese.so.7.0.31[0m                         [38;5;51mliblwres.so.91[0m                           [38;5;51mlibtirpc.so.1[0m
+[38;5;51mlibchewing.so.3[0m                             [38;5;34mliblwres.so.91.0.0[0m                       [38;5;34mlibtirpc.so.1.0.10[0m
+[38;5;34mlibchewing.so.3.2.0[0m                         [38;5;51mliblz4.so.1[0m                              [38;5;51mlibtomcrypt.so.0[0m
+[38;5;51mlibchromeXvMCPro.so.1[0m                       [38;5;34mliblz4.so.1.6.0[0m                          [38;5;34mlibtomcrypt.so.0.0.117[0m
+[38;5;34mlibchromeXvMCPro.so.1.0.0[0m                   [38;5;51mliblzma.so[0m                               [38;5;51mlibtommath.so.0[0m
+[38;5;51mlibchromeXvMC.so.1[0m                          [38;5;51mliblzma.so.5[0m                             [38;5;34mlibtommath.so.0.0.41[0m
+[38;5;34mlibchromeXvMC.so.1.0.0[0m                      [38;5;34mliblzma.so.5.0.99[0m                        [38;5;51mlibtorque.so.2[0m
+[38;5;34mlibcidn-2.20.so[0m                             [38;5;51mliblzo2.so.2[0m                             [38;5;34mlibtorque.so.2.0.0[0m
+[38;5;51mlibcidn.so[0m                                  [38;5;34mliblzo2.so.2.0.0[0m                         [38;5;51mlibtotem_pg.so.5[0m
+[38;5;51mlibcidn.so.1[0m                                [38;5;51mlibm17n-core.so.0[0m                        [38;5;34mlibtotem_pg.so.5.0.0[0m
+[38;5;34mlibCIMQueryCapabilitiesProvider.so.1[0m        [38;5;34mlibm17n-core.so.0.4.0[0m                    [38;5;51mlibtotem-plparser-mini.so.18[0m
+[38;5;51mlibCIMxmlIndicationHandler.so[0m               [38;5;51mlibm17n-flt.so.0[0m                         [38;5;34mlibtotem-plparser-mini.so.18.1.0[0m
+[38;5;34mlibCIMxmlIndicationHandler.so.1[0m             [38;5;34mlibm17n-flt.so.0.4.0[0m                     [38;5;51mlibtotem-plparser.so.18[0m
+[38;5;51mlibckyapplet.so.1[0m                           [38;5;51mlibm17n.so.0[0m                             [38;5;34mlibtotem-plparser.so.18.1.0[0m
+[38;5;34mlibckyapplet.so.1.0.0[0m                       [38;5;34mlibm17n.so.0.4.0[0m                         [38;5;51mlibtotem.so.0[0m
+[38;5;51mlibclucene-contribs-lib.so.1[0m                [38;5;34mlibm-2.20.so[0m                             [38;5;34mlibtotem.so.0.0.0[0m
+[38;5;34mlibclucene-contribs-lib.so.2.3.3.4[0m          [38;5;51mlibmagic.so.1[0m                            [38;5;51mlibtracker-control-1.0.so.0[0m
+[38;5;51mlibclucene-core.so.1[0m                        [38;5;34mlibmagic.so.1.0.0[0m                        [38;5;34mlibtracker-control-1.0.so.0.203.3[0m
+[38;5;34mlibclucene-core.so.2.3.3.4[0m                  [38;5;51mlibmarisa.so.0[0m                           [38;5;51mlibtracker-miner-1.0.so.0[0m
+[38;5;51mlibclucene-shared.so.1[0m                      [38;5;34mlibmarisa.so.0.0.0[0m                       [38;5;34mlibtracker-miner-1.0.so.0.203.3[0m
+[38;5;34mlibclucene-shared.so.2.3.3.4[0m                [38;5;34mlibMathMLSolver.so.0.2[0m                   [38;5;51mlibtracker-sparql-1.0.so.0[0m
+[38;5;51mlibclucene.so.3[0m                             [38;5;51mlibmbim-glib.so.4[0m                        [38;5;34mlibtracker-sparql-1.0.so.0.203.3[0m
+[38;5;34mlibclucene.so.3.0.1[0m                         [38;5;34mlibmbim-glib.so.4.1.0[0m                    [38;5;27mlibtranslit[0m
+[38;5;51mlibclutter-1.0.so.0[0m                         libmcheck.a                              [38;5;51mlibtranslit.so.0[0m
+[38;5;34mlibclutter-1.0.so.0.2000.2[0m                  [38;5;51mlibmcpp.so.0[0m                             [38;5;34mlibtranslit.so.0.0.0[0m
+[38;5;51mlibclutter-glx-1.0.so.0[0m                     [38;5;34mlibmcpp.so.0.3.0[0m                         [38;5;51mlibtspi.so.1[0m
+[38;5;51mlibclutter-gst-2.0.so.0[0m                     [38;5;51mlibmeanwhile.so.1[0m                        [38;5;34mlibtspi.so.1.2.0[0m
+[38;5;34mlibclutter-gst-2.0.so.0.12.0[0m                [38;5;34mlibmeanwhile.so.1.1.0[0m                    [38;5;51mlibudev.so.1[0m
+[38;5;51mlibclutter-gtk-1.0.so.0[0m                     [38;5;51mlibmediaart-1.0.so.0[0m                     [38;5;34mlibudev.so.1.6.1[0m
+[38;5;34mlibclutter-gtk-1.0.so.0.0.0[0m                 [38;5;34mlibmediaart-1.0.so.0.700.0[0m               [38;5;51mlibudf.so.0[0m
+[38;5;51mlibcmap.so.4[0m                                [38;5;34mlibmemusage.so[0m                           [38;5;34mlibudf.so.0.0.0[0m
+[38;5;34mlibcmap.so.4.1.0[0m                            [38;5;51mlibmenu.so[0m                               [38;5;51mlibudisks2.so.0[0m
+[38;5;51mlibcmis-0.4.so.4[0m                            [38;5;51mlibmenu.so.5[0m                             [38;5;34mlibudisks2.so.0.0.0[0m
+[38;5;34mlibcmis-0.4.so.4.0.1[0m                        [38;5;34mlibmenu.so.5.9[0m                           [38;5;51mlibulockmgr.so.1[0m
+[38;5;51mlibcmis-c-0.4.so.4[0m                          [38;5;51mlibmenuw.so[0m                              [38;5;34mlibulockmgr.so.1.0.1[0m
+[38;5;34mlibcmis-c-0.4.so.4.0.1[0m                      [38;5;51mlibmenuw.so.5[0m                            [38;5;51mlibunbound.so.2[0m
+[38;5;51mlibcmpiCppImpl.so[0m                           [38;5;34mlibmenuw.so.5.9[0m                          [38;5;34mlibunbound.so.2.3.3[0m
+[38;5;34mlibcmpiCppImpl.so.1[0m                         [38;5;51mlibmetalink.so.3[0m                         [38;5;51mlibungif.so.4[0m
+libc_nonshared.a                            [38;5;34mlibmetalink.so.3.0.0[0m                     [38;5;34mlibungif.so.4.1.6[0m
+[38;5;51mlibcogl-pango.so.20[0m                         [38;5;51mlibmission-control-plugins.so.0[0m          [38;5;34mlibuniconf.so.4.6[0m
+[38;5;34mlibcogl-pango.so.20.2.0[0m                     [38;5;34mlibmission-control-plugins.so.0.5.1[0m      [38;5;51mlibunistring.so.0[0m
+[38;5;51mlibcogl-path.so.20[0m                          [38;5;51mlibmm-glib.so.0[0m                          [38;5;34mlibunistring.so.0.1.2[0m
+[38;5;34mlibcogl-path.so.20.2.0[0m                      [38;5;34mlibmm-glib.so.0.2.0[0m                      [38;5;51mlibunwind-coredump.so.0[0m
+[38;5;51mlibcogl.so.20[0m                               [38;5;51mlibmng.so.2[0m                              [38;5;34mlibunwind-coredump.so.0.0.0[0m
+[38;5;34mlibcogl.so.20.2.0[0m                           [38;5;34mlibmng.so.2.0.2[0m                          [38;5;51mlibunwind.so.8[0m
+[38;5;51mlibcollection.so.4[0m                          [38;5;51mlibmnl.so.0[0m                              [38;5;34mlibunwind.so.8.0.1[0m
+[38;5;34mlibcollection.so.4.0.0[0m                      [38;5;34mlibmnl.so.0.1.0[0m                          [38;5;51mlibunwind-x86_64.so.8[0m
+[38;5;51mlibcolord-gtk.so.1[0m                          [38;5;51mlibmodman.so.1[0m                           [38;5;34mlibunwind-x86_64.so.8.0.1[0m
+[38;5;34mlibcolord-gtk.so.1.0.3[0m                      [38;5;34mlibmodman.so.1.0.0[0m                       [38;5;51mlibupower-glib.so.3[0m
+[38;5;51mlibcolordprivate.so.2[0m                       [38;5;51mlibmount.so.1[0m                            [38;5;34mlibupower-glib.so.3.0.1[0m
+[38;5;34mlibcolordprivate.so.2.0.3[0m                   [38;5;34mlibmount.so.1.1.0[0m                        [38;5;51mlibusb-0.1.so.4[0m
+[38;5;51mlibcolord.so.2[0m                              [38;5;34mlibmozjs-17.0.so[0m                         [38;5;34mlibusb-0.1.so.4.4.4[0m
+[38;5;34mlibcolord.so.2.0.3[0m                          [38;5;34mlibmozjs-24.so[0m                           [38;5;51mlibusb-1.0.so.0[0m
+[38;5;51mlibcolorhug.so.2[0m                            [38;5;51mlibmpathpersist.so[0m                       [38;5;34mlibusb-1.0.so.0.1.0[0m
+[38;5;34mlibcolorhug.so.2.0.3[0m                        [38;5;34mlibmpathpersist.so.0[0m                     [38;5;51mlibusbmuxd.so.4[0m
+[38;5;51mlibcom_err.so[0m                               [38;5;51mlibmpcdec.so.5[0m                           [38;5;34mlibusbmuxd.so.4.0.0[0m
+[38;5;51mlibcom_err.so.2[0m                             [38;5;34mlibmpcdec.so.5.0.2[0m                       [38;5;51mlibusbredirhost.so.1[0m
+[38;5;34mlibcom_err.so.2.1[0m                           [38;5;51mlibmpc.so.3[0m                              [38;5;34mlibusbredirhost.so.1.0.0[0m
+[38;5;34mlibcomps.so.0.1.6[0m                           [38;5;34mlibmpc.so.3.0.0[0m                          [38;5;51mlibusbredirparser.so.1[0m
+[38;5;34mlibConfigSettingProvider.so.1[0m               [38;5;51mlibmpfr.so.4[0m                             [38;5;34mlibusbredirparser.so.1.0.0[0m
+[38;5;51mlibcoolkeypk11.so[0m                           [38;5;34mlibmpfr.so.4.1.2[0m                         [38;5;27mlibuser[0m
+[38;5;51mlibcorosync_common.so.4[0m                     [38;5;51mlibm.so[0m                                  [38;5;34mlibUserAuthProvider.so.1[0m
+[38;5;34mlibcorosync_common.so.4.0.0[0m                 [38;5;51mlibm.so.6[0m                                [38;5;51mlibuser.so.1[0m
+[38;5;51mlibcpg.so.4[0m                                 [38;5;51mlibmspack.so.0[0m                           [38;5;34mlibuser.so.1.5.0[0m
+[38;5;34mlibcpg.so.4.1.0[0m                             [38;5;34mlibmspack.so.0.1.0[0m                       [38;5;51mlibustr-1.0.so.1[0m
+[38;5;51mlibcpupower.so.0[0m                            [38;5;51mlibmspub-0.1.so.1[0m                        [38;5;34mlibustr-1.0.so.1.0.4[0m
+[38;5;34mlibcpupower.so.0.0.0[0m                        [38;5;34mlibmspub-0.1.so.1.0.2[0m                    [38;5;51mlibutempter.so.0[0m
+[38;5;51mlibcrack.so.2[0m                               [38;5;51mlibmtdev.so.1[0m                            [38;5;34mlibutempter.so.1.1.6[0m
+[38;5;34mlibcrack.so.2.9.0[0m                           [38;5;34mlibmtdev.so.1.0.0[0m                        [38;5;34mlibUTF.so.0.2[0m
+[38;5;51mlibcreaterepo_c.so.0[0m                        [38;5;51mlibmtp.so.9[0m                              [38;5;34mlibutil-2.20.so[0m
+[38;5;34mlibcreaterepo_c.so.0.7.4[0m                    [38;5;34mlibmtp.so.9.2.0[0m                          [38;5;51mlibutil.so[0m
+[38;5;51mlibcroco-0.6.so.3[0m                           [38;5;51mlibmultipath.so[0m                          [38;5;51mlibutil.so.1[0m
+[38;5;34mlibcroco-0.6.so.3.0.1[0m                       [38;5;34mlibmultipath.so.0[0m                        [38;5;51mlibuuid.so.1[0m
+[38;5;34mlibcrypt-2.20.so[0m                            [38;5;51mlibmunge.so.2[0m                            [38;5;34mlibuuid.so.1.3.0[0m
+[38;5;51mlibcrypto.so[0m                                [38;5;34mlibmunge.so.2.0.0[0m                        [38;5;27mlibv4l[0m
+[38;5;51mlibcrypto.so.10[0m                             [38;5;51mlibmusicbrainz5.so.0[0m                     [38;5;51mlibv4l1.so.0[0m
+[38;5;34mlibcrypto.so.1.0.1k[0m                         [38;5;34mlibmusicbrainz5.so.0.0.1[0m                 [38;5;34mlibv4l1.so.0.0.0[0m
+[38;5;51mlibcryptsetup.so.4[0m                          [38;5;51mlibmutter.so.0[0m                           [38;5;51mlibv4l2rds.so.0[0m
+[38;5;34mlibcryptsetup.so.4.6.0[0m                      [38;5;34mlibmutter.so.0.0.0[0m                       [38;5;34mlibv4l2rds.so.0.0.0[0m
+[38;5;51mlibcrypt.so[0m                                 [38;5;51mlibmwaw-0.3.so.3[0m                         [38;5;51mlibv4l2.so.0[0m
+[38;5;51mlibcrypt.so.1[0m                               [38;5;34mlibmwaw-0.3.so.3.0.4[0m                     [38;5;34mlibv4l2.so.0.0.0[0m
+libc.so                                     [38;5;51mlibmx-1.0.so.2[0m                           [38;5;51mlibv4lconvert.so.0[0m
+[38;5;51mlibc.so.6[0m                                   [38;5;34mlibmx-1.0.so.2.405.0[0m                     [38;5;34mlibv4lconvert.so.0.0.0[0m
+[38;5;51mlibcuda.so[0m                                  [38;5;51mlibmx-gtk-1.0.so.0[0m                       [38;5;51mlibvdpau_nvidia.so[0m
+[38;5;51mlibcuda.so.1[0m                                [38;5;34mlibmx-gtk-1.0.so.0.0.0[0m                   [38;5;51mlibvdpau.so.1[0m
+[38;5;34mlibcuda.so.346.46[0m                           [38;5;51mlibmythes-1.2.so.0[0m                       [38;5;34mlibvdpau.so.1.0.0[0m
+[38;5;51mlibcue.so.1[0m                                 [38;5;34mlibmythes-1.2.so.0.0.0[0m                   [38;5;51mlibverto.so[0m
+[38;5;34mlibcue.so.1.0.4[0m                             [38;5;34mlibNamespaceProvider.so.1[0m                [38;5;51mlibverto.so.1[0m
+[38;5;34mlibcupscgi.so.1[0m                             [38;5;51mlibnautilus-extension.so.1[0m               [38;5;34mlibverto.so.1.0.0[0m
+[38;5;51mlibcupsfilters.so.1[0m                         [38;5;34mlibnautilus-extension.so.1.4.0[0m           [38;5;51mlibverto-tevent.so.1[0m
+[38;5;34mlibcupsfilters.so.1.0.0[0m                     libncurses.so                            [38;5;34mlibverto-tevent.so.1.0.0[0m
+[38;5;34mlibcupsimage.so.2[0m                           [38;5;51mlibncurses++.so[0m                          [38;5;51mlibvgauth.so.0[0m
+[38;5;34mlibcupsmime.so.1[0m                            [38;5;51mlibncurses.so.5[0m                          [38;5;34mlibvgauth.so.0.0.0[0m
+[38;5;34mlibcupsppdc.so.1[0m                            [38;5;51mlibncurses++.so.5[0m                        [38;5;51mlibvhd.so.1.0[0m
+[38;5;34mlibcups.so.2[0m                                [38;5;34mlibncurses.so.5.9[0m                        [38;5;34mlibvhd.so.1.0.0[0m
+[38;5;51mlibcurl.so.4[0m                                [38;5;34mlibncurses++.so.5.9[0m                      [38;5;27mlibvirt[0m
+[38;5;34mlibcurl.so.4.3.0[0m                            [38;5;51mlibncurses++w.so[0m                         [38;5;51mlibvirt-gconfig-1.0.so.0[0m
+libcurses.so                                libncursesw.so                           [38;5;34mlibvirt-gconfig-1.0.so.0.1.9[0m
+libcursesw.so                               [38;5;51mlibncurses++w.so.5[0m                       [38;5;51mlibvirt-glib-1.0.so.0[0m
+[38;5;51mlibdaemon.so.0[0m                              [38;5;51mlibncursesw.so.5[0m                         [38;5;34mlibvirt-glib-1.0.so.0.1.9[0m
+[38;5;34mlibdaemon.so.0.5.0[0m                          [38;5;34mlibncurses++w.so.5.9[0m                     [38;5;51mlibvirt-gobject-1.0.so.0[0m
+[38;5;51mlibdatrie.so.1[0m                              [38;5;34mlibncursesw.so.5.9[0m                       [38;5;34mlibvirt-gobject-1.0.so.0.1.9[0m
+[38;5;34mlibdatrie.so.1.3.1[0m                          [38;5;51mlibndp.so.0[0m                              [38;5;51mlibvirt-lxc.so.0[0m
+[38;5;34mlibdb-5.3.so[0m                                [38;5;34mlibndp.so.0.0.2[0m                          [38;5;34mlibvirt-lxc.so.0.1002.9[0m
+[38;5;51mlibdb-5.so[0m                                  [38;5;51mlibndr-krb5pac.so.0[0m                      [38;5;51mlibvirt-qemu.so.0[0m
+[38;5;51mlibdbus-1.so.3[0m                              [38;5;34mlibndr-krb5pac.so.0.0.1[0m                  [38;5;34mlibvirt-qemu.so.0.1002.9[0m
+[38;5;34mlibdbus-1.so.3.8.11[0m                         [38;5;51mlibndr-nbt.so.0[0m                          [38;5;51mlibvirt.so.0[0m
+[38;5;51mlibdbus-glib-1.so.2[0m                         [38;5;34mlibndr-nbt.so.0.0.1[0m                      [38;5;34mlibvirt.so.0.1002.9[0m
+[38;5;34mlibdbus-glib-1.so.2.2.2[0m                     [38;5;51mlibndr.so.0[0m                              [38;5;51mlibvisio-0.1.so.1[0m
+[38;5;51mlibdcerpc-atsvc.so.0[0m                        [38;5;34mlibndr.so.0.0.2[0m                          [38;5;34mlibvisio-0.1.so.1.0.1[0m
+[38;5;34mlibdcerpc-atsvc.so.0.0.1[0m                    [38;5;51mlibndr-standard.so.0[0m                     [38;5;51mlibvisual-0.4.so.0[0m
+[38;5;51mlibdcerpc-binding.so.0[0m                      [38;5;34mlibndr-standard.so.0.0.1[0m                 [38;5;34mlibvisual-0.4.so.0.0.0[0m
+[38;5;34mlibdcerpc-binding.so.0.0.1[0m                  [38;5;51mlibneon.so.27[0m                            [38;5;51mlibvmtools.so.0[0m
+[38;5;51mlibdcerpc-samr.so.0[0m                         [38;5;34mlibneon.so.27.3.1[0m                        [38;5;34mlibvmtools.so.0.0.0[0m
+[38;5;34mlibdcerpc-samr.so.0.0.1[0m                     [38;5;34mlibnetapi.so.0[0m                           [38;5;51mlibvorbisenc.so.2[0m
+[38;5;51mlibdcerpc.so.0[0m                              [38;5;51mlibnetcf.so.1[0m                            [38;5;34mlibvorbisenc.so.2.0.10[0m
+[38;5;34mlibdcerpc.so.0.0.1[0m                          [38;5;34mlibnetcf.so.1.4.0[0m                        [38;5;51mlibvorbisfile.so.3[0m
+[38;5;51mlibdconf-dbus-1.so.0[0m                        [38;5;51mlibnetfilter_conntrack.so.3[0m              [38;5;34mlibvorbisfile.so.3.3.6[0m
+[38;5;34mlibdconf-dbus-1.so.0.0.0[0m                    [38;5;34mlibnetfilter_conntrack.so.3.5.0[0m          [38;5;51mlibvorbis.so.0[0m
+[38;5;51mlibdconf.so.1[0m                               [38;5;51mlibnetsnmp.so.30[0m                         [38;5;34mlibvorbis.so.0.4.7[0m
+[38;5;34mlibdconf.so.1.0.0[0m                           [38;5;34mlibnetsnmp.so.30.0.2[0m                     [38;5;51mlibvotequorum.so.7[0m
+[38;5;51mlibDefaultProviderManager.so[0m                [38;5;51mlibnettle.so.4[0m                           [38;5;34mlibvotequorum.so.7.0.0[0m
+[38;5;34mlibDefaultProviderManager.so.1[0m              [38;5;34mlibnettle.so.4.7[0m                         [38;5;51mlibvpx.so.1[0m
+[38;5;51mlibDeployPkg.so.0[0m                           [38;5;51mlibnewt.so.0.52[0m                          [38;5;51mlibvpx.so.1.3[0m
+[38;5;34mlibDeployPkg.so.0.0.0[0m                       [38;5;34mlibnewt.so.0.52.18[0m                       [38;5;34mlibvpx.so.1.3.0[0m
+[38;5;51mlibdevmapper-event-lvm2mirror.so[0m            [38;5;51mlibnfnetlink.so.0[0m                        [38;5;51mlibvte2_90.so.9[0m
+[38;5;51mlibdevmapper-event-lvm2raid.so[0m              [38;5;34mlibnfnetlink.so.0.2.0[0m                    [38;5;34mlibvte2_90.so.9.3600.3[0m
+[38;5;51mlibdevmapper-event-lvm2snapshot.so[0m          [38;5;27mlibnfsidmap[0m                              [38;5;51mlibvte-2.91.so.0[0m
+[38;5;34mlibdevmapper-event-lvm2.so.2.02[0m             [38;5;51mlibnfsidmap.so.0[0m                         [38;5;34mlibvte-2.91.so.0.3800.3[0m
+[38;5;51mlibdevmapper-event-lvm2thin.so[0m              [38;5;34mlibnfsidmap.so.0.3.0[0m                     [38;5;51mlibwacom.so.2[0m
+[38;5;34mlibdevmapper-event.so.1.02[0m                  [38;5;51mlibnice.so.10[0m                            [38;5;34mlibwacom.so.2.2.0[0m
+[38;5;34mlibdevmapper.so.1.02[0m                        [38;5;34mlibnice.so.10.4.1[0m                        [38;5;51mlibwavpack.so.1[0m
+[38;5;51mlibdhash.so.1[0m                               [38;5;27mlibnl[0m                                    [38;5;34mlibwavpack.so.1.1.5[0m
+[38;5;34mlibdhash.so.1.0.2[0m                           [38;5;51mlibnl-3.so.200[0m                           [38;5;51mlibwayland-client.so.0[0m
+[38;5;51mlibdhcpctl.so.0[0m                             [38;5;34mlibnl-3.so.200.20.0[0m                      [38;5;34mlibwayland-client.so.0.3.0[0m
+[38;5;34mlibdhcpctl.so.0.0.0[0m                         [38;5;51mlibnl-cli-3.so.200[0m                       [38;5;51mlibwayland-cursor.so.0[0m
+[38;5;34mlibdl-2.20.so[0m                               [38;5;34mlibnl-cli-3.so.200.20.0[0m                  [38;5;34mlibwayland-cursor.so.0.0.0[0m
+[38;5;51mlibdleyna-core-1.0.so.3[0m                     [38;5;51mlibnl-genl-3.so.200[0m                      [38;5;51mlibwayland-egl.so.1[0m
+[38;5;34mlibdleyna-core-1.0.so.3.0.0[0m                 [38;5;34mlibnl-genl-3.so.200.20.0[0m                 [38;5;34mlibwayland-egl.so.1.0.0[0m
+[38;5;51mlibdl.so[0m                                    [38;5;51mlibnl-idiag-3.so.200[0m                     [38;5;51mlibwayland-server.so.0[0m
+[38;5;51mlibdl.so.2[0m                                  [38;5;34mlibnl-idiag-3.so.200.20.0[0m                [38;5;34mlibwayland-server.so.0.1.0[0m
+[38;5;51mlibdmapsharing-3.0.so.2[0m                     [38;5;51mlibnl-nf-3.so.200[0m                        [38;5;51mlibwbclient.so.0[0m
+[38;5;34mlibdmapsharing-3.0.so.2.9.30[0m                [38;5;34mlibnl-nf-3.so.200.20.0[0m                   [38;5;51mlibwbclient.so.0.11[0m
+[38;5;51mlibdmraid-events-isw.so[0m                     [38;5;51mlibnl-route-3.so.200[0m                     [38;5;51mlibwebkit2gtk-4.0.so.37[0m
+[38;5;51mlibdmraid-events-isw.so.1[0m                   [38;5;34mlibnl-route-3.so.200.20.0[0m                [38;5;34mlibwebkit2gtk-4.0.so.37.2.7[0m
+[38;5;34mlibdmraid-events-isw.so.1.0.0.rc16[0m          [38;5;51mlibnm-glib.so.4[0m                          [38;5;51mlibwebkitgtk-3.0.so.0[0m
+[38;5;51mlibdmraid.so[0m                                [38;5;34mlibnm-glib.so.4.8.0[0m                      [38;5;34mlibwebkitgtk-3.0.so.0.22.14[0m
+[38;5;51mlibdmraid.so.1[0m                              [38;5;51mlibnm-glib-vpn.so.1[0m                      [38;5;51mlibwebpdecoder.so.1[0m
+[38;5;34mlibdmraid.so.1.0.0.rc16[0m                     [38;5;34mlibnm-glib-vpn.so.1.2.0[0m                  [38;5;34mlibwebpdecoder.so.1.0.3[0m
+[38;5;51mlibdmx.so.1[0m                                 [38;5;51mlibnm-gtk.so.0[0m                           [38;5;51mlibwebpdemux.so.1[0m
+[38;5;34mlibdmx.so.1.0.0[0m                             [38;5;34mlibnm-gtk.so.0.0.0[0m                       [38;5;34mlibwebpdemux.so.1.0.2[0m
+[38;5;51mlibdnet.so.1[0m                                [38;5;51mlibnm-util.so.2[0m                          [38;5;51mlibwebpmux.so.1[0m
+[38;5;34mlibdnet.so.1.0.1[0m                            [38;5;34mlibnm-util.so.2.6.0[0m                      [38;5;34mlibwebpmux.so.1.0.2[0m
+[38;5;51mlibdns-export.so.104[0m                        [38;5;51mlibnotify.so.4[0m                           [38;5;51mlibwebp.so.5[0m
+[38;5;34mlibdns-export.so.104.0.3[0m                    [38;5;34mlibnotify.so.4.0.0[0m                       [38;5;34mlibwebp.so.5.0.3[0m
+[38;5;51mlibdns.so.104[0m                               [38;5;34mlibnsl-2.20.so[0m                           [38;5;51mlibwebrtc_audio_processing.so.0[0m
+[38;5;34mlibdns.so.104.0.3[0m                           [38;5;51mlibnsl.so[0m                                [38;5;34mlibwebrtc_audio_processing.so.0.0.0[0m
+[38;5;51mlibdotconf.so.0[0m                             [38;5;51mlibnsl.so.1[0m                              [38;5;51mlibwinpr-asn1.so.1.1[0m
+[38;5;34mlibdotconf.so.0.0.1[0m                         [38;5;34mlibnspr4.so[0m                              [38;5;34mlibwinpr-asn1.so.1.1.0[0m
+[38;5;51mlibdrm_intel.so[0m                             [38;5;34mlibnss3.so[0m                               [38;5;51mlibwinpr-bcrypt.so.1.1[0m
+[38;5;51mlibdrm_intel.so.1[0m                           [38;5;51mlibnssckbi.so[0m                            [38;5;34mlibwinpr-bcrypt.so.1.1.0[0m
+[38;5;34mlibdrm_intel.so.1.0.0[0m                       [38;5;34mlibnss_compat-2.20.so[0m                    [38;5;51mlibwinpr-com.so.1.1[0m
+[38;5;51mlibdrm_nouveau.so[0m                           [38;5;51mlibnss_compat.so[0m                         [38;5;34mlibwinpr-com.so.1.1.0[0m
+[38;5;51mlibdrm_nouveau.so.2[0m                         [38;5;51mlibnss_compat.so.2[0m                       [38;5;51mlibwinpr-credentials.so.1.1[0m
+[38;5;34mlibdrm_nouveau.so.2.0.0[0m                     [38;5;34mlibnss_db-2.20.so[0m                        [38;5;34mlibwinpr-credentials.so.1.1.0[0m
+[38;5;51mlibdrm_radeon.so[0m                            libnssdbm3.chk                           [38;5;51mlibwinpr-credui.so.1.1[0m
+[38;5;51mlibdrm_radeon.so.1[0m                          [38;5;34mlibnssdbm3.so[0m                            [38;5;34mlibwinpr-credui.so.1.1.0[0m
+[38;5;34mlibdrm_radeon.so.1.0.1[0m                      [38;5;51mlibnss_db.so[0m                             [38;5;51mlibwinpr-crt.so.1.1[0m
+[38;5;51mlibdrm.so[0m                                   [38;5;51mlibnss_db.so.2[0m                           [38;5;34mlibwinpr-crt.so.1.1.0[0m
+[38;5;51mlibdrm.so.2[0m                                 [38;5;34mlibnss_dns-2.20.so[0m                       [38;5;51mlibwinpr-crypto.so.1.1[0m
+[38;5;34mlibdrm.so.2.4.0[0m                             [38;5;51mlibnss_dns.so[0m                            [38;5;34mlibwinpr-crypto.so.1.1.0[0m
+[38;5;51mlibdvdnav.so.4[0m                              [38;5;51mlibnss_dns.so.2[0m                          [38;5;51mlibwinpr-dsparse.so.1.1[0m
+[38;5;34mlibdvdnav.so.4.2.0[0m                          [38;5;34mlibnss_files-2.20.so[0m                     [38;5;34mlibwinpr-dsparse.so.1.1.0[0m
+[38;5;51mlibdvdread.so.4[0m                             [38;5;51mlibnss_files.so[0m                          [38;5;51mlibwinpr-environment.so.1.1[0m
+[38;5;34mlibdvdread.so.4.2.0[0m                         [38;5;51mlibnss_files.so.2[0m                        [38;5;34mlibwinpr-environment.so.1.1.0[0m
+[38;5;51mlibdv.so.4[0m                                  [38;5;34mlibnss_hesiod-2.20.so[0m                    [38;5;51mlibwinpr-error.so.1.1[0m
+[38;5;34mlibdv.so.4.0.3[0m                              [38;5;51mlibnss_hesiod.so[0m                         [38;5;34mlibwinpr-error.so.1.1.0[0m
+[38;5;34mlibdw-0.160.so[0m                              [38;5;51mlibnss_hesiod.so.2[0m                       [38;5;51mlibwinpr-file.so.1.1[0m
+[38;5;51mlibdwarf.so.1[0m                               [38;5;34mlibnss_mdns4_minimal.so.2[0m                [38;5;34mlibwinpr-file.so.1.1.0[0m
+[38;5;34mlibdwarf.so.1.20150115.0[0m                    [38;5;34mlibnss_mdns4.so.2[0m                        [38;5;51mlibwinpr-handle.so.1.1[0m
+[38;5;51mlibdw.so.1[0m                                  [38;5;34mlibnss_mdns6_minimal.so.2[0m                [38;5;34mlibwinpr-handle.so.1.1.0[0m
+[38;5;51mlibe2p.so.2[0m                                 [38;5;34mlibnss_mdns6.so.2[0m                        [38;5;51mlibwinpr-heap.so.1.1[0m
+[38;5;34mlibe2p.so.2.3[0m                               [38;5;34mlibnss_mdns_minimal.so.2[0m                 [38;5;34mlibwinpr-heap.so.1.1.0[0m
+[38;5;51mlibebackend-1.2.so.7[0m                        [38;5;34mlibnss_mdns.so.2[0m                         [38;5;51mlibwinpr-input.so.1.1[0m
+[38;5;34mlibebackend-1.2.so.7.0.0[0m                    [38;5;34mlibnss_myhostname.so.2[0m                   [38;5;34mlibwinpr-input.so.1.1.0[0m
+[38;5;51mlibe-book-0.1.so.1[0m                          [38;5;34mlibnss_mymachines.so.2[0m                   [38;5;51mlibwinpr-interlocked.so.1.1[0m
+[38;5;34mlibe-book-0.1.so.1.0.2[0m                      [38;5;34mlibnss_nis-2.20.so[0m                       [38;5;34mlibwinpr-interlocked.so.1.1.0[0m
+[38;5;51mlibebook-1.2.so.14[0m                          [38;5;34mlibnss_nisplus-2.20.so[0m                   [38;5;51mlibwinpr-io.so.1.1[0m
+[38;5;34mlibebook-1.2.so.14.3.1[0m                      [38;5;51mlibnss_nisplus.so[0m                        [38;5;34mlibwinpr-io.so.1.1.0[0m
+[38;5;51mlibebook-contacts-1.2.so.0[0m                  [38;5;51mlibnss_nisplus.so.2[0m                      [38;5;51mlibwinpr-library.so.1.1[0m
+[38;5;34mlibebook-contacts-1.2.so.0.0.0[0m              [38;5;51mlibnss_nis.so[0m                            [38;5;34mlibwinpr-library.so.1.1.0[0m
+[38;5;34mlibebtc.so[0m                                  [38;5;51mlibnss_nis.so.2[0m                          [38;5;51mlibwinpr-locale.so.1.1[0m
+[38;5;51mlibecal-1.2.so.16[0m                           [38;5;34mlibnsspem.so[0m                             [38;5;34mlibwinpr-locale.so.1.1.0[0m
+[38;5;34mlibecal-1.2.so.16.0.0[0m                       [38;5;34mlibnss_resolve.so.2[0m                      [38;5;51mlibwinpr-memory.so.1.1[0m
+[38;5;51mlibedata-book-1.2.so.20[0m                     [38;5;34mlibnss_sss.so.2[0m                          [38;5;34mlibwinpr-memory.so.1.1.0[0m
+[38;5;34mlibedata-book-1.2.so.20.0.0[0m                 [38;5;34mlibnsssysinit.so[0m                         [38;5;51mlibwinpr-nt.so.1.1[0m
+[38;5;51mlibedata-cal-1.2.so.23[0m                      [38;5;34mlibnssutil3.so[0m                           [38;5;34mlibwinpr-nt.so.1.1.0[0m
+[38;5;34mlibedata-cal-1.2.so.23.0.0[0m                  [38;5;51mlibnss_winbind.so[0m                        [38;5;51mlibwinpr-path.so.1.1[0m
+[38;5;51mlibedataserver-1.2.so.18[0m                    [38;5;34mlibnss_winbind.so.2[0m                      [38;5;34mlibwinpr-path.so.1.1.0[0m
+[38;5;34mlibedataserver-1.2.so.18.0.0[0m                [38;5;51mlibnss_wins.so[0m                           [38;5;51mlibwinpr-pipe.so.1.1[0m
+[38;5;51mlibedit.so.0[0m                                [38;5;34mlibnss_wins.so.2[0m                         [38;5;34mlibwinpr-pipe.so.1.1.0[0m
+[38;5;34mlibedit.so.0.0.48[0m                           [38;5;51mlibntfs-3g.so.85[0m                         [38;5;51mlibwinpr-pool.so.1.1[0m
+[38;5;51mlibEGL.so[0m                                   [38;5;34mlibntfs-3g.so.85.0.0[0m                     [38;5;34mlibwinpr-pool.so.1.1.0[0m
+[38;5;51mlibEGL.so.1[0m                                 [38;5;34mlibnuma.so.1[0m                             [38;5;51mlibwinpr-registry.so.1.1[0m
+[38;5;34mlibEGL.so.346.46[0m                            [38;5;51mlibnvcuvid.so[0m                            [38;5;34mlibwinpr-registry.so.1.1.0[0m
+[38;5;34mlibelf-0.160.so[0m                             [38;5;51mlibnvcuvid.so.1[0m                          [38;5;51mlibwinpr-rpc.so.1.1[0m
+[38;5;51mlibelf.so.1[0m                                 [38;5;34mlibnvcuvid.so.346.46[0m                     [38;5;34mlibwinpr-rpc.so.1.1.0[0m
+[38;5;51mlibenca.so.0[0m                                [38;5;51mlibnvidia-cfg.so[0m                         [38;5;51mlibwinpr-security.so.1.1[0m
+[38;5;34mlibenca.so.0.5.1[0m                            [38;5;51mlibnvidia-cfg.so.1[0m                       [38;5;34mlibwinpr-security.so.1.1.0[0m
+[38;5;51mlibenchant.so.1[0m                             [38;5;34mlibnvidia-cfg.so.346.46[0m                  [38;5;51mlibwinpr-smartcard.so.1.1[0m
+[38;5;34mlibenchant.so.1.6.0[0m                         [38;5;34mlibnvidia-compiler.so.346.46[0m             [38;5;34mlibwinpr-smartcard.so.1.1.0[0m
+[38;5;51mlibeot.so.0[0m                                 [38;5;34mlibnvidia-eglcore.so.346.46[0m              [38;5;51mlibwinpr-sspicli.so.1.1[0m
+[38;5;34mlibeot.so.0.0.0[0m                             [38;5;51mlibnvidia-encode.so[0m                      [38;5;34mlibwinpr-sspicli.so.1.1.0[0m
+[38;5;51mlibepoxy.so.0[0m                               [38;5;51mlibnvidia-encode.so.1[0m                    [38;5;51mlibwinpr-sspi.so.1.1[0m
+[38;5;34mlibepoxy.so.0.0.0[0m                           [38;5;34mlibnvidia-encode.so.346.46[0m               [38;5;34mlibwinpr-sspi.so.1.1.0[0m
+[38;5;51mlibespeak.so.1[0m                              [38;5;51mlibnvidia-fbc.so[0m                         [38;5;51mlibwinpr-synch.so.1.1[0m
+[38;5;34mlibespeak.so.1.1.48[0m                         [38;5;51mlibnvidia-fbc.so.1[0m                       [38;5;34mlibwinpr-synch.so.1.1.0[0m
+[38;5;34mlibestbase.so.1.2.96.1[0m                      [38;5;34mlibnvidia-fbc.so.346.46[0m                  [38;5;51mlibwinpr-sysinfo.so.1.1[0m
+[38;5;34mlibestools.so.1.2.96.1[0m                      [38;5;34mlibnvidia-glcore.so.346.46[0m               [38;5;34mlibwinpr-sysinfo.so.1.1.0[0m
+[38;5;51mlibestr.so.0[0m                                [38;5;34mlibnvidia-glsi.so.346.46[0m                 [38;5;51mlibwinpr-thread.so.1.1[0m
+[38;5;34mlibestr.so.0.0.0[0m                            [38;5;34mlibnvidia-gtk2.so.346.46[0m                 [38;5;34mlibwinpr-thread.so.1.1.0[0m
+[38;5;34mlibeststring.so.1.2[0m                         [38;5;34mlibnvidia-gtk3.so.346.46[0m                 [38;5;51mlibwinpr-timezone.so.1.1[0m
+[38;5;51mlibetonyek-0.1.so.1[0m                         [38;5;51mlibnvidia-ifr.so[0m                         [38;5;34mlibwinpr-timezone.so.1.1.0[0m
+[38;5;34mlibetonyek-0.1.so.1.0.1[0m                     [38;5;51mlibnvidia-ifr.so.1[0m                       [38;5;51mlibwinpr-utils.so.1.1[0m
+[38;5;51mlibevdev.so.2[0m                               [38;5;34mlibnvidia-ifr.so.346.46[0m                  [38;5;34mlibwinpr-utils.so.1.1.0[0m
+[38;5;34mlibevdev.so.2.1.5[0m                           [38;5;51mlibnvidia-ml.so[0m                          [38;5;51mlibwinpr-winhttp.so.1.1[0m
+[38;5;51mlibevdocument3.so.4[0m                         [38;5;51mlibnvidia-ml.so.1[0m                        [38;5;34mlibwinpr-winhttp.so.1.1.0[0m
+[38;5;34mlibevdocument3.so.4.0.0[0m                     [38;5;34mlibnvidia-ml.so.346.46[0m                   [38;5;51mlibwinpr-winsock.so.1.1[0m
+[38;5;51mlibevent-2.0.so.5[0m                           [38;5;51mlibnvidia-opencl.so.1[0m                    [38;5;34mlibwinpr-winsock.so.1.1.0[0m
+[38;5;34mlibevent-2.0.so.5.1.9[0m                       [38;5;34mlibnvidia-opencl.so.346.46[0m               [38;5;51mlibwinpr-wnd.so.1.1[0m
+[38;5;51mlibevent_core-2.0.so.5[0m                      [38;5;34mlibnvidia-tls.so.346.46[0m                  [38;5;34mlibwinpr-wnd.so.1.1.0[0m
+[38;5;34mlibevent_core-2.0.so.5.1.9[0m                  [38;5;51mliboauth.so.0[0m                            [38;5;51mlibwinpr-wtsapi.so.1.1[0m
+[38;5;51mlibevent_extra-2.0.so.5[0m                     [38;5;34mliboauth.so.0.8.7[0m                        [38;5;34mlibwinpr-wtsapi.so.1.1.0[0m
+[38;5;34mlibevent_extra-2.0.so.5.1.9[0m                 [38;5;51mlibodfgen-0.1.so.1[0m                       [38;5;51mlibwnck-3.so.0[0m
+[38;5;51mlibevent_openssl-2.0.so.5[0m                   [38;5;34mlibodfgen-0.1.so.1.0.3[0m                   [38;5;34mlibwnck-3.so.0.2.2[0m
+[38;5;34mlibevent_openssl-2.0.so.5.1.9[0m               [38;5;51mlibofa.so.0[0m                              [38;5;51mlibwpd-0.10.so.10[0m
+[38;5;51mlibevent_pthreads-2.0.so.5[0m                  [38;5;34mlibofa.so.0.0.0[0m                          [38;5;34mlibwpd-0.10.so.10.0.0[0m
+[38;5;34mlibevent_pthreads-2.0.so.5.1.9[0m              [38;5;51mlibogg.so.0[0m                              [38;5;51mlibwpg-0.3.so.3[0m
+[38;5;51mlibevview3.so.3[0m                             [38;5;34mlibogg.so.0.8.0[0m                          [38;5;34mlibwpg-0.3.so.3.0.0[0m
+[38;5;34mlibevview3.so.3.0.0[0m                         [38;5;51mlibomapi.so.0[0m                            [38;5;51mlibwps-0.3.so.3[0m
+[38;5;51mlibexempi.so.3[0m                              [38;5;34mlibomapi.so.0.0.0[0m                        [38;5;34mlibwps-0.3.so.3.0.1[0m
+[38;5;34mlibexempi.so.3.2.3[0m                          [38;5;34mlibopcodes-2.24.so[0m                       [38;5;51mlibwrap.so.0[0m
+[38;5;51mlibexif.so.12[0m                               [38;5;51mlibOpenCL.so[0m                             [38;5;34mlibwrap.so.0.7.6[0m
+[38;5;34mlibexif.so.12.3.3[0m                           [38;5;51mlibOpenCL.so.1[0m                           [38;5;51mlibwsman_client.so.2[0m
+[38;5;51mlibexiv2.so.13[0m                              [38;5;51mlibOpenCL.so.1.0[0m                         [38;5;34mlibwsman_client.so.2.0.0[0m
+[38;5;34mlibexiv2.so.13.0.0[0m                          [38;5;34mlibOpenCL.so.1.0.0[0m                       [38;5;51mlibwsman_curl_client_transport.so.1[0m
+[38;5;51mlibexpat.so.1[0m                               [38;5;34mlibOpenCOLLADABaseUtils.so.0.2[0m           [38;5;34mlibwsman_curl_client_transport.so.1.0.0[0m
+[38;5;34mlibexpat.so.1.6.0[0m                           [38;5;34mlibOpenCOLLADAFramework.so.0.2[0m           [38;5;51mlibwsman.so.1[0m
+[38;5;51mlibexslt.so.0[0m                               [38;5;34mlibOpenCOLLADASaxFrameworkLoader.so.0.2[0m  [38;5;34mlibwsman.so.1.0.0[0m
+[38;5;34mlibexslt.so.0.8.17[0m                          [38;5;34mlibOpenCOLLADAStreamWriter.so.0.2[0m        [38;5;34mlibwvbase.so.4.6[0m
+[38;5;51mlibext2fs.so.2[0m                              [38;5;51mlibopenconnect.so.5[0m                      [38;5;34mlibwvdbus.so.4.6[0m
+[38;5;34mlibext2fs.so.2.4[0m                            [38;5;34mlibopenconnect.so.5.1.0[0m                  [38;5;34mlibwvstreams.so.4.6[0m
+[38;5;51mlibexttextcat-2.0.so.0[0m                      [38;5;34mlibopenjp2.so.2.1.0[0m                      [38;5;34mlibwvutils.so.4.6[0m
+[38;5;34mlibexttextcat-2.0.so.0.0.0[0m                  [38;5;51mlibopenjp2.so.7[0m                          [38;5;51mlibX11.so[0m
+[38;5;27mlibfakeroot[0m                                 [38;5;51mlibopenjpeg.so.1[0m                         [38;5;51mlibX11.so.6[0m
+[38;5;51mlibfarstream-0.1.so.0[0m                       [38;5;34mlibopenjpeg.so.1.5.1[0m                     [38;5;34mlibX11.so.6.3.0[0m
+[38;5;34mlibfarstream-0.1.so.0.0.1[0m                   [38;5;51mlibopenlmicommon.so.0[0m                    [38;5;51mlibX11-xcb.so[0m
+[38;5;51mlibfarstream-0.2.so.2[0m                       [38;5;34mlibopenlmicommon.so.0.0.2[0m                [38;5;51mlibX11-xcb.so.1[0m
+[38;5;34mlibfarstream-0.2.so.2.1.1[0m                   [38;5;51mlibopenlmiindmanager.so.1[0m                [38;5;34mlibX11-xcb.so.1.0.0[0m
+[38;5;51mlibfa.so.1[0m                                  [38;5;34mlibopenlmiindmanager.so.1.0.0[0m            [38;5;51mlibxalan-c.so.111[0m
+[38;5;34mlibfa.so.1.4.0[0m                              [38;5;51mlibopenlmiindsender.so.0[0m                 [38;5;34mlibxalan-c.so.111.0[0m
+[38;5;51mlibfbembed.so.2.5[0m                           [38;5;34mlibopenlmiindsender.so.0.0.1[0m             [38;5;51mlibxalanMsg.so.111[0m
+libfbembed.so.2.5.2                         [38;5;51mlibopenlmijobmanager.so.0[0m                [38;5;34mlibxalanMsg.so.111.0[0m
+[38;5;34mlibfdt-1.4.0.so[0m                             [38;5;34mlibopenlmijobmanager.so.0.0.1[0m            [38;5;51mlibxatracker.so.2[0m
+[38;5;51mlibfdt.so.1[0m                                 [38;5;51mlibopensm.so.5[0m                           [38;5;34mlibxatracker.so.2.2.0[0m
+[38;5;34mlibFestival.so.1.96.0[0m                       [38;5;34mlibopensm.so.5.2.0[0m                       [38;5;51mlibXau.so[0m
+[38;5;51mlibffi.so.6[0m                                 [38;5;51mlibopts.so.25[0m                            [38;5;51mlibXau.so.6[0m
+[38;5;34mlibffi.so.6.0.2[0m                             [38;5;34mlibopts.so.25.15.2[0m                       [38;5;34mlibXau.so.6.0.0[0m
+[38;5;51mlibfftw3_omp.so.3[0m                           [38;5;51mlibopus.so.0[0m                             [38;5;51mlibxcb-composite.so[0m
+[38;5;34mlibfftw3_omp.so.3.4.4[0m                       [38;5;34mlibopus.so.0.5.0[0m                         [38;5;51mlibxcb-composite.so.0[0m
+[38;5;51mlibfftw3.so.3[0m                               [38;5;51mliborc-0.4.so.0[0m                          [38;5;34mlibxcb-composite.so.0.0.0[0m
+[38;5;34mlibfftw3.so.3.4.4[0m                           [38;5;34mliborc-0.4.so.0.22.0[0m                     [38;5;51mlibxcb-damage.so[0m
+[38;5;51mlibfftw3_threads.so.3[0m                       [38;5;51mliborc-test-0.4.so.0[0m                     [38;5;51mlibxcb-damage.so.0[0m
+[38;5;34mlibfftw3_threads.so.3.4.4[0m                   [38;5;34mliborc-test-0.4.so.0.22.0[0m                [38;5;34mlibxcb-damage.so.0.0.0[0m
+[38;5;34mlibFileListenerDestination.so.1[0m             [38;5;51mliborcus-0.8.so.0[0m                        [38;5;51mlibxcb-dpms.so[0m
+[38;5;51mlibfipscheck.so.1[0m                           [38;5;34mliborcus-0.8.so.0.0.0[0m                    [38;5;51mlibxcb-dpms.so.0[0m
+[38;5;34mlibfipscheck.so.1.2.1[0m                       [38;5;51mliborcus-mso-0.8.so.0[0m                    [38;5;34mlibxcb-dpms.so.0.0.0[0m
+[38;5;51mlibFLAC++.so.6[0m                              [38;5;34mliborcus-mso-0.8.so.0.0.0[0m                [38;5;51mlibxcb-dri2.so[0m
+[38;5;34mlibFLAC++.so.6.3.0[0m                          [38;5;51mliborcus-parser-0.8.so.0[0m                 [38;5;51mlibxcb-dri2.so.0[0m
+[38;5;51mlibFLAC.so.8[0m                                [38;5;34mliborcus-parser-0.8.so.0.0.0[0m             [38;5;34mlibxcb-dri2.so.0.0.0[0m
+[38;5;34mlibFLAC.so.8.3.0[0m                            [38;5;51mlibosinfo-1.0.so.0[0m                       [38;5;51mlibxcb-dri3.so[0m
+[38;5;51mlibflite_cmulex.so.1[0m                        [38;5;34mlibosinfo-1.0.so.0.2.11[0m                  [38;5;51mlibxcb-dri3.so.0[0m
+[38;5;34mlibflite_cmulex.so.1.3[0m                      [38;5;51mlibosmcomp.so.3[0m                          [38;5;34mlibxcb-dri3.so.0.0.0[0m
+[38;5;51mlibflite_cmu_time_awb.so.1[0m                  [38;5;34mlibosmcomp.so.3.0.8[0m                      [38;5;51mlibxcb-ewmh.so.2[0m
+[38;5;34mlibflite_cmu_time_awb.so.1.3[0m                [38;5;51mlibosmvendor.so.3[0m                        [38;5;34mlibxcb-ewmh.so.2.0.0[0m
+[38;5;51mlibflite_cmu_us_kal16.so.1[0m                  [38;5;34mlibosmvendor.so.3.0.9[0m                    [38;5;51mlibxcb-glx.so[0m
+[38;5;34mlibflite_cmu_us_kal16.so.1.3[0m                [38;5;51mlibp11-kit.so.0[0m                          [38;5;51mlibxcb-glx.so.0[0m
+[38;5;51mlibflite_cmu_us_kal.so.1[0m                    [38;5;34mlibp11-kit.so.0.1.0[0m                      [38;5;34mlibxcb-glx.so.0.0.0[0m
+[38;5;34mlibflite_cmu_us_kal.so.1.3[0m                  [38;5;51mlibpackagekit-glib2.so.18[0m                [38;5;51mlibxcb-icccm.so.4[0m
+[38;5;51mlibflite.so.1[0m                               [38;5;34mlibpackagekit-glib2.so.18.0.2[0m            [38;5;34mlibxcb-icccm.so.4.0.0[0m
+[38;5;34mlibflite.so.1.3[0m                             [38;5;51mlibpakchois.so.0[0m                         [38;5;51mlibxcb-image.so.0[0m
+[38;5;51mlibflite_usenglish.so.1[0m                     [38;5;34mlibpakchois.so.0.1.0[0m                     [38;5;34mlibxcb-image.so.0.0.0[0m
+[38;5;34mlibflite_usenglish.so.1.3[0m                   [38;5;51mlibpamc.so.0[0m                             [38;5;51mlibxcb-keysyms.so.1[0m
+[38;5;51mlibfolks-dummy.so.25[0m                        [38;5;34mlibpamc.so.0.82.1[0m                        [38;5;34mlibxcb-keysyms.so.1.0.0[0m
+[38;5;34mlibfolks-dummy.so.25.17.3[0m                   [38;5;51mlibpam_misc.so.0[0m                         [38;5;51mlibxcb-present.so[0m
+[38;5;51mlibfolks-eds.so.25[0m                          [38;5;34mlibpam_misc.so.0.82.0[0m                    [38;5;51mlibxcb-present.so.0[0m
+[38;5;34mlibfolks-eds.so.25.17.3[0m                     [38;5;51mlibpam.so.0[0m                              [38;5;34mlibxcb-present.so.0.0.0[0m
+[38;5;51mlibfolks.so.25[0m                              [38;5;34mlibpam.so.0.83.1[0m                         [38;5;51mlibxcb-randr.so[0m
+[38;5;34mlibfolks.so.25.17.3[0m                         [38;5;51mlibpanel.so[0m                              [38;5;51mlibxcb-randr.so.0[0m
+[38;5;51mlibfolks-telepathy.so.25[0m                    [38;5;51mlibpanel.so.5[0m                            [38;5;34mlibxcb-randr.so.0.1.0[0m
+[38;5;34mlibfolks-telepathy.so.25.17.3[0m               [38;5;34mlibpanel.so.5.9[0m                          [38;5;51mlibxcb-record.so[0m
+[38;5;51mlibfontconfig.so.1[0m                          [38;5;51mlibpanelw.so[0m                             [38;5;51mlibxcb-record.so.0[0m
+[38;5;34mlibfontconfig.so.1.8.0[0m                      [38;5;51mlibpanelw.so.5[0m                           [38;5;34mlibxcb-record.so.0.0.0[0m
+[38;5;51mlibfontembed.so.1[0m                           [38;5;34mlibpanelw.so.5.9[0m                         [38;5;51mlibxcb-render.so[0m
+[38;5;34mlibfontembed.so.1.0.0[0m                       [38;5;51mlibpango-1.0.so.0[0m                        [38;5;51mlibxcb-render.so.0[0m
+[38;5;51mlibfontenc.so.1[0m                             [38;5;34mlibpango-1.0.so.0.3600.8[0m                 [38;5;34mlibxcb-render.so.0.0.0[0m
+[38;5;34mlibfontenc.so.1.0.0[0m                         [38;5;51mlibpangocairo-1.0.so.0[0m                   [38;5;51mlibxcb-render-util.so.0[0m
+[38;5;51mlibform.so[0m                                  [38;5;34mlibpangocairo-1.0.so.0.3600.8[0m            [38;5;34mlibxcb-render-util.so.0.0.0[0m
+[38;5;51mlibform.so.5[0m                                [38;5;51mlibpangoft2-1.0.so.0[0m                     [38;5;51mlibxcb-res.so[0m
+[38;5;34mlibform.so.5.9[0m                              [38;5;34mlibpangoft2-1.0.so.0.3600.8[0m              [38;5;51mlibxcb-res.so.0[0m
+[38;5;51mlibformw.so[0m                                 [38;5;51mlibpangomm-1.4.so.1[0m                      [38;5;34mlibxcb-res.so.0.0.0[0m
+[38;5;51mlibformw.so.5[0m                               [38;5;34mlibpangomm-1.4.so.1.0.30[0m                 [38;5;51mlibxcb-screensaver.so[0m
+[38;5;34mlibformw.so.5.9[0m                             [38;5;51mlibpangoxft-1.0.so.0[0m                     [38;5;51mlibxcb-screensaver.so.0[0m
+[38;5;51mlibfprint.so.0[0m                              [38;5;34mlibpangoxft-1.0.so.0.3600.8[0m              [38;5;34mlibxcb-screensaver.so.0.0.0[0m
+[38;5;34mlibfprint.so.0.0.0[0m                          [38;5;51mlibpapi.so.5[0m                             [38;5;51mlibxcb-shape.so[0m
+libfreebl3.chk                              [38;5;51mlibpapi.so.5.3.2[0m                         [38;5;51mlibxcb-shape.so.0[0m
+[38;5;34mlibfreebl3.so[0m                               [38;5;34mlibpapi.so.5.3.2.0[0m                       [38;5;34mlibxcb-shape.so.0.0.0[0m
+[38;5;51mlibfreehand-0.1.so.1[0m                        [38;5;51mlibpaps.so.0[0m                             [38;5;51mlibxcb-shm.so[0m
+[38;5;34mlibfreehand-0.1.so.1.0.0[0m                    [38;5;34mlibpaps.so.0.0.0[0m                         [38;5;51mlibxcb-shm.so.0[0m
+[38;5;51mlibfreerdp-cache.so.1.2[0m                     [38;5;51mlibparted-fs-resize.so[0m                   [38;5;34mlibxcb-shm.so.0.0.0[0m
+[38;5;34mlibfreerdp-cache.so.1.2.0[0m                   [38;5;51mlibparted-fs-resize.so.0[0m                 [38;5;51mlibxcb.so[0m
+[38;5;51mlibfreerdp-client.so.1.2[0m                    [38;5;34mlibparted-fs-resize.so.0.0.1[0m             [38;5;51mlibxcb.so.1[0m
+[38;5;34mlibfreerdp-client.so.1.2.0[0m                  [38;5;51mlibparted.so.2[0m                           [38;5;34mlibxcb.so.1.1.0[0m
+[38;5;51mlibfreerdp-codec.so.1.2[0m                     [38;5;34mlibparted.so.2.0.1[0m                       [38;5;51mlibxcb-sync.so[0m
+[38;5;34mlibfreerdp-codec.so.1.2.0[0m                   [38;5;34mlibpasswdqc.so.0[0m                         [38;5;51mlibxcb-sync.so.1[0m
+[38;5;51mlibfreerdp-common.so.1.2.0[0m                  [38;5;51mlibpath_utils.so.1[0m                       [38;5;34mlibxcb-sync.so.1.0.0[0m
+[38;5;34mlibfreerdp-common.so.1.2.0-beta1[0m            [38;5;34mlibpath_utils.so.1.0.1[0m                   [38;5;51mlibxcb-util.so.1[0m
+[38;5;51mlibfreerdp-core.so.1.2[0m                      [38;5;51mlibpcap.so.1[0m                             [38;5;34mlibxcb-util.so.1.0.0[0m
+[38;5;34mlibfreerdp-core.so.1.2.0[0m                    [38;5;34mlibpcap.so.1.6.2[0m                         [38;5;51mlibxcb-xevie.so[0m
+[38;5;51mlibfreerdp-crypto.so.1.2[0m                    [38;5;51mlibpciaccess.so.0[0m                        [38;5;51mlibxcb-xevie.so.0[0m
+[38;5;34mlibfreerdp-crypto.so.1.2.0[0m                  [38;5;34mlibpciaccess.so.0.11.1[0m                   [38;5;34mlibxcb-xevie.so.0.0.0[0m
+[38;5;51mlibfreerdp-gdi.so.1.2[0m                       [38;5;51mlibpci.so.3[0m                              [38;5;51mlibxcb-xf86dri.so[0m
+[38;5;34mlibfreerdp-gdi.so.1.2.0[0m                     [38;5;34mlibpci.so.3.3.0[0m                          [38;5;51mlibxcb-xf86dri.so.0[0m
+[38;5;51mlibfreerdp-locale.so.1.2[0m                    [38;5;34mlibpcprofile.so[0m                          [38;5;34mlibxcb-xf86dri.so.0.0.0[0m
+[38;5;34mlibfreerdp-locale.so.1.2.0[0m                  [38;5;51mlibpcre16.so[0m                             [38;5;51mlibxcb-xfixes.so[0m
+[38;5;51mlibfreerdp-primitives.so.1.2[0m                [38;5;51mlibpcre16.so.0[0m                           [38;5;51mlibxcb-xfixes.so.0[0m
+[38;5;34mlibfreerdp-primitives.so.1.2.0[0m              [38;5;34mlibpcre16.so.0.2.3[0m                       [38;5;34mlibxcb-xfixes.so.0.0.0[0m
+[38;5;51mlibfreerdp-rail.so.1.2[0m                      [38;5;51mlibpcre32.so[0m                             [38;5;51mlibxcb-xinerama.so[0m
+[38;5;34mlibfreerdp-rail.so.1.2.0[0m                    [38;5;51mlibpcre32.so.0[0m                           [38;5;51mlibxcb-xinerama.so.0[0m
+[38;5;51mlibfreerdp-utils.so.1.2[0m                     [38;5;34mlibpcre32.so.0.0.3[0m                       [38;5;34mlibxcb-xinerama.so.0.0.0[0m
+[38;5;34mlibfreerdp-utils.so.1.2.0[0m                   [38;5;51mlibpcrecpp.so[0m                            [38;5;51mlibxcb-xinput.so[0m
+[38;5;51mlibfreetype.so.6[0m                            [38;5;51mlibpcrecpp.so.0[0m                          [38;5;51mlibxcb-xinput.so.0[0m
+[38;5;34mlibfreetype.so.6.11.2[0m                       [38;5;34mlibpcrecpp.so.0.0.0[0m                      [38;5;34mlibxcb-xinput.so.0.1.0[0m
+[38;5;51mlibfsimage.so.1.0[0m                           [38;5;51mlibpcreposix.so[0m                          [38;5;51mlibxcb-xkb.so[0m
+[38;5;34mlibfsimage.so.1.0.0[0m                         [38;5;51mlibpcreposix.so.0[0m                        [38;5;51mlibxcb-xkb.so.1[0m
+[38;5;34mlibftoa.so.0.2[0m                              [38;5;34mlibpcreposix.so.0.0.2[0m                    [38;5;34mlibxcb-xkb.so.1.0.0[0m
+[38;5;51mlibfuse.so.2[0m                                [38;5;51mlibpcre.so[0m                               [38;5;51mlibxcb-xselinux.so[0m
+[38;5;34mlibfuse.so.2.9.3[0m                            [38;5;51mlibpcre.so.1[0m                             [38;5;51mlibxcb-xselinux.so.0[0m
+libg.a                                      [38;5;34mlibpcre.so.1.2.3[0m                         [38;5;34mlibxcb-xselinux.so.0.0.0[0m
+[38;5;51mlibgadu.so.3[0m                                [38;5;51mlibpcsclite.so.1[0m                         [38;5;51mlibxcb-xtest.so[0m
+[38;5;34mlibgadu.so.3.13.0[0m                           [38;5;34mlibpcsclite.so.1.0.0[0m                     [38;5;51mlibxcb-xtest.so.0[0m
+[38;5;51mlibgailutil-3.so.0[0m                          [38;5;34mlibpdb.so.0[0m                              [38;5;34mlibxcb-xtest.so.0.0.0[0m
+[38;5;34mlibgailutil-3.so.0.0.0[0m                      [38;5;27mlibpeas-1.0[0m                              [38;5;51mlibxcb-xvmc.so[0m
+[38;5;51mlibgailutil.so.18[0m                           [38;5;51mlibpeas-1.0.so.0[0m                         [38;5;51mlibxcb-xvmc.so.0[0m
+[38;5;34mlibgailutil.so.18.0.1[0m                       [38;5;34mlibpeas-1.0.so.0.1201.0[0m                  [38;5;34mlibxcb-xvmc.so.0.0.0[0m
+[38;5;51mlibgavl.so.1[0m                                [38;5;51mlibpeas-gtk-1.0.so.0[0m                     [38;5;51mlibxcb-xv.so[0m
+[38;5;34mlibgavl.so.1.0.0[0m                            [38;5;34mlibpeas-gtk-1.0.so.0.1201.0[0m              [38;5;51mlibxcb-xv.so.0[0m
+[38;5;51mlibgbm.so.1[0m                                 [38;5;34mlibpegauthentication.so.1[0m                [38;5;34mlibxcb-xv.so.0.0.0[0m
+[38;5;34mlibgbm.so.1.0.0[0m                             [38;5;51mlibpegclient.so[0m                          [38;5;51mlibXcomposite.so.1[0m
+[38;5;34mlibgcc_s-4.9.2-20150212.so.1[0m                [38;5;34mlibpegclient.so.1[0m                        [38;5;34mlibXcomposite.so.1.0.0[0m
+[38;5;51mlibgcc_s.so.1[0m                               [38;5;34mlibpegcliutils.so.1[0m                      [38;5;51mlibXcursor.so.1[0m
+[38;5;51mlibgck-1.so.0[0m                               [38;5;51mlibpegcommon.so[0m                          [38;5;34mlibXcursor.so.1.0.2[0m
+[38;5;34mlibgck-1.so.0.0.0[0m                           [38;5;34mlibpegcommon.so.1[0m                        [38;5;51mlibXdamage.so[0m
+[38;5;51mlibgconf-2.so.4[0m                             [38;5;34mlibpegcompiler.so.1[0m                      [38;5;51mlibXdamage.so.1[0m
+[38;5;34mlibgconf-2.so.4.1.5[0m                         [38;5;34mlibpegconfig.so.1[0m                        [38;5;34mlibXdamage.so.1.1.0[0m
+[38;5;51mlibgcr-3.so.1[0m                               [38;5;34mlibpegcql.so.1[0m                           [38;5;51mlibXdmcp.so.6[0m
+[38;5;51mlibgcr-3.so.1.0.0[0m                           [38;5;34mlibpegexportclient.so.1[0m                  [38;5;34mlibXdmcp.so.6.0.0[0m
+[38;5;51mlibgcr-base-3.so.1[0m                          [38;5;34mlibpegexportserver.so.1[0m                  [38;5;51mlibxenctrl.so.4.4[0m
+[38;5;34mlibgcr-base-3.so.1.0.0[0m                      [38;5;34mlibpeggeneral.so.1[0m                       [38;5;34mlibxenctrl.so.4.4.0[0m
+[38;5;51mlibgcr-ui-3.so.1[0m                            [38;5;34mlibpeggetoopt.so.1[0m                       [38;5;51mlibxenguest.so.4.4[0m
+[38;5;34mlibgcr-ui-3.so.1.0.0[0m                        [38;5;34mlibpeghandlerservice.so.1[0m                [38;5;34mlibxenguest.so.4.4.0[0m
+[38;5;51mlibgcrypt.so.20[0m                             [38;5;34mlibpeghandler.so.1[0m                       [38;5;51mlibxenlight.so.4.4[0m
+[38;5;34mlibgcrypt.so.20.0.1[0m                         [38;5;34mlibpegindicationservice.so.1[0m             [38;5;34mlibxenlight.so.4.4.0[0m
+[38;5;51mlibgdata.so.19[0m                              [38;5;51mlibpeglistener.so[0m                        [38;5;51mlibxenstat.so.0[0m
+[38;5;34mlibgdata.so.19.2.1[0m                          [38;5;34mlibpeglistener.so.1[0m                      [38;5;34mlibxenstat.so.0.0[0m
+[38;5;51mlibgdbm_compat.so.4[0m                         [38;5;34mlibpegpmrouter.so.1[0m                      [38;5;51mlibxenstore.so.3.0[0m
+[38;5;34mlibgdbm_compat.so.4.0.0[0m                     [38;5;34mlibpegpmservice.so.1[0m                     [38;5;34mlibxenstore.so.3.0.3[0m
+[38;5;51mlibgdbm.so.4[0m                                [38;5;34mlibpegprm.so.1[0m                           [38;5;51mlibxenvchan.so.1.0[0m
+[38;5;34mlibgdbm.so.4.0.0[0m                            [38;5;34mlibpegprovidermanager.so.1[0m               [38;5;34mlibxenvchan.so.1.0.0[0m
+[38;5;51mlibgdither.so.1[0m                             [38;5;51mlibpegprovider.so[0m                        [38;5;34mlibxerces-c-3.1.so[0m
+[38;5;34mlibgdither.so.1.0[0m                           [38;5;34mlibpegprovider.so.1[0m                      [38;5;51mlibXevie.so.1[0m
+[38;5;51mlibgdk-3.so.0[0m                               [38;5;34mlibpegquerycommon.so.1[0m                   [38;5;34mlibXevie.so.1.0.0[0m
+[38;5;34mlibgdk-3.so.0.1400.13[0m                       [38;5;34mlibpegqueryexpression.so.1[0m               [38;5;51mlibXext.so[0m
+[38;5;51mlibgdkmm-2.4.so.1[0m                           [38;5;34mlibpegrepository.so.1[0m                    [38;5;51mlibXext.so.6[0m
+[38;5;34mlibgdkmm-2.4.so.1.1.0[0m                       [38;5;34mlibpegserver.so.1[0m                        [38;5;34mlibXext.so.6.4.0[0m
+[38;5;51mlibgdkmm-3.0.so.1[0m                           [38;5;34mlibpegservice.so.1[0m                       [38;5;51mlibXfixes.so[0m
+[38;5;34mlibgdkmm-3.0.so.1.1.0[0m                       [38;5;51mlibpegslp_client.so[0m                      [38;5;51mlibXfixes.so.3[0m
+[38;5;51mlibgdk_pixbuf-2.0.so.0[0m                      [38;5;34mlibpegslp_client.so.1[0m                    [38;5;34mlibXfixes.so.3.1.0[0m
+[38;5;34mlibgdk_pixbuf-2.0.so.0.3100.1[0m               [38;5;34mlibpegslp.so.1[0m                           [38;5;51mlibXfont.so.1[0m
+[38;5;51mlibgdk_pixbuf_xlib-2.0.so.0[0m                 [38;5;34mlibpeguser.so.1[0m                          [38;5;34mlibXfont.so.1.4.1[0m
+[38;5;34mlibgdk_pixbuf_xlib-2.0.so.0.3100.1[0m          [38;5;34mlibpegwql.so.1[0m                           [38;5;51mlibxfreerdp-client.so.1.2[0m
+[38;5;51mlibgdk-x11-2.0.so.0[0m                         [38;5;34mlibpegwsmserver.so.1[0m                     [38;5;34mlibxfreerdp-client.so.1.2.0[0m
+[38;5;34mlibgdk-x11-2.0.so.0.2400.27[0m                 [38;5;51mlibperl.so.5.18[0m                          [38;5;51mlibXft.so.2[0m
+[38;5;51mlibgdm.so[0m                                   [38;5;34mlibperl.so.5.18.4[0m                        [38;5;34mlibXft.so.2.3.2[0m
+[38;5;51mlibgdm.so.1[0m                                 [38;5;51mlibpfm.so.4[0m                              [38;5;51mlibXinerama.so.1[0m
+[38;5;34mlibgdm.so.1.0.0[0m                             [38;5;34mlibpfm.so.4.5.0[0m                          [38;5;34mlibXinerama.so.1.0.0[0m
+[38;5;51mlibgd.so.3[0m                                  [38;5;51mlibphodav-1.0.so.0[0m                       [38;5;51mlibXi.so[0m
+[38;5;34mlibgd.so.3.0.0[0m                              [38;5;34mlibphodav-1.0.so.0.0.0[0m                   [38;5;51mlibXi.so.6[0m
+[38;5;51mlibgee-0.8.so.2[0m                             [38;5;27mlibpinyin[0m                                [38;5;34mlibXi.so.6.1.0[0m
+[38;5;34mlibgee-0.8.so.2.5.1[0m                         [38;5;51mlibpinyin.so.5[0m                           [38;5;51mlibxkbcommon.so.0[0m
+[38;5;34mlibGeneratedSaxParser.so.0.2[0m                [38;5;34mlibpinyin.so.5.0.0[0m                       [38;5;34mlibxkbcommon.so.0.0.0[0m
+[38;5;51mlibgensec.so.0[0m                              [38;5;51mlibpipeline.so.1[0m                         [38;5;51mlibxkbcommon-x11.so.0[0m
+[38;5;34mlibgensec.so.0.0.1[0m                          [38;5;34mlibpipeline.so.1.3.0[0m                     [38;5;34mlibxkbcommon-x11.so.0.0.0[0m
+[38;5;51mlibgeocode-glib.so.0[0m                        [38;5;51mlibpixman-1.so.0[0m                         [38;5;51mlibxkbfile.so.1[0m
+[38;5;34mlibgeocode-glib.so.0.0.0[0m                    [38;5;34mlibpixman-1.so.0.32.6[0m                    [38;5;34mlibxkbfile.so.1.0.2[0m
+[38;5;34mlibgettextlib-0.19.2.so[0m                     [38;5;51mlibpkcs11-helper.so.1[0m                    [38;5;51mlibxklavier.so.16[0m
+[38;5;51mlibgettextpo.so.0[0m                           [38;5;34mlibpkcs11-helper.so.1.0.0[0m                [38;5;34mlibxklavier.so.16.4.0[0m
+[38;5;34mlibgettextpo.so.0.5.2[0m                       [38;5;34mlibplc4.so[0m                               [38;5;51mlibxlutil.so.4.3[0m
+[38;5;34mlibgettextsrc-0.19.2.so[0m                     [38;5;34mlibplds4.so[0m                              [38;5;34mlibxlutil.so.4.3.0[0m
+[38;5;51mlibgexiv2.so.2[0m                              [38;5;51mlibplist.so.3[0m                            [38;5;51mlibxml2.so[0m
+[38;5;34mlibgexiv2.so.2.0.0[0m                          [38;5;51mlibplist++.so.3[0m                          [38;5;51mlibxml2.so.2[0m
+[38;5;51mlibgfapi.so.0[0m                               [38;5;34mlibplist.so.3.0.0[0m                        [38;5;34mlibxml2.so.2.9.1[0m
+[38;5;34mlibgfapi.so.0.0.0[0m                           [38;5;34mlibplist++.so.3.0.0[0m                      [38;5;51mlibxmlrpc_abyss.so.3[0m
+[38;5;51mlibgfbgraph-0.2.so.0[0m                        [38;5;51mlibply-boot-client.so.2[0m                  [38;5;34mlibxmlrpc_abyss.so.3.32[0m
+[38;5;34mlibgfbgraph-0.2.so.0.0.0[0m                    [38;5;34mlibply-boot-client.so.2.1.0[0m              [38;5;51mlibxmlrpc_client.so.3[0m
+[38;5;51mlibgfchangelog.so.0[0m                         [38;5;51mlibply.so.2[0m                              [38;5;34mlibxmlrpc_client.so.3.32[0m
+[38;5;34mlibgfchangelog.so.0.0.0[0m                     [38;5;34mlibply.so.2.1.0[0m                          [38;5;51mlibxmlrpc_server_abyss.so.3[0m
+[38;5;51mlibgfortran.so.3[0m                            [38;5;51mlibply-splash-core.so.2[0m                  [38;5;34mlibxmlrpc_server_abyss.so.3.32[0m
+[38;5;34mlibgfortran.so.3.0.0[0m                        [38;5;34mlibply-splash-core.so.2.1.0[0m              [38;5;51mlibxmlrpc_server_cgi.so.3[0m
+[38;5;51mlibgfrpc.so.0[0m                               [38;5;51mlibply-splash-graphics.so.2[0m              [38;5;34mlibxmlrpc_server_cgi.so.3.32[0m
+[38;5;34mlibgfrpc.so.0.0.0[0m                           [38;5;34mlibply-splash-graphics.so.2.1.0[0m          [38;5;51mlibxmlrpc_server.so.3[0m
+[38;5;51mlibgfxdr.so.0[0m                               [38;5;51mlibpng16.so.16[0m                           [38;5;34mlibxmlrpc_server.so.3.32[0m
+[38;5;34mlibgfxdr.so.0.0.0[0m                           [38;5;34mlibpng16.so.16.10.0[0m                      [38;5;51mlibxmlrpc.so.3[0m
+[38;5;51mlibgif.so.4[0m                                 [38;5;51mlibpoldiff.so.1[0m                          [38;5;34mlibxmlrpc.so.3.32[0m
+[38;5;34mlibgif.so.4.1.6[0m                             [38;5;34mlibpoldiff.so.1.3.3[0m                      [38;5;51mlibxmlrpc_util.so.3[0m
+[38;5;51mlibgio-2.0.so.0[0m                             [38;5;51mlibpolkit-agent-1.so.0[0m                   [38;5;34mlibxmlrpc_util.so.3.32[0m
+[38;5;34mlibgio-2.0.so.0.4200.1[0m                      [38;5;34mlibpolkit-agent-1.so.0.0.0[0m               [38;5;51mlibxml-security-c.so.16[0m
+[38;5;51mlibgiomm-2.4.so.1[0m                           [38;5;51mlibpolkit-gobject-1.so.0[0m                 [38;5;34mlibxml-security-c.so.16.0.1[0m
+[38;5;34mlibgiomm-2.4.so.1.3.0[0m                       [38;5;34mlibpolkit-gobject-1.so.0.0.0[0m             [38;5;51mlibXmu.so[0m
+[38;5;51mlibgirepository-1.0.so.1[0m                    [38;5;51mlibpoppler-glib.so.8[0m                     [38;5;51mlibXmu.so.6[0m
+[38;5;34mlibgirepository-1.0.so.1.0.0[0m                [38;5;34mlibpoppler-glib.so.8.6.0[0m                 [38;5;34mlibXmu.so.6.2.0[0m
+[38;5;51mlibgjs.so.0[0m                                 [38;5;51mlibpoppler.so.46[0m                         [38;5;51mlibXmuu.so[0m
+[38;5;34mlibgjs.so.0.0.0[0m                             [38;5;34mlibpoppler.so.46.0.0[0m                     [38;5;51mlibXmuu.so.1[0m
+[38;5;27mlibglade[0m                                    [38;5;51mlibpopt.so.0[0m                             [38;5;34mlibXmuu.so.1.0.0[0m
+[38;5;51mlibglade-2.0.so.0[0m                           [38;5;34mlibpopt.so.0.0.0[0m                         [38;5;51mlibXpm.so.4[0m
+[38;5;34mlibglade-2.0.so.0.0.7[0m                       [38;5;51mlibprocps.so.4[0m                           [38;5;34mlibXpm.so.4.11.0[0m
+[38;5;51mlibglapi.so[0m                                 [38;5;34mlibprocps.so.4.0.0[0m                       [38;5;51mlibXrandr.so.2[0m
+[38;5;51mlibglapi.so.0[0m                               [38;5;51mlibprotobuf-c.so.1[0m                       [38;5;34mlibXrandr.so.2.2.0[0m
+[38;5;34mlibglapi.so.0.0.0[0m                           [38;5;34mlibprotobuf-c.so.1.0.0[0m                   [38;5;51mlibXrender.so.1[0m
+[38;5;51mlibGLESv1_CM.so[0m                             [38;5;51mlibprotobuf.so.8[0m                         [38;5;34mlibXrender.so.1.3.0[0m
+[38;5;51mlibGLESv1_CM.so.1[0m                           [38;5;34mlibprotobuf.so.8.0.0[0m                     [38;5;51mlibXRes.so.1[0m
+[38;5;34mlibGLESv1_CM.so.346.46[0m                      [38;5;51mlibprotoc.so.8[0m                           [38;5;34mlibXRes.so.1.0.0[0m
+[38;5;51mlibGLESv2.so[0m                                [38;5;34mlibprotoc.so.8.0.0[0m                       [38;5;51mlibxshmfence.so[0m
+[38;5;51mlibGLESv2.so.2[0m                              [38;5;34mlibProviderRegistrationProvider.so.1[0m     [38;5;51mlibxshmfence.so.1[0m
+[38;5;34mlibGLESv2.so.346.46[0m                         [38;5;27mlibproxy[0m                                 [38;5;34mlibxshmfence.so.1.0.0[0m
+[38;5;51mlibGLEW.so.1.10[0m                             [38;5;51mlibproxy.so.1[0m                            [38;5;27mlibxslt-plugins[0m
+[38;5;34mlibGLEW.so.1.10.0[0m                           [38;5;34mlibproxy.so.1.0.0[0m                        [38;5;51mlibxslt.so.1[0m
+[38;5;51mlibglib-2.0.so.0[0m                            [38;5;34mlibpthread-2.20.so[0m                       [38;5;34mlibxslt.so.1.1.28[0m
+[38;5;34mlibglib-2.0.so.0.4200.1[0m                     libpthread_nonshared.a                   [38;5;51mlibxtables.so.10[0m
+[38;5;51mlibglibmm-2.4.so.1[0m                          libpthread.so                            [38;5;34mlibxtables.so.10.0.0[0m
+[38;5;34mlibglibmm-2.4.so.1.3.0[0m                      [38;5;51mlibpthread.so.0[0m                          [38;5;51mlibXt.so[0m
+[38;5;51mlibglibmm_generate_extra_defs-2.4.so.1[0m      [38;5;51mlibpth.so.20[0m                             [38;5;51mlibXt.so.6[0m
+[38;5;34mlibglibmm_generate_extra_defs-2.4.so.1.3.0[0m  [38;5;34mlibpth.so.20.0.27[0m                        [38;5;34mlibXt.so.6.0.0[0m
+libGL.la                                    [38;5;34mlibpulsecore-6.0.so[0m                      [38;5;51mlibXtst.so.6[0m
+[38;5;51mlibGL.so[0m                                    [38;5;51mlibpulse-mainloop-glib.so.0[0m              [38;5;34mlibXtst.so.6.1.0[0m
+[38;5;51mlibGL.so.1[0m                                  [38;5;34mlibpulse-mainloop-glib.so.0.0.5[0m          [38;5;51mlibXvMC.so.1[0m
+[38;5;34mlibGL.so.346.46[0m                             [38;5;51mlibpulse-simple.so.0[0m                     [38;5;34mlibXvMC.so.1.0.0[0m
+[38;5;51mlibgltf-0.0.so.0[0m                            [38;5;34mlibpulse-simple.so.0.1.0[0m                 [38;5;51mlibXvMCW.so.1[0m
+[38;5;34mlibgltf-0.0.so.0.0.2[0m                        [38;5;51mlibpulse.so.0[0m                            [38;5;34mlibXvMCW.so.1.0.0[0m
+[38;5;51mlibGLU.so[0m                                   [38;5;34mlibpulse.so.0.18.0[0m                       [38;5;51mlibXv.so.1[0m
+[38;5;51mlibGLU.so.1[0m                                 [38;5;51mlibpurple-client.so.0[0m                    [38;5;34mlibXv.so.1.0.0[0m
+[38;5;34mlibGLU.so.1.3.1[0m                             [38;5;34mlibpurple-client.so.0.10.11[0m              [38;5;51mlibXxf86dga.so.1[0m
+[38;5;51mlibglusterfs.so.0[0m                           [38;5;51mlibpurple.so.0[0m                           [38;5;34mlibXxf86dga.so.1.0.0[0m
+[38;5;34mlibglusterfs.so.0.0.0[0m                       [38;5;34mlibpurple.so.0.10.11[0m                     [38;5;51mlibXxf86misc.so.1[0m
+[38;5;51mlibglut.so[0m                                  [38;5;51mlibpwquality.so.1[0m                        [38;5;34mlibXxf86misc.so.1.1.0[0m
+[38;5;51mlibglut.so.3[0m                                [38;5;34mlibpwquality.so.1.0.2[0m                    [38;5;51mlibXxf86vm.so[0m
+[38;5;34mlibglut.so.3.9.0[0m                            [38;5;51mlibpyglib-2.0-python.so[0m                  [38;5;51mlibXxf86vm.so.1[0m
+[38;5;51mlibgmime-2.6.so.0[0m                           [38;5;51mlibpyglib-2.0-python.so.0[0m                [38;5;34mlibXxf86vm.so.1.0.0[0m
+[38;5;34mlibgmime-2.6.so.0.620.0[0m                     libpyglib-2.0-python.so.0.0.0            [38;5;51mlibyajl.so.2[0m
+[38;5;51mlibgmodule-2.0.so.0[0m                         [38;5;51mlibpytalloc-util.so.2[0m                    [38;5;34mlibyajl.so.2.1.0[0m
+[38;5;34mlibgmodule-2.0.so.0.4200.1[0m                  [38;5;34mlibpytalloc-util.so.2.1.1[0m                [38;5;51mlibyaml-0.so.2[0m
+[38;5;51mlibgmp.so.10[0m                                [38;5;34mlibpython2.7.so.1.0[0m                      [38;5;34mlibyaml-0.so.2.0.4[0m
+[38;5;34mlibgmp.so.10.2.0[0m                            [38;5;34mlibpython3.4m.so.1.0[0m                     [38;5;51mlibyelp.so.0[0m
+[38;5;51mlibgmpxx.so.4[0m                               [38;5;34mlibpython3.so[0m                            [38;5;34mlibyelp.so.0.0.0[0m
+[38;5;34mlibgmpxx.so.4.4.0[0m                           [38;5;51mlibqb.so.0[0m                               [38;5;51mlibykpers-1.so.1[0m
+[38;5;51mlibgnome-bluetooth.so.13[0m                    [38;5;34mlibqb.so.0.17.0[0m                          [38;5;34mlibykpers-1.so.1.17.1[0m
+[38;5;34mlibgnome-bluetooth.so.13.0.0[0m                [38;5;51mlibqmi-glib.so.1[0m                         [38;5;51mlibyubikey.so.0[0m
+[38;5;51mlibgnome-desktop-3.so.10[0m                    [38;5;34mlibqmi-glib.so.1.3.0[0m                     [38;5;34mlibyubikey.so.0.1.5[0m
+[38;5;34mlibgnome-desktop-3.so.10.0.0[0m                [38;5;51mlibqpdf.so.13[0m                            [38;5;51mlibzapojit-0.0.so.0[0m
+[38;5;51mlibgnomekbd.so.8[0m                            [38;5;34mlibqpdf.so.13.1.2[0m                        [38;5;34mlibzapojit-0.0.so.0.0.0[0m
+[38;5;34mlibgnomekbd.so.8.0.0[0m                        [38;5;51mlibqpol.so.1[0m                             [38;5;51mlibzeitgeist-2.0.so.0[0m
+[38;5;51mlibgnomekbdui.so.8[0m                          [38;5;34mlibqpol.so.1.7[0m                           [38;5;34mlibzeitgeist-2.0.so.0.0.0[0m
+[38;5;34mlibgnomekbdui.so.8.0.0[0m                      [38;5;51mlibqrencode.so.3[0m                         [38;5;51mlibz.so[0m
+[38;5;51mlibgnome-keyring.so.0[0m                       [38;5;34mlibqrencode.so.3.4.2[0m                     [38;5;51mlibz.so.1[0m
+[38;5;34mlibgnome-keyring.so.0.2.0[0m                   [38;5;51mlibQt3Support.so.4[0m                       [38;5;34mlibz.so.1.2.8[0m
+[38;5;51mlibgnome-menu-3.so.0[0m                        [38;5;51mlibQt3Support.so.4.8[0m                     [38;5;27mlksctp-tools[0m
+[38;5;34mlibgnome-menu-3.so.0.0.1[0m                    [38;5;34mlibQt3Support.so.4.8.6[0m                   [38;5;27mllvm[0m
+[38;5;51mlibgnutls-dane.so.0[0m                         [38;5;51mlibQt5Concurrent.so.5[0m                    [38;5;27mlua[0m
+[38;5;34mlibgnutls-dane.so.0.5.0[0m                     [38;5;51mlibQt5Concurrent.so.5.4[0m                  [38;5;27mm17n[0m
+[38;5;51mlibgnutls.so.28[0m                             [38;5;34mlibQt5Concurrent.so.5.4.1[0m                [38;5;27mman-db[0m
+[38;5;34mlibgnutls.so.28.41.6[0m                        [38;5;51mlibQt5Core.so.5[0m                          Mcrt1.o
+[38;5;51mlibgoa-1.0.so.0[0m                             [38;5;51mlibQt5Core.so.5.4[0m                        [38;5;27mmission-control-plugins.0[0m
+[38;5;34mlibgoa-1.0.so.0.0.0[0m                         [38;5;34mlibQt5Core.so.5.4.1[0m                      [38;5;27mModemManager[0m
+[38;5;51mlibgoa-backend-1.0.so.1[0m                     [38;5;51mlibQt5DBus.so.5[0m                          [38;5;27mmozilla[0m
+[38;5;34mlibgoa-backend-1.0.so.1.0.0[0m                 [38;5;51mlibQt5DBus.so.5.4[0m                        [38;5;27mmpich[0m
+[38;5;51mlibgobject-2.0.so.0[0m                         [38;5;34mlibQt5DBus.so.5.4.1[0m                      [38;5;27mmultipath[0m
+[38;5;34mlibgobject-2.0.so.0.4200.1[0m                  [38;5;51mlibQt5Gui.so.5[0m                           [38;5;27mmutter[0m
+[38;5;51mlibgom-1.0.so.0[0m                             [38;5;51mlibQt5Gui.so.5.4[0m                         [38;5;27mnautilus[0m
+[38;5;34mlibgom-1.0.so.0.0.0[0m                         [38;5;34mlibQt5Gui.so.5.4.1[0m                       [38;5;27mNetworkManager[0m
+[38;5;51mlibgomp.so.1[0m                                [38;5;51mlibQt5Network.so.5[0m                       [38;5;27mnss[0m
+[38;5;34mlibgomp.so.1.0.0[0m                            [38;5;51mlibQt5Network.so.5.4[0m                     [38;5;27mnvidia[0m
+[38;5;51mlibgovirt.so.2[0m                              [38;5;34mlibQt5Network.so.5.4.1[0m                   [38;5;27mopenmpi[0m
+[38;5;34mlibgovirt.so.2.1.0[0m                          [38;5;51mlibQt5OpenGL.so.5[0m                        [38;5;27mopenssl[0m
+[38;5;51mlibgpg-error.so.0[0m                           [38;5;51mlibQt5OpenGL.so.5.4[0m                      [38;5;27mopen-vm-tools[0m
+[38;5;34mlibgpg-error.so.0.11.0[0m                      [38;5;34mlibQt5OpenGL.so.5.4.1[0m                    [38;5;27mopenvpn[0m
+[38;5;51mlibgpgme-pthread.so.11[0m                      [38;5;51mlibQt5PrintSupport.so.5[0m                  [38;5;27mp11-kit[0m
+[38;5;34mlibgpgme-pthread.so.11.11.0[0m                 [38;5;51mlibQt5PrintSupport.so.5.4[0m                [38;5;51mp11-kit-proxy.so[0m
+[38;5;51mlibgpgme.so.11[0m                              [38;5;34mlibQt5PrintSupport.so.5.4.1[0m              [38;5;51mp11-kit-trust.so[0m
+[38;5;34mlibgpgme.so.11.11.0[0m                         [38;5;51mlibQt5Qml.so.5[0m                           [38;5;27mpackagekit-backend[0m
+[38;5;27mlibgphoto2[0m                                  [38;5;51mlibQt5Qml.so.5.4[0m                         [38;5;27mpam_pkcs11[0m
+[38;5;27mlibgphoto2_port[0m                             [38;5;34mlibQt5Qml.so.5.4.1[0m                       [38;5;27mpango[0m
+[38;5;51mlibgphoto2_port.so.12[0m                       [38;5;51mlibQt5QuickParticles.so.5[0m                [38;5;27mpcsc[0m
+[38;5;34mlibgphoto2_port.so.12.0.0[0m                   [38;5;51mlibQt5QuickParticles.so.5.4[0m              [38;5;27mPegasus[0m
+[38;5;51mlibgphoto2.so.6[0m                             [38;5;34mlibQt5QuickParticles.so.5.4.1[0m            [38;5;27mperl5[0m
+[38;5;34mlibgphoto2.so.6.0.0[0m                         [38;5;51mlibQt5Quick.so.5[0m                         [38;5;27mpkcs11[0m
+[38;5;51mlibgpm.so.2[0m                                 [38;5;51mlibQt5Quick.so.5.4[0m                       [38;5;27mpkgconfig[0m
+[38;5;34mlibgpm.so.2.1.0[0m                             [38;5;34mlibQt5Quick.so.5.4.1[0m                     [38;5;27mplymouth[0m
+[38;5;27mlibgpod[0m                                     [38;5;51mlibQt5QuickTest.so.5[0m                     [38;5;27mpm-utils[0m
+[38;5;51mlibgpod.so.4[0m                                [38;5;51mlibQt5QuickTest.so.5.4[0m                   [38;5;27mpppd[0m
+[38;5;34mlibgpod.so.4.3.2[0m                            [38;5;34mlibQt5QuickTest.so.5.4.1[0m                 [38;5;27mpulse-6.0[0m
+[38;5;51mlibgraphite2.so.3[0m                           [38;5;51mlibQt5QuickWidgets.so.5[0m                  [38;5;27mpulseaudio[0m
+[38;5;34mlibgraphite2.so.3.0.1[0m                       [38;5;51mlibQt5QuickWidgets.so.5.4[0m                [38;5;27mpurple-2[0m
+[38;5;51mlibgrilo-0.2.so.1[0m                           [38;5;34mlibQt5QuickWidgets.so.5.4.1[0m              [38;5;27mpygtk[0m
+[38;5;34mlibgrilo-0.2.so.1.7.0[0m                       [38;5;51mlibQt5Sql.so.5[0m                           [38;5;27mpython2.7[0m
+[38;5;51mlibgrlnet-0.2.so.0[0m                          [38;5;51mlibQt5Sql.so.5.4[0m                         [38;5;27mpython3.4[0m
+[38;5;34mlibgrlnet-0.2.so.0.1.8[0m                      [38;5;34mlibQt5Sql.so.5.4.1[0m                       [38;5;27mqt4[0m
+[38;5;51mlibgrlpls-0.2.so.0[0m                          [38;5;51mlibQt5Test.so.5[0m                          [38;5;27mqt5[0m
+[38;5;34mlibgrlpls-0.2.so.0.0.3[0m                      [38;5;51mlibQt5Test.so.5.4[0m                        [38;5;27mrealmd[0m
+[38;5;51mlibgsf-1.so.114[0m                             [38;5;34mlibQt5Test.so.5.4.1[0m                      [38;5;27mredland[0m
+[38;5;34mlibgsf-1.so.114.0.29[0m                        [38;5;51mlibQt5Widgets.so.5[0m                       [38;5;27mrhythmbox[0m
+[38;5;51mlibgsm.so.1[0m                                 [38;5;51mlibQt5Widgets.so.5.4[0m                     [38;5;27mrpm-plugins[0m
+[38;5;34mlibgsm.so.1.0.12[0m                            [38;5;34mlibQt5Widgets.so.5.4.1[0m                   [38;5;27mrsocket[0m
+[38;5;51mlibgssapi_krb5.so[0m                           [38;5;51mlibQt5XmlPatterns.so.5[0m                   [38;5;27mrsyslog[0m
+[38;5;51mlibgssapi_krb5.so.2[0m                         [38;5;51mlibQt5XmlPatterns.so.5.4[0m                 [38;5;27mrtkaio[0m
+[38;5;34mlibgssapi_krb5.so.2.2[0m                       [38;5;34mlibQt5XmlPatterns.so.5.4.1[0m               [38;5;27mrygel-2.4[0m
+[38;5;51mlibgssdp-1.0.so.3[0m                           [38;5;51mlibQt5Xml.so.5[0m                           [38;5;27msa[0m
+[38;5;34mlibgssdp-1.0.so.3.0.0[0m                       [38;5;51mlibQt5Xml.so.5.4[0m                         [38;5;27msamba[0m
+[38;5;51mlibgs.so.9[0m                                  [38;5;34mlibQt5Xml.so.5.4.1[0m                       [38;5;27msane[0m
+[38;5;34mlibgs.so.9.15[0m                               [38;5;51mlibQtCLucene.so.4[0m                        [38;5;27msasl2[0m
+[38;5;51mlibgssrpc.so[0m                                [38;5;51mlibQtCLucene.so.4.8[0m                      Scrt1.o
+[38;5;51mlibgssrpc.so.4[0m                              [38;5;34mlibQtCLucene.so.4.8.6[0m                    [38;5;27mseahorse[0m
+[38;5;34mlibgssrpc.so.4.2[0m                            [38;5;51mlibQtCore.so.4[0m                           [38;5;27msecurity[0m
+[38;5;51mlibgstallocators-1.0.so.0[0m                   [38;5;51mlibQtCore.so.4.8[0m                         [38;5;27mseed-gtk3[0m
+[38;5;34mlibgstallocators-1.0.so.0.405.0[0m             [38;5;34mlibQtCore.so.4.8.6[0m                       [38;5;27mshotwell[0m
+[38;5;51mlibgstapp-0.10.so.0[0m                         [38;5;51mlibQtDBus.so.4[0m                           [38;5;27msilc[0m
+[38;5;34mlibgstapp-0.10.so.0.25.0[0m                    [38;5;51mlibQtDBus.so.4.8[0m                         [38;5;27msox[0m
+[38;5;51mlibgstapp-1.0.so.0[0m                          [38;5;34mlibQtDBus.so.4.8.6[0m                       [38;5;27mspeech-dispatcher[0m
+[38;5;34mlibgstapp-1.0.so.0.405.0[0m                    [38;5;51mlibQtDeclarative.so.4[0m                    [38;5;27mspeech-dispatcher-modules[0m
+[38;5;51mlibgstaudio-0.10.so.0[0m                       [38;5;51mlibQtDeclarative.so.4.8[0m                  [38;5;27msse2[0m
+[38;5;34mlibgstaudio-0.10.so.0.25.0[0m                  [38;5;34mlibQtDeclarative.so.4.8.6[0m                [38;5;27msssd[0m
+[38;5;51mlibgstaudio-1.0.so.0[0m                        [38;5;51mlibQtDesignerComponents.so.4[0m             [38;5;27mstoraged[0m
+[38;5;34mlibgstaudio-1.0.so.0.405.0[0m                  [38;5;51mlibQtDesignerComponents.so.4.8[0m           [38;5;27mstunnel[0m
+[38;5;51mlibgstbadbase-1.0.so.0[0m                      [38;5;34mlibQtDesignerComponents.so.4.8.6[0m         [38;5;27msushi[0m
+[38;5;34mlibgstbadbase-1.0.so.0.405.0[0m                [38;5;51mlibQtDesigner.so.4[0m                       [38;5;27msystemtap[0m
+[38;5;51mlibgstbadvideo-1.0.so.0[0m                     [38;5;51mlibQtDesigner.so.4.8[0m                     [38;5;27mtc[0m
+[38;5;34mlibgstbadvideo-1.0.so.0.405.0[0m               [38;5;34mlibQtDesigner.so.4.8.6[0m                   [38;5;27mtcl8.6[0m
+[38;5;51mlibgstbase-0.10.so.0[0m                        [38;5;51mlibQtGui.so.4[0m                            [38;5;27mtelepathy[0m
+[38;5;34mlibgstbase-0.10.so.0.30.0[0m                   [38;5;51mlibQtGui.so.4.8[0m                          [38;5;27mtls[0m
+[38;5;51mlibgstbase-1.0.so.0[0m                         [38;5;34mlibQtGui.so.4.8.6[0m                        [38;5;27mtotem[0m
+[38;5;34mlibgstbase-1.0.so.0.405.0[0m                   [38;5;51mlibQtHelp.so.4[0m                           [38;5;27mtraceevent[0m
+[38;5;51mlibgstbasecamerabinsrc-0.10.so.23[0m           [38;5;51mlibQtHelp.so.4.8[0m                         [38;5;27mtracker-1.0[0m
+[38;5;34mlibgstbasecamerabinsrc-0.10.so.23.0.0[0m       [38;5;34mlibQtHelp.so.4.8.6[0m                       [38;5;27mvdpau[0m
+[38;5;51mlibgstbasecamerabinsrc-1.0.so.0[0m             [38;5;51mlibQtMultimedia.so.4[0m                     [38;5;27mvte-2.90[0m
+[38;5;34mlibgstbasecamerabinsrc-1.0.so.0.405.0[0m       [38;5;51mlibQtMultimedia.so.4.8[0m                   [38;5;27mvte-2.91[0m
+[38;5;51mlibgstbasevideo-0.10.so.23[0m                  [38;5;34mlibQtMultimedia.so.4.8.6[0m                 [38;5;27mwebkit2gtk-4.0[0m
+[38;5;34mlibgstbasevideo-0.10.so.23.0.0[0m              [38;5;51mlibQtNetwork.so.4[0m                        [38;5;27mX11[0m
+[38;5;51mlibgstcdda-0.10.so.0[0m                        [38;5;51mlibQtNetwork.so.4.8[0m                      xml2Conf.sh
+[38;5;34mlibgstcdda-0.10.so.0.25.0[0m                   [38;5;34mlibQtNetwork.so.4.8.6[0m                    [38;5;27mxorg[0m
+[38;5;51mlibgstcheck-1.0.so.0[0m                        [38;5;51mlibQtOpenGL.so.4[0m                         [38;5;27mxtables[0m
+[38;5;34mlibgstcheck-1.0.so.0.405.0[0m                  [38;5;51mlibQtOpenGL.so.4.8[0m
+]0;lchen@ivy:/usr/lib64[lchen@ivy lib64]$ cd nvidia/
+]0;lchen@ivy:/usr/lib64/nvidia[lchen@ivy nvidia]$ ls
+alternate-install-present  [0m[38;5;27mtls[0m  [38;5;27mxorg[0m
+]0;lchen@ivy:/usr/lib64/nvidia[lchen@ivy nvidia]$ cd
+]0;lchen@ivy:/home/lchen[lchen@ivy ~]$ emacs /.[K[K.bashrc[K[K_p
+[?1049h[?12;25h[?1h=[H[2J[49d[K[?1l>[?12l[?25h[?1049l[39;49m[?1049h[?12;25h[?1h=[>0c[H[2J[49d[K[H[?25l[7mFile Edit Options Buffers Tools Lisp-Interaction Help                                                                                  [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m*scratch*   [0m[39;49m[30m[48;5;250m   All L1     (Lisp Interaction) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[H
+[?12l[?25h[?12;25h[49d[?25l(New file)[K[H
+[?12l[?25h[?12;25h[49d[?25l(New file)[K[H[7mFile Edit Options Buffers Tools Help                                                                                                   [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m.bash_p     [0m[39;49m[30m[48;5;250m   All L1     (Fundamental) ----------------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[K[2d[49d[?25l(No files need saving)[H
+[?12l[?25h[?12;25h[49d[K[?1l>[?12l[?25h[?1049l[39;49m]0;lchen@ivy:/home/lchen[lchen@ivy ~]$ emacs .bash_profile
+[?1049h[?12;25h[?1h=[H[2J[49d[K[?1l>[?12l[?25h[?1049l[39;49m[?1049h[?12;25h[?1h=[>0c[H[2J[49d[K[H[?25l[7mFile Edit Options Buffers Tools Lisp-Interaction Help                                                                                  [0m[39;49m[27m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UUU:----F1  [39;49m[1m[30m[48;5;250m*scratch*   [0m[39;49m[30m[48;5;250m   All L1     (Lisp Interaction) -----------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[?25lFor information about GNU Emacs and the GNU system, type C-h C-a.[H
+[?12l[?25h[?12;25h[49d[?25lSetting up indent for shell type bash[K[H
+[?12l[?25h[?12;25h[49d[?25lIndentation variables are now local.[K[H
+[?12l[?25h[?12;25h[49;13H[?25lsetup for shell type bash[H
+[?12l[?25h[?12;25h[49d[?25lIndentation setup for shell type bash[K[H[7mFile Edit Options Buffers Tools Sh-Script Help                                                                                         [0m[39;49m[27m
+[A
+[38;5;124m# .bash_profile                                                                                                                        [39;49m
+[A
+[K
+[38;5;124m# Get the aliases and functions                                                                                                        [39;49m
+[A
+[38;5;129mif[39;49m [ -f ~/.bashrc ]; [38;5;129mthen[39;49m[K
+        [38;5;60m.[39;49m ~/.bashrc[K
+[38;5;129mfi[39;49m[K
+[K
+[38;5;124m# User specific environment and startup programs                                                                                       [39;49m
+[A
+[K
+[38;5;130mPATH[39;49m=/home/rge/mpich2-1.4/BUILD/bin:/opt/mpich2/gnu/bin:$[38;5;130mPATH[39;49m:$[38;5;130mHOME[39;49m/bin:/home/rge/hppac10/powerpack[K
+[38;5;130mPATH[39;49m=/apps/python-2.7.2/bin/:/apps/power-bench:$[38;5;130mPATH[39;49m[K
+[38;5;130mPATH[39;49m=/usr/java/jdk1.6.0_21/bin:$[38;5;130mPATH[39;49m[K
+[38;5;130mPATH[39;49m=/usr/local/hadoop/bin:$[38;5;130mPATH[39;49m[K
+[38;5;130mPATH[39;49m=/home/lchen/mpich2/bin:/home/lchen/mpich2/include:$[38;5;130mPATH[39;49m[K
+[38;5;124m#PATH=/usr/lib64/openmpi/bin:/usr/lib64/openmpi/lib:$PATH                                                                              [39;49m
+[A
+[38;5;130mPATH[39;49m=/usr/local/cuda/bin:$[38;5;130mPATH[39;49m[K
+[38;5;130mPATH[39;49m=/usr/local/ssl/lib:$[38;5;130mPATH[39;49m[K
+[38;5;130mLD_LIBRARY_PATH[39;49m=/usr/local/lib:$[38;5;130mLD_LIBRARY_PATH[39;49m[K
+[38;5;130mLD_LIBRARY_PATH[39;49m=/usr/local/cuda-7.0/lib64:/lib:$[38;5;130mLD_LIBRARY_PATH[39;49m[K
+[38;5;130mLD_LIBRARY_PATH[39;49m=/home/lchen/mygcc/mpc/lib:$[38;5;130mLD_LIBRARY_PATH[39;49m[K
+[38;5;130mLD_LIBRARY_PATH[39;49m=/usr/local/ssl/lib:$[38;5;130mLD_LIBRARY_PATH[39;49m[K
+[38;5;130mLD_LIBRARY_PATH[39;49m=/usr/local/cula/lib64:$[38;5;130mLD_LIBRARY_PATH[39;49m[K
+[38;5;60mexport[39;49m [38;5;130mGDFONTPATH[39;49m=/usr/share/fonts/bitstream-vera[K
+[38;5;60mexport[39;49m PATH[K
+[38;5;60mexport[39;49m LD_LIBRARY_PATH[K
+[38;5;60mexport[39;49m [38;5;130mHADOOPLIB[39;49m=/usr/local/hadoop[K
+[K
+module load cuda/7.0[K
+[38;5;124m#module load compilers/gcc-4.6.2                                                                                                       [39;49m
+[A
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[30m[48;5;250m-UU-:----F1  [39;49m[1m[30m[48;5;250m.bash_profile[0m[39;49m[30m[48;5;250m   All L1     (Shell-script[bash]) --------------------------------------------------------------------------[39;49m
+[A[2d[?12l[?25h[?12;25h[49d[K[48;35H[?25l[30m[48;5;250m4[39;49m[5;1H[?12l[?25h[?12;25h[48;35H[?25l[30m[48;5;250m3[39;49m[4;1H[?12l[?25h[?12;25h[48;35H[?25l[30m[48;5;250m2[39;49m[H
+
+[?12l[?25h[?12;25h[48;35H[?25l[30m[48;5;250m3[39;49m[4;1H[?12l[?25h[?12;25h[48;35H[?25l[30m[48;5;250m4[39;49m[5;1H[?12l[?25h[?12;25h[48;35H[?25l[30m[48;5;250m7[39;49m[8;1H[?12l[?25h[?12;25h[48;35H[?25l[30m[48;5;250m12[39;49m[13;1H[?12l[?25h[?12;25h[48;36H[?25l[30m[48;5;250m3[39;49m[14;1H[?12l[?25h[?12;25h[48;36H[?25l[30m[48;5;250m4[39;49m[15;1H[?12l[?25h[?12;25h[48;36H[?25l[30m[48;5;250m5[39;49m[16;1H[?12l[?25h[?12;25h[48;36H[?25l[30m[48;5;250m6[39;49m[17;1H[?12l[?25h[?12;25h[48;36H[?25l[30m[48;5;250m7[39;49m[18;1H[?12l[?25h[?12;25h[48;36H[?25l[30m[48;5;250m8[39;49m[19;1H[?12l[?25h[?12;25h[48;36H[?25l[30m[48;5;250m9[39;49m[20;1H[?12l[?25h[?12;25h[48;35H[?25l[30m[48;5;250m21[39;49m[22;1H[?12l[?25h[?12;25h[48;36H[?25l[30m[48;5;250m0[39;49m[21;1H[?12l[?25h[?12;25h[48;35H[?25l[30m[48;5;250m19[39;49m[20;1H[?12l[?25h[?12;25h[C[C[C[C[C[C		[C[C[C[C[C[C		[C[C[C[C[C[C		[C[C[C[C[C[C		[C[C[C[C[?25l[1P[48;6H[30m[48;5;250m**[39;49m[20;35H[?12l[?25h[?12;25h[?25l[1P[?12l[?25h[?12;25h[?25l[1P[?12l[?25h[?12;25h[?25l[1P[?12l[?25h[?12;25h[49;1H[?25l[38;5;20mSave file /home/lchen/.bash_profile? (y, n, !, ., q, C-r, d or C-h) [39;49m[?12l[?25h[?12;25h[?25lSave file /home/lchen/.bash_profile? (y, n, !, ., q, C-r, d or C-h) y[?12l[?25h[?12;25h[49;4H[?25ling file /home/lchen/.bash_profile...[K[20;32H[?12l[?25h[?12;25h[49;1H[?25lWrote /home/lchen/.bash_profile[K[20d[?12l[?25h[?12;25h[49;1H[K[20;32H[49;1H[K[?1l>[?12l[?25h[?1049l[39;49m]0;lchen@ivy:/home/lchen[lchen@ivy ~]$ source .bash_profile
+]0;lchen@ivy:/home/lchen[lchen@ivy ~]$ make[K[K[K[Kcd mag[K[K[KMAGMA/magma-1.[K[K[K[K[K[K[K[Ktest/magma-1.6.1_timing/
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing[lchen@ivy magma-1.6.1_timing]$ cd sc[K[Kscripts/
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ ./MAGMA_LU_GPUDVFS_ivy.sh 
+send out message: 24 49 /home/lchen/MAGMA/test/magma-1.6.1_timing/results
+send out message: 20 26 MAGMA_LU_GPUDVFS.total.pwr
+./MAGMA_LU_GPUDVFS_ivy.sh: line 17: /usr/local/bin/rapl: No such file or directory
+/home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf: error while loading shared libraries: libcublas.so.7.0: cannot open shared object file: No such file or directory
+0.00user 0.00system 0:00.00elapsed 82%CPU (0avgtext+0avgdata 444maxresident)k
+0inputs+0outputs (0major+31minor)pagefaults 0swaps
+send out message: 22 3 log
+./MAGMA_LU_GPUDVFS_ivy.sh: line 45: kill: (13008) - No such process
+]0;lchen@ivy:/home/lchen/MAGMA/test/magma-1.6.1_timing/scripts[lchen@ivy scripts]$ cd /.[K[K/usr/local/bin/
+]0;lchen@ivy:/usr/local/bin[lchen@ivy bin]$ ls
+[0m[38;5;34mctags[0m  [38;5;34mebrowse[0m  [38;5;51memacs[0m  [38;5;34memacs-24.5[0m  [38;5;34memacsclient[0m  [38;5;34metags[0m  [38;5;34mgrep-changelog[0m
+]0;lchen@ivy:/usr/local/bin[lchen@ivy bin]$ ls
+[0m[38;5;34mctags[0m  [38;5;34mebrowse[0m  [38;5;51memacs[0m  [38;5;34memacs-24.5[0m  [38;5;34memacsclient[0m  [38;5;34metags[0m  [38;5;34mgrep-changelog[0m
+]0;lchen@ivy:/usr/local/bin[lchen@ivy bin]$ locate rapl
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/README
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/Rules.rapl
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/linux-rapl.c
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/tests
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/utils
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/tests/Makefile
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/tests/rapl_basic.c
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/tests/rapl_overflow.c
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/utils/Makefile
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/utils/README
+/data/lchen/Adagio/papi-5.3.0/src/components/rapl/utils/rapl_plot.c
+/data/lchen/PowerTOP/powertop-2.5/src/cpu/cpu_rapl_device.cpp
+/data/lchen/PowerTOP/powertop-2.5/src/cpu/cpu_rapl_device.h
+/data/lchen/PowerTOP/powertop-2.5/src/cpu/dram_rapl_device.cpp
+/data/lchen/PowerTOP/powertop-2.5/src/cpu/dram_rapl_device.h
+/data/lchen/PowerTOP/powertop-2.5/src/cpu/rapl
+/data/lchen/PowerTOP/powertop-2.5/src/cpu/rapl/rapl_interface.cpp
+/data/lchen/PowerTOP/powertop-2.5/src/cpu/rapl/rapl_interface.h
+/data/lchen/PowerTOP/powertop-2.5/src/devices/gpu_rapl_device.cpp
+/data/lchen/PowerTOP/powertop-2.5/src/devices/gpu_rapl_device.h
+/data/rge/rapl.log
+/data/rge/bin.ivy/MU_powergadet/librapl.a
+/data/rge/bin.ivy/MU_powergadet/librapl.so
+/data/rge/bin.ivy/MU_powergadet/rapl.c
+/data/rge/bin.ivy/MU_powergadet/rapl.h
+/data/rge/bin.ivy/MU_powergadet/rapl.o
+/data/rge/bin.ivy/power_gadget/librapl.a
+/data/rge/bin.ivy/power_gadget/librapl.so
+/data/rge/bin.ivy/power_gadget/rapl.c
+/data/rge/bin.ivy/power_gadget/rapl.h
+/data/rge/bin.ivy/power_gadget/rapl.o
+/data/rge/bin.ivy/power_gov_bin/librapl.a
+/data/rge/bin.ivy/power_gov_bin/librapl.so
+/data/rge/bin.ivy/power_gov_bin/rapl.c
+/data/rge/bin.ivy/power_gov_bin/rapl.h
+/data/rge/bin.ivy/power_gov_bin/rapl.o
+/data/rge/projects/PAGPU/implementations/rapl-ge
+/data/rge/projects/PAGPU/implementations/rapl-ge.c
+/data/rge/projects/PAGPU/implementations/rapl-ge.c.bak
+/data/rge/projects/PAGPU/implementations/rapl.log
+/data/rge/projects/PAGPU/implementations/rapl_msr
+/data/rge/projects/PAGPU/implementations/rapl_msr.c
+/data/rge/projects/PAGPU/implementations/rapl_msr_ge.c
+/data/rge/projects/PAGPU/sandy/rapl
+/data/rge/projects/PAGPU/sandy/rapl-ge
+/data/rge/projects/PAGPU/sandy/rapl-ge.c
+/data/rge/projects/PAGPU/sandy/rapl-ivy
+/data/rge/projects/PAGPU/sandy/rapl.cpp
+/data/rge/projects/PAGPU/sandy/rapl.tgz
+/data/rge/projects/PAGPU/sandy/rapl_msr.c
+/data/rge/software/librapl-master
+/data/rge/software/librapl_patki
+/data/rge/software/rapl-msr
+/data/rge/software/librapl-master/.git
+/data/rge/software/librapl-master/libmsr
+/data/rge/software/librapl-master/libmsr/.gitignore
+/data/rge/software/librapl-master/libmsr/Makefile
+/data/rge/software/librapl-master/libmsr/README
+/data/rge/software/librapl-master/libmsr/blr_util.c
+/data/rge/software/librapl-master/libmsr/blr_util.h
+/data/rge/software/librapl-master/libmsr/blr_util.o
+/data/rge/software/librapl-master/libmsr/examples
+/data/rge/software/librapl-master/libmsr/lib
+/data/rge/software/librapl-master/libmsr/localConfig.d
+/data/rge/software/librapl-master/libmsr/makeMSR.out
+/data/rge/software/librapl-master/libmsr/mpi
+/data/rge/software/librapl-master/libmsr/msr_clocks.c
+/data/rge/software/librapl-master/libmsr/msr_clocks.h
+/data/rge/software/librapl-master/libmsr/msr_clocks.o
+/data/rge/software/librapl-master/libmsr/msr_common.h
+/data/rge/software/librapl-master/libmsr/msr_core.c
+/data/rge/software/librapl-master/libmsr/msr_core.h
+/data/rge/software/librapl-master/libmsr/msr_core.o
+/data/rge/software/librapl-master/libmsr/msr_opt.c
+/data/rge/software/librapl-master/libmsr/msr_opt.h
+/data/rge/software/librapl-master/libmsr/msr_opt.o
+/data/rge/software/librapl-master/libmsr/msr_pebs.c
+/data/rge/software/librapl-master/libmsr/msr_pebs.h
+/data/rge/software/librapl-master/libmsr/msr_pebs.o
+/data/rge/software/librapl-master/libmsr/msr_rapl.c
+/data/rge/software/librapl-master/libmsr/msr_rapl.h
+/data/rge/software/librapl-master/libmsr/msr_rapl.o
+/data/rge/software/librapl-master/libmsr/msr_signal.c
+/data/rge/software/librapl-master/libmsr/msr_signal.h
+/data/rge/software/librapl-master/libmsr/msr_signal.o
+/data/rge/software/librapl-master/libmsr/msr_turbo.c
+/data/rge/software/librapl-master/libmsr/msr_turbo.h
+/data/rge/software/librapl-master/libmsr/msr_turbo.o
+/data/rge/software/librapl-master/libmsr/rapl_timing.R
+/data/rge/software/librapl-master/libmsr/test
+/data/rge/software/librapl-master/libmsr/time-1.7.tar.gz
+/data/rge/software/librapl-master/libmsr/examples/Makefile
+/data/rge/software/librapl-master/libmsr/examples/hello
+/data/rge/software/librapl-master/libmsr/examples/hello.c
+/data/rge/software/librapl-master/libmsr/examples/makefile
+/data/rge/software/librapl-master/libmsr/examples/rapl-dummy.c
+/data/rge/software/librapl-master/libmsr/examples/sandy.local_rapl_0.rapl.out
+/data/rge/software/librapl-master/libmsr/examples/sandy.local_rapl_1.rapl.out
+/data/rge/software/librapl-master/libmsr/examples/test-exec.c
+/data/rge/software/librapl-master/libmsr/lib/libmsr.so
+/data/rge/software/librapl-master/libmsr/lib/librapl.so
+/data/rge/software/librapl-master/libmsr/localConfig.d/localConfig.template
+/data/rge/software/librapl-master/libmsr/localConfig.d/pedestalConfig
+/data/rge/software/librapl-master/libmsr/localConfig.d/tlcc2Config
+/data/rge/software/librapl-master/libmsr/mpi/.gitignore
+/data/rge/software/librapl-master/libmsr/mpi/Makefile
+/data/rge/software/librapl-master/libmsr/mpi/harness.c
+/data/rge/software/librapl-master/libmsr/mpi/makeRAPL.out
+/data/rge/software/librapl-master/libmsr/mpi/noturbo.w
+/data/rge/software/librapl-master/libmsr/mpi/query.out
+/data/rge/software/librapl-master/libmsr/mpi/query.w
+/data/rge/software/librapl-master/libmsr/mpi/rapl.c
+/data/rge/software/librapl-master/libmsr/mpi/rapl.o
+/data/rge/software/librapl-master/libmsr/mpi/rapl.w
+/data/rge/software/librapl-master/libmsr/mpi/run.sh
+/data/rge/software/librapl-master/libmsr/mpi/wrap.py
+/data/rge/software/librapl_patki/.git
+/data/rge/software/librapl_patki/libmsr
+/data/rge/software/librapl_patki/libmsr/.gitignore
+/data/rge/software/librapl_patki/libmsr/Makefile
+/data/rge/software/librapl_patki/libmsr/README
+/data/rge/software/librapl_patki/libmsr/blr_util.c
+/data/rge/software/librapl_patki/libmsr/blr_util.h
+/data/rge/software/librapl_patki/libmsr/blr_util.o
+/data/rge/software/librapl_patki/libmsr/examples
+/data/rge/software/librapl_patki/libmsr/localConfig.d
+/data/rge/software/librapl_patki/libmsr/makeMSR.out
+/data/rge/software/librapl_patki/libmsr/mpi
+/data/rge/software/librapl_patki/libmsr/msr_clocks.c
+/data/rge/software/librapl_patki/libmsr/msr_clocks.h
+/data/rge/software/librapl_patki/libmsr/msr_clocks.o
+/data/rge/software/librapl_patki/libmsr/msr_common.h
+/data/rge/software/librapl_patki/libmsr/msr_core.c
+/data/rge/software/librapl_patki/libmsr/msr_core.h
+/data/rge/software/librapl_patki/libmsr/msr_core.o
+/data/rge/software/librapl_patki/libmsr/msr_opt.c
+/data/rge/software/librapl_patki/libmsr/msr_opt.h
+/data/rge/software/librapl_patki/libmsr/msr_opt.o
+/data/rge/software/librapl_patki/libmsr/msr_pebs.c
+/data/rge/software/librapl_patki/libmsr/msr_pebs.h
+/data/rge/software/librapl_patki/libmsr/msr_pebs.o
+/data/rge/software/librapl_patki/libmsr/msr_rapl.c
+/data/rge/software/librapl_patki/libmsr/msr_rapl.h
+/data/rge/software/librapl_patki/libmsr/msr_rapl.o
+/data/rge/software/librapl_patki/libmsr/msr_signal.c
+/data/rge/software/librapl_patki/libmsr/msr_signal.h
+/data/rge/software/librapl_patki/libmsr/msr_signal.o
+/data/rge/software/librapl_patki/libmsr/msr_turbo.c
+/data/rge/software/librapl_patki/libmsr/msr_turbo.h
+/data/rge/software/librapl_patki/libmsr/msr_turbo.o
+/data/rge/software/librapl_patki/libmsr/rapl_timing.R
+/data/rge/software/librapl_patki/libmsr/test
+/data/rge/software/librapl_patki/libmsr/time-1.7.tar.gz
+/data/rge/software/librapl_patki/libmsr/examples/Makefile
+/data/rge/software/librapl_patki/libmsr/examples/rapl-dummy.c
+/data/rge/software/librapl_patki/libmsr/examples/test-exec.c
+/data/rge/software/librapl_patki/libmsr/localConfig.d/localConfig.template
+/data/rge/software/librapl_patki/libmsr/localConfig.d/pedestalConfig
+/data/rge/software/librapl_patki/libmsr/localConfig.d/tlcc2Config
+/data/rge/software/librapl_patki/libmsr/mpi/.gitignore
+/data/rge/software/librapl_patki/libmsr/mpi/Makefile
+/data/rge/software/librapl_patki/libmsr/mpi/harness.c
+/data/rge/software/librapl_patki/libmsr/mpi/makeRAPL.out
+/data/rge/software/librapl_patki/libmsr/mpi/noturbo.w
+/data/rge/software/librapl_patki/libmsr/mpi/query.out
+/data/rge/software/librapl_patki/libmsr/mpi/query.w
+/data/rge/software/librapl_patki/libmsr/mpi/rapl.w
+/data/rge/software/librapl_patki/libmsr/mpi/run.sh
+/data/rge/software/librapl_patki/libmsr/mpi/wrap.py
+/data/rge/software/mu_power_gadget/librapl.a
+/data/rge/software/mu_power_gadget/librapl.so
+/data/rge/software/mu_power_gadget/rapl.c
+/data/rge/software/mu_power_gadget/rapl.h
+/data/rge/software/mu_power_gadget/rapl.o
+/data/rge/software/power_gadget/librapl.a
+/data/rge/software/power_gadget/librapl.so
+/data/rge/software/power_gadget/rapl.c
+/data/rge/software/power_gadget/rapl.h
+/data/rge/software/power_gadget/rapl.o
+/data/rge/software/power_gov_bin/librapl.a
+/data/rge/software/power_gov_bin/librapl.so
+/data/rge/software/rapl-msr/rapl-read.c
+/data/rge/software/rapl-msr/rapl_msr
+/data/rge/software/rapl-msr/rapl_msr.c
+/data/rge/software-benchmarks/NPB3.3/rapl.log
+/data/rge/temp/rapl.log
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/README
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/Rules.rapl
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/linux-rapl.c
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/tests
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/utils
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/tests/Makefile
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/tests/rapl_basic.c
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/tests/rapl_overflow.c
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/utils/Makefile
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/utils/README
+/home/lchen/Adagio/papi-5.3.0/src/components/rapl/utils/rapl_plot.c
+/home/lchen/PowerTOP/powertop-2.5/src/cpu/cpu_rapl_device.cpp
+/home/lchen/PowerTOP/powertop-2.5/src/cpu/cpu_rapl_device.h
+/home/lchen/PowerTOP/powertop-2.5/src/cpu/dram_rapl_device.cpp
+/home/lchen/PowerTOP/powertop-2.5/src/cpu/dram_rapl_device.h
+/home/lchen/PowerTOP/powertop-2.5/src/cpu/rapl
+/home/lchen/PowerTOP/powertop-2.5/src/cpu/rapl/rapl_interface.cpp
+/home/lchen/PowerTOP/powertop-2.5/src/cpu/rapl/rapl_interface.h
+/home/lchen/PowerTOP/powertop-2.5/src/devices/gpu_rapl_device.cpp
+/home/lchen/PowerTOP/powertop-2.5/src/devices/gpu_rapl_device.h
+/home/rge/rapl.log
+/home/rge/bin.ivy/MU_powergadet/librapl.a
+/home/rge/bin.ivy/MU_powergadet/librapl.so
+/home/rge/bin.ivy/MU_powergadet/rapl.c
+/home/rge/bin.ivy/MU_powergadet/rapl.h
+/home/rge/bin.ivy/MU_powergadet/rapl.o
+/home/rge/bin.ivy/power_gadget/librapl.a
+/home/rge/bin.ivy/power_gadget/librapl.so
+/home/rge/bin.ivy/power_gadget/rapl.c
+/home/rge/bin.ivy/power_gadget/rapl.h
+/home/rge/bin.ivy/power_gadget/rapl.o
+/home/rge/bin.ivy/power_gov_bin/librapl.a
+/home/rge/bin.ivy/power_gov_bin/librapl.so
+/home/rge/bin.ivy/power_gov_bin/rapl.c
+/home/rge/bin.ivy/power_gov_bin/rapl.h
+/home/rge/bin.ivy/power_gov_bin/rapl.o
+/home/rge/projects/PAGPU/implementations/rapl-ge
+/home/rge/projects/PAGPU/implementations/rapl-ge.c
+/home/rge/projects/PAGPU/implementations/rapl-ge.c.bak
+/home/rge/projects/PAGPU/implementations/rapl.log
+/home/rge/projects/PAGPU/implementations/rapl_msr
+/home/rge/projects/PAGPU/implementations/rapl_msr.c
+/home/rge/projects/PAGPU/implementations/rapl_msr_ge.c
+/home/rge/projects/PAGPU/sandy/rapl
+/home/rge/projects/PAGPU/sandy/rapl-ge
+/home/rge/projects/PAGPU/sandy/rapl-ge.c
+/home/rge/projects/PAGPU/sandy/rapl-ivy
+/home/rge/projects/PAGPU/sandy/rapl.cpp
+/home/rge/projects/PAGPU/sandy/rapl.tgz
+/home/rge/projects/PAGPU/sandy/rapl_msr.c
+/home/rge/software/librapl-master
+/home/rge/software/librapl_patki
+/home/rge/software/rapl-msr
+/home/rge/software/librapl-master/.git
+/home/rge/software/librapl-master/libmsr
+/home/rge/software/librapl-master/libmsr/.gitignore
+/home/rge/software/librapl-master/libmsr/Makefile
+/home/rge/software/librapl-master/libmsr/README
+/home/rge/software/librapl-master/libmsr/blr_util.c
+/home/rge/software/librapl-master/libmsr/blr_util.h
+/home/rge/software/librapl-master/libmsr/blr_util.o
+/home/rge/software/librapl-master/libmsr/examples
+/home/rge/software/librapl-master/libmsr/lib
+/home/rge/software/librapl-master/libmsr/localConfig.d
+/home/rge/software/librapl-master/libmsr/makeMSR.out
+/home/rge/software/librapl-master/libmsr/mpi
+/home/rge/software/librapl-master/libmsr/msr_clocks.c
+/home/rge/software/librapl-master/libmsr/msr_clocks.h
+/home/rge/software/librapl-master/libmsr/msr_clocks.o
+/home/rge/software/librapl-master/libmsr/msr_common.h
+/home/rge/software/librapl-master/libmsr/msr_core.c
+/home/rge/software/librapl-master/libmsr/msr_core.h
+/home/rge/software/librapl-master/libmsr/msr_core.o
+/home/rge/software/librapl-master/libmsr/msr_opt.c
+/home/rge/software/librapl-master/libmsr/msr_opt.h
+/home/rge/software/librapl-master/libmsr/msr_opt.o
+/home/rge/software/librapl-master/libmsr/msr_pebs.c
+/home/rge/software/librapl-master/libmsr/msr_pebs.h
+/home/rge/software/librapl-master/libmsr/msr_pebs.o
+/home/rge/software/librapl-master/libmsr/msr_rapl.c
+/home/rge/software/librapl-master/libmsr/msr_rapl.h
+/home/rge/software/librapl-master/libmsr/msr_rapl.o
+/home/rge/software/librapl-master/libmsr/msr_signal.c
+/home/rge/software/librapl-master/libmsr/msr_signal.h
+/home/rge/software/librapl-master/libmsr/msr_signal.o
+/home/rge/software/librapl-master/libmsr/msr_turbo.c
+/home/rge/software/librapl-master/libmsr/msr_turbo.h
+/home/rge/software/librapl-master/libmsr/msr_turbo.o
+/home/rge/software/librapl-master/libmsr/rapl_timing.R
+/home/rge/software/librapl-master/libmsr/test
+/home/rge/software/librapl-master/libmsr/time-1.7.tar.gz
+/home/rge/software/librapl-master/libmsr/examples/Makefile
+/home/rge/software/librapl-master/libmsr/examples/hello
+/home/rge/software/librapl-master/libmsr/examples/hello.c
+/home/rge/software/librapl-master/libmsr/examples/makefile
+/home/rge/software/librapl-master/libmsr/examples/rapl-dummy.c
+/home/rge/software/librapl-master/libmsr/examples/sandy.local_rapl_0.rapl.out
+/home/rge/software/librapl-master/libmsr/examples/sandy.local_rapl_1.rapl.out
+/home/rge/software/librapl-master/libmsr/examples/test-exec.c
+/home/rge/software/librapl-master/libmsr/lib/libmsr.so
+/home/rge/software/librapl-master/libmsr/lib/librapl.so
+/home/rge/software/librapl-master/libmsr/localConfig.d/localConfig.template
+/home/rge/software/librapl-master/libmsr/localConfig.d/pedestalConfig
+/home/rge/software/librapl-master/libmsr/localConfig.d/tlcc2Config
+/home/rge/software/librapl-master/libmsr/mpi/.gitignore
+/home/rge/software/librapl-master/libmsr/mpi/Makefile
+/home/rge/software/librapl-master/libmsr/mpi/harness.c
+/home/rge/software/librapl-master/libmsr/mpi/makeRAPL.out
+/home/rge/software/librapl-master/libmsr/mpi/noturbo.w
+/home/rge/software/librapl-master/libmsr/mpi/query.out
+/home/rge/software/librapl-master/libmsr/mpi/query.w
+/home/rge/software/librapl-master/libmsr/mpi/rapl.c
+/home/rge/software/librapl-master/libmsr/mpi/rapl.o
+/home/rge/software/librapl-master/libmsr/mpi/rapl.w
+/home/rge/software/librapl-master/libmsr/mpi/run.sh
+/home/rge/software/librapl-master/libmsr/mpi/wrap.py
+/home/rge/software/librapl_patki/.git
+/home/rge/software/librapl_patki/libmsr
+/home/rge/software/librapl_patki/libmsr/.gitignore
+/home/rge/software/librapl_patki/libmsr/Makefile
+/home/rge/software/librapl_patki/libmsr/README
+/home/rge/software/librapl_patki/libmsr/blr_util.c
+/home/rge/software/librapl_patki/libmsr/blr_util.h
+/home/rge/software/librapl_patki/libmsr/blr_util.o
+/home/rge/software/librapl_patki/libmsr/examples
+/home/rge/software/librapl_patki/libmsr/localConfig.d
+/home/rge/software/librapl_patki/libmsr/makeMSR.out
+/home/rge/software/librapl_patki/libmsr/mpi
+/home/rge/software/librapl_patki/libmsr/msr_clocks.c
+/home/rge/software/librapl_patki/libmsr/msr_clocks.h
+/home/rge/software/librapl_patki/libmsr/msr_clocks.o
+/home/rge/software/librapl_patki/libmsr/msr_common.h
+/home/rge/software/librapl_patki/libmsr/msr_core.c
+/home/rge/software/librapl_patki/libmsr/msr_core.h
+/home/rge/software/librapl_patki/libmsr/msr_core.o
+/home/rge/software/librapl_patki/libmsr/msr_opt.c
+/home/rge/software/librapl_patki/libmsr/msr_opt.h
+/home/rge/software/librapl_patki/libmsr/msr_opt.o
+/home/rge/software/librapl_patki/libmsr/msr_pebs.c
+/home/rge/software/librapl_patki/libmsr/msr_pebs.h
+/home/rge/software/librapl_patki/libmsr/msr_pebs.o
+/home/rge/software/librapl_patki/libmsr/msr_rapl.c
+/home/rge/software/librapl_patki/libmsr/msr_rapl.h
+/home/rge/software/librapl_patki/libmsr/msr_rapl.o
+/home/rge/software/librapl_patki/libmsr/msr_signal.c
+/home/rge/software/librapl_patki/libmsr/msr_signal.h
+/home/rge/software/librapl_patki/libmsr/msr_signal.o
+/home/rge/software/librapl_patki/libmsr/msr_turbo.c
+/home/rge/software/librapl_patki/libmsr/msr_turbo.h
+/home/rge/software/librapl_patki/libmsr/msr_turbo.o
+/home/rge/software/librapl_patki/libmsr/rapl_timing.R
+/home/rge/software/librapl_patki/libmsr/test
+/home/rge/software/librapl_patki/libmsr/time-1.7.tar.gz
+/home/rge/software/librapl_patki/libmsr/examples/Makefile
+/home/rge/software/librapl_patki/libmsr/examples/rapl-dummy.c
+/home/rge/software/librapl_patki/libmsr/examples/test-exec.c
+/home/rge/software/librapl_patki/libmsr/localConfig.d/localConfig.template
+/home/rge/software/librapl_patki/libmsr/localConfig.d/pedestalConfig
+/home/rge/software/librapl_patki/libmsr/localConfig.d/tlcc2Config
+/home/rge/software/librapl_patki/libmsr/mpi/.gitignore
+/home/rge/software/librapl_patki/libmsr/mpi/Makefile
+/home/rge/software/librapl_patki/libmsr/mpi/harness.c
+/home/rge/software/librapl_patki/libmsr/mpi/makeRAPL.out
+/home/rge/software/librapl_patki/libmsr/mpi/noturbo.w
+/home/rge/software/librapl_patki/libmsr/mpi/query.out
+/home/rge/software/librapl_patki/libmsr/mpi/query.w
+/home/rge/software/librapl_patki/libmsr/mpi/rapl.w
+/home/rge/software/librapl_patki/libmsr/mpi/run.sh
+/home/rge/software/librapl_patki/libmsr/mpi/wrap.py
+/home/rge/software/mu_power_gadget/librapl.a
+/home/rge/software/mu_power_gadget/librapl.so
+/home/rge/software/mu_power_gadget/rapl.c
+/home/rge/software/mu_power_gadget/rapl.h
+/home/rge/software/mu_power_gadget/rapl.o
+/home/rge/software/power_gadget/librapl.a
+/home/rge/software/power_gadget/librapl.so
+/home/rge/software/power_gadget/rapl.c
+/home/rge/software/power_gadget/rapl.h
+/home/rge/software/power_gadget/rapl.o
+/home/rge/software/power_gov_bin/librapl.a
+/home/rge/software/power_gov_bin/librapl.so
+/home/rge/software/rapl-msr/rapl-read.c
+/home/rge/software/rapl-msr/rapl_msr
+/home/rge/software/rapl-msr/rapl_msr.c
+/home/rge/software-benchmarks/NPB3.3/rapl.log
+/home/rge/temp/rapl.log
+/opt/power-bench/rapl
+/usr/lib/modules/4.0.4/kernel/drivers/powercap/intel_rapl.ko
+/usr/lib/modules/4.0.4-202.fc21.x86_64/kernel/drivers/powercap/intel_rapl.ko.xz
+/usr/lib64/libreoffice/program/libexpwraplo.so
+/usr/lib64/libreoffice/program/libmozbootstraplo.so
+/usr/lib64/libreoffice/ure/lib/libbootstraplo.so
+/usr/src/kernels/3.19.7-200.fc21.x86_64+debug/include/config/intel/rapl.h
+/usr/src/kernels/4.0.4-202.fc21.x86_64/include/config/intel/rapl.h
+/usr/src/kernels/linux-4.0.4/.tmp_versions/intel_rapl.mod
+/usr/src/kernels/linux-4.0.4/arch/x86/kernel/cpu/.perf_event_intel_rapl.o.cmd
+/usr/src/kernels/linux-4.0.4/arch/x86/kernel/cpu/perf_event_intel_rapl.c
+/usr/src/kernels/linux-4.0.4/arch/x86/kernel/cpu/perf_event_intel_rapl.o
+/usr/src/kernels/linux-4.0.4/drivers/powercap/.in

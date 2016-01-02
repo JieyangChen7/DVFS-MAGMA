@@ -1,0 +1,12 @@
+#!/bin/bash
+#PBS -N MAGMA_Cholesky
+#PBS -l nodes=1:ppn=16:sandy:gpus=2
+#PBS -l walltime=29:29:29
+#PBS -e $PBS_JOBNAME-$PBS_JOBID.err
+#PBS -o $PBS_JOBNAME-$PBS_JOBID.out
+#PBS -V
+cd $PBS_O_WORKDIR
+
+module load cuda/5.0
+
+./scripts/MAGMA_Cholesky.sh

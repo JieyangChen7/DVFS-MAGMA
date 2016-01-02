@@ -1,0 +1,471 @@
+send out message: 24 37 /home/lchen/MAGMA/magma-1.6.1/results
+send out message: 20 26 MAGMA_LU_GPUDVFS.total.pwr
+MAGMA 1.6.1  compiled for CUDA capability >= 3.0
+CUDA runtime 5000, driver 6050. MAGMA not compiled with OpenMP. 
+ndevices 1
+device 0: Tesla K20c, 705.5 MHz clock, 4799.6 MB memory, capability 3.5
+Usage: /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf [options] [-h|--help]
+
+ngpu = 1, uplo = Lower
+    N   CPU GFlop/s (sec)   GPU GFlop/s (sec)   ||R_magma - R_lapack||_F / ||R_lapack||_F
+========================================================
+init_time = 0.813112
+iter 0: cpu_time_cuda = 0.000324
+iter 0: gpu_time_dsyrk_cuda = 0.000007
+iter 0: gpu_time_dgemm_cuda = 0.000007
+iter 0: gpu_time_dtrsm_cuda = 0.001002
+iter 0: upload_copy_time1_cuda = 0.000692
+iter 0: download_copy_time1_cuda = 0.000063
+iter 0: upload_copy_time2_cuda = 0.000037
+iter 0: download_copy_time2_cuda = 0.000002
+
+iter 1: cpu_time_cuda = 0.000237
+iter 1: gpu_time_dsyrk_cuda = 0.000072
+iter 1: gpu_time_dgemm_cuda = 0.000249
+iter 1: gpu_time_dtrsm_cuda = 0.000947
+iter 1: upload_copy_time1_cuda = 0.000719
+iter 1: download_copy_time1_cuda = 0.000048
+iter 1: upload_copy_time2_cuda = 0.000044
+iter 1: download_copy_time2_cuda = 0.000047
+
+iter 2: cpu_time_cuda = 0.000240
+iter 2: gpu_time_dsyrk_cuda = 0.000089
+iter 2: gpu_time_dgemm_cuda = 0.000370
+iter 2: gpu_time_dtrsm_cuda = 0.000930
+iter 2: upload_copy_time1_cuda = 0.000697
+iter 2: download_copy_time1_cuda = 0.000047
+iter 2: upload_copy_time2_cuda = 0.000043
+iter 2: download_copy_time2_cuda = 0.000074
+
+iter 3: cpu_time_cuda = 0.000225
+iter 3: gpu_time_dsyrk_cuda = 0.000110
+iter 3: gpu_time_dgemm_cuda = 0.000492
+iter 3: gpu_time_dtrsm_cuda = 0.000923
+iter 3: upload_copy_time1_cuda = 0.000689
+iter 3: download_copy_time1_cuda = 0.000047
+iter 3: upload_copy_time2_cuda = 0.000043
+iter 3: download_copy_time2_cuda = 0.000107
+
+iter 4: cpu_time_cuda = 0.000228
+iter 4: gpu_time_dsyrk_cuda = 0.000137
+iter 4: gpu_time_dgemm_cuda = 0.000613
+iter 4: gpu_time_dtrsm_cuda = 0.000926
+iter 4: upload_copy_time1_cuda = 0.000670
+iter 4: download_copy_time1_cuda = 0.000047
+iter 4: upload_copy_time2_cuda = 0.000044
+iter 4: download_copy_time2_cuda = 0.000142
+
+iter 5: cpu_time_cuda = 0.000219
+iter 5: gpu_time_dsyrk_cuda = 0.000153
+iter 5: gpu_time_dgemm_cuda = 0.000730
+iter 5: gpu_time_dtrsm_cuda = 0.000923
+iter 5: upload_copy_time1_cuda = 0.000663
+iter 5: download_copy_time1_cuda = 0.000048
+iter 5: upload_copy_time2_cuda = 0.000043
+iter 5: download_copy_time2_cuda = 0.000168
+
+iter 6: cpu_time_cuda = 0.000223
+iter 6: gpu_time_dsyrk_cuda = 0.000173
+iter 6: gpu_time_dgemm_cuda = 0.000847
+iter 6: gpu_time_dtrsm_cuda = 0.000915
+iter 6: upload_copy_time1_cuda = 0.000641
+iter 6: download_copy_time1_cuda = 0.000048
+iter 6: upload_copy_time2_cuda = 0.000043
+iter 6: download_copy_time2_cuda = 0.000193
+
+iter 7: cpu_time_cuda = 0.000217
+iter 7: gpu_time_dsyrk_cuda = 0.000194
+iter 7: gpu_time_dgemm_cuda = 0.000949
+iter 7: gpu_time_dtrsm_cuda = 0.000900
+iter 7: upload_copy_time1_cuda = 0.000627
+iter 7: download_copy_time1_cuda = 0.000047
+iter 7: upload_copy_time2_cuda = 0.000043
+iter 7: download_copy_time2_cuda = 0.000220
+
+iter 8: cpu_time_cuda = 0.000218
+iter 8: gpu_time_dsyrk_cuda = 0.000211
+iter 8: gpu_time_dgemm_cuda = 0.001069
+iter 8: gpu_time_dtrsm_cuda = 0.000909
+iter 8: upload_copy_time1_cuda = 0.000623
+iter 8: download_copy_time1_cuda = 0.000048
+iter 8: upload_copy_time2_cuda = 0.000043
+iter 8: download_copy_time2_cuda = 0.000255
+
+iter 9: cpu_time_cuda = 0.000227
+iter 9: gpu_time_dsyrk_cuda = 0.000236
+iter 9: gpu_time_dgemm_cuda = 0.001043
+iter 9: gpu_time_dtrsm_cuda = 0.000880
+iter 9: upload_copy_time1_cuda = 0.000601
+iter 9: download_copy_time1_cuda = 0.000048
+iter 9: upload_copy_time2_cuda = 0.000044
+iter 9: download_copy_time2_cuda = 0.000280
+
+iter 10: cpu_time_cuda = 0.000219
+iter 10: gpu_time_dsyrk_cuda = 0.000255
+iter 10: gpu_time_dgemm_cuda = 0.001312
+iter 10: gpu_time_dtrsm_cuda = 0.000886
+iter 10: upload_copy_time1_cuda = 0.000587
+iter 10: download_copy_time1_cuda = 0.000047
+iter 10: upload_copy_time2_cuda = 0.000043
+iter 10: download_copy_time2_cuda = 0.000316
+
+iter 11: cpu_time_cuda = 0.000219
+iter 11: gpu_time_dsyrk_cuda = 0.000278
+iter 11: gpu_time_dgemm_cuda = 0.001432
+iter 11: gpu_time_dtrsm_cuda = 0.000887
+iter 11: upload_copy_time1_cuda = 0.000577
+iter 11: download_copy_time1_cuda = 0.000048
+iter 11: upload_copy_time2_cuda = 0.000043
+iter 11: download_copy_time2_cuda = 0.000362
+
+iter 12: cpu_time_cuda = 0.000217
+iter 12: gpu_time_dsyrk_cuda = 0.000298
+iter 12: gpu_time_dgemm_cuda = 0.001352
+iter 12: gpu_time_dtrsm_cuda = 0.000909
+iter 12: upload_copy_time1_cuda = 0.000562
+iter 12: download_copy_time1_cuda = 0.000047
+iter 12: upload_copy_time2_cuda = 0.000044
+iter 12: download_copy_time2_cuda = 0.000366
+
+iter 13: cpu_time_cuda = 0.000222
+iter 13: gpu_time_dsyrk_cuda = 0.000318
+iter 13: gpu_time_dgemm_cuda = 0.001668
+iter 13: gpu_time_dtrsm_cuda = 0.000872
+iter 13: upload_copy_time1_cuda = 0.000552
+iter 13: download_copy_time1_cuda = 0.000049
+iter 13: upload_copy_time2_cuda = 0.000044
+iter 13: download_copy_time2_cuda = 0.000414
+
+iter 14: cpu_time_cuda = 0.000214
+iter 14: gpu_time_dsyrk_cuda = 0.000337
+iter 14: gpu_time_dgemm_cuda = 0.001556
+iter 14: gpu_time_dtrsm_cuda = 0.005585
+iter 14: upload_copy_time1_cuda = 0.000546
+iter 14: download_copy_time1_cuda = 0.000046
+iter 14: upload_copy_time2_cuda = 0.000043
+iter 14: download_copy_time2_cuda = 0.000427
+
+iter 15: cpu_time_cuda = 0.000219
+iter 15: gpu_time_dsyrk_cuda = 0.000360
+iter 15: gpu_time_dgemm_cuda = 0.001643
+iter 15: gpu_time_dtrsm_cuda = 0.000870
+iter 15: upload_copy_time1_cuda = 0.000518
+iter 15: download_copy_time1_cuda = 0.000047
+iter 15: upload_copy_time2_cuda = 0.000043
+iter 15: download_copy_time2_cuda = 0.000463
+
+iter 16: cpu_time_cuda = 0.000216
+iter 16: gpu_time_dsyrk_cuda = 0.000378
+iter 16: gpu_time_dgemm_cuda = 0.001756
+iter 16: gpu_time_dtrsm_cuda = 0.000865
+iter 16: upload_copy_time1_cuda = 0.000511
+iter 16: download_copy_time1_cuda = 0.000048
+iter 16: upload_copy_time2_cuda = 0.000043
+iter 16: download_copy_time2_cuda = 0.000487
+
+iter 17: cpu_time_cuda = 0.000224
+iter 17: gpu_time_dsyrk_cuda = 0.000399
+iter 17: gpu_time_dgemm_cuda = 0.001442
+iter 17: gpu_time_dtrsm_cuda = 0.000844
+iter 17: upload_copy_time1_cuda = 0.000496
+iter 17: download_copy_time1_cuda = 0.000047
+iter 17: upload_copy_time2_cuda = 0.000043
+iter 17: download_copy_time2_cuda = 0.000516
+
+iter 18: cpu_time_cuda = 0.000219
+iter 18: gpu_time_dsyrk_cuda = 0.000421
+iter 18: gpu_time_dgemm_cuda = 0.001526
+iter 18: gpu_time_dtrsm_cuda = 0.000830
+iter 18: upload_copy_time1_cuda = 0.000477
+iter 18: download_copy_time1_cuda = 0.000048
+iter 18: upload_copy_time2_cuda = 0.000043
+iter 18: download_copy_time2_cuda = 0.000562
+
+iter 19: cpu_time_cuda = 0.000226
+iter 19: gpu_time_dsyrk_cuda = 0.000441
+iter 19: gpu_time_dgemm_cuda = 0.001605
+iter 19: gpu_time_dtrsm_cuda = 0.000836
+iter 19: upload_copy_time1_cuda = 0.000464
+iter 19: download_copy_time1_cuda = 0.000047
+iter 19: upload_copy_time2_cuda = 0.000043
+iter 19: download_copy_time2_cuda = 0.000563
+
+iter 20: cpu_time_cuda = 0.000217
+iter 20: gpu_time_dsyrk_cuda = 0.000464
+iter 20: gpu_time_dgemm_cuda = 0.001685
+iter 20: gpu_time_dtrsm_cuda = 0.000834
+iter 20: upload_copy_time1_cuda = 0.000454
+iter 20: download_copy_time1_cuda = 0.000048
+iter 20: upload_copy_time2_cuda = 0.000043
+iter 20: download_copy_time2_cuda = 0.000601
+
+iter 21: cpu_time_cuda = 0.000221
+iter 21: gpu_time_dsyrk_cuda = 0.000482
+iter 21: gpu_time_dgemm_cuda = 0.001763
+iter 21: gpu_time_dtrsm_cuda = 0.000831
+iter 21: upload_copy_time1_cuda = 0.000442
+iter 21: download_copy_time1_cuda = 0.000047
+iter 21: upload_copy_time2_cuda = 0.000044
+iter 21: download_copy_time2_cuda = 0.000635
+
+iter 22: cpu_time_cuda = 0.000218
+iter 22: gpu_time_dsyrk_cuda = 0.000505
+iter 22: gpu_time_dgemm_cuda = 0.001837
+iter 22: gpu_time_dtrsm_cuda = 0.000840
+iter 22: upload_copy_time1_cuda = 0.000423
+iter 22: download_copy_time1_cuda = 0.000047
+iter 22: upload_copy_time2_cuda = 0.000043
+iter 22: download_copy_time2_cuda = 0.000685
+
+iter 23: cpu_time_cuda = 0.000220
+iter 23: gpu_time_dsyrk_cuda = 0.000524
+iter 23: gpu_time_dgemm_cuda = 0.001906
+iter 23: gpu_time_dtrsm_cuda = 0.000821
+iter 23: upload_copy_time1_cuda = 0.000417
+iter 23: download_copy_time1_cuda = 0.000047
+iter 23: upload_copy_time2_cuda = 0.000043
+iter 23: download_copy_time2_cuda = 0.000695
+
+iter 24: cpu_time_cuda = 0.000219
+iter 24: gpu_time_dsyrk_cuda = 0.000542
+iter 24: gpu_time_dgemm_cuda = 0.001987
+iter 24: gpu_time_dtrsm_cuda = 0.000828
+iter 24: upload_copy_time1_cuda = 0.000403
+iter 24: download_copy_time1_cuda = 0.000048
+iter 24: upload_copy_time2_cuda = 0.000044
+iter 24: download_copy_time2_cuda = 0.000722
+
+iter 25: cpu_time_cuda = 0.000219
+iter 25: gpu_time_dsyrk_cuda = 0.000566
+iter 25: gpu_time_dgemm_cuda = 0.002061
+iter 25: gpu_time_dtrsm_cuda = 0.000799
+iter 25: upload_copy_time1_cuda = 0.000384
+iter 25: download_copy_time1_cuda = 0.000047
+iter 25: upload_copy_time2_cuda = 0.000044
+iter 25: download_copy_time2_cuda = 0.000749
+
+iter 26: cpu_time_cuda = 0.000219
+iter 26: gpu_time_dsyrk_cuda = 0.000587
+iter 26: gpu_time_dgemm_cuda = 0.002139
+iter 26: gpu_time_dtrsm_cuda = 0.000806
+iter 26: upload_copy_time1_cuda = 0.000372
+iter 26: download_copy_time1_cuda = 0.000047
+iter 26: upload_copy_time2_cuda = 0.000043
+iter 26: download_copy_time2_cuda = 0.000781
+
+iter 27: cpu_time_cuda = 0.000223
+iter 27: gpu_time_dsyrk_cuda = 0.000607
+iter 27: gpu_time_dgemm_cuda = 0.002223
+iter 27: gpu_time_dtrsm_cuda = 0.000792
+iter 27: upload_copy_time1_cuda = 0.000353
+iter 27: download_copy_time1_cuda = 0.000047
+iter 27: upload_copy_time2_cuda = 0.000044
+iter 27: download_copy_time2_cuda = 0.000832
+
+iter 28: cpu_time_cuda = 0.000220
+iter 28: gpu_time_dsyrk_cuda = 0.000628
+iter 28: gpu_time_dgemm_cuda = 0.001839
+iter 28: gpu_time_dtrsm_cuda = 0.000788
+iter 28: upload_copy_time1_cuda = 0.000340
+iter 28: download_copy_time1_cuda = 0.000047
+iter 28: upload_copy_time2_cuda = 0.000043
+iter 28: download_copy_time2_cuda = 0.000843
+
+iter 29: cpu_time_cuda = 0.000225
+iter 29: gpu_time_dsyrk_cuda = 0.000648
+iter 29: gpu_time_dgemm_cuda = 0.002375
+iter 29: gpu_time_dtrsm_cuda = 0.000780
+iter 29: upload_copy_time1_cuda = 0.000310
+iter 29: download_copy_time1_cuda = 0.000047
+iter 29: upload_copy_time2_cuda = 0.000044
+iter 29: download_copy_time2_cuda = 0.000857
+
+iter 30: cpu_time_cuda = 0.000219
+iter 30: gpu_time_dsyrk_cuda = 0.000668
+iter 30: gpu_time_dgemm_cuda = 0.001968
+iter 30: gpu_time_dtrsm_cuda = 0.000785
+iter 30: upload_copy_time1_cuda = 0.000307
+iter 30: download_copy_time1_cuda = 0.000047
+iter 30: upload_copy_time2_cuda = 0.000043
+iter 30: download_copy_time2_cuda = 0.000907
+
+iter 31: cpu_time_cuda = 0.000220
+iter 31: gpu_time_dsyrk_cuda = 0.000701
+iter 31: gpu_time_dgemm_cuda = 0.002024
+iter 31: gpu_time_dtrsm_cuda = 0.000783
+iter 31: upload_copy_time1_cuda = 0.000282
+iter 31: download_copy_time1_cuda = 0.000048
+iter 31: upload_copy_time2_cuda = 0.000043
+iter 31: download_copy_time2_cuda = 0.000927
+
+iter 32: cpu_time_cuda = 0.000220
+iter 32: gpu_time_dsyrk_cuda = 0.000707
+iter 32: gpu_time_dgemm_cuda = 0.002095
+iter 32: gpu_time_dtrsm_cuda = 0.000800
+iter 32: upload_copy_time1_cuda = 0.000271
+iter 32: download_copy_time1_cuda = 0.000047
+iter 32: upload_copy_time2_cuda = 0.000042
+iter 32: download_copy_time2_cuda = 0.000954
+
+iter 33: cpu_time_cuda = 0.000218
+iter 33: gpu_time_dsyrk_cuda = 0.000731
+iter 33: gpu_time_dgemm_cuda = 0.001367
+iter 33: gpu_time_dtrsm_cuda = 0.000768
+iter 33: upload_copy_time1_cuda = 0.000259
+iter 33: download_copy_time1_cuda = 0.000048
+iter 33: upload_copy_time2_cuda = 0.000044
+iter 33: download_copy_time2_cuda = 0.000990
+
+iter 34: cpu_time_cuda = 0.000221
+iter 34: gpu_time_dsyrk_cuda = 0.000753
+iter 34: gpu_time_dgemm_cuda = 0.001412
+iter 34: gpu_time_dtrsm_cuda = 0.000758
+iter 34: upload_copy_time1_cuda = 0.000248
+iter 34: download_copy_time1_cuda = 0.000047
+iter 34: upload_copy_time2_cuda = 0.000043
+iter 34: download_copy_time2_cuda = 0.001016
+
+iter 35: cpu_time_cuda = 0.000230
+iter 35: gpu_time_dsyrk_cuda = 0.000771
+iter 35: gpu_time_dgemm_cuda = 0.001448
+iter 35: gpu_time_dtrsm_cuda = 0.007436
+iter 35: upload_copy_time1_cuda = 0.000229
+iter 35: download_copy_time1_cuda = 0.000048
+iter 35: upload_copy_time2_cuda = 0.000040
+iter 35: download_copy_time2_cuda = 0.001043
+
+iter 36: cpu_time_cuda = 0.000218
+iter 36: gpu_time_dsyrk_cuda = 0.000794
+iter 36: gpu_time_dgemm_cuda = 0.001487
+iter 36: gpu_time_dtrsm_cuda = 0.000747
+iter 36: upload_copy_time1_cuda = 0.000217
+iter 36: download_copy_time1_cuda = 0.000047
+iter 36: upload_copy_time2_cuda = 0.000044
+iter 36: download_copy_time2_cuda = 0.001101
+
+iter 37: cpu_time_cuda = 0.000216
+iter 37: gpu_time_dsyrk_cuda = 0.000815
+iter 37: gpu_time_dgemm_cuda = 0.001522
+iter 37: gpu_time_dtrsm_cuda = 0.000738
+iter 37: upload_copy_time1_cuda = 0.000208
+iter 37: download_copy_time1_cuda = 0.000047
+iter 37: upload_copy_time2_cuda = 0.000044
+iter 37: download_copy_time2_cuda = 0.001113
+
+iter 38: cpu_time_cuda = 0.000219
+iter 38: gpu_time_dsyrk_cuda = 0.000837
+iter 38: gpu_time_dgemm_cuda = 0.001564
+iter 38: gpu_time_dtrsm_cuda = 0.000737
+iter 38: upload_copy_time1_cuda = 0.000189
+iter 38: download_copy_time1_cuda = 0.000047
+iter 38: upload_copy_time2_cuda = 0.000042
+iter 38: download_copy_time2_cuda = 0.001138
+
+iter 39: cpu_time_cuda = 0.000224
+iter 39: gpu_time_dsyrk_cuda = 0.000857
+iter 39: gpu_time_dgemm_cuda = 0.001608
+iter 39: gpu_time_dtrsm_cuda = 0.000733
+iter 39: upload_copy_time1_cuda = 0.000178
+iter 39: download_copy_time1_cuda = 0.000048
+iter 39: upload_copy_time2_cuda = 0.000043
+iter 39: download_copy_time2_cuda = 0.001138
+
+iter 40: cpu_time_cuda = 0.000215
+iter 40: gpu_time_dsyrk_cuda = 0.000874
+iter 40: gpu_time_dgemm_cuda = 0.001645
+iter 40: gpu_time_dtrsm_cuda = 0.000728
+iter 40: upload_copy_time1_cuda = 0.000166
+iter 40: download_copy_time1_cuda = 0.000048
+iter 40: upload_copy_time2_cuda = 0.000043
+iter 40: download_copy_time2_cuda = 0.001201
+
+iter 41: cpu_time_cuda = 0.000219
+iter 41: gpu_time_dsyrk_cuda = 0.000897
+iter 41: gpu_time_dgemm_cuda = 0.001034
+iter 41: gpu_time_dtrsm_cuda = 0.000707
+iter 41: upload_copy_time1_cuda = 0.000147
+iter 41: download_copy_time1_cuda = 0.000048
+iter 41: upload_copy_time2_cuda = 0.000044
+iter 41: download_copy_time2_cuda = 0.001251
+
+iter 42: cpu_time_cuda = 0.000219
+iter 42: gpu_time_dsyrk_cuda = 0.000918
+iter 42: gpu_time_dgemm_cuda = 0.001040
+iter 42: gpu_time_dtrsm_cuda = 0.000703
+iter 42: upload_copy_time1_cuda = 0.000140
+iter 42: download_copy_time1_cuda = 0.000047
+iter 42: upload_copy_time2_cuda = 0.000043
+iter 42: download_copy_time2_cuda = 0.001261
+
+iter 43: cpu_time_cuda = 0.000223
+iter 43: gpu_time_dsyrk_cuda = 0.000937
+iter 43: gpu_time_dgemm_cuda = 0.001058
+iter 43: gpu_time_dtrsm_cuda = 0.000695
+iter 43: upload_copy_time1_cuda = 0.000117
+iter 43: download_copy_time1_cuda = 0.000048
+iter 43: upload_copy_time2_cuda = 0.000043
+iter 43: download_copy_time2_cuda = 0.001275
+
+iter 44: cpu_time_cuda = 0.000221
+iter 44: gpu_time_dsyrk_cuda = 0.000958
+iter 44: gpu_time_dgemm_cuda = 0.001078
+iter 44: gpu_time_dtrsm_cuda = 0.000713
+iter 44: upload_copy_time1_cuda = 0.000109
+iter 44: download_copy_time1_cuda = 0.000048
+iter 44: upload_copy_time2_cuda = 0.000043
+iter 44: download_copy_time2_cuda = 0.001336
+
+iter 45: cpu_time_cuda = 0.000216
+iter 45: gpu_time_dsyrk_cuda = 0.000980
+iter 45: gpu_time_dgemm_cuda = 0.001099
+iter 45: gpu_time_dtrsm_cuda = 0.000711
+iter 45: upload_copy_time1_cuda = 0.000090
+iter 45: download_copy_time1_cuda = 0.000047
+iter 45: upload_copy_time2_cuda = 0.000044
+iter 45: download_copy_time2_cuda = 0.001382
+
+iter 46: cpu_time_cuda = 0.000218
+iter 46: gpu_time_dsyrk_cuda = 0.000999
+iter 46: gpu_time_dgemm_cuda = 0.001125
+iter 46: gpu_time_dtrsm_cuda = 0.000543
+iter 46: upload_copy_time1_cuda = 0.000084
+iter 46: download_copy_time1_cuda = 0.000047
+iter 46: upload_copy_time2_cuda = 0.000043
+iter 46: download_copy_time2_cuda = 0.001373
+
+iter 47: cpu_time_cuda = 0.000232
+iter 47: gpu_time_dsyrk_cuda = 0.001021
+iter 47: gpu_time_dgemm_cuda = 0.001153
+iter 47: gpu_time_dtrsm_cuda = 0.000529
+iter 47: upload_copy_time1_cuda = 0.000070
+iter 47: download_copy_time1_cuda = 0.000048
+iter 47: upload_copy_time2_cuda = 0.000043
+iter 47: download_copy_time2_cuda = 0.001399
+
+iter 48: cpu_time_cuda = 0.000213
+iter 48: gpu_time_dsyrk_cuda = 0.001040
+iter 48: gpu_time_dgemm_cuda = 0.001177
+iter 48: gpu_time_dtrsm_cuda = 0.000707
+iter 48: upload_copy_time1_cuda = 0.000055
+iter 48: download_copy_time1_cuda = 0.000048
+iter 48: upload_copy_time2_cuda = 0.000043
+iter 48: download_copy_time2_cuda = 0.001431
+
+iter 49: cpu_time_cuda = 0.000120
+iter 49: gpu_time_dsyrk_cuda = 0.001056
+iter 49: gpu_time_dgemm_cuda = 0.000002
+iter 49: gpu_time_dtrsm_cuda = 0.000002
+iter 49: upload_copy_time1_cuda = 0.000035
+iter 49: download_copy_time1_cuda = 0.000037
+iter 49: upload_copy_time2_cuda = 0.000030
+iter 49: download_copy_time2_cuda = 0.001396
+
+total_cpu_time_cuda = 0.011055
+total_gpu_time_cuda = 0.147201
+total_copy_time_cuda = 0.060728
+main_loop_time_cuda = 0.227469
+ 5120     ---   (  ---  )    195.87 (   0.23)     ---  
+total_time = 1.123550
+0.98user 0.46system 0:02.48elapsed 58%CPU (0avgtext+0avgdata 564932maxresident)k
+0inputs+0outputs (0major+72945minor)pagefaults 0swaps
+send out message: 22 3 log

@@ -1,0 +1,816 @@
+send out message: 24 37 /home/lchen/MAGMA/magma-1.3.0/results
+send out message: 20 26 MAGMA_LU_GPUDVFS.total.pwr
+MAGMA 1.3.0
+device 0: Tesla K20c, 705.5 MHz clock, 4799.6 MB memory, capability 3.5
+
+Usage: /home/lchen/MAGMA/magma-1.3.0/testing/testing_dgetrf -N <m,n> -c -c2 -l
+  -N  can be repeated up to 10 times. If only m is given, then m=n.
+  -c  or setting $MAGMA_TESTINGS_CHECK checks result, PA - LU.
+  -c2 for square matrices, solves one RHS and checks residual, Ax - b.
+  -l  or setting $MAGMA_RUN_LAPACK runs LAPACK.
+
+    M     N   CPU GFlop/s (sec)   GPU GFlop/s (sec)   |PA-LU|/(N*|A|)
+=========================================================================
+init_time = 0.847169
+iter 0: cpu_time_cuda = 0.000000
+iter 0: gpu_time_cuda = 0.000000
+iter 0: download_copy_time_cuda = 0.000000
+iter 0: upload_copy_time_cuda = 0.000498
+
+iter 1: cpu_time_cuda = 0.007610
+iter 1: gpu_time_cuda = 0.005187
+iter 1: download_copy_time_cuda = 0.000460
+iter 1: upload_copy_time_cuda = 0.000490
+
+iter 2: cpu_time_pred = 0.007513
+iter 2: gpu_time_pred = 0.005055
+!!Border found at iter 1
+iter 2: ratio_split_freq = 0.078278
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 2: cpu_time_cuda = 0.007511
+iter 2: gpu_time_cuda = 0.005167
+iter 2: download_copy_time_cuda = 0.000456
+iter 2: upload_copy_time_cuda = 0.000484
+
+iter 3: cpu_time_pred = 0.007414
+iter 3: gpu_time_pred = 0.005034
+!!Border found at iter 2
+iter 3: ratio_split_freq = 0.076114
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 3: cpu_time_cuda = 0.007440
+iter 3: gpu_time_cuda = 0.005346
+iter 3: download_copy_time_cuda = 0.000451
+iter 3: upload_copy_time_cuda = 0.000478
+
+iter 4: cpu_time_pred = 0.007342
+iter 4: gpu_time_pred = 0.005206
+!!Border found at iter 3
+iter 4: ratio_split_freq = 0.066051
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 4: cpu_time_cuda = 0.007326
+iter 4: gpu_time_cuda = 0.005114
+iter 4: download_copy_time_cuda = 0.000445
+iter 4: upload_copy_time_cuda = 0.000473
+
+iter 5: cpu_time_pred = 0.007229
+iter 5: gpu_time_pred = 0.004978
+!!Border found at iter 4
+iter 5: ratio_split_freq = 0.072803
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 5: cpu_time_cuda = 0.007242
+iter 5: gpu_time_cuda = 0.004741
+iter 5: download_copy_time_cuda = 0.000440
+iter 5: upload_copy_time_cuda = 0.000467
+
+iter 6: cpu_time_pred = 0.007144
+iter 6: gpu_time_pred = 0.004614
+!!Border found at iter 5
+iter 6: ratio_split_freq = 0.088306
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 6: cpu_time_cuda = 0.007153
+iter 6: gpu_time_cuda = 0.004680
+iter 6: download_copy_time_cuda = 0.000426
+iter 6: upload_copy_time_cuda = 0.000462
+
+iter 7: cpu_time_pred = 0.007055
+iter 7: gpu_time_pred = 0.004553
+!!Border found at iter 6
+iter 7: ratio_split_freq = 0.088505
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 7: cpu_time_cuda = 0.007034
+iter 7: gpu_time_cuda = 0.004470
+iter 7: download_copy_time_cuda = 0.000423
+iter 7: upload_copy_time_cuda = 0.000454
+
+iter 8: cpu_time_pred = 0.006936
+iter 8: gpu_time_pred = 0.004346
+!!Border found at iter 7
+iter 8: ratio_split_freq = 0.095961
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 8: cpu_time_cuda = 0.006939
+iter 8: gpu_time_cuda = 0.004472
+iter 8: download_copy_time_cuda = 0.000416
+iter 8: upload_copy_time_cuda = 0.000449
+
+iter 9: cpu_time_pred = 0.006842
+iter 9: gpu_time_pred = 0.004347
+!!Border found at iter 8
+iter 9: ratio_split_freq = 0.092417
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 9: cpu_time_cuda = 0.006836
+iter 9: gpu_time_cuda = 0.004400
+iter 9: download_copy_time_cuda = 0.000418
+iter 9: upload_copy_time_cuda = 0.000442
+
+iter 10: cpu_time_pred = 0.006738
+iter 10: gpu_time_pred = 0.004275
+!!Border found at iter 9
+iter 10: ratio_split_freq = 0.092761
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 10: cpu_time_cuda = 0.006744
+iter 10: gpu_time_cuda = 0.004261
+iter 10: download_copy_time_cuda = 0.000407
+iter 10: upload_copy_time_cuda = 0.000435
+
+iter 11: cpu_time_pred = 0.006647
+iter 11: gpu_time_pred = 0.004138
+!!Border found at iter 10
+iter 11: ratio_split_freq = 0.097627
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 11: cpu_time_cuda = 0.006654
+iter 11: gpu_time_cuda = 0.004081
+iter 11: download_copy_time_cuda = 0.000407
+iter 11: upload_copy_time_cuda = 0.000432
+
+iter 12: cpu_time_pred = 0.006556
+iter 12: gpu_time_pred = 0.003962
+!!Border found at iter 11
+iter 12: ratio_split_freq = 0.105456
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 12: cpu_time_cuda = 0.006555
+iter 12: gpu_time_cuda = 0.004095
+iter 12: download_copy_time_cuda = 0.000395
+iter 12: upload_copy_time_cuda = 0.000427
+
+iter 13: cpu_time_pred = 0.006457
+iter 13: gpu_time_pred = 0.003973
+!!Border found at iter 12
+iter 13: ratio_split_freq = 0.100663
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 13: cpu_time_cuda = 0.006464
+iter 13: gpu_time_cuda = 0.003626
+iter 13: download_copy_time_cuda = 0.000396
+iter 13: upload_copy_time_cuda = 0.000418
+
+iter 14: cpu_time_pred = 0.006366
+iter 14: gpu_time_pred = 0.003517
+!!Border found at iter 13
+iter 14: ratio_split_freq = 0.130404
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 14: cpu_time_cuda = 0.006355
+iter 14: gpu_time_cuda = 0.003874
+iter 14: download_copy_time_cuda = 0.000384
+iter 14: upload_copy_time_cuda = 0.000406
+
+iter 15: cpu_time_pred = 0.006257
+iter 15: gpu_time_pred = 0.003756
+!!Border found at iter 14
+iter 15: ratio_split_freq = 0.107239
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 15: cpu_time_cuda = 0.006245
+iter 15: gpu_time_cuda = 0.003744
+iter 15: download_copy_time_cuda = 0.000382
+iter 15: upload_copy_time_cuda = 0.000408
+
+iter 16: cpu_time_pred = 0.006148
+iter 16: gpu_time_pred = 0.003628
+!!Border found at iter 15
+iter 16: ratio_split_freq = 0.111856
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 16: cpu_time_cuda = 0.006119
+iter 16: gpu_time_cuda = 0.003635
+iter 16: download_copy_time_cuda = 0.000373
+iter 16: upload_copy_time_cuda = 0.000400
+
+iter 17: cpu_time_pred = 0.006022
+iter 17: gpu_time_pred = 0.003520
+!!Border found at iter 16
+iter 17: ratio_split_freq = 0.114419
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 17: cpu_time_cuda = 0.006028
+iter 17: gpu_time_cuda = 0.003405
+iter 17: download_copy_time_cuda = 0.000366
+iter 17: upload_copy_time_cuda = 0.000403
+
+iter 18: cpu_time_pred = 0.005931
+iter 18: gpu_time_pred = 0.003296
+!!Border found at iter 17
+iter 18: ratio_split_freq = 0.128778
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 18: cpu_time_cuda = 0.005920
+iter 18: gpu_time_cuda = 0.003503
+iter 18: download_copy_time_cuda = 0.000361
+iter 18: upload_copy_time_cuda = 0.000389
+
+iter 19: cpu_time_pred = 0.005823
+iter 19: gpu_time_pred = 0.003389
+!!Border found at iter 18
+iter 19: ratio_split_freq = 0.115641
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 19: cpu_time_cuda = 0.005895
+iter 19: gpu_time_cuda = 0.003198
+iter 19: download_copy_time_cuda = 0.000356
+iter 19: upload_copy_time_cuda = 0.000385
+
+iter 20: cpu_time_pred = 0.005797
+iter 20: gpu_time_pred = 0.003092
+!!Border found at iter 19
+iter 20: ratio_split_freq = 0.140875
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 20: cpu_time_cuda = 0.005752
+iter 20: gpu_time_cuda = 0.003192
+iter 20: download_copy_time_cuda = 0.000349
+iter 20: upload_copy_time_cuda = 0.000386
+
+iter 21: cpu_time_pred = 0.005654
+iter 21: gpu_time_pred = 0.003084
+!!Border found at iter 20
+iter 21: ratio_split_freq = 0.134178
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 21: cpu_time_cuda = 0.005650
+iter 21: gpu_time_cuda = 0.003111
+iter 21: download_copy_time_cuda = 0.000345
+iter 21: upload_copy_time_cuda = 0.000365
+
+iter 22: cpu_time_pred = 0.005553
+iter 22: gpu_time_pred = 0.003005
+!!Border found at iter 21
+iter 22: ratio_split_freq = 0.136544
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 22: cpu_time_cuda = 0.005563
+iter 22: gpu_time_cuda = 0.003029
+iter 22: download_copy_time_cuda = 0.000338
+iter 22: upload_copy_time_cuda = 0.000360
+
+iter 23: cpu_time_pred = 0.005465
+iter 23: gpu_time_pred = 0.002924
+!!Border found at iter 22
+iter 23: ratio_split_freq = 0.139931
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 23: cpu_time_cuda = 0.005444
+iter 23: gpu_time_cuda = 0.002917
+iter 23: download_copy_time_cuda = 0.000334
+iter 23: upload_copy_time_cuda = 0.000360
+
+iter 24: cpu_time_pred = 0.005347
+iter 24: gpu_time_pred = 0.002814
+!!Border found at iter 23
+iter 24: ratio_split_freq = 0.144944
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 24: cpu_time_cuda = 0.005337
+iter 24: gpu_time_cuda = 0.002868
+iter 24: download_copy_time_cuda = 0.000328
+iter 24: upload_copy_time_cuda = 0.000349
+
+iter 25: cpu_time_pred = 0.005240
+iter 25: gpu_time_pred = 0.002765
+!!Border found at iter 24
+iter 25: ratio_split_freq = 0.144154
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 25: cpu_time_cuda = 0.005254
+iter 25: gpu_time_cuda = 0.002740
+iter 25: download_copy_time_cuda = 0.000327
+iter 25: upload_copy_time_cuda = 0.000341
+
+iter 26: cpu_time_pred = 0.005156
+iter 26: gpu_time_pred = 0.002640
+!!Border found at iter 25
+iter 26: ratio_split_freq = 0.153538
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 26: cpu_time_cuda = 0.005162
+iter 26: gpu_time_cuda = 0.002717
+iter 26: download_copy_time_cuda = 0.000318
+iter 26: upload_copy_time_cuda = 0.000338
+
+iter 27: cpu_time_pred = 0.005065
+iter 27: gpu_time_pred = 0.002616
+!!Border found at iter 26
+iter 27: ratio_split_freq = 0.150779
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 27: cpu_time_cuda = 0.005069
+iter 27: gpu_time_cuda = 0.002535
+iter 27: download_copy_time_cuda = 0.000311
+iter 27: upload_copy_time_cuda = 0.000330
+
+iter 28: cpu_time_pred = 0.004972
+iter 28: gpu_time_pred = 0.002438
+!!Border found at iter 27
+iter 28: ratio_split_freq = 0.167325
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 28: cpu_time_cuda = 0.004974
+iter 28: gpu_time_cuda = 0.002469
+iter 28: download_copy_time_cuda = 0.000306
+iter 28: upload_copy_time_cuda = 0.000324
+
+iter 29: cpu_time_pred = 0.004877
+iter 29: gpu_time_pred = 0.002373
+!!Border found at iter 28
+iter 29: ratio_split_freq = 0.169901
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 29: cpu_time_cuda = 0.004872
+iter 29: gpu_time_cuda = 0.002336
+iter 29: download_copy_time_cuda = 0.000300
+iter 29: upload_copy_time_cuda = 0.000318
+
+iter 30: cpu_time_pred = 0.004775
+iter 30: gpu_time_pred = 0.002243
+!!Border found at iter 29
+iter 30: ratio_split_freq = 0.181714
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 30: cpu_time_cuda = 0.004784
+iter 30: gpu_time_cuda = 0.002266
+iter 30: download_copy_time_cuda = 0.000294
+iter 30: upload_copy_time_cuda = 0.000312
+
+iter 31: cpu_time_pred = 0.004686
+iter 31: gpu_time_pred = 0.002175
+!!Border found at iter 30
+iter 31: ratio_split_freq = 0.185955
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 31: cpu_time_cuda = 0.004683
+iter 31: gpu_time_cuda = 0.002136
+iter 31: download_copy_time_cuda = 0.000288
+iter 31: upload_copy_time_cuda = 0.000303
+
+iter 32: cpu_time_pred = 0.004586
+iter 32: gpu_time_pred = 0.002048
+!!Border found at iter 31
+iter 32: ratio_split_freq = 0.199575
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 32: cpu_time_cuda = 0.004591
+iter 32: gpu_time_cuda = 0.002103
+iter 32: download_copy_time_cuda = 0.000281
+iter 32: upload_copy_time_cuda = 0.000300
+
+iter 33: cpu_time_pred = 0.004493
+iter 33: gpu_time_pred = 0.002015
+!!Border found at iter 32
+iter 33: ratio_split_freq = 0.198092
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 33: cpu_time_cuda = 0.004498
+iter 33: gpu_time_cuda = 0.002029
+iter 33: download_copy_time_cuda = 0.000279
+iter 33: upload_copy_time_cuda = 0.000293
+
+iter 34: cpu_time_pred = 0.004400
+iter 34: gpu_time_pred = 0.001942
+!!Border found at iter 33
+iter 34: ratio_split_freq = 0.203823
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 34: cpu_time_cuda = 0.004410
+iter 34: gpu_time_cuda = 0.001898
+iter 34: download_copy_time_cuda = 0.000272
+iter 34: upload_copy_time_cuda = 0.000289
+
+iter 35: cpu_time_pred = 0.004312
+iter 35: gpu_time_pred = 0.001815
+!!Border found at iter 34
+iter 35: ratio_split_freq = 0.221505
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 35: cpu_time_cuda = 0.004309
+iter 35: gpu_time_cuda = 0.001925
+iter 35: download_copy_time_cuda = 0.000261
+iter 35: upload_copy_time_cuda = 0.000281
+
+iter 36: cpu_time_pred = 0.004211
+iter 36: gpu_time_pred = 0.001838
+!!Border found at iter 35
+iter 36: ratio_split_freq = 0.207911
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 36: cpu_time_cuda = 0.004208
+iter 36: gpu_time_cuda = 0.001794
+iter 36: download_copy_time_cuda = 0.000263
+iter 36: upload_copy_time_cuda = 0.000275
+
+iter 37: cpu_time_pred = 0.004110
+iter 37: gpu_time_pred = 0.001712
+!!Border found at iter 36
+iter 37: ratio_split_freq = 0.225566
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 37: cpu_time_cuda = 0.004089
+iter 37: gpu_time_cuda = 0.001673
+iter 37: download_copy_time_cuda = 0.000250
+iter 37: upload_copy_time_cuda = 0.000270
+
+iter 38: cpu_time_pred = 0.003992
+iter 38: gpu_time_pred = 0.001594
+!!Border found at iter 37
+iter 38: ratio_split_freq = 0.242219
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 38: cpu_time_cuda = 0.003996
+iter 38: gpu_time_cuda = 0.001674
+iter 38: download_copy_time_cuda = 0.000252
+iter 38: upload_copy_time_cuda = 0.000264
+
+iter 39: cpu_time_pred = 0.003899
+iter 39: gpu_time_pred = 0.001593
+!!Border found at iter 38
+iter 39: ratio_split_freq = 0.233043
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 39: cpu_time_cuda = 0.003900
+iter 39: gpu_time_cuda = 0.001611
+iter 39: download_copy_time_cuda = 0.000239
+iter 39: upload_copy_time_cuda = 0.000258
+
+iter 40: cpu_time_pred = 0.003803
+iter 40: gpu_time_pred = 0.001531
+!!Border found at iter 39
+iter 40: ratio_split_freq = 0.238914
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 40: cpu_time_cuda = 0.003807
+iter 40: gpu_time_cuda = 0.001511
+iter 40: download_copy_time_cuda = 0.000240
+iter 40: upload_copy_time_cuda = 0.000252
+
+iter 41: cpu_time_pred = 0.003710
+iter 41: gpu_time_pred = 0.001434
+!!Border found at iter 40
+iter 41: ratio_split_freq = 0.255464
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 41: cpu_time_cuda = 0.003713
+iter 41: gpu_time_cuda = 0.001418
+iter 41: download_copy_time_cuda = 0.000235
+iter 41: upload_copy_time_cuda = 0.000247
+
+iter 42: cpu_time_pred = 0.003615
+iter 42: gpu_time_pred = 0.001344
+!!Border found at iter 41
+iter 42: ratio_split_freq = 0.272141
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 42: cpu_time_cuda = 0.003624
+iter 42: gpu_time_cuda = 0.001372
+iter 42: download_copy_time_cuda = 0.000224
+iter 42: upload_copy_time_cuda = 0.000240
+
+iter 43: cpu_time_pred = 0.003526
+iter 43: gpu_time_pred = 0.001299
+!!Border found at iter 42
+iter 43: ratio_split_freq = 0.276206
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 43: cpu_time_cuda = 0.003528
+iter 43: gpu_time_cuda = 0.001334
+iter 43: download_copy_time_cuda = 0.000225
+iter 43: upload_copy_time_cuda = 0.000235
+
+iter 44: cpu_time_pred = 0.003430
+iter 44: gpu_time_pred = 0.001261
+!!Border found at iter 43
+iter 44: ratio_split_freq = 0.276962
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 44: cpu_time_cuda = 0.003433
+iter 44: gpu_time_cuda = 0.001244
+iter 44: download_copy_time_cuda = 0.000219
+iter 44: upload_copy_time_cuda = 0.000227
+
+iter 45: cpu_time_pred = 0.003335
+iter 45: gpu_time_pred = 0.001174
+!!Border found at iter 44
+iter 45: ratio_split_freq = 0.296577
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 45: cpu_time_cuda = 0.003338
+iter 45: gpu_time_cuda = 0.001150
+iter 45: download_copy_time_cuda = 0.000205
+iter 45: upload_copy_time_cuda = 0.000222
+
+iter 46: cpu_time_pred = 0.003240
+iter 46: gpu_time_pred = 0.001083
+!!Border found at iter 45
+iter 46: ratio_split_freq = 0.320582
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 46: cpu_time_cuda = 0.003260
+iter 46: gpu_time_cuda = 0.001130
+iter 46: download_copy_time_cuda = 0.000208
+iter 46: upload_copy_time_cuda = 0.000217
+
+iter 47: cpu_time_pred = 0.003161
+iter 47: gpu_time_pred = 0.001063
+!!Border found at iter 46
+iter 47: ratio_split_freq = 0.317952
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 47: cpu_time_cuda = 0.003155
+iter 47: gpu_time_cuda = 0.001040
+iter 47: download_copy_time_cuda = 0.000195
+iter 47: upload_copy_time_cuda = 0.000210
+
+iter 48: cpu_time_pred = 0.003056
+iter 48: gpu_time_pred = 0.000976
+!!Border found at iter 47
+iter 48: ratio_split_freq = 0.343158
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 48: cpu_time_cuda = 0.003058
+iter 48: gpu_time_cuda = 0.000983
+iter 48: download_copy_time_cuda = 0.000189
+iter 48: upload_copy_time_cuda = 0.000206
+
+iter 49: cpu_time_pred = 0.002960
+iter 49: gpu_time_pred = 0.000921
+!!Border found at iter 48
+iter 49: ratio_split_freq = 0.356583
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 49: cpu_time_cuda = 0.002965
+iter 49: gpu_time_cuda = 0.000920
+iter 49: download_copy_time_cuda = 0.000190
+iter 49: upload_copy_time_cuda = 0.000198
+
+iter 50: cpu_time_pred = 0.002866
+iter 50: gpu_time_pred = 0.000860
+!!Border found at iter 49
+iter 50: ratio_split_freq = 0.375838
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 50: cpu_time_cuda = 0.002881
+iter 50: gpu_time_cuda = 0.000891
+iter 50: download_copy_time_cuda = 0.000185
+iter 50: upload_copy_time_cuda = 0.000192
+
+iter 51: cpu_time_pred = 0.002781
+iter 51: gpu_time_pred = 0.000830
+!!Border found at iter 50
+iter 51: ratio_split_freq = 0.378459
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 51: cpu_time_cuda = 0.002777
+iter 51: gpu_time_cuda = 0.000816
+iter 51: download_copy_time_cuda = 0.000181
+iter 51: upload_copy_time_cuda = 0.000188
+
+iter 52: cpu_time_pred = 0.002678
+iter 52: gpu_time_pred = 0.000758
+!!Border found at iter 51
+iter 52: ratio_split_freq = 0.407640
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 52: cpu_time_cuda = 0.002691
+iter 52: gpu_time_cuda = 0.000798
+iter 52: download_copy_time_cuda = 0.000174
+iter 52: upload_copy_time_cuda = 0.000181
+
+iter 53: cpu_time_pred = 0.002591
+iter 53: gpu_time_pred = 0.000740
+!!Border found at iter 52
+iter 53: ratio_split_freq = 0.402639
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 53: cpu_time_cuda = 0.002602
+iter 53: gpu_time_cuda = 0.000746
+iter 53: download_copy_time_cuda = 0.000168
+iter 53: upload_copy_time_cuda = 0.000175
+
+iter 54: cpu_time_pred = 0.002502
+iter 54: gpu_time_pred = 0.000689
+!!Border found at iter 53
+iter 54: ratio_split_freq = 0.423238
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 54: cpu_time_cuda = 0.002487
+iter 54: gpu_time_cuda = 0.000688
+iter 54: download_copy_time_cuda = 0.000163
+iter 54: upload_copy_time_cuda = 0.000169
+
+iter 55: cpu_time_pred = 0.002388
+iter 55: gpu_time_pred = 0.000634
+!!Border found at iter 54
+iter 55: ratio_split_freq = 0.445077
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 55: cpu_time_cuda = 0.002398
+iter 55: gpu_time_cuda = 0.000643
+iter 55: download_copy_time_cuda = 0.000159
+iter 55: upload_copy_time_cuda = 0.000165
+
+iter 56: cpu_time_pred = 0.002299
+iter 56: gpu_time_pred = 0.000590
+!!Border found at iter 55
+iter 56: ratio_split_freq = 0.465896
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 56: cpu_time_cuda = 0.002313
+iter 56: gpu_time_cuda = 0.000601
+iter 56: download_copy_time_cuda = 0.000145
+iter 56: upload_copy_time_cuda = 0.000159
+
+iter 57: cpu_time_pred = 0.002213
+iter 57: gpu_time_pred = 0.000550
+!!Border found at iter 56
+iter 57: ratio_split_freq = 0.486396
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 57: cpu_time_cuda = 0.002212
+iter 57: gpu_time_cuda = 0.000552
+iter 57: download_copy_time_cuda = 0.000140
+iter 57: upload_copy_time_cuda = 0.000154
+
+iter 58: cpu_time_pred = 0.002111
+iter 58: gpu_time_pred = 0.000503
+!!Border found at iter 57
+iter 58: ratio_split_freq = 0.515467
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 58: cpu_time_cuda = 0.002099
+iter 58: gpu_time_cuda = 0.000506
+iter 58: download_copy_time_cuda = 0.000134
+iter 58: upload_copy_time_cuda = 0.000146
+
+iter 59: cpu_time_pred = 0.001999
+iter 59: gpu_time_pred = 0.000459
+!!Border found at iter 58
+iter 59: ratio_split_freq = 0.540937
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 59: cpu_time_cuda = 0.001987
+iter 59: gpu_time_cuda = 0.000491
+iter 59: download_copy_time_cuda = 0.000136
+iter 59: upload_copy_time_cuda = 0.000141
+
+iter 60: cpu_time_pred = 0.001888
+iter 60: gpu_time_pred = 0.000443
+!!Border found at iter 59
+iter 60: ratio_split_freq = 0.525259
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 60: cpu_time_cuda = 0.001900
+iter 60: gpu_time_cuda = 0.000449
+iter 60: download_copy_time_cuda = 0.000132
+iter 60: upload_copy_time_cuda = 0.000136
+
+iter 61: cpu_time_pred = 0.001800
+iter 61: gpu_time_pred = 0.000403
+!!Border found at iter 60
+iter 61: ratio_split_freq = 0.558079
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 61: cpu_time_cuda = 0.001799
+iter 61: gpu_time_cuda = 0.000395
+iter 61: download_copy_time_cuda = 0.000118
+iter 61: upload_copy_time_cuda = 0.000131
+
+iter 62: cpu_time_pred = 0.001699
+iter 62: gpu_time_pred = 0.000353
+!!Border found at iter 61
+iter 62: ratio_split_freq = 0.615248
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 62: cpu_time_cuda = 0.001698
+iter 62: gpu_time_cuda = 0.000359
+iter 62: download_copy_time_cuda = 0.000113
+iter 62: upload_copy_time_cuda = 0.000124
+
+iter 63: cpu_time_pred = 0.001598
+iter 63: gpu_time_pred = 0.000318
+!!Border found at iter 62
+iter 63: ratio_split_freq = 0.648927
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 63: cpu_time_cuda = 0.001601
+iter 63: gpu_time_cuda = 0.000345
+iter 63: download_copy_time_cuda = 0.000115
+iter 63: upload_copy_time_cuda = 0.000120
+
+iter 64: cpu_time_pred = 0.001501
+iter 64: gpu_time_pred = 0.000303
+!!Border found at iter 63
+iter 64: ratio_split_freq = 0.636835
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 64: cpu_time_cuda = 0.001522
+iter 64: gpu_time_cuda = 0.000294
+iter 64: download_copy_time_cuda = 0.000109
+iter 64: upload_copy_time_cuda = 0.000114
+
+iter 65: cpu_time_pred = 0.001421
+iter 65: gpu_time_pred = 0.000256
+!!Border found at iter 64
+iter 65: ratio_split_freq = 0.731405
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 65: cpu_time_cuda = 0.001418
+iter 65: gpu_time_cuda = 0.000251
+iter 65: download_copy_time_cuda = 0.000103
+iter 65: upload_copy_time_cuda = 0.000107
+
+iter 66: cpu_time_pred = 0.001317
+iter 66: gpu_time_pred = 0.000216
+!!Border found at iter 65
+iter 66: ratio_split_freq = 0.818920
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 66: cpu_time_cuda = 0.001330
+iter 66: gpu_time_cuda = 0.000226
+iter 66: download_copy_time_cuda = 0.000099
+iter 66: upload_copy_time_cuda = 0.000102
+
+iter 67: cpu_time_pred = 0.001228
+iter 67: gpu_time_pred = 0.000193
+!!Border found at iter 66
+iter 67: ratio_split_freq = 0.866030
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 67: cpu_time_cuda = 0.001241
+iter 67: gpu_time_cuda = 0.000189
+iter 67: download_copy_time_cuda = 0.000091
+iter 67: upload_copy_time_cuda = 0.000093
+
+iter 68: cpu_time_pred = 0.001137
+iter 68: gpu_time_pred = 0.000159
+!!Border found at iter 67
+iter 68: ratio_split_freq = 0.993992
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 68: cpu_time_cuda = 0.001140
+iter 68: gpu_time_cuda = 0.000185
+iter 68: download_copy_time_cuda = 0.000080
+iter 68: upload_copy_time_cuda = 0.000090
+
+iter 69: cpu_time_pred = 0.001037
+iter 69: gpu_time_pred = 0.000153
+!!Border found at iter 68
+iter 69: ratio_split_freq = 0.930885
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 69: cpu_time_cuda = 0.001046
+iter 69: gpu_time_cuda = 0.000151
+iter 69: download_copy_time_cuda = 0.000083
+iter 69: upload_copy_time_cuda = 0.000086
+
+iter 70: cpu_time_pred = 0.000942
+iter 70: gpu_time_pred = 0.000122
+!!Border found at iter 69
+iter 70: ratio_split_freq = 1.082379
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 70: cpu_time_cuda = 0.000958
+iter 70: gpu_time_cuda = 0.000138
+iter 70: download_copy_time_cuda = 0.000071
+iter 70: upload_copy_time_cuda = 0.000081
+
+iter 71: cpu_time_pred = 0.000851
+iter 71: gpu_time_pred = 0.000109
+!!Border found at iter 70
+iter 71: ratio_split_freq = 1.092222
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 71: cpu_time_cuda = 0.000868
+iter 71: gpu_time_cuda = 0.000132
+iter 71: download_copy_time_cuda = 0.000066
+iter 71: upload_copy_time_cuda = 0.000074
+
+iter 72: cpu_time_pred = 0.000760
+iter 72: gpu_time_pred = 0.000101
+!!Border found at iter 71
+iter 72: ratio_split_freq = 1.045357
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 72: cpu_time_cuda = 0.000779
+iter 72: gpu_time_cuda = 0.000109
+iter 72: download_copy_time_cuda = 0.000068
+iter 72: upload_copy_time_cuda = 0.000069
+
+iter 73: cpu_time_pred = 0.000668
+iter 73: gpu_time_pred = 0.000080
+!!Border found at iter 72
+iter 73: ratio_split_freq = 1.182018
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 73: cpu_time_cuda = 0.000762
+iter 73: gpu_time_cuda = 0.000071
+iter 73: download_copy_time_cuda = 0.000062
+iter 73: upload_copy_time_cuda = 0.000063
+
+iter 74: cpu_time_pred = 0.000635
+iter 74: gpu_time_pred = 0.000050
+!!Border found at iter 73
+iter 74: ratio_split_freq = 1.898546
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 74: cpu_time_cuda = 0.001112
+iter 74: gpu_time_cuda = 0.000066
+iter 74: download_copy_time_cuda = 0.000051
+iter 74: upload_copy_time_cuda = 0.000057
+
+iter 75: cpu_time_pred = 0.000890
+iter 75: gpu_time_pred = 0.000043
+!!Border found at iter 74
+iter 75: ratio_split_freq = 3.209675
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 75: cpu_time_cuda = 0.000520
+iter 75: gpu_time_cuda = 0.000053
+iter 75: download_copy_time_cuda = 0.000056
+iter 75: upload_copy_time_cuda = 0.000052
+
+iter 76: cpu_time_pred = 0.000390
+iter 76: gpu_time_pred = 0.000030
+!!Border found at iter 75
+iter 76: ratio_split_freq = 1.958391
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 76: cpu_time_cuda = 0.000446
+iter 76: gpu_time_cuda = 0.000050
+iter 76: download_copy_time_cuda = 0.000048
+iter 76: upload_copy_time_cuda = 0.000047
+
+iter 77: cpu_time_pred = 0.000297
+iter 77: gpu_time_pred = 0.000022
+!!Border found at iter 76
+iter 77: ratio_split_freq = 1.997379
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 77: cpu_time_cuda = 0.000363
+iter 77: gpu_time_cuda = 0.000048
+iter 77: download_copy_time_cuda = 0.000042
+iter 77: upload_copy_time_cuda = 0.000044
+
+iter 78: cpu_time_pred = 0.000181
+iter 78: gpu_time_pred = 0.000012
+!!Border found at iter 77
+iter 78: ratio_split_freq = 2.254748
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 78: cpu_time_cuda = 0.000267
+iter 78: gpu_time_cuda = 0.000048
+iter 78: download_copy_time_cuda = 0.000034
+iter 78: upload_copy_time_cuda = 0.000040
+
+iter 79: cpu_time_pred = 0.000000
+iter 79: gpu_time_pred = 0.000000
+!!Border found at iter 78
+iter 79: ratio_split_freq = -nan
+Failed to set GPU core and memory frequencies: Invalid Argument
+iter 79: cpu_time_cuda = 0.000157
+iter 79: gpu_time_cuda = 0.000002
+iter 79: download_copy_time_cuda = 0.000032
+iter 79: upload_copy_time_cuda = 0.000032
+
+total_cpu_time_cuda = 0.303873
+total_gpu_time_cuda = 0.150416
+total_copy_time_cuda = 0.039688
+main_loop_time_cuda = 0.593591
+Normalized difference of predicted CPU runtime per iteration is: -3.248222%
+Normalized difference of predicted GPU runtime per iteration is: -6.132285%
+Normalized difference of predicted slack per iteration is: -2.412980%
+ 5120  5120     ---   (  ---  )    133.33 (   0.67)     ---   
+total_time = 1.521744
+1.47user 0.47system 0:03.09elapsed 62%CPU (0avgtext+0avgdata 358756maxresident)k
+4504inputs+0outputs (1major+71710minor)pagefaults 0swaps
+send out message: 22 3 log

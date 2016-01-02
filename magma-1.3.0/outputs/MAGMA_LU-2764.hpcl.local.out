@@ -1,0 +1,677 @@
+send out message: 24 37 /home/lchen/MAGMA/magma-1.3.0/results
+send out message: 20 26 MAGMA_LU_GPUDVFS.total.pwr
+MAGMA 1.3.0
+device 0: Tesla K20c, 705.5 MHz clock, 4799.6 MB memory, capability 3.5
+
+Usage: /home/lchen/MAGMA/magma-1.3.0/testing/testing_dgetrf -N <m,n> -c -c2 -l
+  -N  can be repeated up to 10 times. If only m is given, then m=n.
+  -c  or setting $MAGMA_TESTINGS_CHECK checks result, PA - LU.
+  -c2 for square matrices, solves one RHS and checks residual, Ax - b.
+  -l  or setting $MAGMA_RUN_LAPACK runs LAPACK.
+
+    M     N   CPU GFlop/s (sec)   GPU GFlop/s (sec)   |PA-LU|/(N*|A|)
+=========================================================================
+init_time = 0.841916
+iter 0: cpu_time_cuda = 0.000000
+iter 0: gpu_time_cuda = 0.000000
+iter 0: download_copy_time_cuda = 0.000000
+iter 0: upload_copy_time_cuda = 0.000497
+
+iter 1: cpu_time_cuda = 0.007669
+iter 1: gpu_time_cuda = 0.005440
+iter 1: download_copy_time_cuda = 0.000453
+iter 1: upload_copy_time_cuda = 0.000489
+
+iter 2: cpu_time_pred = 0.007571
+iter 2: gpu_time_pred = 0.005302
+!!Border found at iter 1
+iter 2: ratio_split_freq = 0.082157
+iter 2: cpu_time_cuda = 0.007503
+iter 2: gpu_time_cuda = 0.008852
+iter 2: download_copy_time_cuda = 0.001155
+iter 2: upload_copy_time_cuda = 0.000477
+
+iter 3: cpu_time_pred = 0.007472
+iter 3: gpu_time_pred = 0.005165
+iter 3: ratio_split_freq = 0.085763
+iter 3: cpu_time_cuda = 0.007415
+iter 3: gpu_time_cuda = 0.008448
+iter 3: download_copy_time_cuda = 0.001112
+iter 3: upload_copy_time_cuda = 0.000460
+
+iter 4: cpu_time_pred = 0.007374
+iter 4: gpu_time_pred = 0.005030
+iter 4: ratio_split_freq = 0.089466
+iter 4: cpu_time_cuda = 0.007328
+iter 4: gpu_time_cuda = 0.008458
+iter 4: download_copy_time_cuda = 0.001091
+iter 4: upload_copy_time_cuda = 0.000465
+
+iter 5: cpu_time_pred = 0.007276
+iter 5: gpu_time_pred = 0.004896
+iter 5: ratio_split_freq = 0.093269
+iter 5: cpu_time_cuda = 0.007225
+iter 5: gpu_time_cuda = 0.008504
+iter 5: download_copy_time_cuda = 0.001090
+iter 5: upload_copy_time_cuda = 0.000454
+
+iter 6: cpu_time_pred = 0.007177
+iter 6: gpu_time_pred = 0.004765
+iter 6: ratio_split_freq = 0.097176
+iter 6: cpu_time_cuda = 0.007130
+iter 6: gpu_time_cuda = 0.008493
+iter 6: download_copy_time_cuda = 0.001074
+iter 6: upload_copy_time_cuda = 0.000444
+
+iter 7: cpu_time_pred = 0.007079
+iter 7: gpu_time_pred = 0.004635
+iter 7: ratio_split_freq = 0.101191
+iter 7: cpu_time_cuda = 0.007027
+iter 7: gpu_time_cuda = 0.008497
+iter 7: download_copy_time_cuda = 0.001055
+iter 7: upload_copy_time_cuda = 0.000438
+
+iter 8: cpu_time_pred = 0.006981
+iter 8: gpu_time_pred = 0.004507
+iter 8: ratio_split_freq = 0.105320
+iter 8: cpu_time_cuda = 0.006949
+iter 8: gpu_time_cuda = 0.015696
+iter 8: download_copy_time_cuda = 0.001049
+iter 8: upload_copy_time_cuda = 0.000444
+
+iter 9: cpu_time_pred = 0.006882
+iter 9: gpu_time_pred = 0.004381
+iter 9: ratio_split_freq = 0.109566
+iter 9: cpu_time_cuda = 0.006831
+iter 9: gpu_time_cuda = 0.008183
+iter 9: download_copy_time_cuda = 0.001028
+iter 9: upload_copy_time_cuda = 0.000434
+
+iter 10: cpu_time_pred = 0.006784
+iter 10: gpu_time_pred = 0.004257
+iter 10: ratio_split_freq = 0.113936
+iter 10: cpu_time_cuda = 0.006734
+iter 10: gpu_time_cuda = 0.008356
+iter 10: download_copy_time_cuda = 0.001005
+iter 10: upload_copy_time_cuda = 0.000422
+
+iter 11: cpu_time_pred = 0.006686
+iter 11: gpu_time_pred = 0.004135
+iter 11: ratio_split_freq = 0.118434
+iter 11: cpu_time_cuda = 0.006650
+iter 11: gpu_time_cuda = 0.008136
+iter 11: download_copy_time_cuda = 0.001000
+iter 11: upload_copy_time_cuda = 0.000423
+
+iter 12: cpu_time_pred = 0.006588
+iter 12: gpu_time_pred = 0.004014
+iter 12: ratio_split_freq = 0.123066
+iter 12: cpu_time_cuda = 0.006543
+iter 12: gpu_time_cuda = 0.008054
+iter 12: download_copy_time_cuda = 0.000973
+iter 12: upload_copy_time_cuda = 0.000426
+
+iter 13: cpu_time_pred = 0.006489
+iter 13: gpu_time_pred = 0.003895
+iter 13: ratio_split_freq = 0.127839
+iter 13: cpu_time_cuda = 0.006449
+iter 13: gpu_time_cuda = 0.010358
+iter 13: download_copy_time_cuda = 0.000971
+iter 13: upload_copy_time_cuda = 0.000413
+
+iter 14: cpu_time_pred = 0.006391
+iter 14: gpu_time_pred = 0.003778
+iter 14: ratio_split_freq = 0.132759
+iter 14: cpu_time_cuda = 0.006349
+iter 14: gpu_time_cuda = 0.007975
+iter 14: download_copy_time_cuda = 0.000962
+iter 14: upload_copy_time_cuda = 0.000398
+
+iter 15: cpu_time_pred = 0.006293
+iter 15: gpu_time_pred = 0.003662
+iter 15: ratio_split_freq = 0.137832
+iter 15: cpu_time_cuda = 0.006274
+iter 15: gpu_time_cuda = 0.007794
+iter 15: download_copy_time_cuda = 0.000926
+iter 15: upload_copy_time_cuda = 0.001388
+
+iter 16: cpu_time_pred = 0.006194
+iter 16: gpu_time_pred = 0.003549
+iter 16: ratio_split_freq = 0.143067
+iter 16: cpu_time_cuda = 0.006109
+iter 16: gpu_time_cuda = 0.007741
+iter 16: download_copy_time_cuda = 0.000920
+iter 16: upload_copy_time_cuda = 0.000393
+
+iter 17: cpu_time_pred = 0.006096
+iter 17: gpu_time_pred = 0.003437
+iter 17: ratio_split_freq = 0.148470
+iter 17: cpu_time_cuda = 0.006036
+iter 17: gpu_time_cuda = 0.007687
+iter 17: download_copy_time_cuda = 0.000912
+iter 17: upload_copy_time_cuda = 0.000392
+
+iter 18: cpu_time_pred = 0.005998
+iter 18: gpu_time_pred = 0.003327
+iter 18: ratio_split_freq = 0.154051
+iter 18: cpu_time_cuda = 0.005921
+iter 18: gpu_time_cuda = 0.014311
+iter 18: download_copy_time_cuda = 0.000886
+iter 18: upload_copy_time_cuda = 0.000378
+
+iter 19: cpu_time_pred = 0.005899
+iter 19: gpu_time_pred = 0.003219
+iter 19: ratio_split_freq = 0.159817
+iter 19: cpu_time_cuda = 0.005826
+iter 19: gpu_time_cuda = 0.007558
+iter 19: download_copy_time_cuda = 0.000875
+iter 19: upload_copy_time_cuda = 0.000399
+
+iter 20: cpu_time_pred = 0.005801
+iter 20: gpu_time_pred = 0.003113
+iter 20: ratio_split_freq = 0.165779
+iter 20: cpu_time_cuda = 0.005735
+iter 20: gpu_time_cuda = 0.007509
+iter 20: download_copy_time_cuda = 0.000866
+iter 20: upload_copy_time_cuda = 0.000378
+
+iter 21: cpu_time_pred = 0.005703
+iter 21: gpu_time_pred = 0.003008
+iter 21: ratio_split_freq = 0.171947
+iter 21: cpu_time_cuda = 0.005633
+iter 21: gpu_time_cuda = 0.007412
+iter 21: download_copy_time_cuda = 0.000847
+iter 21: upload_copy_time_cuda = 0.000373
+
+iter 22: cpu_time_pred = 0.005604
+iter 22: gpu_time_pred = 0.002905
+iter 22: ratio_split_freq = 0.178331
+iter 22: cpu_time_cuda = 0.005548
+iter 22: gpu_time_cuda = 0.007315
+iter 22: download_copy_time_cuda = 0.000832
+iter 22: upload_copy_time_cuda = 0.000374
+
+iter 23: cpu_time_pred = 0.005506
+iter 23: gpu_time_pred = 0.002804
+iter 23: ratio_split_freq = 0.184943
+iter 23: cpu_time_cuda = 0.005437
+iter 23: gpu_time_cuda = 0.007199
+iter 23: download_copy_time_cuda = 0.000822
+iter 23: upload_copy_time_cuda = 0.000369
+
+iter 24: cpu_time_pred = 0.005408
+iter 24: gpu_time_pred = 0.002705
+iter 24: ratio_split_freq = 0.191795
+iter 24: cpu_time_cuda = 0.005358
+iter 24: gpu_time_cuda = 0.007276
+iter 24: download_copy_time_cuda = 0.000796
+iter 24: upload_copy_time_cuda = 0.000347
+
+iter 25: cpu_time_pred = 0.005309
+iter 25: gpu_time_pred = 0.002607
+iter 25: ratio_split_freq = 0.198901
+iter 25: cpu_time_cuda = 0.005243
+iter 25: gpu_time_cuda = 0.007122
+iter 25: download_copy_time_cuda = 0.000781
+iter 25: upload_copy_time_cuda = 0.000342
+
+iter 26: cpu_time_pred = 0.005211
+iter 26: gpu_time_pred = 0.002512
+iter 26: ratio_split_freq = 0.206275
+iter 26: cpu_time_cuda = 0.005211
+iter 26: gpu_time_cuda = 0.006986
+iter 26: download_copy_time_cuda = 0.000767
+iter 26: upload_copy_time_cuda = 0.000351
+
+iter 27: cpu_time_pred = 0.005113
+iter 27: gpu_time_pred = 0.002418
+iter 27: ratio_split_freq = 0.213933
+iter 27: cpu_time_cuda = 0.005064
+iter 27: gpu_time_cuda = 0.006921
+iter 27: download_copy_time_cuda = 0.000758
+iter 27: upload_copy_time_cuda = 0.000337
+
+iter 28: cpu_time_pred = 0.005014
+iter 28: gpu_time_pred = 0.002326
+iter 28: ratio_split_freq = 0.221892
+iter 28: cpu_time_cuda = 0.004978
+iter 28: gpu_time_cuda = 0.006916
+iter 28: download_copy_time_cuda = 0.000745
+iter 28: upload_copy_time_cuda = 0.000327
+
+iter 29: cpu_time_pred = 0.004916
+iter 29: gpu_time_pred = 0.002235
+iter 29: ratio_split_freq = 0.230168
+iter 29: cpu_time_cuda = 0.004918
+iter 29: gpu_time_cuda = 0.011418
+iter 29: download_copy_time_cuda = 0.000713
+iter 29: upload_copy_time_cuda = 0.000327
+
+iter 30: cpu_time_pred = 0.004818
+iter 30: gpu_time_pred = 0.002147
+iter 30: ratio_split_freq = 0.238783
+iter 30: cpu_time_cuda = 0.004788
+iter 30: gpu_time_cuda = 0.006747
+iter 30: download_copy_time_cuda = 0.000706
+iter 30: upload_copy_time_cuda = 0.000326
+
+iter 31: cpu_time_pred = 0.004719
+iter 31: gpu_time_pred = 0.002060
+iter 31: ratio_split_freq = 0.247756
+iter 31: cpu_time_cuda = 0.004675
+iter 31: gpu_time_cuda = 0.006699
+iter 31: download_copy_time_cuda = 0.000691
+iter 31: upload_copy_time_cuda = 0.000314
+
+iter 32: cpu_time_pred = 0.004621
+iter 32: gpu_time_pred = 0.001975
+iter 32: ratio_split_freq = 0.257111
+iter 32: cpu_time_cuda = 0.004606
+iter 32: gpu_time_cuda = 0.006605
+iter 32: download_copy_time_cuda = 0.000671
+iter 32: upload_copy_time_cuda = 0.000308
+
+iter 33: cpu_time_pred = 0.004523
+iter 33: gpu_time_pred = 0.001892
+iter 33: ratio_split_freq = 0.266873
+iter 33: cpu_time_cuda = 0.004497
+iter 33: gpu_time_cuda = 0.006509
+iter 33: download_copy_time_cuda = 0.000663
+iter 33: upload_copy_time_cuda = 0.000296
+
+iter 34: cpu_time_pred = 0.004424
+iter 34: gpu_time_pred = 0.001811
+iter 34: ratio_split_freq = 0.277069
+iter 34: cpu_time_cuda = 0.004403
+iter 34: gpu_time_cuda = 0.006463
+iter 34: download_copy_time_cuda = 0.000634
+iter 34: upload_copy_time_cuda = 0.000288
+
+iter 35: cpu_time_pred = 0.004326
+iter 35: gpu_time_pred = 0.001731
+iter 35: ratio_split_freq = 0.287728
+iter 35: cpu_time_cuda = 0.004346
+iter 35: gpu_time_cuda = 0.009550
+iter 35: download_copy_time_cuda = 0.000620
+iter 35: upload_copy_time_cuda = 0.000297
+
+iter 36: cpu_time_pred = 0.004228
+iter 36: gpu_time_pred = 0.001653
+iter 36: ratio_split_freq = 0.298884
+iter 36: cpu_time_cuda = 0.004221
+iter 36: gpu_time_cuda = 0.006268
+iter 36: download_copy_time_cuda = 0.000613
+iter 36: upload_copy_time_cuda = 0.000290
+
+iter 37: cpu_time_pred = 0.004129
+iter 37: gpu_time_pred = 0.001577
+iter 37: ratio_split_freq = 0.310570
+iter 37: cpu_time_cuda = 0.004083
+iter 37: gpu_time_cuda = 0.006234
+iter 37: download_copy_time_cuda = 0.000596
+iter 37: upload_copy_time_cuda = 0.000278
+
+iter 38: cpu_time_pred = 0.004031
+iter 38: gpu_time_pred = 0.001503
+iter 38: ratio_split_freq = 0.322826
+iter 38: cpu_time_cuda = 0.004001
+iter 38: gpu_time_cuda = 0.006174
+iter 38: download_copy_time_cuda = 0.000575
+iter 38: upload_copy_time_cuda = 0.000280
+
+iter 39: cpu_time_pred = 0.003933
+iter 39: gpu_time_pred = 0.001431
+iter 39: ratio_split_freq = 0.335695
+iter 39: cpu_time_cuda = 0.003901
+iter 39: gpu_time_cuda = 0.006044
+iter 39: download_copy_time_cuda = 0.000571
+iter 39: upload_copy_time_cuda = 0.000268
+
+iter 40: cpu_time_pred = 0.003835
+iter 40: gpu_time_pred = 0.001360
+iter 40: ratio_split_freq = 0.349224
+iter 40: cpu_time_cuda = 0.003808
+iter 40: gpu_time_cuda = 0.006024
+iter 40: download_copy_time_cuda = 0.000555
+iter 40: upload_copy_time_cuda = 0.000254
+
+iter 41: cpu_time_pred = 0.003736
+iter 41: gpu_time_pred = 0.001291
+iter 41: ratio_split_freq = 0.363465
+iter 41: cpu_time_cuda = 0.003709
+iter 41: gpu_time_cuda = 0.005900
+iter 41: download_copy_time_cuda = 0.000533
+iter 41: upload_copy_time_cuda = 0.000249
+
+iter 42: cpu_time_pred = 0.003638
+iter 42: gpu_time_pred = 0.001224
+iter 42: ratio_split_freq = 0.378476
+iter 42: cpu_time_cuda = 0.003624
+iter 42: gpu_time_cuda = 0.005815
+iter 42: download_copy_time_cuda = 0.000526
+iter 42: upload_copy_time_cuda = 0.000256
+
+iter 43: cpu_time_pred = 0.003540
+iter 43: gpu_time_pred = 0.001159
+iter 43: ratio_split_freq = 0.394321
+iter 43: cpu_time_cuda = 0.003551
+iter 43: gpu_time_cuda = 0.005694
+iter 43: download_copy_time_cuda = 0.000520
+iter 43: upload_copy_time_cuda = 0.000238
+
+iter 44: cpu_time_pred = 0.003441
+iter 44: gpu_time_pred = 0.001095
+iter 44: ratio_split_freq = 0.411071
+iter 44: cpu_time_cuda = 0.003430
+iter 44: gpu_time_cuda = 0.005621
+iter 44: download_copy_time_cuda = 0.000496
+iter 44: upload_copy_time_cuda = 0.000242
+
+iter 45: cpu_time_pred = 0.003343
+iter 45: gpu_time_pred = 0.001034
+iter 45: ratio_split_freq = 0.428807
+iter 45: cpu_time_cuda = 0.003340
+iter 45: gpu_time_cuda = 0.005554
+iter 45: download_copy_time_cuda = 0.000474
+iter 45: upload_copy_time_cuda = 0.000224
+
+iter 46: cpu_time_pred = 0.003245
+iter 46: gpu_time_pred = 0.000974
+iter 46: ratio_split_freq = 0.447618
+iter 46: cpu_time_cuda = 0.003250
+iter 46: gpu_time_cuda = 0.005475
+iter 46: download_copy_time_cuda = 0.000467
+iter 46: upload_copy_time_cuda = 0.000217
+
+iter 47: cpu_time_pred = 0.003146
+iter 47: gpu_time_pred = 0.000916
+iter 47: ratio_split_freq = 0.467604
+iter 47: cpu_time_cuda = 0.003147
+iter 47: gpu_time_cuda = 0.005436
+iter 47: download_copy_time_cuda = 0.000453
+iter 47: upload_copy_time_cuda = 0.000203
+
+iter 48: cpu_time_pred = 0.003048
+iter 48: gpu_time_pred = 0.000859
+iter 48: ratio_split_freq = 0.488879
+iter 48: cpu_time_cuda = 0.003054
+iter 48: gpu_time_cuda = 0.005677
+iter 48: download_copy_time_cuda = 0.000427
+iter 48: upload_copy_time_cuda = 0.000206
+
+iter 49: cpu_time_pred = 0.002950
+iter 49: gpu_time_pred = 0.000805
+iter 49: ratio_split_freq = 0.511573
+iter 49: cpu_time_cuda = 0.002960
+iter 49: gpu_time_cuda = 0.005236
+iter 49: download_copy_time_cuda = 0.000405
+iter 49: upload_copy_time_cuda = 0.000198
+
+iter 50: cpu_time_pred = 0.002851
+iter 50: gpu_time_pred = 0.000752
+iter 50: ratio_split_freq = 0.535832
+iter 50: cpu_time_cuda = 0.002876
+iter 50: gpu_time_cuda = 0.005166
+iter 50: download_copy_time_cuda = 0.000395
+iter 50: upload_copy_time_cuda = 0.000194
+
+iter 51: cpu_time_pred = 0.002753
+iter 51: gpu_time_pred = 0.000701
+iter 51: ratio_split_freq = 0.561824
+iter 51: cpu_time_cuda = 0.002776
+iter 51: gpu_time_cuda = 0.004626
+iter 51: download_copy_time_cuda = 0.000376
+iter 51: upload_copy_time_cuda = 0.000183
+
+iter 52: cpu_time_pred = 0.002655
+iter 52: gpu_time_pred = 0.000652
+iter 52: ratio_split_freq = 0.589741
+iter 52: cpu_time_cuda = 0.002691
+iter 52: gpu_time_cuda = 0.004361
+iter 52: download_copy_time_cuda = 0.000376
+iter 52: upload_copy_time_cuda = 0.000181
+
+iter 53: cpu_time_pred = 0.002556
+iter 53: gpu_time_pred = 0.000604
+iter 53: ratio_split_freq = 0.619806
+iter 53: cpu_time_cuda = 0.002583
+iter 53: gpu_time_cuda = 0.003977
+iter 53: download_copy_time_cuda = 0.000350
+iter 53: upload_copy_time_cuda = 0.000177
+
+iter 54: cpu_time_pred = 0.002458
+iter 54: gpu_time_pred = 0.000559
+iter 54: ratio_split_freq = 0.652276
+iter 54: cpu_time_cuda = 0.002488
+iter 54: gpu_time_cuda = 0.003799
+iter 54: download_copy_time_cuda = 0.000333
+iter 54: upload_copy_time_cuda = 0.000170
+
+iter 55: cpu_time_pred = 0.002360
+iter 55: gpu_time_pred = 0.000515
+iter 55: ratio_split_freq = 0.687451
+iter 55: cpu_time_cuda = 0.002420
+iter 55: gpu_time_cuda = 0.003436
+iter 55: download_copy_time_cuda = 0.000320
+iter 55: upload_copy_time_cuda = 0.000164
+
+iter 56: cpu_time_pred = 0.002261
+iter 56: gpu_time_pred = 0.000473
+iter 56: ratio_split_freq = 0.725685
+iter 56: cpu_time_cuda = 0.002341
+iter 56: gpu_time_cuda = 0.003226
+iter 56: download_copy_time_cuda = 0.000318
+iter 56: upload_copy_time_cuda = 0.000160
+
+iter 57: cpu_time_pred = 0.002163
+iter 57: gpu_time_pred = 0.000433
+iter 57: ratio_split_freq = 0.767396
+iter 57: cpu_time_cuda = 0.002222
+iter 57: gpu_time_cuda = 0.002854
+iter 57: download_copy_time_cuda = 0.000291
+iter 57: upload_copy_time_cuda = 0.000158
+
+iter 58: cpu_time_pred = 0.002065
+iter 58: gpu_time_pred = 0.000394
+iter 58: ratio_split_freq = 0.813078
+iter 58: cpu_time_cuda = 0.002090
+iter 58: gpu_time_cuda = 0.002751
+iter 58: download_copy_time_cuda = 0.000296
+iter 58: upload_copy_time_cuda = 0.000148
+
+iter 59: cpu_time_pred = 0.001966
+iter 59: gpu_time_pred = 0.000358
+iter 59: ratio_split_freq = 0.863329
+iter 59: cpu_time_cuda = 0.001983
+iter 59: gpu_time_cuda = 0.002439
+iter 59: download_copy_time_cuda = 0.000283
+iter 59: upload_copy_time_cuda = 0.000139
+
+iter 60: cpu_time_pred = 0.001868
+iter 60: gpu_time_pred = 0.000323
+iter 60: ratio_split_freq = 0.918869
+iter 60: cpu_time_cuda = 0.001886
+iter 60: gpu_time_cuda = 0.002195
+iter 60: download_copy_time_cuda = 0.000272
+iter 60: upload_copy_time_cuda = 0.000139
+
+iter 61: cpu_time_pred = 0.001770
+iter 61: gpu_time_pred = 0.000290
+iter 61: ratio_split_freq = 0.980581
+iter 61: cpu_time_cuda = 0.001809
+iter 61: gpu_time_cuda = 0.001990
+iter 61: download_copy_time_cuda = 0.000253
+iter 61: upload_copy_time_cuda = 0.000129
+
+iter 62: cpu_time_pred = 0.001671
+iter 62: gpu_time_pred = 0.000258
+iter 62: ratio_split_freq = 1.049552
+iter 62: cpu_time_cuda = 0.001696
+iter 62: gpu_time_cuda = 0.001783
+iter 62: download_copy_time_cuda = 0.000252
+iter 62: upload_copy_time_cuda = 0.000126
+
+iter 63: cpu_time_pred = 0.001573
+iter 63: gpu_time_pred = 0.000229
+iter 63: ratio_split_freq = 1.127146
+iter 63: cpu_time_cuda = 0.001601
+iter 63: gpu_time_cuda = 0.001598
+iter 63: download_copy_time_cuda = 0.000225
+iter 63: upload_copy_time_cuda = 0.000119
+
+iter 64: cpu_time_pred = 0.001475
+iter 64: gpu_time_pred = 0.000201
+!!Border found at iter 63
+iter 64: ratio_split_freq = 1.215084
+iter 64: cpu_time_cuda = 0.001540
+iter 64: gpu_time_cuda = 0.001398
+iter 64: download_copy_time_cuda = 0.000211
+iter 64: upload_copy_time_cuda = 0.000114
+
+iter 65: cpu_time_pred = 0.001376
+iter 65: gpu_time_pred = 0.000175
+!!Border found at iter 64
+iter 65: ratio_split_freq = 1.315586
+iter 65: cpu_time_cuda = 0.001420
+iter 65: gpu_time_cuda = 0.001283
+iter 65: download_copy_time_cuda = 0.000204
+iter 65: upload_copy_time_cuda = 0.000105
+
+iter 66: cpu_time_pred = 0.001278
+iter 66: gpu_time_pred = 0.000151
+!!Border found at iter 65
+iter 66: ratio_split_freq = 1.431550
+iter 66: cpu_time_cuda = 0.001327
+iter 66: gpu_time_cuda = 0.001160
+iter 66: download_copy_time_cuda = 0.000203
+iter 66: upload_copy_time_cuda = 0.000101
+
+iter 67: cpu_time_pred = 0.001180
+iter 67: gpu_time_pred = 0.000129
+!!Border found at iter 66
+iter 67: ratio_split_freq = 1.566840
+iter 67: cpu_time_cuda = 0.001239
+iter 67: gpu_time_cuda = 0.000924
+iter 67: download_copy_time_cuda = 0.000191
+iter 67: upload_copy_time_cuda = 0.000096
+
+iter 68: cpu_time_pred = 0.001082
+iter 68: gpu_time_pred = 0.000108
+!!Border found at iter 67
+iter 68: ratio_split_freq = 1.726729
+iter 68: cpu_time_cuda = 0.001135
+iter 68: gpu_time_cuda = 0.000752
+iter 68: download_copy_time_cuda = 0.000175
+iter 68: upload_copy_time_cuda = 0.000098
+
+iter 69: cpu_time_pred = 0.000983
+iter 69: gpu_time_pred = 0.000089
+!!Border found at iter 68
+iter 69: ratio_split_freq = 1.918596
+iter 69: cpu_time_cuda = 0.001044
+iter 69: gpu_time_cuda = 0.000680
+iter 69: download_copy_time_cuda = 0.000163
+iter 69: upload_copy_time_cuda = 0.000091
+
+iter 70: cpu_time_pred = 0.000885
+iter 70: gpu_time_pred = 0.000072
+!!Border found at iter 69
+iter 70: ratio_split_freq = 2.153100
+iter 70: cpu_time_cuda = 0.000948
+iter 70: gpu_time_cuda = 0.000602
+iter 70: download_copy_time_cuda = 0.000147
+iter 70: upload_copy_time_cuda = 0.000079
+
+iter 71: cpu_time_pred = 0.000787
+iter 71: gpu_time_pred = 0.000057
+!!Border found at iter 70
+iter 71: ratio_split_freq = 2.446230
+iter 71: cpu_time_cuda = 0.000855
+iter 71: gpu_time_cuda = 0.000521
+iter 71: download_copy_time_cuda = 0.000141
+iter 71: upload_copy_time_cuda = 0.000075
+
+iter 72: cpu_time_pred = 0.000688
+iter 72: gpu_time_pred = 0.000044
+!!Border found at iter 71
+iter 72: ratio_split_freq = 2.823111
+iter 72: cpu_time_cuda = 0.000761
+iter 72: gpu_time_cuda = 0.000443
+iter 72: download_copy_time_cuda = 0.000133
+iter 72: upload_copy_time_cuda = 0.000068
+
+iter 73: cpu_time_pred = 0.000590
+iter 73: gpu_time_pred = 0.000032
+!!Border found at iter 72
+iter 73: ratio_split_freq = 3.325619
+iter 73: cpu_time_cuda = 0.000796
+iter 73: gpu_time_cuda = 0.000278
+iter 73: download_copy_time_cuda = 0.000127
+iter 73: upload_copy_time_cuda = 0.000064
+
+iter 74: cpu_time_pred = 0.000492
+iter 74: gpu_time_pred = 0.000022
+!!Border found at iter 73
+iter 74: ratio_split_freq = 4.029131
+iter 74: cpu_time_cuda = 0.000599
+iter 74: gpu_time_cuda = 0.000221
+iter 74: download_copy_time_cuda = 0.000104
+iter 74: upload_copy_time_cuda = 0.000058
+
+iter 75: cpu_time_pred = 0.000393
+iter 75: gpu_time_pred = 0.000014
+!!Border found at iter 74
+iter 75: ratio_split_freq = 5.084399
+iter 75: cpu_time_cuda = 0.000522
+iter 75: gpu_time_cuda = 0.000176
+iter 75: download_copy_time_cuda = 0.000107
+iter 75: upload_copy_time_cuda = 0.000052
+
+iter 76: cpu_time_pred = 0.000295
+iter 76: gpu_time_pred = 0.000008
+!!Border found at iter 75
+iter 76: ratio_split_freq = 6.843178
+iter 76: cpu_time_cuda = 0.000440
+iter 76: gpu_time_cuda = 0.000146
+iter 76: download_copy_time_cuda = 0.000099
+iter 76: upload_copy_time_cuda = 0.000046
+
+iter 77: cpu_time_pred = 0.000197
+iter 77: gpu_time_pred = 0.000004
+!!Border found at iter 76
+iter 77: ratio_split_freq = 10.360735
+iter 77: cpu_time_cuda = 0.000355
+iter 77: gpu_time_cuda = 0.000133
+iter 77: download_copy_time_cuda = 0.000085
+iter 77: upload_copy_time_cuda = 0.000044
+
+iter 78: cpu_time_pred = 0.000098
+iter 78: gpu_time_pred = 0.000001
+!!Border found at iter 77
+iter 78: ratio_split_freq = 20.913409
+iter 78: cpu_time_cuda = 0.000265
+iter 78: gpu_time_cuda = 0.000048
+iter 78: download_copy_time_cuda = 0.000088
+iter 78: upload_copy_time_cuda = 0.000040
+
+iter 79: cpu_time_pred = 0.000000
+iter 79: gpu_time_pred = 0.000000
+!!Border found at iter 78
+iter 79: ratio_split_freq = -nan
+iter 79: cpu_time_cuda = 0.000158
+iter 79: gpu_time_cuda = 0.000003
+iter 79: download_copy_time_cuda = 0.000083
+iter 79: upload_copy_time_cuda = 0.000077
+
+total_cpu_time_cuda = 0.303352
+total_gpu_time_cuda = 0.421305
+total_copy_time_cuda = 0.066041
+main_loop_time_cuda = 1.390901
+Normalized difference of predicted CPU runtime per iteration is: -4.404534%
+Normalized difference of predicted GPU runtime per iteration is: -71.901993%
+Normalized difference of predicted slack per iteration is: 324.424377%
+ 5120  5120     ---   (  ---  )     58.66 (   1.53)     ---   
+total_time = 2.373368
+1.64user 0.93system 0:03.77elapsed 68%CPU (0avgtext+0avgdata 358948maxresident)k
+4512inputs+0outputs (1major+71720minor)pagefaults 0swaps
+send out message: 22 3 log
