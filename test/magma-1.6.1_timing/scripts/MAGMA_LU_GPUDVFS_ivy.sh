@@ -22,12 +22,11 @@ rapl_pid=$!
 #time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 3000,3000 -c
 #sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 20000,20000
 
-ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 5120,5120
-#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 10240,10240
-#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 15360,15360
-#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 20480,20480
-##ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 25600,25600
-
+ssh -t -t ivy sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 5120,5120
+ssh -t -t ivy sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 10240,10240
+ssh -t -t ivy sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 15360,15360
+ssh -t -t ivy sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 20480,20480
+ssh -t -t ivy sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 25600,25600
 #sudo env
 
 #sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 5120,5120
@@ -36,11 +35,11 @@ ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 
 #sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 20480,20480
 ##ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 25600,25600
 
-#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 5120,5120
-#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 10240,10240
+#sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgeqrf -N 5120,5120
+#sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgeqrf -N 10240,10240
 #ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 15360,15360
-#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 20480,20480
-#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 25600,25600
+#sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgeqrf -N 20480,20480
+##ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 25600,25600
 
 /opt/power-bench/mclient -H 130.127.48.185 -e log
 
