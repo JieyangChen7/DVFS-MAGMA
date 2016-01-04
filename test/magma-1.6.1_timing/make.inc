@@ -34,6 +34,7 @@ LIB       = -llapack -lf77blas -lgfortran -lcblas -latlas -lcublas -lcudart -lst
 CUDADIR   = /usr/local/cuda
 
 LIBDIR    = -L/usr/lib64 -L/usr/lib64/atlas -L/lib64 \
-            -L$(CUDADIR)/lib64 -L/home/lchen/myroot/lib
+            -L$(CUDADIR)/lib64 -L/home/lchen/myroot/lib \
+	     -L$(PAPIDIR)/src
 INC       = -I$(CUDADIR)/include \
 	     -I$(PAPIDIR)/src	
