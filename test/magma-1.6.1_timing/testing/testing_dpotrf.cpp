@@ -22,6 +22,8 @@
 #include "../testing/testing_util.cpp"
 #include "papi.h"
 
+using namespace std;
+
 /* ////////////////////////////////////////////////////////////////////////////
    -- Testing dpotrf
 */
