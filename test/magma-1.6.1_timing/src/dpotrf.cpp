@@ -10,7 +10,8 @@
 */
 #include "common_magma.h"
 #include "../testing/testing_util.cpp"
-
+#include <iostream>
+using namespace std;
 #define PRECISION_d
 
 // === Define what BLAS to use ============================================
@@ -250,6 +251,7 @@ magma_dpotrf(
             if(TIME_DIFF_CPU_FREQ) SetCPUFreq(1200000);
             if(TIME_DIFF_GPU_FREQ) SetGPUFreq(324, 324);
 
+            cout << "stream[1]=" << stream[1] <<endl;
             //=========================================================
             // Compute the Cholesky factorization A = L*L'.
             for (j=0; j < n; j += nb) {////if(j > n/2){nb = 103;
