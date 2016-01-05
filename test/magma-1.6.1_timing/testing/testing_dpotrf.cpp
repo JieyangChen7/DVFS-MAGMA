@@ -101,7 +101,7 @@ int main( int argc, char** argv)
 				return -1;
 			}  
 			
-            gpu_time = magma_wtime();
+//            gpu_time = magma_wtime();
             
             
             magma_dpotrf( opts.uplo, N, h_R, lda, &info );
@@ -112,8 +112,8 @@ int main( int argc, char** argv)
 			}
             cout<<"N="<<N<<"---time:"<<real_time<<"---gflops:"<<(double)gflops/real_time<<endl;
 			PAPI_shutdown();   
-            gpu_time = magma_wtime() - gpu_time;
-            printf("time = %.6f\n", gpu_time);
+//            gpu_time = magma_wtime() - gpu_time;
+//            printf("time = %.6f\n", gpu_time);
 //            gpu_perf = gflops / gpu_time;
 //            if (info != 0)
 //                printf("magma_dpotrf returned error %d: %s.\n",

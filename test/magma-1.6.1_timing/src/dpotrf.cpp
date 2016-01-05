@@ -235,7 +235,7 @@ magma_dpotrf(
             double gpu_time_dgemm_this_iter_lowest_freq = gpu_time_dgemm_iter0_lowest_freq;
             int cpu_switched_flag1 = 0;
 
-            #define TIME_MEASUREMENT 0
+            #define TIME_MEASUREMENT 1
             #define TIME_DIFF_CPU_FREQ 0
             #define TIME_DIFF_GPU_FREQ 0
             #define ALGORITHMIC_SLACK_PREDICTION 0
@@ -255,9 +255,9 @@ magma_dpotrf(
             for (j=0; j < n; j += nb) {////if(j > n/2){nb = 103;
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventCreate(&start_upload_copy1);
-							cudaEventCreate(&stop_upload_copy1);
-							cudaEventRecord(start_upload_copy1, 0);
+					cudaEventCreate(&start_upload_copy1);
+					cudaEventCreate(&stop_upload_copy1);
+					cudaEventRecord(start_upload_copy1, 0);
 				}
 
                 //  Update and factorize the current diagonal block and test
@@ -267,19 +267,19 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventRecord(stop_upload_copy1, 0);
-							cudaEventSynchronize(stop_upload_copy1);
-							cudaEventElapsedTime(&upload_copy_time1_cuda_temp, start_upload_copy1, stop_upload_copy1);
-							cudaEventDestroy(start_upload_copy1);
-							cudaEventDestroy(stop_upload_copy1);
-							total_copy_time_cuda += upload_copy_time1_cuda_temp;
+					cudaEventRecord(stop_upload_copy1, 0);
+					cudaEventSynchronize(stop_upload_copy1);
+					cudaEventElapsedTime(&upload_copy_time1_cuda_temp, start_upload_copy1, stop_upload_copy1);
+					cudaEventDestroy(start_upload_copy1);
+					cudaEventDestroy(stop_upload_copy1);
+					total_copy_time_cuda += upload_copy_time1_cuda_temp;
 				}
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventCreate(&start_gpu_dsyrk);
-							cudaEventCreate(&stop_gpu_dsyrk);
-							cudaEventRecord(start_gpu_dsyrk, 0);
+					cudaEventCreate(&start_gpu_dsyrk);
+					cudaEventCreate(&stop_gpu_dsyrk);
+					cudaEventRecord(start_gpu_dsyrk, 0);
 				}
 
                 magma_dsyrk(MagmaLower, MagmaNoTrans, jb, j,
@@ -288,19 +288,19 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventRecord(stop_gpu_dsyrk, 0);
-							cudaEventSynchronize(stop_gpu_dsyrk);
-							cudaEventElapsedTime(&gpu_time_dsyrk_cuda_temp, start_gpu_dsyrk, stop_gpu_dsyrk);
-							cudaEventDestroy(start_gpu_dsyrk);
-							cudaEventDestroy(stop_gpu_dsyrk);
-							total_gpu_time_cuda += gpu_time_dsyrk_cuda_temp;
+					cudaEventRecord(stop_gpu_dsyrk, 0);
+					cudaEventSynchronize(stop_gpu_dsyrk);
+					cudaEventElapsedTime(&gpu_time_dsyrk_cuda_temp, start_gpu_dsyrk, stop_gpu_dsyrk);
+					cudaEventDestroy(start_gpu_dsyrk);
+					cudaEventDestroy(stop_gpu_dsyrk);
+					total_gpu_time_cuda += gpu_time_dsyrk_cuda_temp;
 				}
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventCreate(&start_download_copy1);
-							cudaEventCreate(&stop_download_copy1);
-							cudaEventRecord(start_download_copy1, 0);
+					cudaEventCreate(&start_download_copy1);
+					cudaEventCreate(&stop_download_copy1);
+					cudaEventRecord(start_download_copy1, 0);
 				}
 
                 magma_queue_sync( stream[1] );
@@ -311,12 +311,12 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventRecord(stop_download_copy1, 0);
-							cudaEventSynchronize(stop_download_copy1);
-							cudaEventElapsedTime(&download_copy_time1_cuda_temp, start_download_copy1, stop_download_copy1);
-							cudaEventDestroy(start_download_copy1);
-							cudaEventDestroy(stop_download_copy1);
-							total_copy_time_cuda += download_copy_time1_cuda_temp;
+					cudaEventRecord(stop_download_copy1, 0);
+					cudaEventSynchronize(stop_download_copy1);
+					cudaEventElapsedTime(&download_copy_time1_cuda_temp, start_download_copy1, stop_download_copy1);
+					cudaEventDestroy(start_download_copy1);
+					cudaEventDestroy(stop_download_copy1);
+					total_copy_time_cuda += download_copy_time1_cuda_temp;
 				}
 
 				if(ALGORITHMIC_SLACK_PREDICTION)
@@ -331,9 +331,9 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventCreate(&start_gpu_dgemm);
-							cudaEventCreate(&stop_gpu_dgemm);
-							cudaEventRecord(start_gpu_dgemm, 0);
+					cudaEventCreate(&start_gpu_dgemm);
+					cudaEventCreate(&stop_gpu_dgemm);
+					cudaEventRecord(start_gpu_dgemm, 0);
 				}
 
                 if ( (j+jb) < n) {
@@ -346,31 +346,31 @@ magma_dpotrf(
                 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventRecord(stop_gpu_dgemm, 0);
-							cudaEventSynchronize(stop_gpu_dgemm);
-							cudaEventElapsedTime(&gpu_time_dgemm_cuda_temp, start_gpu_dgemm, stop_gpu_dgemm);
-							cudaEventDestroy(start_gpu_dgemm);
-							cudaEventDestroy(stop_gpu_dgemm);
-							total_gpu_time_cuda += gpu_time_dgemm_cuda_temp;
-							if(ALGORITHMIC_SLACK_PREDICTION)
-							{
-								if(!gpu_time_dgemm_iter0_flag)
-								{
-									gpu_time_dgemm_iter0 = gpu_time_dgemm_cuda_temp/1000;
-									gpu_time_dgemm_pred = gpu_time_dgemm_iter0;
-									gpu_time_dgemm_iter0_flag = 1;
-								}
-								gpu_time_dgemm_this_iter = gpu_time_dgemm_cuda_temp/1000;
-								diff_total_gpu_dgemm += (gpu_time_dgemm_pred - gpu_time_dgemm_this_iter)/gpu_time_dgemm_this_iter;
-								gpu_time_dgemm_pred = gpu_time_dgemm_this_iter;//Prediction without this line is worse.
-							}
+					cudaEventRecord(stop_gpu_dgemm, 0);
+					cudaEventSynchronize(stop_gpu_dgemm);
+					cudaEventElapsedTime(&gpu_time_dgemm_cuda_temp, start_gpu_dgemm, stop_gpu_dgemm);
+					cudaEventDestroy(start_gpu_dgemm);
+					cudaEventDestroy(stop_gpu_dgemm);
+					total_gpu_time_cuda += gpu_time_dgemm_cuda_temp;
+					if(ALGORITHMIC_SLACK_PREDICTION)
+					{
+						if(!gpu_time_dgemm_iter0_flag)
+						{
+							gpu_time_dgemm_iter0 = gpu_time_dgemm_cuda_temp/1000;
+							gpu_time_dgemm_pred = gpu_time_dgemm_iter0;
+							gpu_time_dgemm_iter0_flag = 1;
+						}
+						gpu_time_dgemm_this_iter = gpu_time_dgemm_cuda_temp/1000;
+						diff_total_gpu_dgemm += (gpu_time_dgemm_pred - gpu_time_dgemm_this_iter)/gpu_time_dgemm_this_iter;
+						gpu_time_dgemm_pred = gpu_time_dgemm_this_iter;//Prediction without this line is worse.
+					}
 				}
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventCreate(&start_download_copy2);
-							cudaEventCreate(&stop_download_copy2);
-							cudaEventRecord(start_download_copy2, 0);
+					cudaEventCreate(&start_download_copy2);
+					cudaEventCreate(&stop_download_copy2);
+					cudaEventRecord(start_download_copy2, 0);
 				}
 
                 magma_dgetmatrix_async( jb, j,
@@ -381,51 +381,51 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventRecord(stop_download_copy2, 0);
-							cudaEventSynchronize(stop_download_copy2);
-							cudaEventElapsedTime(&download_copy_time2_cuda_temp, start_download_copy2, stop_download_copy2);
-							cudaEventDestroy(start_download_copy2);
-							cudaEventDestroy(stop_download_copy2);
-							total_copy_time_cuda += download_copy_time2_cuda_temp;
+					cudaEventRecord(stop_download_copy2, 0);
+					cudaEventSynchronize(stop_download_copy2);
+					cudaEventElapsedTime(&download_copy_time2_cuda_temp, start_download_copy2, stop_download_copy2);
+					cudaEventDestroy(start_download_copy2);
+					cudaEventDestroy(stop_download_copy2);
+					total_copy_time_cuda += download_copy_time2_cuda_temp;
 				}
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventCreate(&start_cpu);
-							cudaEventCreate(&stop_cpu);
-							cudaEventRecord(start_cpu, 0);
+					cudaEventCreate(&start_cpu);
+					cudaEventCreate(&stop_cpu);
+					cudaEventRecord(start_cpu, 0);
 				}
 
                 lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventRecord(stop_cpu, 0);
-							cudaEventSynchronize(stop_cpu);
-							cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
-							cudaEventDestroy(start_cpu);
-							cudaEventDestroy(stop_cpu);
-							total_cpu_time_cuda += cpu_time_cuda_temp;
-							if(ALGORITHMIC_SLACK_PREDICTION)
-							{
-								if(!cpu_time_iter0_flag)
-								{
-									cpu_time_iter0 = cpu_time_cuda_temp/1000;
-									cpu_time_pred = cpu_time_iter0;
-									cpu_time_iter0_flag = 1;
-								}
-								cpu_time_this_iter = cpu_time_cuda_temp/1000;
-								diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
-								diff_total_slack += ((cpu_time_pred - gpu_time_dgemm_pred) - (cpu_time_this_iter - gpu_time_dgemm_this_iter))/(cpu_time_this_iter - gpu_time_dgemm_this_iter);//(slack_pred - slack_measured) / slack_measured
-								cpu_time_pred = cpu_time_this_iter;//Prediction without this line is worse.
-							}
+					cudaEventRecord(stop_cpu, 0);
+					cudaEventSynchronize(stop_cpu);
+					cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
+					cudaEventDestroy(start_cpu);
+					cudaEventDestroy(stop_cpu);
+					total_cpu_time_cuda += cpu_time_cuda_temp;
+					if(ALGORITHMIC_SLACK_PREDICTION)
+					{
+						if(!cpu_time_iter0_flag)
+						{
+							cpu_time_iter0 = cpu_time_cuda_temp/1000;
+							cpu_time_pred = cpu_time_iter0;
+							cpu_time_iter0_flag = 1;
+						}
+						cpu_time_this_iter = cpu_time_cuda_temp/1000;
+						diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
+						diff_total_slack += ((cpu_time_pred - gpu_time_dgemm_pred) - (cpu_time_this_iter - gpu_time_dgemm_this_iter))/(cpu_time_this_iter - gpu_time_dgemm_this_iter);//(slack_pred - slack_measured) / slack_measured
+						cpu_time_pred = cpu_time_this_iter;//Prediction without this line is worse.
+					}
 				}
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventCreate(&start_upload_copy2);
-							cudaEventCreate(&stop_upload_copy2);
-							cudaEventRecord(start_upload_copy2, 0);
+					cudaEventCreate(&start_upload_copy2);
+					cudaEventCreate(&stop_upload_copy2);
+					cudaEventRecord(start_upload_copy2, 0);
 				}
 
                 if (*info != 0) {
@@ -439,19 +439,19 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventRecord(stop_upload_copy2, 0);
-							cudaEventSynchronize(stop_upload_copy2);
-							cudaEventElapsedTime(&upload_copy_time2_cuda_temp, start_upload_copy2, stop_upload_copy2);
-							cudaEventDestroy(start_upload_copy2);
-							cudaEventDestroy(stop_upload_copy2);
-							total_copy_time_cuda += upload_copy_time2_cuda_temp;
+					cudaEventRecord(stop_upload_copy2, 0);
+					cudaEventSynchronize(stop_upload_copy2);
+					cudaEventElapsedTime(&upload_copy_time2_cuda_temp, start_upload_copy2, stop_upload_copy2);
+					cudaEventDestroy(start_upload_copy2);
+					cudaEventDestroy(stop_upload_copy2);
+					total_copy_time_cuda += upload_copy_time2_cuda_temp;
 				}
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventCreate(&start_gpu_dtrsm);
-							cudaEventCreate(&stop_gpu_dtrsm);
-							cudaEventRecord(start_gpu_dtrsm, 0);
+					cudaEventCreate(&start_gpu_dtrsm);
+					cudaEventCreate(&stop_gpu_dtrsm);
+					cudaEventRecord(start_gpu_dtrsm, 0);
 				}
 
                 if ( (j+jb) < n) {
@@ -463,25 +463,25 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							cudaEventRecord(stop_gpu_dtrsm, 0);
-							cudaEventSynchronize(stop_gpu_dtrsm);
-							cudaEventElapsedTime(&gpu_time_dtrsm_cuda_temp, start_gpu_dtrsm, stop_gpu_dtrsm);
-							cudaEventDestroy(start_gpu_dtrsm);
-							cudaEventDestroy(stop_gpu_dtrsm);
-							total_gpu_time_cuda += gpu_time_dtrsm_cuda_temp;
+					cudaEventRecord(stop_gpu_dtrsm, 0);
+					cudaEventSynchronize(stop_gpu_dtrsm);
+					cudaEventElapsedTime(&gpu_time_dtrsm_cuda_temp, start_gpu_dtrsm, stop_gpu_dtrsm);
+					cudaEventDestroy(start_gpu_dtrsm);
+					cudaEventDestroy(stop_gpu_dtrsm);
+					total_gpu_time_cuda += gpu_time_dtrsm_cuda_temp;
 				}
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-							printf("iter %d: slack_cuda = %.6f\n", iter, cpu_time_cuda_temp/1000 - gpu_time_dgemm_cuda_temp/1000);
-							printf("iter %d: cpu_time_cuda = %.6f\n", iter, cpu_time_cuda_temp/1000);
-							printf("iter %d: gpu_time_dsyrk_cuda = %.6f\n", iter, gpu_time_dsyrk_cuda_temp/1000);
-							printf("iter %d: gpu_time_dgemm_cuda = %.6f\n", iter, gpu_time_dgemm_cuda_temp/1000);
-							printf("iter %d: gpu_time_dtrsm_cuda = %.6f\n", iter, gpu_time_dtrsm_cuda_temp/1000);
-							printf("iter %d: upload_copy_time1_cuda = %.6f\n", iter, upload_copy_time1_cuda_temp/1000);
-							printf("iter %d: download_copy_time1_cuda = %.6f\n", iter, download_copy_time1_cuda_temp/1000);
-							printf("iter %d: upload_copy_time2_cuda = %.6f\n", iter, upload_copy_time2_cuda_temp/1000);
-							printf("iter %d: download_copy_time2_cuda = %.6f\n\n", iter++, download_copy_time2_cuda_temp/1000);
+					printf("iter %d: slack_cuda = %.6f\n", iter, cpu_time_cuda_temp/1000 - gpu_time_dgemm_cuda_temp/1000);
+					printf("iter %d: cpu_time_cuda = %.6f\n", iter, cpu_time_cuda_temp/1000);
+					printf("iter %d: gpu_time_dsyrk_cuda = %.6f\n", iter, gpu_time_dsyrk_cuda_temp/1000);
+					printf("iter %d: gpu_time_dgemm_cuda = %.6f\n", iter, gpu_time_dgemm_cuda_temp/1000);
+					printf("iter %d: gpu_time_dtrsm_cuda = %.6f\n", iter, gpu_time_dtrsm_cuda_temp/1000);
+					printf("iter %d: upload_copy_time1_cuda = %.6f\n", iter, upload_copy_time1_cuda_temp/1000);
+					printf("iter %d: download_copy_time1_cuda = %.6f\n", iter, download_copy_time1_cuda_temp/1000);
+					printf("iter %d: upload_copy_time2_cuda = %.6f\n", iter, upload_copy_time2_cuda_temp/1000);
+					printf("iter %d: download_copy_time2_cuda = %.6f\n\n", iter++, download_copy_time2_cuda_temp/1000);
 				}
             }
 
