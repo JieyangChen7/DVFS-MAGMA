@@ -335,7 +335,7 @@ magma_dpotrf(
 				{
 					cudaEventCreate(&start_gpu_dgemm);
 					cudaEventCreate(&stop_gpu_dgemm);
-					cudaEventRecord(start_gpu_dgemm, 0);
+					cudaEventRecord(start_gpu_dgemm, stream[0]);
 				}
 
                 if ( (j+jb) < n) {
@@ -348,7 +348,7 @@ magma_dpotrf(
                 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-					cudaEventRecord(stop_gpu_dgemm, 0);
+					cudaEventRecord(stop_gpu_dgemm, stream[0]);
 					cudaEventSynchronize(stop_gpu_dgemm);
 					cudaEventElapsedTime(&gpu_time_dgemm_cuda_temp, start_gpu_dgemm, stop_gpu_dgemm);
 					cudaEventDestroy(start_gpu_dgemm);
