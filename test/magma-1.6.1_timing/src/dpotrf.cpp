@@ -262,7 +262,7 @@ magma_dpotrf(
 //
 //                //  Update and factorize the current diagonal block and test
 //                //  for non-positive-definiteness. Computing MIN
-//                jb = min(nb, (n-j));
+                jb = min(nb, (n-j));
 //                magma_dsetmatrix_async( (n-j), jb, A(j, j), lda, dA(j, j), ldda, stream[1]);
 //
 //				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
