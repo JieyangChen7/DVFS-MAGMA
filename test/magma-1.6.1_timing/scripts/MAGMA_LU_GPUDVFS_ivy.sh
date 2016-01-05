@@ -22,8 +22,8 @@ rapl_pid=$!
 
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 5120,5120
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 10240,10240
-sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 15360,15360
-#sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 20480,20480
+#sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 15360,15360
+sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 20480,20480
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 25600,25600
 
 
