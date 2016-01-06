@@ -234,16 +234,16 @@ magma_dgetrf(
         static double gpu_time_iter0_highest_freq = 0.008133, gpu_time_iter0_lowest_freq = 0.043773;
         static double cpu_time_iter0_highest_freq = 0.014919;
         double gpu_time_this_iter_lowest_freq = gpu_time_iter0_lowest_freq;
-	int cpu_switched_flag1 = 0;
+        int cpu_switched_flag1 = 0;
 
-        #define TIME_MEASUREMENT 1
+        #define TIME_MEASUREMENT 0
         #define TIME_DIFF_CPU_FREQ 0
-	#define TIME_DIFF_GPU_FREQ 0
-	#define SIMPLEST_TEST 0
+		#define TIME_DIFF_GPU_FREQ 0
+		#define SIMPLEST_TEST 0
         #define ALGORITHMIC_SLACK_PREDICTION 0
 
-	#define RACE_TO_HALT 0
-	#define CPU_SLACK_RECLAMATION 0
+		#define RACE_TO_HALT 0
+		#define CPU_SLACK_RECLAMATION 0
         #define GPU_SLACK_RECLAMATION 0//When testing, set GPU and ALGORITHMIC_SLACK_PREDICTION both to 1.
 
 	if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)

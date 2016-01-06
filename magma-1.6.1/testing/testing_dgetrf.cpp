@@ -21,6 +21,10 @@
 #include "testings.h"
 #include "../testing/testing_util.cpp"
 
+#include "papi.h"
+#include <iostream>
+
+using namespace std;
 
 // Initialize matrix to random.
 // Having this in separate function ensures the same ISEED is always used,
@@ -229,9 +233,30 @@ int main( int argc, char** argv)
             SetGPUFreq(2600, 705);
 
             gpu_time = magma_wtime();
+            
+            float real_time = 0.0;
+			float proc_time = 0.0;
+			long long flpins = 0.0;
+			float mflops = 0.0;
+			
+			//PAPI timing start
+			if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+				cout << "PAPI ERROR" << endl;
+				return -1;
+			} 
+            
             magma_dgetrf( M, N, h_A, lda, ipiv, &info);
-            gpu_time = magma_wtime() - gpu_time;
-            gpu_perf = gflops / gpu_time;
+            
+            //PAPI timing end
+		   if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+				cout << "PAPI ERROR" << endl;
+				return -1;
+			}
+			cout<<"N="<<N<<"---time:"<<real_time<<"---gflops:"<<(double)gflops/real_time<<endl;
+			PAPI_shutdown();
+            
+            //gpu_time = magma_wtime() - gpu_time;
+            //gpu_perf = gflops / gpu_time;
             if (info != 0)
                 printf("magma_dgetrf returned error %d: %s.\n",
                        (int) info, magma_strerror( info ));

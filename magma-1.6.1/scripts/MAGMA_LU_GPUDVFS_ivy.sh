@@ -18,6 +18,10 @@ smi_pid=$!
 rapl_pid=$!
 #echo $rapl_pid
 
+
+ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 5120,5120
+
+
 #time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 3000,3000 -c
 #sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 20000,20000
 
@@ -27,7 +31,7 @@ rapl_pid=$!
 #ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 20480,20480
 ##ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 25600,25600
 
-ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 5120,5120
+#ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 5120,5120
 #ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 10240,10240
 #ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 15360,15360
 #ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 20480,20480
@@ -47,3 +51,6 @@ kill ${rapl_pid}
 #sleep 9
 #/apps/power-bench/cpuspeed-set.pl --all 2500000
 /home/lchen/cpu_h_ivy.sh
+
+
+scp lchen@ivy2:/home/lchen/MAGMA/magma-1.6.1/results/MAGMA_LU_GPUDVFS.total.pwr ./MAGMA_LU_GPUDVFS.total.pwr
