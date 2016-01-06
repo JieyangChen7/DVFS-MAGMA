@@ -150,7 +150,7 @@ magma_dpotrf(
     nb = magma_get_dpotrf_nb(n);
     cout << "nb=" << nb << endl;
     //nb = 256;
-    nb = 103;//optimal
+    nb = 105;//optimal
 
     if (nb <= 1 || nb >= n) {
         lapackf77_dpotrf(uplo_, &n, A, &lda, info);
