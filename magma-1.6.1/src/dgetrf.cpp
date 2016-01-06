@@ -364,7 +364,7 @@ magma_dgetrf(
                     cudaEventRecord(start_gpu, 0);
                 }
 		/**/
-
+ 
 		/*
 		//Slow down both panel sovling and trailing matrix updating.
 		magma_dtrsm( MagmaRight, MagmaUpper, MagmaNoTrans, MagmaUnit,
