@@ -21,6 +21,9 @@
 #include "testings.h"
 #include "../testing/testing_util.cpp"
 #include "papi.h"
+#include <iostream>
+
+using namespace std;
 
 
 // Initialize matrix to random.
