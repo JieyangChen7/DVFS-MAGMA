@@ -402,7 +402,7 @@ magma_dpotrf(
 				}
 				cout << "f" << endl;
                 lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
-
+                cout << "f-time0" << endl;
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
 					cout << "f-time1" << endl;
