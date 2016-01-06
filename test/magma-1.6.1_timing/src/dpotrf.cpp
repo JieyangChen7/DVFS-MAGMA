@@ -429,7 +429,7 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
-					cout << "f-time2" << endl
+					cout << "f-time2" << endl;
 					cudaEventCreate(&start_upload_copy2);
 					cudaEventCreate(&stop_upload_copy2);
 					cudaEventRecord(start_upload_copy2, 0);
