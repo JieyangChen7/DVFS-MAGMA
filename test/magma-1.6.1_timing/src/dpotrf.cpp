@@ -255,7 +255,7 @@ magma_dpotrf(
             //=========================================================
             // Compute the Cholesky factorization A = L*L'.
             for (j=0; j < n; j += nb) {////if(j > n/2){nb = 103;
-            	cout << "j" << endl;
+            	cout << j << endl;
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
 					cudaEventCreate(&start_upload_copy1);
@@ -266,6 +266,7 @@ magma_dpotrf(
                 //  Update and factorize the current diagonal block and test
                 //  for non-positive-definiteness. Computing MIN
                 jb = min(nb, (n-j));
+                cout << "a" << endl;
                 magma_dsetmatrix_async( (n-j), jb, A(j, j), lda, dA(j, j), ldda, stream[1]);
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
@@ -284,7 +285,7 @@ magma_dpotrf(
 					cudaEventCreate(&stop_gpu_dsyrk);
 					cudaEventRecord(start_gpu_dsyrk, 0);
 				}
-
+				cout << "b" << endl;
                 magma_dsyrk(MagmaLower, MagmaNoTrans, jb, j,
                             d_neg_one, dA(j, 0), ldda,
                             d_one,     dA(j, j), ldda);
@@ -307,7 +308,7 @@ magma_dpotrf(
 				}
 
                 magma_queue_sync( stream[1] );
-
+                cout << "c" << endl;
                 magma_dgetmatrix_async( jb, jb,
                                         dA(j,j), ldda,
                                         A(j,j),  lda, stream[0] );
@@ -340,6 +341,7 @@ magma_dpotrf(
 				}
 
                 if ( (j+jb) < n) {
+                	cout << "d" << endl;
                     magma_dgemm( MagmaNoTrans, MagmaConjTrans,
                                  (n-j-jb), jb, j,
                                  c_neg_one, dA(j+jb, 0), ldda,
@@ -375,7 +377,7 @@ magma_dpotrf(
 					cudaEventCreate(&stop_download_copy2);
 					cudaEventRecord(start_download_copy2, 0);
 				}
-
+				cout << "e" << endl;
                 magma_dgetmatrix_async( jb, j,
                                         dA(j, 0), ldda,
                                         A(j, 0),  lda, stream[2] );
@@ -398,7 +400,7 @@ magma_dpotrf(
 					cudaEventCreate(&stop_cpu);
 					cudaEventRecord(start_cpu, 0);
 				}
-
+				cout << "f" << endl;
                 lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
@@ -435,6 +437,7 @@ magma_dpotrf(
                     *info = *info + j;
                     break;
                 }
+                cout << "g" << endl;
                 magma_dsetmatrix_async( jb, jb,
                                         A(j, j),  lda,
                                         dA(j, j), ldda, stream[0] );
