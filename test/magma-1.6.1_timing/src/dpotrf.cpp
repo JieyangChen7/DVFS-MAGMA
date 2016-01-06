@@ -405,6 +405,7 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
+					cout << "f-time1" << endl;
 					cudaEventRecord(stop_cpu, 0);
 					cudaEventSynchronize(stop_cpu);
 					cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
@@ -428,6 +429,7 @@ magma_dpotrf(
 
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
+					cout << "f-time2" << endl
 					cudaEventCreate(&start_upload_copy2);
 					cudaEventCreate(&stop_upload_copy2);
 					cudaEventRecord(start_upload_copy2, 0);
