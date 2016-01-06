@@ -434,6 +434,7 @@ magma_dpotrf(
 				}
 
                 if (*info != 0) {
+                	cout << "f-err" << endl;
                     *info = *info + j;
                     break;
                 }
