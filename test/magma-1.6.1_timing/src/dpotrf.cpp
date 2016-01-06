@@ -255,6 +255,7 @@ magma_dpotrf(
             //=========================================================
             // Compute the Cholesky factorization A = L*L'.
             for (j=0; j < n; j += nb) {////if(j > n/2){nb = 103;
+            	cout << "j" << endl;
 				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
 					cudaEventCreate(&start_upload_copy1);
