@@ -148,6 +148,7 @@ magma_dpotrf(
     }
 
     nb = magma_get_dpotrf_nb(n);
+    cout << "nb=" << nb << endl;
     //nb = 103;//optimal
 
     if (nb <= 1 || nb >= n) {
@@ -236,7 +237,7 @@ magma_dpotrf(
             double gpu_time_dgemm_this_iter_lowest_freq = gpu_time_dgemm_iter0_lowest_freq;
             int cpu_switched_flag1 = 0;
 
-            #define TIME_MEASUREMENT 0
+            #define TIME_MEASUREMENT 1
             #define TIME_DIFF_CPU_FREQ 0
             #define TIME_DIFF_GPU_FREQ 0
             #define ALGORITHMIC_SLACK_PREDICTION 0
