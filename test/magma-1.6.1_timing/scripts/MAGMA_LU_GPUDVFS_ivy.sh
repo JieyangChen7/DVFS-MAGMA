@@ -52,3 +52,8 @@ kill ${rapl_pid}
 /home/lchen/cpu_h_ivy.sh
 
 scp lchen@ivy2:/home/lchen/MAGMA/test/magma-1.6.1_timing/results/MAGMA_LU_GPUDVFS.total.pwr /home/lchen/MAGMA/test/magma-1.6.1_timing/results/
+
+cd /home/lchen/MAGMA/test/magma-1.6.1_timing/results/
+
+./getEnergy.sh MAGMA_LU_GPUDVFS
+
