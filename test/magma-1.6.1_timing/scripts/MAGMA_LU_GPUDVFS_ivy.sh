@@ -27,8 +27,8 @@ rapl_pid=$!
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dpotrf -N 25600,25600
 
 
-ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 5120,5120
-#ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 10240,10240
+#ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 5120,5120
+ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 10240,10240
 #ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 15360,15360
 #ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 20480,20480
 #sudo time /home/lchen/MAGMA/test/magma-1.6.1_timing/testing/testing_dgetrf -N 10240,10240
