@@ -244,7 +244,7 @@ magma_dgetrf(
 
 		#define RACE_TO_HALT 0
 		#define CPU_SLACK_RECLAMATION 0
-        #define GPU_SLACK_RECLAMATION 0//When testing, set GPU and ALGORITHMIC_SLACK_PREDICTION both to 1.
+        #define GPU_SLACK_RECLAMATION 1//When testing, set GPU and ALGORITHMIC_SLACK_PREDICTION both to 1.
  
         if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
         {
