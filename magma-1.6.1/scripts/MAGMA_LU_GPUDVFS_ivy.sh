@@ -52,8 +52,8 @@ kill ${rapl_pid}
 #/apps/power-bench/cpuspeed-set.pl --all 2500000
 /home/lchen/cpu_h_ivy.sh
 
-
-scp lchen@ivy2:/home/lchen/MAGMA/magma-1.6.1/results/MAGMA_LU_GPUDVFS.total.pwr ./MAGMA_LU_GPUDVFS.total.pwr
+scp lchen@ivy2:/home/lchen/MAGMA/test/magma-1.6.1_timing/results/MAGMA_LU_GPUDVFS.total.pwr /home/lchen/MAGMA/magma-1.6.1/results/
+#scp lchen@ivy2:/home/lchen/MAGMA/magma-1.6.1/results/MAGMA_LU_GPUDVFS.total.pwr ./MAGMA_LU_GPUDVFS.total.pwr
 
 cd /home/lchen/MAGMA/magma-1.6.1/results/
 
