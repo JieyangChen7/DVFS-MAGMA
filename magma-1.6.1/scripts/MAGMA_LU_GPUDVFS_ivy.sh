@@ -54,3 +54,7 @@ kill ${rapl_pid}
 
 
 scp lchen@ivy2:/home/lchen/MAGMA/magma-1.6.1/results/MAGMA_LU_GPUDVFS.total.pwr ./MAGMA_LU_GPUDVFS.total.pwr
+
+cd /home/lchen/MAGMA/magma-1.6.1/results/
+
+./getEnergy.sh MAGMA_LU_GPUDVFS
