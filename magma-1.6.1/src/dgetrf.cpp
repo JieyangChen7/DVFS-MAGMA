@@ -371,7 +371,7 @@ magma_dgetrf(
                              n - (j+1)*nb, nb,
                              c_one, dAT(j-1,j-1), ldda,
                                     dAT(j-1,j+1), ldda );
-                 */
+                */
 
                 //[NOT TRUE]Slow down trailing matrix updating only.
                 magma_dgemm( MagmaNoTrans, MagmaNoTrans,
