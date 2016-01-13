@@ -240,7 +240,7 @@ magma_dgetrf(
         #define TIME_DIFF_CPU_FREQ 0
 		#define TIME_DIFF_GPU_FREQ 0
 		#define SIMPLEST_TEST 0
-        #define ALGORITHMIC_SLACK_PREDICTION 0
+        #define ALGORITHMIC_SLACK_PREDICTION 1
 
 		#define RACE_TO_HALT 0
 		#define CPU_SLACK_RECLAMATION 0
