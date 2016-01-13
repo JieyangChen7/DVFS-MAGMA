@@ -236,15 +236,15 @@ magma_dgetrf(
         double gpu_time_this_iter_lowest_freq = gpu_time_iter0_lowest_freq;
         int cpu_switched_flag1 = 0;
 
-        #define TIME_MEASUREMENT 0
+        #define TIME_MEASUREMENT 1
         #define TIME_DIFF_CPU_FREQ 0
 		#define TIME_DIFF_GPU_FREQ 0
 		#define SIMPLEST_TEST 0
-        #define ALGORITHMIC_SLACK_PREDICTION 1
+        #define ALGORITHMIC_SLACK_PREDICTION 0
 
 		#define RACE_TO_HALT 0
 		#define CPU_SLACK_RECLAMATION 0
-        #define GPU_SLACK_RECLAMATION 1//When testing, set GPU and ALGORITHMIC_SLACK_PREDICTION both to 1.
+        #define GPU_SLACK_RECLAMATION 0//When testing, set GPU and ALGORITHMIC_SLACK_PREDICTION both to 1.
  
         if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
         {
@@ -331,19 +331,19 @@ magma_dgetrf(
                     //cpu_time_pred = cpu_time_pred * ratio_slack_pred_cpu;
                     gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
                     //gpu_time_pred = gpu_time_pred * ratio_slack_pred_gpu;
-              //      printf("iter %d: cpu_time_pred = %f\n", j, cpu_time_pred);
-               //     printf("iter %d: gpu_time_pred = %f\n", j, gpu_time_pred);
-              //     printf("iter %d: slack_pred = %f\n", j, cpu_time_pred - gpu_time_pred);
+                    printf("iter %d: cpu_time_pred = %f\n", j, cpu_time_pred);
+                    printf("iter %d: gpu_time_pred = %f\n", j, gpu_time_pred);
+                    printf("iter %d: slack_pred = %f\n", j, cpu_time_pred - gpu_time_pred);
                 }
 
                 if(GPU_SLACK_RECLAMATION)
                 {
                     ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time_iter0_lowest_freq / gpu_time_iter0_highest_freq) - 1));
-               //     printf("iter %d: ratio_split_freq = %f\n", j, ratio_split_freq);
+                    printf("iter %d: ratio_split_freq = %f\n", j, ratio_split_freq);
                     gpu_time_this_iter_lowest_freq = gpu_time_this_iter_lowest_freq * ratio_slack_pred * ratio_slack_pred;
                     //gpu_time_this_iter_lowest_freq = gpu_time_this_iter_lowest_freq * ratio_slack_pred_gpu;
                     seconds_until_interrupt = gpu_time_this_iter_lowest_freq * ratio_split_freq;
-             //       printf("iter %d: seconds_until_interrupt = %f\n", j, seconds_until_interrupt);
+                    printf("iter %d: seconds_until_interrupt = %f\n", j, seconds_until_interrupt);
                     //double DVFS_overhead_adjustment = 0.6;//0.0014
                     //if(ratio_split_freq < 1) seconds_until_interrupt *= DVFS_overhead_adjustment;//-=
                     if(j > 1)//if(seconds_until_interrupt > 0.0029)//cpu_time_pred - gpu_time_pred > 0.001
@@ -565,12 +565,12 @@ magma_dgetrf(
             {
             	if(cpu_time_cuda_temp/1000 - gpu_time_cuda_temp/1000 < 0)
                     total_slack_overflow += cpu_time_cuda_temp/1000 - gpu_time_cuda_temp/1000;
-//                printf("iter %d: slack_cuda = %.6f\n", j, cpu_time_cuda_temp/1000 - gpu_time_cuda_temp/1000);
-//                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
-//                printf("iter %d: gpu_time_cuda = %.6f\n", j, gpu_time_cuda_temp/1000);
-//                printf("iter %d: download_copy_time_cuda = %.6f\n", j, download_copy_time_cuda_temp/1000);
-//                printf("iter %d: upload_copy_time_cuda = %.6f\n", j, upload_copy_time_cuda_temp/1000);
-//                printf("iter %d: per_iter_time_cuda = %.6f\n\n", j, per_iter_time_cuda_temp/1000);
+                printf("iter %d: slack_cuda = %.6f\n", j, cpu_time_cuda_temp/1000 - gpu_time_cuda_temp/1000);
+                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
+                printf("iter %d: gpu_time_cuda = %.6f\n", j, gpu_time_cuda_temp/1000);
+                printf("iter %d: download_copy_time_cuda = %.6f\n", j, download_copy_time_cuda_temp/1000);
+                printf("iter %d: upload_copy_time_cuda = %.6f\n", j, upload_copy_time_cuda_temp/1000);
+                printf("iter %d: per_iter_time_cuda = %.6f\n\n", j, per_iter_time_cuda_temp/1000);
             }
         }
         
