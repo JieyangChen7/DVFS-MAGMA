@@ -565,12 +565,12 @@ magma_dgetrf(
             {
             	if(cpu_time_cuda_temp/1000 - gpu_time_cuda_temp/1000 < 0)
                     total_slack_overflow += cpu_time_cuda_temp/1000 - gpu_time_cuda_temp/1000;
-                printf("iter %d: slack_cuda = %.6f\n", j, cpu_time_cuda_temp/1000 - gpu_time_cuda_temp/1000);
-                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
-                printf("iter %d: gpu_time_cuda = %.6f\n", j, gpu_time_cuda_temp/1000);
-                printf("iter %d: download_copy_time_cuda = %.6f\n", j, download_copy_time_cuda_temp/1000);
-                printf("iter %d: upload_copy_time_cuda = %.6f\n", j, upload_copy_time_cuda_temp/1000);
-                printf("iter %d: per_iter_time_cuda = %.6f\n\n", j, per_iter_time_cuda_temp/1000);
+//                printf("iter %d: slack_cuda = %.6f\n", j, cpu_time_cuda_temp/1000 - gpu_time_cuda_temp/1000);
+//                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
+//                printf("iter %d: gpu_time_cuda = %.6f\n", j, gpu_time_cuda_temp/1000);
+//                printf("iter %d: download_copy_time_cuda = %.6f\n", j, download_copy_time_cuda_temp/1000);
+//                printf("iter %d: upload_copy_time_cuda = %.6f\n", j, upload_copy_time_cuda_temp/1000);
+//                printf("iter %d: per_iter_time_cuda = %.6f\n\n", j, per_iter_time_cuda_temp/1000);
             }
         }
         
