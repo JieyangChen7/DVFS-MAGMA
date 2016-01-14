@@ -466,7 +466,7 @@ magma_dgetrf(
                         	printf("iter %d: diff_slack = %f\n", j, diff_slack);
                         	
                         }
-                        if(j>1)
+    
 //                        cpu_time_pred = cpu_time_this_iter;//Prediction without this line is worse.
                     }
                 }
