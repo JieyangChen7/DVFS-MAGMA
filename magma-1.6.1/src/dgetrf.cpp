@@ -389,7 +389,7 @@ magma_dgetrf(
                             gpu_time_iter0_flag = 1;
                         }
                         gpu_time_this_iter = gpu_time_cuda_temp/1000;
-//                        if(j>1)diff_total_gpu += (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
+                        if(j>1)diff_total_gpu += (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
 //                        ////if(!GPU_SLACK_RECLAMATION)gpu_time_pred = gpu_time_this_iter;//Prediction without this line is worse.
                     }
                 }
@@ -434,7 +434,6 @@ magma_dgetrf(
 
                 if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
                 {
-                    //cpu_time_cuda_temp = magma_wtime() - cpu_time_cuda_temp;
                     cudaEventRecord(stop_cpu, 0);
                     cudaEventSynchronize(stop_cpu);
                     cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
@@ -450,8 +449,8 @@ magma_dgetrf(
                             cpu_time_iter0_flag = 1;
                         }
                         cpu_time_this_iter = cpu_time_cuda_temp/1000;
-//                        if(j>1)diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
-//                        if(j>1)diff_total_slack += ((cpu_time_pred - gpu_time_pred) - (cpu_time_this_iter - gpu_time_this_iter))/(cpu_time_this_iter - gpu_time_this_iter);//(slack_pred - slack_measured) / slack_measured
+                        if(j>1)diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
+                        if(j>1)diff_total_slack += ((cpu_time_pred - gpu_time_pred) - (cpu_time_this_iter - gpu_time_this_iter))/(cpu_time_this_iter - gpu_time_this_iter);//(slack_pred - slack_measured) / slack_measured
 //                        cpu_time_pred = cpu_time_this_iter;//Prediction without this line is worse.
                     }
                 }
