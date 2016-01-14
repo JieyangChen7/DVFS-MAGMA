@@ -231,14 +231,17 @@ magma_dgetrf(
         double gpu_time_this_iter = 0, cpu_time_this_iter = 0;
         int gpu_time_iter0_flag = 0, cpu_time_iter0_flag = 0;
         double gpu_time_iter0, cpu_time_iter0;
-        static double gpu_time_iter0_highest_freq = 0.008133, gpu_time_iter0_lowest_freq = 0.043773;
-        static double cpu_time_iter0_highest_freq = 0.014919;
+        //static double gpu_time_iter0_highest_freq = 0.008133, gpu_time_iter0_lowest_freq = 0.043773;
+        //static double cpu_time_iter0_highest_freq = 0.014919;
+        static double gpu_time_iter0_highest_freq = 0.124196, gpu_time_iter0_lowest_freq = 0.043773;
+        static double cpu_time_iter0_highest_freq = 0.057338;
+        
         double gpu_time_this_iter_lowest_freq = gpu_time_iter0_lowest_freq;
         int cpu_switched_flag1 = 0;
 
         #define TIME_MEASUREMENT 1
         #define TIME_DIFF_CPU_FREQ 0
-		#define TIME_DIFF_GPU_FREQ 0
+		#define TIME_DIFF_GPU_FREQ 1
 		#define SIMPLEST_TEST 0
         #define ALGORITHMIC_SLACK_PREDICTION 0
 
