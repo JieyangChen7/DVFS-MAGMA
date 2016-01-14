@@ -391,7 +391,7 @@ magma_dgetrf(
                         gpu_time_this_iter = gpu_time_cuda_temp/1000;
 //                        if(j>1)diff_total_gpu += (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
 //                        ////if(!GPU_SLACK_RECLAMATION)gpu_time_pred = gpu_time_this_iter;//Prediction without this line is worse.
-                    }
+//                    }
                 }
 
                 ////if(SIMPLEST_TEST) SetGPUFreq(2600, 705);
