@@ -380,18 +380,18 @@ magma_dgetrf(
                     cudaEventDestroy(start_gpu);
                     cudaEventDestroy(stop_gpu);
                     total_gpu_time_cuda += gpu_time_cuda_temp;
-//                    if(ALGORITHMIC_SLACK_PREDICTION)
-//                    {
-//                        if(!gpu_time_iter0_flag)
-//                        {
-//                            gpu_time_iter0 = gpu_time_cuda_temp/1000;
-//                            gpu_time_pred = gpu_time_iter0;
-//                            gpu_time_iter0_flag = 1;
-//                        }
+                    if(ALGORITHMIC_SLACK_PREDICTION)
+                    {
+                        if(!gpu_time_iter0_flag)
+                        {
+                            gpu_time_iter0 = gpu_time_cuda_temp/1000;
+                            gpu_time_pred = gpu_time_iter0;
+                            gpu_time_iter0_flag = 1;
+                        }
                         gpu_time_this_iter = gpu_time_cuda_temp/1000;
 //                        if(j>1)diff_total_gpu += (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
 //                        ////if(!GPU_SLACK_RECLAMATION)gpu_time_pred = gpu_time_this_iter;//Prediction without this line is worse.
-//                    }
+                    }
                 }
 
                 ////if(SIMPLEST_TEST) SetGPUFreq(2600, 705);
@@ -441,19 +441,19 @@ magma_dgetrf(
                     cudaEventDestroy(start_cpu);
                     cudaEventDestroy(stop_cpu);
                     total_cpu_time_cuda += cpu_time_cuda_temp;
-//                    if(ALGORITHMIC_SLACK_PREDICTION)
-//                    {
-//                        if(!cpu_time_iter0_flag)
-//                        {
-//                            cpu_time_iter0 = cpu_time_cuda_temp/1000;
-//                            cpu_time_pred = cpu_time_iter0;
-//                            cpu_time_iter0_flag = 1;
-//                        }
+                    if(ALGORITHMIC_SLACK_PREDICTION)
+                    {
+                        if(!cpu_time_iter0_flag)
+                        {
+                            cpu_time_iter0 = cpu_time_cuda_temp/1000;
+                            cpu_time_pred = cpu_time_iter0;
+                            cpu_time_iter0_flag = 1;
+                        }
                         cpu_time_this_iter = cpu_time_cuda_temp/1000;
 //                        if(j>1)diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
 //                        if(j>1)diff_total_slack += ((cpu_time_pred - gpu_time_pred) - (cpu_time_this_iter - gpu_time_this_iter))/(cpu_time_this_iter - gpu_time_this_iter);//(slack_pred - slack_measured) / slack_measured
 //                        cpu_time_pred = cpu_time_this_iter;//Prediction without this line is worse.
-//                    }
+                    }
                 }
 
                 if(CPU_SLACK_RECLAMATION)
