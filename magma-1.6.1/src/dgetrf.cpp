@@ -389,7 +389,12 @@ magma_dgetrf(
                             gpu_time_iter0_flag = 1;
                         }
                         gpu_time_this_iter = gpu_time_cuda_temp/1000;
-                        if(j>1)diff_total_gpu += (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
+                        if(j>1) 
+                        {
+                        	diff_total_gpu += (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
+                        	double diff_gpu = (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
+                        	printf("iter %d: diff_gpu = %f\n", j, diff_gpu);
+                        }
 //                        ////if(!GPU_SLACK_RECLAMATION)gpu_time_pred = gpu_time_this_iter;//Prediction without this line is worse.
                     }
                 }
@@ -449,8 +454,19 @@ magma_dgetrf(
                             cpu_time_iter0_flag = 1;
                         }
                         cpu_time_this_iter = cpu_time_cuda_temp/1000;
-                        if(j>1)diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
-                        if(j>1)diff_total_slack += ((cpu_time_pred - gpu_time_pred) - (cpu_time_this_iter - gpu_time_this_iter))/(cpu_time_this_iter - gpu_time_this_iter);//(slack_pred - slack_measured) / slack_measured
+                        if(j>1)
+                        {
+                        	diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
+                        	diff_total_slack += ((cpu_time_pred - gpu_time_pred) - (cpu_time_this_iter - gpu_time_this_iter))/(cpu_time_this_iter - gpu_time_this_iter);
+                        	
+                        	double diff_cpu = (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
+                        	double diff_slack = ((cpu_time_pred - gpu_time_pred) - (cpu_time_this_iter - gpu_time_this_iter))/(cpu_time_this_iter - gpu_time_this_iter);
+                        	
+                        	printf("iter %d: diff_cpu = %f\n", j, diff_cpu);
+                        	printf("iter %d: diff_slack = %f\n", j, diff_slack);
+                        	
+                        }
+                        if(j>1)
 //                        cpu_time_pred = cpu_time_this_iter;//Prediction without this line is worse.
                     }
                 }
