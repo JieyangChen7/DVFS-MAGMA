@@ -31,8 +31,19 @@ LDOPTS    = -fPIC -Xlinker -zmuldefs
 #LIB       = -lf77blas -latlas -lcblas -lg2c -llapack -lcublas -lnvidia-ml -lm
 LIB       = -llapack -lf77blas -lgfortran -lcblas -latlas -lcublas -lcudart -lstdc++ -lnvidia-ml -lm
 
-CUDADIR   = /usr/local/cuda
+LIB       = -lacml_mp -lcblas -lcublas -lcudart -lstdc++ -lm -lgfortran -lpapi -lnvidia-ml
 
-LIBDIR    = -L/usr/lib64 -L/usr/lib64/atlas -L/lib64 \
-            -L$(CUDADIR)/lib64 -L/home/lchen/myroot/lib
-INC       = -I$(CUDADIR)/include
+#CUDADIR   = /usr/local/cuda
+
+#LIBDIR    = -L/usr/lib64 -L/usr/lib64/atlas -L/lib64 \
+#            -L$(CUDADIR)/lib64 -L/home/lchen/myroot/lib
+#INC       = -I$(CUDADIR)/include
+
+LIBDIR    = -L$(CUDADIR)/lib64 \
+            -L$(ACMLDIR)/gfortran64_mp/lib \
+            -L$(CBLASDIR)/lib
+
+
+INC       = -I$(CUDADIR)/include \
+            -I$(ACMLDIR)/gfortran64_mp/include \
+            -I$(CULA_INC_PATH)
