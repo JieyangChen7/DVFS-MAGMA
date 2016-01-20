@@ -10,7 +10,7 @@
 */
 #include "common_magma.h"
 #include "../testing/testing_util.cpp"
-
+#include "cuda_profiler_api.h"
 
 /**
     Purpose
@@ -202,12 +202,12 @@ magma_dgetrf(
             stream[1] = orig_stream;
         }
 
-		float cpu_time_cuda_temp, gpu_time_cuda_temp, cpu_gpu_time_cuda_temp;
-	
-		cudaEvent_t start_cpu, stop_cpu;
-		cudaEvent_t start_gpu, stop_gpu;
-		cudaEvent_t start_cpu_gpu, stop_cpu_gpu;
-
+//		float cpu_time_cuda_temp, gpu_time_cuda_temp, cpu_gpu_time_cuda_temp;
+//	
+//		cudaEvent_t start_cpu, stop_cpu;
+//		cudaEvent_t start_gpu, stop_gpu;
+//		cudaEvent_t start_cpu_gpu, stop_cpu_gpu;
+        cudaProfilerStart();
         for( j = 0; j < s; j++ ) {
             // download j-th panel
             cols = maxm - j*nb;
@@ -221,60 +221,49 @@ magma_dgetrf(
                 magma_dgetmatrix_async( m-j*nb, nb, dA, cols, work, lda,
                                         stream[0]);
                
-                ////cudaEventCreate(&start_cpu_gpu);
-                ////cudaEventCreate(&stop_cpu_gpu);
-                ////cudaEventRecord(start_cpu_gpu, 0);
+               
+//                cudaEventCreate(&start_gpu);
+//                cudaEventCreate(&stop_gpu);
+//                cudaEventRecord(start_gpu, 0);
 
-                cudaEventCreate(&start_gpu);
-                cudaEventCreate(&stop_gpu);
-                cudaEventRecord(start_gpu, 0);
-
-                //SetGPUFreq(2600, 614); 
+                
                 magma_dtrsm( MagmaRight, MagmaUpper, MagmaNoTrans, MagmaUnit,
                              n - (j+1)*nb, nb,
                              c_one, dAT(j-1,j-1), ldda,
                                     dAT(j-1,j+1), ldda );
-                //SetGPUFreq(2600, 614);
-                ////if(j < 27) SetGPUFreq(2600, 614);
+                
                 magma_dgemm( MagmaNoTrans, MagmaNoTrans,
                              n-(j+1)*nb, m-j*nb, nb,
                              c_neg_one, dAT(j-1,j+1), ldda,
                                         dAT(j,  j-1), ldda,
                              c_one,     dAT(j,  j+1), ldda );
-                //SetGPUFreq(2600, 640);//Two GPU DVFS incur big overhead. No matter what frequency.
-                //SetGPUFreq(2600, 705);
-                ////if(j < 27) SetGPUFreq(2600, 705);
-
-                cudaEventRecord(stop_gpu, 0);
-                cudaEventSynchronize(stop_gpu);
-                cudaEventElapsedTime(&gpu_time_cuda_temp, start_gpu, stop_gpu);
-                cudaEventDestroy(start_gpu);
-                cudaEventDestroy(stop_gpu);
+                
+//                cudaEventRecord(stop_gpu, 0);
+//                cudaEventSynchronize(stop_gpu);
+//                cudaEventElapsedTime(&gpu_time_cuda_temp, start_gpu, stop_gpu);
+//                cudaEventDestroy(start_gpu);
+//                cudaEventDestroy(stop_gpu);
 
                 // do the cpu part
                 rows = m - j*nb;
                 magma_queue_sync( stream[0] );
 
-                cudaEventCreate(&start_cpu);
-                cudaEventCreate(&stop_cpu);
-                cudaEventRecord(start_cpu, 0);
+//                cudaEventCreate(&start_cpu);
+//                cudaEventCreate(&stop_cpu);
+//                cudaEventRecord(start_cpu, 0);
 
                 lapackf77_dgetrf( &rows, &nb, work, &lda, ipiv+j*nb, &iinfo);
 
-                cudaEventRecord(stop_cpu, 0);
-                cudaEventSynchronize(stop_cpu);
-                cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
-                cudaEventDestroy(start_cpu);
-                cudaEventDestroy(stop_cpu);
+//                cudaEventRecord(stop_cpu, 0);
+//                cudaEventSynchronize(stop_cpu);
+//                cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
+//                cudaEventDestroy(start_cpu);
+//                cudaEventDestroy(stop_cpu);
 
-                ////cudaEventRecord(stop_cpu_gpu, 0);
-                ////cudaEventSynchronize(stop_cpu_gpu);
-                ////cudaEventElapsedTime(&cpu_gpu_time_cuda_temp, start_cpu_gpu, stop_cpu_gpu);
-                ////cudaEventDestroy(start_cpu_gpu);
-                ////cudaEventDestroy(stop_cpu_gpu);
+                
 
-                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
-                printf("iter %d: gpu_time_cuda = %.6f\n", j, gpu_time_cuda_temp/1000);
+//                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
+//                printf("iter %d: gpu_time_cuda = %.6f\n", j, gpu_time_cuda_temp/1000);
                 ////printf("iter %d: cpu_gpu_time_cuda = %.6f\n", j, cpu_gpu_time_cuda_temp/1000);
             }
             if (*info == 0 && iinfo > 0)
@@ -316,6 +305,7 @@ magma_dgetrf(
                              c_one,     dAT(j+1, j+1), ldda );
             }
         }
+        cudaProfilerStop();
         
         magma_int_t nb0 = min(m - s*nb, n - s*nb);
         if ( nb0 > 0 ) {
