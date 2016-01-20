@@ -202,7 +202,7 @@ magma_dgetrf(
             stream[1] = orig_stream;
         }
 
-//		float cpu_time_cuda_temp, gpu_time_cuda_temp, cpu_gpu_time_cuda_temp;
+		float cpu_time_cuda_temp, gpu_time_cuda_temp, cpu_gpu_time_cuda_temp;
 //	
 		cudaEvent_t start_cpu, stop_cpu;
 //		cudaEvent_t start_gpu, stop_gpu;
