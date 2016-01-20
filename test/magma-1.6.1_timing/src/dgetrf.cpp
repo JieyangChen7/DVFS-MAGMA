@@ -205,7 +205,7 @@ magma_dgetrf(
 //		float cpu_time_cuda_temp, gpu_time_cuda_temp, cpu_gpu_time_cuda_temp;
 //	
 		cudaEvent_t start_cpu, stop_cpu;
-		cudaEvent_t start_gpu, stop_gpu;
+//		cudaEvent_t start_gpu, stop_gpu;
 //		cudaEvent_t start_cpu_gpu, stop_cpu_gpu;
         cudaProfilerStart();
         for( j = 0; j < s; j++ ) {
@@ -222,9 +222,9 @@ magma_dgetrf(
                                         stream[0]);
                
                
-                cudaEventCreate(&start_gpu);
-                cudaEventCreate(&stop_gpu);
-                cudaEventRecord(start_gpu, stream[1]);
+//                cudaEventCreate(&start_gpu);
+//                cudaEventCreate(&stop_gpu);
+//                cudaEventRecord(start_gpu, stream[1]);
 
                 
                 magma_dtrsm( MagmaRight, MagmaUpper, MagmaNoTrans, MagmaUnit,
@@ -238,31 +238,31 @@ magma_dgetrf(
                                         dAT(j,  j-1), ldda,
                              c_one,     dAT(j,  j+1), ldda );
                 
-                cudaEventRecord(stop_gpu, stream[1]);
+//                cudaEventRecord(stop_gpu, stream[1]);
 //                cudaEventSynchronize(stop_gpu);
 //                cudaEventElapsedTime(&gpu_time_cuda_temp, start_gpu, stop_gpu);
-                cudaEventDestroy(start_gpu);
-                cudaEventDestroy(stop_gpu);
+//                cudaEventDestroy(start_gpu);
+//                cudaEventDestroy(stop_gpu);
 
                 // do the cpu part
                 rows = m - j*nb;
                 magma_queue_sync( stream[0] );
 
-//                cudaEventCreate(&start_cpu);
-//                cudaEventCreate(&stop_cpu);
-//                cudaEventRecord(start_cpu, 0);
+                cudaEventCreate(&start_cpu);
+                cudaEventCreate(&stop_cpu);
+                cudaEventRecord(start_cpu, 0);
 
                 lapackf77_dgetrf( &rows, &nb, work, &lda, ipiv+j*nb, &iinfo);
 
-//                cudaEventRecord(stop_cpu, 0);
-//                cudaEventSynchronize(stop_cpu);
-//                cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
-//                cudaEventDestroy(start_cpu);
-//                cudaEventDestroy(stop_cpu);
+                cudaEventRecord(stop_cpu, 0);
+                cudaEventSynchronize(stop_cpu);
+                cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
+                cudaEventDestroy(start_cpu);
+                cudaEventDestroy(stop_cpu);
 
                 
 
-//                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
+                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
 //                printf("iter %d: gpu_time_cuda = %.6f\n", j, gpu_time_cuda_temp/1000);
                 ////printf("iter %d: cpu_gpu_time_cuda = %.6f\n", j, cpu_gpu_time_cuda_temp/1000);
             }
