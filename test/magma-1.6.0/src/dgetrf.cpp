@@ -9,7 +9,7 @@
        @generated from zgetrf.cpp normal z -> d, Sat Nov 15 19:54:09 2014
 */
 #include "common_magma.h"
-
+#include "cuda_profiler_api.h"
 
 /**
     Purpose
@@ -201,6 +201,7 @@ magma_dgetrf(
             stream[1] = orig_stream;
         }
 
+        cudaProfilerStart();
         for( j = 0; j < s; j++ ) {
             // download j-th panel
             cols = maxm - j*nb;
@@ -268,6 +269,7 @@ magma_dgetrf(
                              c_one,     dAT(j+1, j+1), ldda );
             }
         }
+        cudaProfilerStop();
         
         magma_int_t nb0 = min(m - s*nb, n - s*nb);
         if ( nb0 > 0 ) {
