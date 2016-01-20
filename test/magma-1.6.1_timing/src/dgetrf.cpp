@@ -204,8 +204,8 @@ magma_dgetrf(
 
 //		float cpu_time_cuda_temp, gpu_time_cuda_temp, cpu_gpu_time_cuda_temp;
 //	
-//		cudaEvent_t start_cpu, stop_cpu;
-//		cudaEvent_t start_gpu, stop_gpu;
+		cudaEvent_t start_cpu, stop_cpu;
+		cudaEvent_t start_gpu, stop_gpu;
 //		cudaEvent_t start_cpu_gpu, stop_cpu_gpu;
         cudaProfilerStart();
         for( j = 0; j < s; j++ ) {
@@ -222,9 +222,9 @@ magma_dgetrf(
                                         stream[0]);
                
                
-//                cudaEventCreate(&start_gpu);
-//                cudaEventCreate(&stop_gpu);
-//                cudaEventRecord(start_gpu, 0);
+                cudaEventCreate(&start_gpu);
+                cudaEventCreate(&stop_gpu);
+                cudaEventRecord(start_gpu, stream[1]);
 
                 
                 magma_dtrsm( MagmaRight, MagmaUpper, MagmaNoTrans, MagmaUnit,
@@ -238,11 +238,11 @@ magma_dgetrf(
                                         dAT(j,  j-1), ldda,
                              c_one,     dAT(j,  j+1), ldda );
                 
-//                cudaEventRecord(stop_gpu, 0);
+                cudaEventRecord(stop_gpu, stream[1]);
 //                cudaEventSynchronize(stop_gpu);
 //                cudaEventElapsedTime(&gpu_time_cuda_temp, start_gpu, stop_gpu);
-//                cudaEventDestroy(start_gpu);
-//                cudaEventDestroy(stop_gpu);
+                cudaEventDestroy(start_gpu);
+                cudaEventDestroy(stop_gpu);
 
                 // do the cpu part
                 rows = m - j*nb;
