@@ -335,7 +335,7 @@ magma_dgetrf(
                              n - (j+1)*nb, nb,
                              c_one, dAT(j-1,j-1), ldda,
                                     dAT(j-1,j+1), ldda );
-                magma_device_sync();
+                
                 if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 				{
 					cudaEventCreate(&start_gpu);
@@ -343,35 +343,14 @@ magma_dgetrf(
 					cudaEventRecord(start_gpu, 0);
 				}
                 
-                
-                float real_time = 0.0;
-				float proc_time = 0.0;
-				long long flpins = 0.0;
-				float mflops = 0.0;
-				
-				//PAPI timing start
-				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-					cout << "PAPI ERROR" << endl;
-					return -1;
-				} 
-                
+               
                 //[NOT TRUE]Slow down trailing matrix updating only.
                 magma_dgemm( MagmaNoTrans, MagmaNoTrans,
                              n-(j+1)*nb, m-j*nb, nb,
                              c_neg_one, dAT(j-1,j+1), ldda,
                                         dAT(j,  j-1), ldda,
                              c_one,     dAT(j,  j+1), ldda );
-                magma_device_sync();
-                //PAPI timing start
-				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-					cout << "PAPI ERROR" << endl;
-					return -1;
-				} 
-				
-				cout<<"gpu time:"<<real_time<<endl;
-				PAPI_shutdown();
-                
-
+              
                 if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
                 {
                     cudaEventRecord(stop_gpu, 0);
