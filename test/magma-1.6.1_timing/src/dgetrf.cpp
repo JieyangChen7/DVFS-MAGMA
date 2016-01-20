@@ -257,9 +257,9 @@ magma_dgetrf(
                 rows = m - j*nb;
                 magma_queue_sync( stream[0] );
 
-//                cudaEventCreate(&start_cpu);
-//                cudaEventCreate(&stop_cpu);
-//                cudaEventRecord(start_cpu, 0);
+                cudaEventCreate(&start_cpu);
+                cudaEventCreate(&stop_cpu);
+                cudaEventRecord(start_cpu, 0);
 
                 //PAPI timing start
 				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
@@ -281,15 +281,15 @@ magma_dgetrf(
 				proc_time = 0.0;
 				flpins = 0.0;
 				mflops = 0.0;
-//                cudaEventRecord(stop_cpu, 0);
-//                cudaEventSynchronize(stop_cpu);
-//                cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
-//                cudaEventDestroy(start_cpu);
-//                cudaEventDestroy(stop_cpu);
+                cudaEventRecord(stop_cpu, 0);
+                cudaEventSynchronize(stop_cpu);
+                cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
+                cudaEventDestroy(start_cpu);
+                cudaEventDestroy(stop_cpu);
 
                 
 
-//                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
+                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
 //                printf("iter %d: gpu_time_cuda = %.6f\n", j, gpu_time_cuda_temp/1000);
                 ////printf("iter %d: cpu_gpu_time_cuda = %.6f\n", j, cpu_gpu_time_cuda_temp/1000);
             }
