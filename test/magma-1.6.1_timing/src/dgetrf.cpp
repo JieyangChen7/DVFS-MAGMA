@@ -11,7 +11,7 @@
 #include "common_magma.h"
 #include "../testing/testing_util.cpp"
 #include "cuda_profiler_api.h"
-
+#include "papi.h"
 /**
     Purpose
     -------
@@ -207,6 +207,13 @@ magma_dgetrf(
 		cudaEvent_t start_cpu, stop_cpu;
 //		cudaEvent_t start_gpu, stop_gpu;
 //		cudaEvent_t start_cpu_gpu, stop_cpu_gpu;
+		
+		
+		
+		float real_time = 0.0;
+		float proc_time = 0.0;
+		long long flpins = 0.0;
+		float mflops = 0.0;
         cudaProfilerStart();
         for( j = 0; j < s; j++ ) {
             // download j-th panel
@@ -248,17 +255,35 @@ magma_dgetrf(
                 rows = m - j*nb;
                 magma_queue_sync( stream[0] );
 
-                cudaEventCreate(&start_cpu);
-                cudaEventCreate(&stop_cpu);
-                cudaEventRecord(start_cpu, 0);
+//                cudaEventCreate(&start_cpu);
+//                cudaEventCreate(&stop_cpu);
+//                cudaEventRecord(start_cpu, 0);
 
+                //PAPI timing start
+				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+					cout << "PAPI ERROR" << endl;
+					return -1;
+				} 
                 lapackf77_dgetrf( &rows, &nb, work, &lda, ipiv+j*nb, &iinfo);
 
-                cudaEventRecord(stop_cpu, 0);
-                cudaEventSynchronize(stop_cpu);
-                cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
-                cudaEventDestroy(start_cpu);
-                cudaEventDestroy(stop_cpu);
+                //PAPI timing start
+				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+					cout << "PAPI ERROR" << endl;
+					return -1;
+				} 
+				
+				cout<<"time:"<<real_time<<endl;
+				PAPI_shutdown();
+				
+				real_time = 0.0;
+				proc_time = 0.0;
+				flpins = 0.0;
+				mflops = 0.0;
+//                cudaEventRecord(stop_cpu, 0);
+//                cudaEventSynchronize(stop_cpu);
+//                cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu, stop_cpu);
+//                cudaEventDestroy(start_cpu);
+//                cudaEventDestroy(stop_cpu);
 
                 
 
