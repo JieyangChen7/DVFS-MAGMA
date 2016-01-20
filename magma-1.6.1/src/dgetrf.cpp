@@ -235,8 +235,8 @@ magma_dgetrf(
         double gpu_time_iter0, cpu_time_iter0;
         //static double gpu_time_iter0_highest_freq = 0.008133, gpu_time_iter0_lowest_freq = 0.043773;
         //static double cpu_time_iter0_highest_freq = 0.014919;
-        static double gpu_time_iter0_highest_freq = 0.124196, gpu_time_iter0_lowest_freq = 0.737263;
-        static double cpu_time_iter0_highest_freq = 0.057338;
+        static double gpu_time_iter0_highest_freq = 0.029583, gpu_time_iter0_lowest_freq = 0.171697;
+        static double cpu_time_iter0_highest_freq = 0.060726;
         
         double gpu_time_this_iter_lowest_freq = gpu_time_iter0_lowest_freq;
         int cpu_switched_flag1 = 0;
@@ -251,12 +251,12 @@ magma_dgetrf(
 		#define CPU_SLACK_RECLAMATION 0
         #define GPU_SLACK_RECLAMATION 0//When testing, set GPU and ALGORITHMIC_SLACK_PREDICTION both to 1.
  
-        if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
-        {
-            cudaEventCreate(&start_main_loop);
-            cudaEventCreate(&stop_main_loop);
-            cudaEventRecord(start_main_loop, 0);
-        }
+//        if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
+//        {
+//            cudaEventCreate(&start_main_loop);
+//            cudaEventCreate(&stop_main_loop);
+//            cudaEventRecord(start_main_loop, 0);
+//        }
 
         if(TIME_DIFF_CPU_FREQ) SetCPUFreq(1200000);
         if(TIME_DIFF_GPU_FREQ) SetGPUFreq(324, 324);
@@ -317,7 +317,7 @@ magma_dgetrf(
                 }
                 
                 
-                if(GPU_SLACK_RECLAMATION)
+                if(1)
 				{
 					ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time_iter0_lowest_freq / gpu_time_iter0_highest_freq) - 1));
 					printf("iter %d: ratio_split_freq = %f\n", j, ratio_split_freq);
