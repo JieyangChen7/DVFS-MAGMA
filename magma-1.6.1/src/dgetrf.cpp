@@ -306,7 +306,7 @@ magma_dgetrf(
 				}
                 if (j == 1) {
                 	cpu_time_pred = 0.060726;
-					gpu_time_pred = 0.030097;
+					gpu_time_pred = 0.029510;
                 } else {
                 	ratio_slack_pred = 1.0 - (double)nb/(m-j*nb);
 					cpu_time_pred = cpu_time_pred * ratio_slack_pred;
