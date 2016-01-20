@@ -20,6 +20,7 @@
 #include "magma_lapack.h"
 #include "testings.h"
 #include "../testing/testing_util.cpp"
+
 #include "papi.h"
 #include <iostream>
 

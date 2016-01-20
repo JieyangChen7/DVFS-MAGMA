@@ -10,6 +10,7 @@
 */
 #include "common_magma.h"
 #include "../testing/testing_util.cpp"
+#include "cuda_profiler_api.h"
 #include "papi.h"
 #include <iostream>
 using namespace std;
@@ -266,7 +267,7 @@ magma_dgetrf(
         nvmlDevice_t device;
         nvmlInit();
         nvmlDeviceGetHandleByIndex(0, &device);
-
+        cudaProfilerStart();
         for( j = 0; j < s; j++ )
         {
 //            if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
@@ -566,6 +567,7 @@ magma_dgetrf(
 //                printf("iter %d: per_iter_time_cuda = %.6f\n\n", j, per_iter_time_cuda_temp/1000);
 //            }
         }
+        cudaProfilerStop();
         
 //        if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 //        {
