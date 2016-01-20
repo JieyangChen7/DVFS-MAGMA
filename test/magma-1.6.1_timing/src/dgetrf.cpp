@@ -274,7 +274,7 @@ magma_dgetrf(
 					return -1;
 				} 
 				
-				cout<<"time:"<<real_time<<endl;
+				cout<<"cpu time:"<<real_time<<endl;
 				PAPI_shutdown();
 				
 				real_time = 0.0;
@@ -289,7 +289,7 @@ magma_dgetrf(
 
                 
 
-                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
+//                printf("iter %d: cpu_time_cuda = %.6f\n", j, cpu_time_cuda_temp/1000);
 //                printf("iter %d: gpu_time_cuda = %.6f\n", j, gpu_time_cuda_temp/1000);
                 ////printf("iter %d: cpu_gpu_time_cuda = %.6f\n", j, cpu_gpu_time_cuda_temp/1000);
             }
