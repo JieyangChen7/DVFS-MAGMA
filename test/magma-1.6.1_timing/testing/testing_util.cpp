@@ -72,28 +72,28 @@ void SetCPUFreq(long freq){//void SetCPUFreq(char *freq){
     }
 }
 
-#include <nvml.h>
-
-// NVIDIA NVML library function wrapper for GPU DVFS.
-int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
-    nvmlDevice_t device;//int device;
-    nvmlReturn_t result;
-    result = nvmlInit();
-    result = nvmlDeviceGetHandleByIndex(0, &device);//cudaGetDevice(&device);
-    result = nvmlDeviceSetApplicationsClocks(device, clock_mem, clock_core);//(nvmlDevice_t)device
-    if(result != NVML_SUCCESS)
-    {
-        printf("Failed to set GPU core and memory frequencies: %s\n", nvmlErrorString(result));
-        return 1;
-    }
-    else
-    {
-        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_GRAPHICS, &clock_core);
-        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
-        //printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
-        return 0;
-    }
-}
+//#include <nvml.h>
+//
+//// NVIDIA NVML library function wrapper for GPU DVFS.
+//int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
+//    nvmlDevice_t device;//int device;
+//    nvmlReturn_t result;
+//    result = nvmlInit();
+//    result = nvmlDeviceGetHandleByIndex(0, &device);//cudaGetDevice(&device);
+//    result = nvmlDeviceSetApplicationsClocks(device, clock_mem, clock_core);//(nvmlDevice_t)device
+//    if(result != NVML_SUCCESS)
+//    {
+//        printf("Failed to set GPU core and memory frequencies: %s\n", nvmlErrorString(result));
+//        return 1;
+//    }
+//    else
+//    {
+//        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_GRAPHICS, &clock_core);
+//        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
+//        //printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
+//        return 0;
+//    }
+//}
 
 #include <sys/time.h>
 #include <signal.h>
