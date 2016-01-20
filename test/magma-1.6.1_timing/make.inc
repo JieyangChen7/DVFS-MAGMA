@@ -30,7 +30,7 @@ LDOPTS    = -fPIC -Xlinker -zmuldefs
 
 #LIB       = -lf77blas -latlas -lcblas -lg2c -llapack -lcublas -lnvidia-ml -lm
 #LIB       = -llapack -lf77blas -lgfortran -lcblas -latlas -lcublas -lcudart -lstdc++ -lnvidia-ml -lm -lpthread -lpapi
-LIB       = -lacml_mp -lcblas -lcublas -lcudart -lstdc++ -lm -lgfortran -lpapi
+LIB       = -lacml_mp -lcblas -lcublas -lcudart -lstdc++ -lm -lgfortran -lpapi -lpthread
 
 #CUDADIR   = /usr/local/cuda
 
