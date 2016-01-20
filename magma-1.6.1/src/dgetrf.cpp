@@ -239,7 +239,7 @@ magma_dgetrf(
         double gpu_time_this_iter_lowest_freq = gpu_time_iter0_lowest_freq;
         int cpu_switched_flag1 = 0;
 
-        #define TIME_MEASUREMENT 0
+        #define TIME_MEASUREMENT 1
         #define TIME_DIFF_CPU_FREQ 0
 		#define TIME_DIFF_GPU_FREQ 0
 		#define SIMPLEST_TEST 0
