@@ -324,7 +324,12 @@ magma_dgetrf(
 							 c_one, dAT(j-1,j-1), ldda,
 									dAT(j-1,j+1), ldda );
 											 
-
+				//[NOT TRUE]Slow down trailing matrix updating only.
+				magma_dgemm( MagmaNoTrans, MagmaNoTrans,
+							 n-(j+1)*nb, m-j*nb, nb,
+							 c_neg_one, dAT(j-1,j+1), ldda,
+										dAT(j,  j-1), ldda,
+							 c_one,     dAT(j,  j+1), ldda );
                 
                 if(ALGORITHMIC_SLACK_PREDICTION || GPU_SLACK_RECLAMATION)
 				{
@@ -383,12 +388,7 @@ magma_dgetrf(
 //				}
 //                
                
-                //[NOT TRUE]Slow down trailing matrix updating only.
-                magma_dgemm( MagmaNoTrans, MagmaNoTrans,
-                             n-(j+1)*nb, m-j*nb, nb,
-                             c_neg_one, dAT(j-1,j+1), ldda,
-                                        dAT(j,  j-1), ldda,
-                             c_one,     dAT(j,  j+1), ldda );
+                
               
 //                if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 //                {
