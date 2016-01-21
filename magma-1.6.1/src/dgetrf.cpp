@@ -464,7 +464,7 @@ magma_dgetrf(
 //        			return -1;
 //        		} 
                 
-        //        lapackf77_dgetrf( &rows, &nb, work, &lda, ipiv+j*nb, &iinfo);
+                lapackf77_dgetrf( &rows, &nb, work, &lda, ipiv+j*nb, &iinfo);
                 
         		//PAPI timing start
 //        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
