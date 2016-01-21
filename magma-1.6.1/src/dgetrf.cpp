@@ -189,32 +189,32 @@ magma_dgetrf(
             magmablas_dtranspose( m, n, da, maxm, dAT, ldda );
         }
         
-        float real_time = 0.0;
-		float proc_time = 0.0;
-		long long flpins = 0.0;
-		float mflops = 0.0;
-		
-		//PAPI timing start
-		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-			cout << "PAPI ERROR" << endl;
-			return -1;
-		} 
-        
+//        float real_time = 0.0;
+//		float proc_time = 0.0;
+//		long long flpins = 0.0;
+//		float mflops = 0.0;
+//		
+//		//PAPI timing start
+//		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+//			cout << "PAPI ERROR" << endl;
+//			return -1;
+//		} 
+//        
         lapackf77_dgetrf( &m, &nb, work, &lda, ipiv, &iinfo);
         
-        if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-			cout << "PAPI ERROR" << endl;
-			return -1;
-		} 
-		
-		cout<<"cpu time:"<<real_time<<endl;
-		PAPI_shutdown();
-		
-		real_time = 0.0;
-		proc_time = 0.0;
-		flpins = 0.0;
-		mflops = 0.0;
-        
+//        if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+//			cout << "PAPI ERROR" << endl;
+//			return -1;
+//		} 
+//		
+//		cout<<"cpu time:"<<real_time<<endl;
+//		PAPI_shutdown();
+//		
+//		real_time = 0.0;
+//		proc_time = 0.0;
+//		flpins = 0.0;
+//		mflops = 0.0;
+//        
         
 
         /* Define user stream if current stream is NULL */
@@ -263,7 +263,7 @@ magma_dgetrf(
         //static double gpu_time_iter0_highest_freq = 0.008133, gpu_time_iter0_lowest_freq = 0.043773;
         //static double cpu_time_iter0_highest_freq = 0.014919;
         static double gpu_time_iter0_highest_freq = 0.029583, gpu_time_iter0_lowest_freq = 0.171697;
-        static double cpu_time_iter0_highest_freq = 0.060726;
+        static double cpu_time_iter0_highest_freq = 0.029583;
         
         double gpu_time_this_iter_lowest_freq = gpu_time_iter0_lowest_freq;
         int cpu_switched_flag1 = 0;
@@ -332,7 +332,7 @@ magma_dgetrf(
 					printf("iter %d: slack_pred = %f\n", j, cpu_time_pred - gpu_time_pred);
 				}
                 if (j == 1) {
-                	cpu_time_pred = 0.060726;
+                	cpu_time_pred = 0.029583;
 					gpu_time_pred = 0.029510;
                 } else {
                 	ratio_slack_pred = 1.0 - (double)nb/(m-j*nb);
@@ -458,27 +458,27 @@ magma_dgetrf(
                 
              
                 
-        		//PAPI timing start
-        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-        			cout << "PAPI ERROR" << endl;
-        			return -1;
-        		} 
+//        		//PAPI timing start
+//        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+//        			cout << "PAPI ERROR" << endl;
+//        			return -1;
+//        		} 
                 
                 lapackf77_dgetrf( &rows, &nb, work, &lda, ipiv+j*nb, &iinfo);
                 
         		//PAPI timing start
-        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-        			cout << "PAPI ERROR" << endl;
-        			return -1;
-        		} 
-        		
-        		cout<<"cpu time:"<<real_time<<endl;
-				PAPI_shutdown();
-        		real_time = 0.0;
-				proc_time = 0.0;
-				flpins = 0.0;
-				mflops = 0.0;
-                
+//        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+//        			cout << "PAPI ERROR" << endl;
+//        			return -1;
+//        		} 
+//        		
+//        		cout<<"cpu time:"<<real_time<<endl;
+//				PAPI_shutdown();
+//        		real_time = 0.0;
+//				proc_time = 0.0;
+//				flpins = 0.0;
+//				mflops = 0.0;
+//                
 //                if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 //                {
 //                    cudaEventRecord(stop_cpu, 0);
