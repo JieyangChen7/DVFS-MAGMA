@@ -316,7 +316,9 @@ magma_dgetrf(
                 // make sure that gpu queue is empty
                 magma_device_sync();
 
-               
+                magma_dgetmatrix_async( m-j*nb, nb, dA, cols, work, lda,
+                                                                     stream[0]);
+                                             
 
                 
                 if(ALGORITHMIC_SLACK_PREDICTION || GPU_SLACK_RECLAMATION)
@@ -364,9 +366,7 @@ magma_dgetrf(
 				}
                 
 
-                magma_dgetmatrix_async( m-j*nb, nb, dA, cols, work, lda,
-                                                       stream[0]);
-                               
+              
 
                 
                 //[NOT TRUE]dtrsm is on the critical path, so cannot be slowed down.
