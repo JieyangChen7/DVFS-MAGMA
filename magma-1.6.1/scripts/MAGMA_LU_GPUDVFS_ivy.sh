@@ -19,7 +19,7 @@ rapl_pid=$!
 #echo $rapl_pid
 
 
-ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 20480,20480
+ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 10240,10240
 
 
 #time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 3000,3000 -c
