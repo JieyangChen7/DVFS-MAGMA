@@ -318,7 +318,12 @@ magma_dgetrf(
 
                 magma_dgetmatrix_async( m-j*nb, nb, dA, cols, work, lda,
                                                                      stream[0]);
-                                             
+                //[NOT TRUE]dtrsm is on the critical path, so cannot be slowed down.
+				magma_dtrsm( MagmaRight, MagmaUpper, MagmaNoTrans, MagmaUnit,
+							 n - (j+1)*nb, nb,
+							 c_one, dAT(j-1,j-1), ldda,
+									dAT(j-1,j+1), ldda );
+											 
 
                 
                 if(ALGORITHMIC_SLACK_PREDICTION || GPU_SLACK_RECLAMATION)
@@ -369,11 +374,6 @@ magma_dgetrf(
               
 
                 
-                //[NOT TRUE]dtrsm is on the critical path, so cannot be slowed down.
-                magma_dtrsm( MagmaRight, MagmaUpper, MagmaNoTrans, MagmaUnit,
-                             n - (j+1)*nb, nb,
-                             c_one, dAT(j-1,j-1), ldda,
-                                    dAT(j-1,j+1), ldda );
                 
 //                if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 //				{
