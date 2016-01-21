@@ -318,19 +318,19 @@ magma_dgetrf(
 
                 magma_dgetmatrix_async( m-j*nb, nb, dA, cols, work, lda,
                                                                      stream[0]);
-//                //[NOT TRUE]dtrsm is on the critical path, so cannot be slowed down.
-//				magma_dtrsm( MagmaRight, MagmaUpper, MagmaNoTrans, MagmaUnit,
-//							 n - (j+1)*nb, nb,
-//							 c_one, dAT(j-1,j-1), ldda,
-//									dAT(j-1,j+1), ldda );
-//											 
-//				//[NOT TRUE]Slow down trailing matrix updating only.
-//				magma_dgemm( MagmaNoTrans, MagmaNoTrans,
-//							 n-(j+1)*nb, m-j*nb, nb,
-//							 c_neg_one, dAT(j-1,j+1), ldda,
-//										dAT(j,  j-1), ldda,
-//							 c_one,     dAT(j,  j+1), ldda );
-//                
+                //[NOT TRUE]dtrsm is on the critical path, so cannot be slowed down.
+				magma_dtrsm( MagmaRight, MagmaUpper, MagmaNoTrans, MagmaUnit,
+							 n - (j+1)*nb, nb,
+							 c_one, dAT(j-1,j-1), ldda,
+									dAT(j-1,j+1), ldda );
+											 
+				//[NOT TRUE]Slow down trailing matrix updating only.
+				magma_dgemm( MagmaNoTrans, MagmaNoTrans,
+							 n-(j+1)*nb, m-j*nb, nb,
+							 c_neg_one, dAT(j-1,j+1), ldda,
+										dAT(j,  j-1), ldda,
+							 c_one,     dAT(j,  j+1), ldda );
+                
                 if(ALGORITHMIC_SLACK_PREDICTION || GPU_SLACK_RECLAMATION)
 				{
 					ratio_slack_pred = 1.0 - (double)nb/(m-j*nb);
@@ -354,7 +354,7 @@ magma_dgetrf(
                 }
                 
                 
-                if(j > 1)
+                if(j > 1 && j < 20)
 				{
 					ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time_iter0_lowest_freq / gpu_time_iter0_highest_freq) - 1));
 					//printf("iter %d: ratio_split_freq = %f\n", j, ratio_split_freq);
@@ -368,8 +368,7 @@ magma_dgetrf(
 					if(j > 1)//if(seconds_until_interrupt > 0.0029)//cpu_time_pred - gpu_time_pred > 0.001
 					{
 						initialize_handler();
-						//SetGPUFreq(324, 324);
-						SetGPUFreq(2600, 614);
+						SetGPUFreq(324, 324);
 						if(ratio_split_freq < 1) set_alarm(seconds_until_interrupt);
 						else set_alarm(cpu_time_pred);
 						//SetGPUFreq(2600, 614);
