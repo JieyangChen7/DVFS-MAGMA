@@ -375,13 +375,13 @@ magma_dgetrf(
                              c_one, dAT(j-1,j-1), ldda,
                                     dAT(j-1,j+1), ldda );
                 
-                if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
-				{
-					cudaEventCreate(&start_gpu);
-					cudaEventCreate(&stop_gpu);
-					cudaEventRecord(start_gpu, 0);
-				}
-                
+//                if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
+//				{
+//					cudaEventCreate(&start_gpu);
+//					cudaEventCreate(&stop_gpu);
+//					cudaEventRecord(start_gpu, 0);
+//				}
+//                
                
                 //[NOT TRUE]Slow down trailing matrix updating only.
                 magma_dgemm( MagmaNoTrans, MagmaNoTrans,
@@ -390,33 +390,33 @@ magma_dgetrf(
                                         dAT(j,  j-1), ldda,
                              c_one,     dAT(j,  j+1), ldda );
               
-                if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
-                {
-                    cudaEventRecord(stop_gpu, 0);
-                    cudaEventSynchronize(stop_gpu);
-                    cudaEventElapsedTime(&gpu_time_cuda_temp, start_gpu, stop_gpu);
-                    cudaEventDestroy(start_gpu);
-                    cudaEventDestroy(stop_gpu);
-//                    total_gpu_time_cuda += gpu_time_cuda_temp;
-//                    if(ALGORITHMIC_SLACK_PREDICTION)
-//                    {
-//                        if(!gpu_time_iter0_flag)
-//                        {
-//                            gpu_time_iter0 = gpu_time_cuda_temp/1000;
-//                            gpu_time_pred = gpu_time_iter0;
-//                            gpu_time_iter0_flag = 1;
-//                        }
-                        gpu_time_this_iter = gpu_time_cuda_temp/1000;
-                        printf("iter %d: gpu_time_this_iter = %f\n", j, gpu_time_this_iter);
-//                        if(j>1) 
-//                        {
-//                        	diff_total_gpu += (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
-//                        	double diff_gpu = (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
-//                        	printf("iter %d: diff_gpu = %f\n", j, diff_gpu);
-//                        }
-//                        ////if(!GPU_SLACK_RECLAMATION)gpu_time_pred = gpu_time_this_iter;//Prediction without this line is worse.
-//                    }
-                }
+//                if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
+//                {
+//                    cudaEventRecord(stop_gpu, 0);
+//                    cudaEventSynchronize(stop_gpu);
+//                    cudaEventElapsedTime(&gpu_time_cuda_temp, start_gpu, stop_gpu);
+//                    cudaEventDestroy(start_gpu);
+//                    cudaEventDestroy(stop_gpu);
+////                    total_gpu_time_cuda += gpu_time_cuda_temp;
+////                    if(ALGORITHMIC_SLACK_PREDICTION)
+////                    {
+////                        if(!gpu_time_iter0_flag)
+////                        {
+////                            gpu_time_iter0 = gpu_time_cuda_temp/1000;
+////                            gpu_time_pred = gpu_time_iter0;
+////                            gpu_time_iter0_flag = 1;
+////                        }
+//                        gpu_time_this_iter = gpu_time_cuda_temp/1000;
+//                        printf("iter %d: gpu_time_this_iter = %f\n", j, gpu_time_this_iter);
+////                        if(j>1) 
+////                        {
+////                        	diff_total_gpu += (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
+////                        	double diff_gpu = (gpu_time_pred - gpu_time_this_iter)/gpu_time_this_iter;
+////                        	printf("iter %d: diff_gpu = %f\n", j, diff_gpu);
+////                        }
+////                        ////if(!GPU_SLACK_RECLAMATION)gpu_time_pred = gpu_time_this_iter;//Prediction without this line is worse.
+////                    }
+//                }
 
 
 
