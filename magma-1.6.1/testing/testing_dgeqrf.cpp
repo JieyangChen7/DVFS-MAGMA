@@ -103,8 +103,8 @@ int main( int argc, char** argv)
             /* ====================================================================
                Performs operation using MAGMA
                =================================================================== */
-            //SetGPUFreq(2600, 758);
-            SetGPUFreq(2600, 614);
+            SetGPUFreq(2600, 705);
+            //SetGPUFreq(2600, 614);
 
             gpu_time = magma_wtime();
             magma_dgeqrf(M, N, h_R, lda, tau, h_work, lwork, &info);
