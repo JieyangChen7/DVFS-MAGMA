@@ -368,7 +368,8 @@ magma_dgetrf(
 					if(j > 1)//if(seconds_until_interrupt > 0.0029)//cpu_time_pred - gpu_time_pred > 0.001
 					{
 						initialize_handler();
-						SetGPUFreq(324, 324);
+						//SetGPUFreq(324, 324);
+						SetGPUFreq(2600, 614);
 						if(ratio_split_freq < 1) set_alarm(seconds_until_interrupt);
 						else set_alarm(cpu_time_pred);
 						//SetGPUFreq(2600, 614);
