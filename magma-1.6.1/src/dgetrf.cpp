@@ -137,6 +137,7 @@ magma_dgetrf(
 
         int h = 1+(2+ngpu), ngpu2 = ngpu;
         int NB = (magma_int_t)(0.8*freeMem/maxm-h*nb);
+        cout << "NB="<<NB<<endl; 
         const char* ngr_nb_char = getenv("MAGMA_NGR_NB");
         if ( ngr_nb_char != NULL )
             NB = max( nb, min( NB, atoi(ngr_nb_char) ) );
