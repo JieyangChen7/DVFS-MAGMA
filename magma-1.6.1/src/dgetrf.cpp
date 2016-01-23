@@ -107,6 +107,7 @@ magma_dgetrf(
 
     /* Function Body */
     nb = magma_get_dgetrf_nb(m);
+    cout << "nb="<<nb<<endl; 
     //nb = 100;//optimal
 
     if ( (nb <= 1) || (nb >= min(m,n)) ) {
@@ -128,7 +129,7 @@ magma_dgetrf(
             magma_dgetrf_m(ngpu, m, n, A, lda, ipiv, info);
             return *info;
         }
-
+        cout << "nb="<<nb<<endl; 
         /* explicitly checking the memory requirement */
         size_t freeMem, totalMem;
         cudaMemGetInfo( &freeMem, &totalMem );
@@ -150,7 +151,7 @@ magma_dgetrf(
             magma_dgetrf_m(ngpu, m, n, A, lda, ipiv, info);
             return *info;
         }
-
+        cout << "nb="<<nb<<endl; 
         ldda = maxn;
         work = A;
         if (maxdim*maxdim < 2*maxm*maxn) {
@@ -188,7 +189,7 @@ magma_dgetrf(
 
             magmablas_dtranspose( m, n, da, maxm, dAT, ldda );
         }
-        
+        cout << "nb="<<nb<<endl; 
 //        float real_time = 0.0;
 //		float proc_time = 0.0;
 //		long long flpins = 0.0;
