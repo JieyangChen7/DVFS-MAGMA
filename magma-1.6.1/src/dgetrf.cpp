@@ -151,6 +151,7 @@ magma_dgetrf(
             magma_dgetrf_m(ngpu, m, n, A, lda, ipiv, info);
             return *info;
         }
+        cout << "NB="<<NB<<endl; 
         cout << "nb="<<nb<<endl; 
         ldda = maxn;
         work = A;
