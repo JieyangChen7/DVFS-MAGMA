@@ -134,7 +134,7 @@ magma_dgetrf(
         size_t freeMem, totalMem;
         cudaMemGetInfo( &freeMem, &totalMem );
         freeMem /= sizeof(double);
-
+        cout << "freeMem="<<freeMem<<endl; 
         int h = 1+(2+ngpu), ngpu2 = ngpu;
         int NB = (magma_int_t)(0.8*freeMem/maxm-h*nb);
         cout << "NB="<<NB<<endl; 
