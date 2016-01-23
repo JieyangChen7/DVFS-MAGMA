@@ -205,7 +205,7 @@ magma_dgetrf(
 //			return -1;
 //		} 
 //        
-        lapackf77_dgetrf( &m, &nb, work, &lda, ipiv, &iinfo);
+        lapackf77_dgetrf( &m, &nb, A, &lda, ipiv, &iinfo);
         
         
         cout << "a-nb="<<nb<<endl; 
