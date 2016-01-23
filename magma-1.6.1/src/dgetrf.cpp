@@ -232,7 +232,7 @@ magma_dgetrf(
         else {
             stream[1] = orig_stream;
         }
-
+        cout << "nb="<<nb<<endl; 
 /***********
  * GreenLA *
  ***********/
