@@ -207,6 +207,8 @@ magma_dgetrf(
 //        
         lapackf77_dgetrf( &m, &nb, work, &lda, ipiv, &iinfo);
         
+        
+        cout << "a-nb="<<nb<<endl; 
 //        if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
 //			cout << "PAPI ERROR" << endl;
 //			return -1;
