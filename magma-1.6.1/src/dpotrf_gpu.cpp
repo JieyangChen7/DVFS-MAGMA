@@ -107,6 +107,7 @@ magma_dpotrf_gpu(
 
     nb = magma_get_dpotrf_nb(n);
     cout << "nb="<<nb<<endl; 
+    nb = 100;
     if (MAGMA_SUCCESS != magma_dmalloc_pinned( &work, nb*nb )) {
         *info = MAGMA_ERR_HOST_ALLOC;
         return *info;
