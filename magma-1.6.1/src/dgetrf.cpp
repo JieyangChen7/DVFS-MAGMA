@@ -106,8 +106,8 @@ magma_dgetrf(
         return *info;
 
     /* Function Body */
-    //nb = magma_get_dgetrf_nb(m);
-    nb = 100;//optimal
+    nb = magma_get_dgetrf_nb(m);
+    //nb = 100;//optimal
 
     if ( (nb <= 1) || (nb >= min(m,n)) ) {
         /* Use CPU code. */
@@ -296,14 +296,6 @@ magma_dgetrf(
         cudaProfilerStart();
         for( j = 0; j < s; j++ )
         {
-//            if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
-//            {
-//            	//per_iter_time_cuda_temp = magma_wtime();
-//                cudaEventCreate(&start_per_iter);
-//                cudaEventCreate(&stop_per_iter);
-//                cudaEventRecord(start_per_iter, 0);
-//            }
-
             // download j-th panel
             cols = maxm - j*nb;
             
@@ -312,7 +304,6 @@ magma_dgetrf(
             {
 
                 magmablas_dtranspose( nb, cols, dAT(j,j), ldda, dA, cols );
-
                 // make sure that gpu queue is empty
                 magma_device_sync();
 
@@ -349,8 +340,8 @@ magma_dgetrf(
 					cpu_time_pred = cpu_time_pred * ratio_slack_pred;
 					gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
 					 
-//					printf("iter %d: cpu_time_pred = %f\n", j, cpu_time_pred);
-//					printf("iter %d: gpu_time_pred = %f\n", j, gpu_time_pred);
+					printf("iter %d: cpu_time_pred = %f\n", j, cpu_time_pred);
+					printf("iter %d: gpu_time_pred = %f\n", j, gpu_time_pred);
                 }
                 
                 
