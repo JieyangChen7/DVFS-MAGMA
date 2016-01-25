@@ -108,7 +108,7 @@ magma_dgetrf(
     /* Function Body */
     //nb = magma_get_dgetrf_nb(m);
     //cout << "nb="<<nb<<endl; 
-    nb = 105;//optimal
+    nb = 110;//optimal
 
     if ( (nb <= 1) || (nb >= min(m,n)) ) {
         /* Use CPU code. */
