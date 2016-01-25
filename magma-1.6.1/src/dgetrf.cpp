@@ -451,27 +451,27 @@ magma_dgetrf(
                 }
                         
                 
-//        		//PAPI timing start
-//        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-//        			cout << "PAPI ERROR" << endl;
-//        			return -1;
-//        		} 
+        		//PAPI timing start
+        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+        			cout << "PAPI ERROR" << endl;
+        			return -1;
+        		} 
                 
                 lapackf77_dgetrf( &rows, &nb, work, &lda, ipiv+j*nb, &iinfo);
                 
         		//PAPI timing start
-//        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-//        			cout << "PAPI ERROR" << endl;
-//        			return -1;
-//        		} 
-//        		
-//        		cout<<"cpu time:"<<real_time<<endl;
-//				PAPI_shutdown();
-//        		real_time = 0.0;
-//				proc_time = 0.0;
-//				flpins = 0.0;
-//				mflops = 0.0;
-//                
+        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+        			cout << "PAPI ERROR" << endl;
+        			return -1;
+        		} 
+        		
+        		cout<<"cpu time:"<<real_time<<endl;
+				PAPI_shutdown();
+        		real_time = 0.0;
+				proc_time = 0.0;
+				flpins = 0.0;
+				mflops = 0.0;
+                
 //                if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 //                {
                     cudaEventRecord(stop_cpu, 0);
