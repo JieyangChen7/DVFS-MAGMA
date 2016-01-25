@@ -106,8 +106,8 @@ magma_dgetrf(
         return *info;
 
     /* Function Body */
-    //nb = magma_get_dgetrf_nb(m);
-    //cout << "nb="<<nb<<endl; 
+    nb = magma_get_dgetrf_nb(m);
+    cout << "nb="<<nb<<endl; 
     nb = 128;//optimal
 
     if ( (nb <= 1) || (nb >= min(m,n)) ) {
