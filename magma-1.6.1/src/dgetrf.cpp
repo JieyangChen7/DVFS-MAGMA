@@ -494,7 +494,7 @@ magma_dgetrf(
  //                       cpu_time_this_iter = cpu_time_cuda_temp/1000;
                         printf("iter %d: cpu = %f\n", j, cpu_time_this_iter);
                         printf("iter %d: gpu = %f\n", j, gpu_time_this_iter);
-                        printf("iter %d: slack = %f\n", j, cpu_time_this_iter-gpu_time_this_iter);
+                        printf("iter %d: slack = %f\n\n", j, cpu_time_this_iter-gpu_time_this_iter);
 //                        if(j>1)
 //                        {
 //                        	diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
