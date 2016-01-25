@@ -230,7 +230,7 @@ int main( int argc, char** argv)
             printf("init_time = %.6f\n", init_time);
 
             //SetGPUFreq(324, 324);
-            SetGPUFreq(2600, 705);
+            SetGPUFreq(2600, 614);
 
             gpu_time = magma_wtime();
             
