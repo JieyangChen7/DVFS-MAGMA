@@ -199,29 +199,29 @@ magma_dgetrf(
 		long long flpins = 0.0;
 		float mflops = 0.0;
 		
-//		//PAPI timing start
-//		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-//			cout << "PAPI ERROR" << endl;
-//			return -1;
-//		} 
-//      
+		//PAPI timing start
+		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+			cout << "PAPI ERROR" << endl;
+			return -1;
+		} 
+      
         
         lapackf77_dgetrf( &m, &nb, A, &lda, ipiv, &iinfo);
         
         
         //cout << "a-nb="<<nb<<endl; 
-//        if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-//			cout << "PAPI ERROR" << endl;
-//			return -1;
-//		} 
-//		
-//		cout<<"cpu time:"<<real_time<<endl;
-//		PAPI_shutdown();
-//		
-//		real_time = 0.0;
-//		proc_time = 0.0;
-//		flpins = 0.0;
-//		mflops = 0.0;
+        if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+			cout << "PAPI ERROR" << endl;
+			return -1;
+		} 
+		
+		cout<<"cpu time:"<<real_time<<endl;
+		PAPI_shutdown();
+		
+		real_time = 0.0;
+		proc_time = 0.0;
+		flpins = 0.0;
+		mflops = 0.0;
         
         
 
@@ -327,12 +327,12 @@ magma_dgetrf(
 							 c_one, dAT(j-1,j-1), ldda,
 									dAT(j-1,j+1), ldda );
 											 
-//				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
-//				{
-//					cudaEventCreate(&start_gpu);
-//					cudaEventCreate(&stop_gpu);
-//					cudaEventRecord(start_gpu, 0);
-//				}
+				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
+				{
+					cudaEventCreate(&start_gpu);
+					cudaEventCreate(&stop_gpu);
+					cudaEventRecord(start_gpu, 0);
+				}
 				//[NOT TRUE]Slow down trailing matrix updating only.
 				magma_dgemm( MagmaNoTrans, MagmaNoTrans,
 							 n-(j+1)*nb, m-j*nb, nb,
@@ -343,11 +343,11 @@ magma_dgetrf(
 //				
 //				if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 //				{
-//					cudaEventRecord(stop_gpu, 0);
-//					cudaEventSynchronize(stop_gpu);
-//					cudaEventElapsedTime(&gpu_time_cuda_temp, start_gpu, stop_gpu);
-//					cudaEventDestroy(start_gpu);
-//					cudaEventDestroy(stop_gpu);
+					cudaEventRecord(stop_gpu, 0);
+					cudaEventSynchronize(stop_gpu);
+					cudaEventElapsedTime(&gpu_time_cuda_temp, start_gpu, stop_gpu);
+					cudaEventDestroy(start_gpu);
+					cudaEventDestroy(stop_gpu);
 //                    total_gpu_time_cuda += gpu_time_cuda_temp;
 //                    if(ALGORITHMIC_SLACK_PREDICTION)
 //                    {
@@ -452,28 +452,28 @@ magma_dgetrf(
 //                }
                         
                 
-//        		//PAPI timing start
-//        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-//        			cout << "PAPI ERROR" << endl;
-//        			return -1;
-//        		} 
+        		//PAPI timing start
+        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+        			cout << "PAPI ERROR" << endl;
+        			return -1;
+        		} 
                 
                 lapackf77_dgetrf( &rows, &nb, work, &lda, ipiv+j*nb, &iinfo);
                 
-//        		//PAPI timing start
-//        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-//        			cout << "PAPI ERROR" << endl;
-//        			return -1;
-//        		} 
-//        		
-//        		//cout<<"cpu time:"<<real_time<<endl;
-//        		cpu_time_this_iter = real_time;
-//				PAPI_shutdown();
-//				
-//        		real_time = 0.0;
-//				proc_time = 0.0;
-//				flpins = 0.0;
-//				mflops = 0.0;
+        		//PAPI timing start
+        		if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+        			cout << "PAPI ERROR" << endl;
+        			return -1;
+        		} 
+        		
+        		//cout<<"cpu time:"<<real_time<<endl;
+        		cpu_time_this_iter = real_time;
+				PAPI_shutdown();
+				
+        		real_time = 0.0;
+				proc_time = 0.0;
+				flpins = 0.0;
+				mflops = 0.0;
                 
 //                if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 //                {
@@ -492,9 +492,9 @@ magma_dgetrf(
 //                            cpu_time_iter0_flag = 1;
 //                        }
  //                       cpu_time_this_iter = cpu_time_cuda_temp/1000;
-//                        printf("iter %d: cpu = %f\n", j, cpu_time_this_iter);
-//                        printf("iter %d: gpu = %f\n", j, gpu_time_this_iter);
-//                        printf("iter %d: slack = %f\n\n", j, cpu_time_this_iter-gpu_time_this_iter);
+                        printf("iter %d: cpu = %f\n", j, cpu_time_this_iter);
+                        printf("iter %d: gpu = %f\n", j, gpu_time_this_iter);
+                        printf("iter %d: slack = %f\n\n", j, cpu_time_this_iter-gpu_time_this_iter);
 //                        if(j>1)
 //                        {
 //                        	diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)/cpu_time_this_iter;
