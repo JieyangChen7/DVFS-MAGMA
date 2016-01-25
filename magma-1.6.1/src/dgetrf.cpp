@@ -371,27 +371,27 @@ magma_dgetrf(
 
 				
 				
-                if(ALGORITHMIC_SLACK_PREDICTION || GPU_SLACK_RECLAMATION)
-				{
-					ratio_slack_pred = 1.0 - (double)nb/(m-j*nb);
-					cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-					gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-					 
-					printf("iter %d: cpu_time_pred = %f\n", j, cpu_time_pred);
-					printf("iter %d: gpu_time_pred = %f\n", j, gpu_time_pred);
-					printf("iter %d: slack_pred = %f\n", j, cpu_time_pred - gpu_time_pred);
-				}
-                if (j == 1) {
-                	cpu_time_pred = 0.029583;
-					gpu_time_pred = 0.029510;
-                } else {
-                	ratio_slack_pred = 1.0 - (double)nb/(m-j*nb);
-					cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-					gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-					 
-					printf("iter %d: cpu_time_pred = %f\n", j, cpu_time_pred);
-					printf("iter %d: gpu_time_pred = %f\n", j, gpu_time_pred);
-                }
+//                if(ALGORITHMIC_SLACK_PREDICTION || GPU_SLACK_RECLAMATION)
+//				{
+//					ratio_slack_pred = 1.0 - (double)nb/(m-j*nb);
+//					cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+//					gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+//					 
+//					printf("iter %d: cpu_time_pred = %f\n", j, cpu_time_pred);
+//					printf("iter %d: gpu_time_pred = %f\n", j, gpu_time_pred);
+//					printf("iter %d: slack_pred = %f\n", j, cpu_time_pred - gpu_time_pred);
+//				}
+//                if (j == 1) {
+//                	cpu_time_pred = 0.029583;
+//					gpu_time_pred = 0.029510;
+//                } else {
+//                	ratio_slack_pred = 1.0 - (double)nb/(m-j*nb);
+//					cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+//					gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+//					 
+//					printf("iter %d: cpu_time_pred = %f\n", j, cpu_time_pred);
+//					printf("iter %d: gpu_time_pred = %f\n", j, gpu_time_pred);
+//                }
                 
                 
 //                if(j > 1)
