@@ -19,6 +19,11 @@
 #include "magma.h"
 #include "magma_lapack.h"
 #include "testings.h"
+#include "cula.h"
+#include "papi.h"
+#include <iostream>
+
+using namespace std;
 
 
 // Initialize matrix to random.
@@ -206,9 +211,15 @@ int main( int argc, char** argv)
                =================================================================== */
             init_matrix( M, N, h_A, lda );
             magma_dsetmatrix( M, N, h_A, lda, d_A, ldda );
-            
+            culaInitialize();
             gpu_time = magma_wtime();
-            magma_dgetrf_gpu( M, N, d_A, ldda, ipiv, &info);
+            
+			culaStatus culastatus = culaDeviceDgetrf(M, N, d_A, ldda, ipiv);
+			if (culastatus != culaNoError) {
+				cout<<"CULA ERROR:"<<culastatus<<endl;
+			}
+            
+            //magma_dgetrf_gpu( M, N, d_A, ldda, ipiv, &info);
             gpu_time = magma_wtime() - gpu_time;
             gpu_perf = gflops / gpu_time;
             if (info != 0)
