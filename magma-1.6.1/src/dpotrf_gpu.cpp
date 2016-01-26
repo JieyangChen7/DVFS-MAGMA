@@ -106,8 +106,7 @@ magma_dpotrf_gpu(
     }
 
     nb = magma_get_dpotrf_nb(n);
-    cout << "nb="<<nb<<endl; 
-    nb = 100;
+
     if (MAGMA_SUCCESS != magma_dmalloc_pinned( &work, nb*nb )) {
         *info = MAGMA_ERR_HOST_ALLOC;
         return *info;
@@ -189,7 +188,7 @@ magma_dpotrf_gpu(
                 //  Update and factorize the current diagonal block and test
                 //  for non-positive-definiteness. Computing MIN
                 jb = min(nb, (n-j));
-                cout << "syrk" <<endl;
+               
                 magma_dsyrk(MagmaLower, MagmaNoTrans, jb, j,
                             d_neg_one, dA(j, 0), ldda,
                             d_one,     dA(j, j), ldda);
@@ -200,7 +199,7 @@ magma_dpotrf_gpu(
                                         work,     jb, stream[0] );
                 
                 if ( (j+jb) < n) {
-                	cout << "gemm" <<endl;
+                	
                     magma_dgemm( MagmaNoTrans, MagmaConjTrans,
                                  (n-j-jb), jb, j,
                                  c_neg_one, dA(j+jb, 0), ldda,
@@ -209,7 +208,7 @@ magma_dpotrf_gpu(
                 }
 
                 magma_queue_sync( stream[0] );
-                cout << "potrf" <<endl;
+                
                 lapackf77_dpotrf(MagmaLowerStr, &jb, work, &jb, info);
                 magma_dsetmatrix_async( jb, jb,
                                         work,     jb,
@@ -220,7 +219,7 @@ magma_dpotrf_gpu(
                 }
                 
                 if ( (j+jb) < n) {
-                	cout << "trsm" <<endl;
+                	
                     magma_dtrsm(MagmaRight, MagmaLower, MagmaConjTrans, MagmaNonUnit,
                                 (n-j-jb), jb,
                                 c_one, dA(j,    j), ldda,
