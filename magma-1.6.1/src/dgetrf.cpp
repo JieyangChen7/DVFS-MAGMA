@@ -12,7 +12,6 @@
 #include "../testing/testing_util.cpp"
 #include "cuda_profiler_api.h"
 #include "papi.h"
-#include "cula.h"
 #include <iostream>
 using namespace std;
 
