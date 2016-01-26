@@ -77,7 +77,7 @@ int main( int argc, char** argv)
        //     magma_dpotrf_gpu( opts.uplo, N, d_A, ldda, &info );
             
             
-            culaStatus culastatus = culaDeviceDpotrf(opts.uplo, N, d_A, ldda);
+            culaStatus culastatus = culaDeviceDpotrf('l', N, d_A, ldda);
 			if (culastatus != culaNoError) {
 				cout<<"CULA ERROR:"<<culastatus<<endl;
 			}
