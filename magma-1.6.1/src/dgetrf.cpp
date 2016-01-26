@@ -301,7 +301,7 @@ magma_dgetrf(
 //        nvmlDevice_t device;
 //        nvmlInit();
 //        nvmlDeviceGetHandleByIndex(0, &device);
-//        cudaProfilerStart();
+        cudaProfilerStart();
         for( j = 0; j < s; j++ )
         {
             // download j-th panel
@@ -616,7 +616,7 @@ magma_dgetrf(
 //                printf("iter %d: per_iter_time_cuda = %.6f\n\n", j, per_iter_time_cuda_temp/1000);
 //            }
         }
- //       cudaProfilerStop();
+        cudaProfilerStop();
         
 //        if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
 //        {
