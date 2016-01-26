@@ -239,7 +239,7 @@ int main( int argc, char** argv)
 			float proc_time = 0.0;
 			long long flpins = 0.0;
 			float mflops = 0.0;
-			
+			culaInitialize();
 			//PAPI timing start
 			if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
 				cout << "PAPI ERROR" << endl;
