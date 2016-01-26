@@ -249,9 +249,9 @@ int main( int argc, char** argv)
            // magma_dgetrf( M, N, h_A, lda, ipiv, &info);
             
             
-            culaStatus status = culaDgetrf(M, N, h_A, lda, ipiv);
-			if (status != culaNoError) {
-				cout<<"CULA ERROR:"<<status<<endl;
+            culaStatus culastatus = culaDgetrf(M, N, h_A, lda, ipiv);
+			if (culastatus != culaNoError) {
+				cout<<"CULA ERROR:"<<culastatus<<endl;
 			}
             
             //PAPI timing end
