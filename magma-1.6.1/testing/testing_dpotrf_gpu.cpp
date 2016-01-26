@@ -19,7 +19,9 @@
 #include "magma.h"
 #include "magma_lapack.h"
 #include "testings.h"
+#include <iostream>
 
+using namespace std;
 /* ////////////////////////////////////////////////////////////////////////////
    -- Testing dpotrf
 */
