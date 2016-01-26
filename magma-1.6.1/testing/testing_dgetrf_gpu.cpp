@@ -211,15 +211,15 @@ int main( int argc, char** argv)
                =================================================================== */
             init_matrix( M, N, h_A, lda );
             magma_dsetmatrix( M, N, h_A, lda, d_A, ldda );
-            culaInitialize();
+            //culaInitialize();
             gpu_time = magma_wtime();
             
-			culaStatus culastatus = culaDeviceDgetrf(M, N, d_A, ldda, ipiv);
-			if (culastatus != culaNoError) {
-				cout<<"CULA ERROR:"<<culastatus<<endl;
-			}
+//			culaStatus culastatus = culaDeviceDgetrf(M, N, d_A, ldda, ipiv);
+//			if (culastatus != culaNoError) {
+//				cout<<"CULA ERROR:"<<culastatus<<endl;
+//			}
             
-            //magma_dgetrf_gpu( M, N, d_A, ldda, ipiv, &info);
+            magma_dgetrf_gpu( M, N, d_A, ldda, ipiv, &info);
             gpu_time = magma_wtime() - gpu_time;
             gpu_perf = gflops / gpu_time;
             if (info != 0)
