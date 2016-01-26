@@ -74,7 +74,7 @@ int main( int argc, char** argv)
             
             
             
-            magma_dpotrf_gpu( opts.uplo, N, d_A, ldda, &info );
+       //     magma_dpotrf_gpu( opts.uplo, N, d_A, ldda, &info );
             
             
             culaStatus culastatus = culaDeviceDpotrf(opts.uplo, N, d_A, ldda);
