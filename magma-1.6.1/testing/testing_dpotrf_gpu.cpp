@@ -74,12 +74,12 @@ int main( int argc, char** argv)
             
             magma_dpotrf_gpu( opts.uplo, N, d_A, ldda, &info );
             
-//            
-//            culaStatus culastatus = culaDeviceDpotrf(opts.uplo, N, d_A, ldda);
-//			if (culastatus != culaNoError) {
-//				cout<<"CULA ERROR:"<<culastatus<<endl;
-//			}
-//            
+            
+            culaStatus culastatus = culaDeviceDpotrf(opts.uplo, N, d_A, ldda);
+			if (culastatus != culaNoError) {
+				cout<<"CULA ERROR:"<<culastatus<<endl;
+			}
+            
             
             gpu_time = magma_wtime() - gpu_time;
             gpu_perf = gflops / gpu_time;
