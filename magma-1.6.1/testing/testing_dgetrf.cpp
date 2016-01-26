@@ -246,7 +246,7 @@ int main( int argc, char** argv)
 				return -1;
 			} 
             
-            //magma_dgetrf( M, N, h_A, lda, ipiv, &info);
+            magma_dgetrf( M, N, h_A, lda, ipiv, &info);
             
             
 //            culaStatus culastatus = culaDgetrf(M, N, h_A, lda, ipiv);
