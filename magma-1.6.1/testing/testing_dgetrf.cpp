@@ -245,7 +245,13 @@ int main( int argc, char** argv)
 				return -1;
 			} 
             
-            magma_dgetrf( M, N, h_A, lda, ipiv, &info);
+           // magma_dgetrf( M, N, h_A, lda, ipiv, &info);
+            
+            
+            culaStatus status = culaDgetrf(M, N, h_A, lda, ipiv);
+			if (status != culaNoError) {
+				cout<<"CULA ERROR:"<<status<<endl;
+			}
             
             //PAPI timing end
 		   if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
