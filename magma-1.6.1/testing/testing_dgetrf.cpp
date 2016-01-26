@@ -261,7 +261,7 @@ int main( int argc, char** argv)
 			}
 			cout<<"N="<<N<<"---time:"<<real_time<<"---gflops:"<<(double)gflops/real_time<<endl;
 			PAPI_shutdown();
-            
+			culaShutdown();
             //gpu_time = magma_wtime() - gpu_time;
             //gpu_perf = gflops / gpu_time;
             if (info != 0)
