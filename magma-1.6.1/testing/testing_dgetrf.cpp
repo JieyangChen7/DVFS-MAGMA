@@ -156,7 +156,7 @@ double get_LU_error(magma_int_t M, magma_int_t N,
 */
 int main( int argc, char** argv)
 {
-    #define LIMITED_ONE_CORE 0//Forces the program to run on a given CPU core.
+    #define LIMITED_ONE_CORE 1//Forces the program to run on a given CPU core.
 
     if(LIMITED_ONE_CORE)
     {
