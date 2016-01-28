@@ -268,10 +268,9 @@ magma_dgetrf(
         double gpu_time_this_iter = 0, cpu_time_this_iter = 0;
         int gpu_time_iter0_flag = 0, cpu_time_iter0_flag = 0;
         double gpu_time_iter0, cpu_time_iter0;
-        //static double gpu_time_iter0_highest_freq = 0.008133, gpu_time_iter0_lowest_freq = 0.043773;
-        //static double cpu_time_iter0_highest_freq = 0.014919;
-        static double gpu_time_iter0_highest_freq = 0.412610, gpu_time_iter0_lowest_freq = 1.795358;
-        static double cpu_time_iter0_highest_freq = 0.584936;
+        
+        static double gpu_time_iter0_highest_freq = 0.401762, gpu_time_iter0_lowest_freq = 1.795358;
+        static double cpu_time_iter0_highest_freq = 1.043;
         
         double gpu_time_this_iter_lowest_freq = gpu_time_iter0_lowest_freq;
         int cpu_switched_flag1 = 0;
@@ -370,20 +369,9 @@ magma_dgetrf(
 	
 
 				
-				
-//                if(ALGORITHMIC_SLACK_PREDICTION || GPU_SLACK_RECLAMATION)
-//				{
-//					ratio_slack_pred = 1.0 - (double)nb/(m-j*nb);
-//					cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-//					gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-//					 
-//					printf("iter %d: cpu_time_pred = %f\n", j, cpu_time_pred);
-//					printf("iter %d: gpu_time_pred = %f\n", j, gpu_time_pred);
-//					printf("iter %d: slack_pred = %f\n", j, cpu_time_pred - gpu_time_pred);
-//				}
                 if (j == 1) {
-                	cpu_time_pred = 0.584936;
-					gpu_time_pred = 0.412610;
+                	cpu_time_pred = cpu_time_iter0_highest_freq;
+					gpu_time_pred = gpu_time_iter0_highest_freq;
                 } else {
                 	ratio_slack_pred = 1.0 - (double)nb/(m-j*nb);
 					cpu_time_pred = cpu_time_pred * ratio_slack_pred;
@@ -416,29 +404,6 @@ magma_dgetrf(
 //				}
 
 
-
-
-                if(GPU_SLACK_RECLAMATION)
-                    if(!gpu_time_iter0_flag)
-                    {
-                        gpu_time_pred = gpu_time_iter0_highest_freq;
-                        gpu_time_iter0_flag = 1;
-                    }
-
-                if(CPU_SLACK_RECLAMATION)
-                {
-                    if(j <= 50 && !cpu_switched_flag1)
-                    {
-                    	system("echo 1700000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
-                    	cpu_switched_flag1 = 1;
-                    }
-                }
-
-                if(RACE_TO_HALT)
-                {
-                    SetGPUFreq(324, 324);
-                    //SetCPUFreq(2500000);
-                }
                 // do the cpu part
                 rows = m - j*nb;
                 magma_queue_sync( stream[0] );
