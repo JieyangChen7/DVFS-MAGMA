@@ -11,8 +11,8 @@ case=MAGMA_LU_GPUDVFS
 /opt/power-bench/mclient -H 130.127.48.185 -d /home/lchen/MAGMA/magma-1.6.1/results
 /opt/power-bench/mclient -H 130.127.48.185 -l ${case}.total.pwr
 
-nvidia-smi -q -d POWER -lms 100 -f /home/lchen/MAGMA/magma-1.6.1/results/${case}.gpu.pwr 2>&1 1>/dev/null &
-smi_pid=$!
+#nvidia-smi -q -d POWER -lms 100 -f /home/lchen/MAGMA/magma-1.6.1/results/${case}.gpu.pwr 2>&1 1>/dev/null &
+#smi_pid=$!
 #echo $smi_pid
 #/usr/local/bin/rapl -c 0,10 -f /home/lchen/MAGMA/magma-1.6.1/results/${case}.cpu.pwr 2>&1 1>/dev/null &
 #rapl_pid=$!
