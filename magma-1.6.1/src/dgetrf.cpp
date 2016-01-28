@@ -269,7 +269,7 @@ magma_dgetrf(
         int gpu_time_iter0_flag = 0, cpu_time_iter0_flag = 0;
         double gpu_time_iter0, cpu_time_iter0;
         
-        static double gpu_time_iter0_highest_freq = 0.401762, gpu_time_iter0_lowest_freq = 1.795358;
+        static double gpu_time_iter0_highest_freq = 0.401762, gpu_time_iter0_lowest_freq = 1.753552;
         static double cpu_time_iter0_highest_freq = 1.043;
         
         double gpu_time_this_iter_lowest_freq = gpu_time_iter0_lowest_freq;
@@ -382,26 +382,26 @@ magma_dgetrf(
                 }
                 
                 
-//                if(j > 1)
-//				{
-//					ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time_iter0_lowest_freq / gpu_time_iter0_highest_freq) - 1));
-//					//printf("iter %d: ratio_split_freq = %f\n", j, ratio_split_freq);
-//					gpu_time_this_iter_lowest_freq = gpu_time_this_iter_lowest_freq * ratio_slack_pred * ratio_slack_pred;
-//					//printf("iter %d: gpu_time_this_iter_lowest_freq = %f\n", j, gpu_time_this_iter_lowest_freq);
-//					//gpu_time_this_iter_lowest_freq = gpu_time_this_iter_lowest_freq * ratio_slack_pred_gpu;
-//					seconds_until_interrupt = gpu_time_this_iter_lowest_freq * ratio_split_freq;
-//					//printf("iter %d: seconds_until_interrupt = %f\n", j, seconds_until_interrupt);
-//					//double DVFS_overhead_adjustment = 0.6;//0.0014
-//					//if(ratio_split_freq < 1) seconds_until_interrupt *= DVFS_overhead_adjustment;//-=
-//					if(j > 1)//if(seconds_until_interrupt > 0.0029)//cpu_time_pred - gpu_time_pred > 0.001
-//					{
-//						initialize_handler();
-//						SetGPUFreq(324, 324);
-//						if(ratio_split_freq < 1) set_alarm(seconds_until_interrupt);
-//						else set_alarm(cpu_time_pred);
-//						//SetGPUFreq(2600, 614);
-//					}
-//				}
+                if(j > 1)
+				{
+					ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time_iter0_lowest_freq / gpu_time_iter0_highest_freq) - 1));
+					//printf("iter %d: ratio_split_freq = %f\n", j, ratio_split_freq);
+					gpu_time_this_iter_lowest_freq = gpu_time_this_iter_lowest_freq * ratio_slack_pred * ratio_slack_pred;
+					//printf("iter %d: gpu_time_this_iter_lowest_freq = %f\n", j, gpu_time_this_iter_lowest_freq);
+					//gpu_time_this_iter_lowest_freq = gpu_time_this_iter_lowest_freq * ratio_slack_pred_gpu;
+					seconds_until_interrupt = gpu_time_this_iter_lowest_freq * ratio_split_freq;
+					//printf("iter %d: seconds_until_interrupt = %f\n", j, seconds_until_interrupt);
+					//double DVFS_overhead_adjustment = 0.6;//0.0014
+					//if(ratio_split_freq < 1) seconds_until_interrupt *= DVFS_overhead_adjustment;//-=
+					if(j > 1)//if(seconds_until_interrupt > 0.0029)//cpu_time_pred - gpu_time_pred > 0.001
+					{
+						initialize_handler();
+						SetGPUFreq(324, 324);
+						if(ratio_split_freq < 1) set_alarm(seconds_until_interrupt);
+						else set_alarm(cpu_time_pred);
+						//SetGPUFreq(2600, 614);
+					}
+				}
 
 
                 // do the cpu part
