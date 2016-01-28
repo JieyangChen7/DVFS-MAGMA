@@ -382,7 +382,7 @@ magma_dgetrf(
                 }
                 
                 
-                if(j > 1 && j < 30)
+                if(j > 1 && j < 20)
 				{
 					ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time_iter0_lowest_freq / gpu_time_iter0_highest_freq) - 1));
 					//printf("iter %d: ratio_split_freq = %f\n", j, ratio_split_freq);
