@@ -108,7 +108,7 @@ magma_dgetrf(
     /* Function Body */
     nb = magma_get_dgetrf_nb(m);
     //cout << "nb="<<nb<<endl; 
-    nb = 100;//optimal
+    //nb = 100;//optimal
 
     if ( (nb <= 1) || (nb >= min(m,n)) ) {
         /* Use CPU code. */
@@ -269,8 +269,15 @@ magma_dgetrf(
         int gpu_time_iter0_flag = 0, cpu_time_iter0_flag = 0;
         double gpu_time_iter0, cpu_time_iter0;
         
+        
+        
+        //nb = 512
         static double gpu_time_iter0_highest_freq = 0.401762, gpu_time_iter0_lowest_freq = 1.753552;
         static double cpu_time_iter0_highest_freq = 1.043;
+        
+//        //nb = 100
+//        static double gpu_time_iter0_highest_freq = 0.115788, gpu_time_iter0_lowest_freq = 1.753552;
+//        static double cpu_time_iter0_highest_freq = 1.043;
         
         double gpu_time_this_iter_lowest_freq = gpu_time_iter0_lowest_freq;
         int cpu_switched_flag1 = 0;
