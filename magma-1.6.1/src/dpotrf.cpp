@@ -223,11 +223,12 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			double gpu_time_dgemm_this_iter = 0, cpu_time_this_iter = 0;
 			int gpu_time_dgemm_iter0_flag = 0, cpu_time_iter0_flag = 0;
 			double gpu_time_dgemm_iter0, cpu_time_iter0;
-			static double gpu_time_dgemm_iter0_highest_freq = 0,
+			
+			//static double gpu_time_dgemm_iter0_highest_freq = 0,
 					gpu_time_dgemm_iter0_lowest_freq = 0;
-			static double cpu_time_iter0_highest_freq = 0;
-			double gpu_time_dgemm_this_iter_lowest_freq =
-					gpu_time_dgemm_iter0_lowest_freq;
+			//static double cpu_time_iter0_highest_freq = 0;
+			
+			//double gpu_time_dgemm_this_iter_lowest_freq = gpu_time_dgemm_iter0_lowest_freq;
 			int cpu_switched_flag1 = 0;
 
 #define TIME_MEASUREMENT 1
