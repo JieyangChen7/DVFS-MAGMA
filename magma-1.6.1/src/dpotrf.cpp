@@ -141,8 +141,8 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 		stream[1] = orig_stream;
 	}
 
-	//nb = magma_get_dpotrf_nb(n);
-	nb = 103; //optimal
+	nb = magma_get_dpotrf_nb(n);
+	//nb = 103; //optimal
 
 	if (nb <= 1 || nb >= n) {
 		lapackf77_dpotrf(uplo_, &n, A, &lda, info);
