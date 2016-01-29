@@ -10,6 +10,7 @@
  */
 #include "common_magma.h"
 #include "../testing/testing_util.cpp"
+#include "cuda_profiler_api.h"
 
 #define PRECISION_d
 
@@ -247,6 +248,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 			//=========================================================
 			// Compute the Cholesky factorization A = L*L'.
+			cudaProfilerStart();
 			for (j = 0; j < n; j += nb) {            ////if(j > n/2){nb = 103;
 				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
 					cudaEventCreate(&start_upload_copy1);
@@ -483,7 +485,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 							iter++, download_copy_time2_cuda_temp / 1000);
 				}
 			}                ////}
-
+			cudaProfilerStop();
 			if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
 				cudaEventRecord(stop_main_loop, 0);
 				cudaEventSynchronize(stop_main_loop);
@@ -513,6 +515,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 						100 * diff_total_slack / (n / nb));
 			}
 		}
+		
 	}
 
 	magma_queue_destroy(stream[0]);
