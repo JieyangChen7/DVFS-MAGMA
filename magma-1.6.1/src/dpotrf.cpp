@@ -230,17 +230,17 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 					gpu_time_dgemm_iter0_lowest_freq;
 			int cpu_switched_flag1 = 0;
 
-#define TIME_MEASUREMENT 0
+#define TIME_MEASUREMENT 1
 #define TIME_DIFF_CPU_FREQ 0
 #define TIME_DIFF_GPU_FREQ 0
 #define ALGORITHMIC_SLACK_PREDICTION 0
 
-			if (TIME_MEASUREMENT) {
-				cudaEventCreate(&start_main_loop);
-				cudaEventCreate(&stop_main_loop);
-				cudaEventRecord(start_main_loop, 0);
-			}
-
+			static double gpu_time_iter0_highest_freq = 0.401762;
+			static double gpu_time_iter0_lowest_freq = 1.753552;
+			static double cpu_time_iter0_highest_freq = 1.043;
+			static double cpu_time_iter0_lowest_freq = 1.043;
+			
+			
 			if (TIME_DIFF_CPU_FREQ)
 				SetCPUFreq(1200000);
 			if (TIME_DIFF_GPU_FREQ)
@@ -250,11 +250,6 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			// Compute the Cholesky factorization A = L*L'.
 			cudaProfilerStart();
 			for (j = 0; j < n; j += nb) {            ////if(j > n/2){nb = 103;
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventCreate(&start_upload_copy1);
-//					cudaEventCreate(&stop_upload_copy1);
-//					cudaEventRecord(start_upload_copy1, 0);
-//				}
 
 				//  Update and factorize the current diagonal block and test
 				//  for non-positive-definiteness. Computing MIN
@@ -262,55 +257,16 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				magma_dsetmatrix_async((n - j), jb, A(j, j), lda, dA(j, j),
 						ldda, stream[1]);
 
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventRecord(stop_upload_copy1, 0);
-//					cudaEventSynchronize(stop_upload_copy1);
-//					cudaEventElapsedTime(&upload_copy_time1_cuda_temp,
-//							start_upload_copy1, stop_upload_copy1);
-//					cudaEventDestroy(start_upload_copy1);
-//					cudaEventDestroy(stop_upload_copy1);
-//					total_copy_time_cuda += upload_copy_time1_cuda_temp;
-//				}
-//
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventCreate(&start_gpu_dsyrk);
-//					cudaEventCreate(&stop_gpu_dsyrk);
-//					cudaEventRecord(start_gpu_dsyrk, 0);
-//				}
 
 				magma_dsyrk(MagmaLower, MagmaNoTrans, jb, j, d_neg_one,
 						dA(j, 0), ldda, d_one, dA(j, j), ldda);
 
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventRecord(stop_gpu_dsyrk, 0);
-//					cudaEventSynchronize(stop_gpu_dsyrk);
-//					cudaEventElapsedTime(&gpu_time_dsyrk_cuda_temp,
-//							start_gpu_dsyrk, stop_gpu_dsyrk);
-//					cudaEventDestroy(start_gpu_dsyrk);
-//					cudaEventDestroy(stop_gpu_dsyrk);
-//					total_gpu_time_cuda += gpu_time_dsyrk_cuda_temp;
-//				}
-//
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventCreate(&start_download_copy1);
-//					cudaEventCreate(&stop_download_copy1);
-//					cudaEventRecord(start_download_copy1, 0);
-//				}
 
 				magma_queue_sync(stream[1]);
 
 				magma_dgetmatrix_async(jb, jb, dA(j,j), ldda, A(j,j), lda,
 						stream[0]);
 
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventRecord(stop_download_copy1, 0);
-//					cudaEventSynchronize(stop_download_copy1);
-//					cudaEventElapsedTime(&download_copy_time1_cuda_temp,
-//							start_download_copy1, stop_download_copy1);
-//					cudaEventDestroy(start_download_copy1);
-//					cudaEventDestroy(stop_download_copy1);
-//					total_copy_time_cuda += download_copy_time1_cuda_temp;
-//				}
 
 				if (ALGORITHMIC_SLACK_PREDICTION) {
 					ratio_slack_pred = 1.0 - (double) nb / (n - iter * nb);
@@ -337,52 +293,22 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 							c_one, dA(j+jb, j), ldda);
 				}
 
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
+				if (TIME_MEASUREMENT) {
 					cudaEventRecord(stop_gpu_dgemm, 0);
 					cudaEventSynchronize(stop_gpu_dgemm);
 					cudaEventElapsedTime(&gpu_time_dgemm_cuda_temp,
 							start_gpu_dgemm, stop_gpu_dgemm);
 					cudaEventDestroy(start_gpu_dgemm);
 					cudaEventDestroy(stop_gpu_dgemm);
-//					total_gpu_time_cuda += gpu_time_dgemm_cuda_temp;
-//					if (ALGORITHMIC_SLACK_PREDICTION) {
-//						if (!gpu_time_dgemm_iter0_flag) {
-//							gpu_time_dgemm_iter0 = gpu_time_dgemm_cuda_temp
-//									/ 1000;
-//							gpu_time_dgemm_pred = gpu_time_dgemm_iter0;
-//							gpu_time_dgemm_iter0_flag = 1;
-//						}
-//						gpu_time_dgemm_this_iter = gpu_time_dgemm_cuda_temp / 1000;
-//							
-//						diff_total_gpu_dgemm += (gpu_time_dgemm_pred
-//								- gpu_time_dgemm_this_iter)
-//								/ gpu_time_dgemm_this_iter;
-//						gpu_time_dgemm_pred = gpu_time_dgemm_this_iter; //Prediction without this line is worse.
-//					}
-//				}
-
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventCreate(&start_download_copy2);
-//					cudaEventCreate(&stop_download_copy2);
-//					cudaEventRecord(start_download_copy2, 0);
-//				}
+				}
 
 				magma_dgetmatrix_async(jb, j, dA(j, 0), ldda, A(j, 0), lda,
 						stream[2]);
 
 				magma_queue_sync(stream[0]);
 
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventRecord(stop_download_copy2, 0);
-//					cudaEventSynchronize(stop_download_copy2);
-//					cudaEventElapsedTime(&download_copy_time2_cuda_temp,
-//							start_download_copy2, stop_download_copy2);
-//					cudaEventDestroy(start_download_copy2);
-//					cudaEventDestroy(stop_download_copy2);
-//					total_copy_time_cuda += download_copy_time2_cuda_temp;
-//				}
 
-				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
+				if (TIME_MEASUREMENT) {
 					cudaEventCreate(&start_cpu);
 					cudaEventCreate(&stop_cpu);
 					cudaEventRecord(start_cpu, 0);
@@ -390,7 +316,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 				lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
 
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
+				if (TIME_MEASUREMENT) {
 					cudaEventRecord(stop_cpu, 0);
 					cudaEventSynchronize(stop_cpu);
 					cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu,
@@ -398,30 +324,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 					cudaEventDestroy(start_cpu);
 					cudaEventDestroy(stop_cpu);
 					total_cpu_time_cuda += cpu_time_cuda_temp;
-//					if (ALGORITHMIC_SLACK_PREDICTION) {
-//						if (!cpu_time_iter0_flag) {
-//							cpu_time_iter0 = cpu_time_cuda_temp / 1000;
-//							cpu_time_pred = cpu_time_iter0;
-//							cpu_time_iter0_flag = 1;
-//						}
-//						cpu_time_this_iter = cpu_time_cuda_temp / 1000;
-//						diff_total_cpu += (cpu_time_pred - cpu_time_this_iter)
-//								/ cpu_time_this_iter;
-//						diff_total_slack +=
-//								((cpu_time_pred - gpu_time_dgemm_pred)
-//										- (cpu_time_this_iter
-//												- gpu_time_dgemm_this_iter))
-//										/ (cpu_time_this_iter
-//												- gpu_time_dgemm_this_iter); //(slack_pred - slack_measured) / slack_measured
-//						cpu_time_pred = cpu_time_this_iter; //Prediction without this line is worse.
-//					}
-//				}
-
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventCreate(&start_upload_copy2);
-//					cudaEventCreate(&stop_upload_copy2);
-//					cudaEventRecord(start_upload_copy2, 0);
-//				}
+				}
 
 				if (*info != 0) {
 					*info = *info + j;
@@ -431,90 +334,23 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 						stream[0]);
 				magma_queue_sync(stream[0]);
 
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventRecord(stop_upload_copy2, 0);
-//					cudaEventSynchronize(stop_upload_copy2);
-//					cudaEventElapsedTime(&upload_copy_time2_cuda_temp,
-//							start_upload_copy2, stop_upload_copy2);
-//					cudaEventDestroy(start_upload_copy2);
-//					cudaEventDestroy(stop_upload_copy2);
-//					total_copy_time_cuda += upload_copy_time2_cuda_temp;
-//				}
-//
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventCreate(&start_gpu_dtrsm);
-//					cudaEventCreate(&stop_gpu_dtrsm);
-//					cudaEventRecord(start_gpu_dtrsm, 0);
-//				}
-
+				
 				if ((j + jb) < n) {
 					magma_dtrsm(MagmaRight, MagmaLower, MagmaConjTrans,
 							MagmaNonUnit, (n - j - jb), jb, c_one, dA(j, j),
 							ldda, dA(j+jb, j), ldda);
 				}
 
-//				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//					cudaEventRecord(stop_gpu_dtrsm, 0);
-//					cudaEventSynchronize(stop_gpu_dtrsm);
-//					cudaEventElapsedTime(&gpu_time_dtrsm_cuda_temp,
-//							start_gpu_dtrsm, stop_gpu_dtrsm);
-//					cudaEventDestroy(start_gpu_dtrsm);
-//					cudaEventDestroy(stop_gpu_dtrsm);
-//					total_gpu_time_cuda += gpu_time_dtrsm_cuda_temp;
-//				}
 
 				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-					printf("iter %d: slack_cuda = %.6f\n", iter,
-							cpu_time_cuda_temp / 1000
-									- gpu_time_dgemm_cuda_temp / 1000);
 					printf("iter %d: cpu_time_cuda = %.6f\n", iter,
 							cpu_time_cuda_temp / 1000);
-//					printf("iter %d: gpu_time_dsyrk_cuda = %.6f\n", iter,
-//							gpu_time_dsyrk_cuda_temp / 1000);
 					printf("iter %d: gpu_time_dgemm_cuda = %.6f\n", iter,
 							gpu_time_dgemm_cuda_temp / 1000);
-//					printf("iter %d: gpu_time_dtrsm_cuda = %.6f\n", iter,
-//							gpu_time_dtrsm_cuda_temp / 1000);
-//					printf("iter %d: upload_copy_time1_cuda = %.6f\n", iter,
-//							upload_copy_time1_cuda_temp / 1000);
-//					printf("iter %d: download_copy_time1_cuda = %.6f\n", iter,
-//							download_copy_time1_cuda_temp / 1000);
-//					printf("iter %d: upload_copy_time2_cuda = %.6f\n", iter,
-//							upload_copy_time2_cuda_temp / 1000);
-//					printf("iter %d: download_copy_time2_cuda = %.6f\n\n",
-//							iter++, download_copy_time2_cuda_temp / 1000);
 					iter++;
 				}
-			}                ////}
+			}               
 			cudaProfilerStop();
-//			if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//				cudaEventRecord(stop_main_loop, 0);
-//				cudaEventSynchronize(stop_main_loop);
-//				cudaEventElapsedTime(&main_loop_time_cuda, start_main_loop,
-//						stop_main_loop);
-//				cudaEventDestroy(start_main_loop);
-//				cudaEventDestroy(stop_main_loop);
-//			}
-
-//			if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
-//				printf("total_cpu_time_cuda = %.6f\n",
-//						total_cpu_time_cuda / 1000);
-//				printf("total_gpu_time_cuda = %.6f\n",
-//						total_gpu_time_cuda / 1000);
-//				printf("total_copy_time_cuda = %.6f\n",
-//						total_copy_time_cuda / 1000);
-//				printf("main_loop_time_cuda = %.6f\n",
-//						main_loop_time_cuda / 1000);
-//				printf(
-//						"Normalized difference of predicted CPU runtime per iteration is: %.6f\%\n",
-//						100 * diff_total_cpu / (n / nb));
-//				printf(
-//						"Normalized difference of predicted GPU_dgemm runtime per iteration is: %.6f\%\n",
-//						100 * diff_total_gpu_dgemm / (n / nb));
-//				printf(
-//						"Normalized difference of predicted slack per iteration is: %.6f\%\n",
-//						100 * diff_total_slack / (n / nb));
-//			}
 		}
 		
 	}
