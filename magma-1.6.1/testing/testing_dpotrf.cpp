@@ -119,7 +119,7 @@ int main( int argc, char** argv)
                 status += ! (error < tol);
             }
             else {
-                printf("%5d     ---   (  ---  )   %7.2f (%7.2f)     ---  \n",
+                printf("%5d     ---   (  ---  )   %7.2f (%7.6f)     ---  \n",
                        (int) N, gpu_perf, gpu_time );
             }
 
