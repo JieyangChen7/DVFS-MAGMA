@@ -264,8 +264,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			cudaProfilerStart();
 			for (j = 0; j < n; j += nb) {            ////if(j > n/2){nb = 103;
 				
-				if (iter == 10)
-						SetCPUFreq(2500000);
+			
 
 				//  Update and factorize the current diagonal block and test
 				//  for non-positive-definiteness. Computing MIN
@@ -328,6 +327,8 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 				magma_queue_sync(stream[0]);
 				
+				if (iter == 20)
+							SetCPUFreq(2500000);
 				
 				if (TIME_MEASUREMENT) {
 					//real_time = magma_wtime();
