@@ -235,11 +235,19 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 #define TIME_DIFF_CPU_FREQ 0
 #define TIME_DIFF_GPU_FREQ 0
 #define ALGORITHMIC_SLACK_PREDICTION 0
+			
+			
 
-			static double gpu_time_iter0_highest_freq = 0.401762;
-			static double gpu_time_iter0_lowest_freq = 1.753552;
-			static double cpu_time_iter0_highest_freq = 1.043;
-			static double cpu_time_iter0_lowest_freq = 1.043;
+			static double gpu_time0_hi = 0.401762;
+			static double gpu_time0_lo = 1.753552;
+			static double cpu_time0_hi = 1.043;
+			static double cpu_time0_lo = 1.043;
+			
+			
+			static double gpu_time_hi = gpu_time0_hi;
+			static double gpu_time_lo = gpu_time0_lo;
+			static double cpu_time_hi = cpu_time0_hi;
+			static double cpu_time_lo = cpu_time0_lo;
 			
 			
 			if (TIME_DIFF_CPU_FREQ)
@@ -314,6 +322,9 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 					cudaEventCreate(&stop_cpu);
 					cudaEventRecord(start_cpu, 0);
 				}
+				
+				
+				if ()
 
 				lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
 
