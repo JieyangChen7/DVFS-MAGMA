@@ -232,7 +232,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			//double gpu_time_dgemm_this_iter_lowest_freq = gpu_time_dgemm_iter0_lowest_freq;
 			int cpu_switched_flag1 = 0;
 
-#define TIME_MEASUREMENT 1
+#define TIME_MEASUREMENT 0
 #define TIME_DIFF_CPU_FREQ 0
 #define TIME_DIFF_GPU_FREQ 0
 #define ALGORITHMIC_SLACK_PREDICTION 0
@@ -253,8 +253,8 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			static double cpu_time_hi = cpu_time1_hi;
 			static double cpu_time_lo = cpu_time1_lo;
 			
-			SetCPUFreq(2500000);
-			if (0)
+			//SetCPUFreq(2500000);
+			if (1)
 				SetCPUFreq(1200000);
 			if (0)
 				SetGPUFreq(324, 324);
@@ -335,21 +335,21 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				}
 				
 				//CPU DVFS
-				if(iter > 1)
-				{
-					ratio_split_freq = (gpu_time_hi - cpu_time_hi) / (cpu_time_hi * ((cpu_time1_lo / cpu_time1_hi) - 1));
-					seconds_until_interrupt = cpu_time_lo * ratio_split_freq;
-					printf("iter %d: ratio_split_freq = %.6f\n", iter, ratio_split_freq);
-					printf("iter %d: seconds_until_interrupt = %.6f\n", iter, seconds_until_interrupt);
-					initialize_handler();
-					SetCPUFreq(1200000);
-					if(ratio_split_freq < 1) {
-						set_alarm(seconds_until_interrupt);
-					} else {
-						set_alarm(gpu_time_hi);
-					}
-					
-				}
+//				if(iter > 1)
+//				{
+//					ratio_split_freq = (gpu_time_hi - cpu_time_hi) / (cpu_time_hi * ((cpu_time1_lo / cpu_time1_hi) - 1));
+//					seconds_until_interrupt = cpu_time_lo * ratio_split_freq;
+//					printf("iter %d: ratio_split_freq = %.6f\n", iter, ratio_split_freq);
+//					printf("iter %d: seconds_until_interrupt = %.6f\n", iter, seconds_until_interrupt);
+//					initialize_handler();
+//					SetCPUFreq(1200000);
+//					if(ratio_split_freq < 1) {
+//						set_alarm(seconds_until_interrupt);
+//					} else {
+//						set_alarm(gpu_time_hi);
+//					}
+//					
+//				}
 				
 	            
 				
