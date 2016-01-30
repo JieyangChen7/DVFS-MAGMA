@@ -85,7 +85,7 @@ int main( int argc, char** argv)
                =================================================================== */
             //SetGPUFreq(324, 324);
             SetGPUFreq(2600, 705);
-            SetCPUFreq(1600000);
+            SetCPUFreq(1700000);
 
             gpu_time = magma_wtime();
             magma_dpotrf( opts.uplo, N, h_R, lda, &info );
