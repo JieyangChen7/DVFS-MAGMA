@@ -347,7 +347,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				if (TIME_MEASUREMENT) {
 					//real_time = magma_wtime();
 					if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-						cout << "PAPI ERROR" << endl;
+						
 						return -1;
 					} 
 				}
@@ -359,7 +359,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				if (TIME_MEASUREMENT) {
 					//real_time = magma_wtime() - real_time;
 					if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-						cout << "PAPI ERROR" << endl;
+						
 						return -1;
 					} 
 					printf("iter %d: cpu_time_papi = %.6f\n", iter, real_time);
