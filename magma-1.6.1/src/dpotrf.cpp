@@ -373,6 +373,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 							cpu_time_cuda_temp / 1000);
 					printf("iter %d: gpu_time_dgemm_cuda = %.6f\n", iter,
 							gpu_time_dgemm_cuda_temp / 1000);
+					printf("\n");
 					iter++;
 				}
 			}               
