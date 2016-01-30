@@ -19,7 +19,7 @@ rapl_pid=$!
 #echo $rapl_pid
 
 
-sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 20480,20480
+sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.1/testing/testing_dpotrf -N 15360,15360
 
 
 #time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 3000,3000 -c
