@@ -327,8 +327,8 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 				magma_queue_sync(stream[0]);
 				
-				if (iter == 40)
-							SetCPUFreq(2500000);
+				if (iter == 30)
+					SetCPUFreq(2500000);
 				
 				if (TIME_MEASUREMENT) {
 					//real_time = magma_wtime();
