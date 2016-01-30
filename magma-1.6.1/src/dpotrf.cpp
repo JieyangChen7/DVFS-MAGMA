@@ -291,7 +291,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 					//update gpu, cpu stay const
 					gpu_time_hi = gpu_time_hi * ratio_slack_pred;
 					gpu_time_lo = gpu_time_lo * ratio_slack_pred;
-					
+					printf("iter %d: ratio_slack_pred = %f\n", iter, ratio_slack_pred);
 					printf("iter %d: gpu_time_hi = %f\n", iter, gpu_time_hi);
 					printf("iter %d: gpu_time_lo = %f\n", iter, gpu_time_lo);
 
