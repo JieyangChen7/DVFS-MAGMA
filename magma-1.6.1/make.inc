@@ -29,7 +29,7 @@ NVOPTS    = -O3 -DADD_ --compiler-options -fno-strict-aliasing -DUNIX
 LDOPTS    = -fPIC -Xlinker -zmuldefs
 
 #LIB       = -lf77blas -latlas -lcblas -lg2c -llapack -lcublas -lnvidia-ml -lm
-LIB       = -llapack -lf77blas -lgfortran -lcblas -latlas -lcublas -lcudart -lstdc++ -lnvidia-ml -lm -lpthread -lcula_lapack
+LIB       = -llapack -lf77blas -lgfortran -lcblas -latlas -lcublas -lcudart -lstdc++ -lnvidia-ml -lm -lpthread -lcula_lapack -lpapi
 
 CUDADIR   = /usr/local/cuda
 
