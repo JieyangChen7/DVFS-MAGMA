@@ -58,7 +58,7 @@ int map_cpu(int cpu) {
 
 void SetCPUFreq(long freq){//void SetCPUFreq(char *freq){
     int i;
-    for(i = 0; i < 1; i++){
+    for(i = 0; i < 20; i++){
         char command[100], freq_buffer[7], index_buffer[2];
         strcpy(command, "echo ");
         sprintf(freq_buffer, "%ld", freq);//strcat(command, freq);
