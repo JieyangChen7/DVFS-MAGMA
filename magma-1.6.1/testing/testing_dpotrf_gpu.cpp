@@ -14,7 +14,6 @@
 #include <math.h>
 
 // includes, project
-#include "cula.h"
 #include "flops.h"
 #include "magma.h"
 #include "magma_lapack.h"
@@ -69,20 +68,10 @@ int main( int argc, char** argv)
             /* ====================================================================
                Performs operation using MAGMA
                =================================================================== */
-            culaInitialize();
             gpu_time = magma_wtime();
-            
-            
-            
+                      
             magma_dpotrf_gpu( opts.uplo, N, d_A, ldda, &info );
-            
-            
-//            culaStatus culastatus = culaDeviceDpotrf('l', N, d_A, ldda);
-//			if (culastatus != culaNoError) {
-//				cout<<"CULA ERROR:"<<culastatus<<endl;
-//			}
-            
-            
+                           
             gpu_time = magma_wtime() - gpu_time;
             gpu_perf = gflops / gpu_time;
             if (info != 0)
