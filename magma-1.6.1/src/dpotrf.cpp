@@ -283,7 +283,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 				//prediction update
 				if (iter > 1) {
-					double comp_j = (n - j - jb) * jb * j
+					double comp_j = (n - j - jb) * jb * j;
 					double comp_j_last = (n - (j - jb) - jb) * jb * (j - jb);
 					
 					//ratio_slack_pred = 1.0 - (double) nb / (n - iter * nb);
