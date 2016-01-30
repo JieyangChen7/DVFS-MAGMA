@@ -277,17 +277,17 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 						stream[0]);
 
 
-				if (ALGORITHMIC_SLACK_PREDICTION) {
+				//prediction update
+				if (j > jb) {
 					ratio_slack_pred = 1.0 - (double) nb / (n - iter * nb);
-					////cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-					gpu_time_dgemm_pred = gpu_time_dgemm_pred * ratio_slack_pred
-							* ratio_slack_pred;
-					printf("iter %d: cpu_time_pred = %f\n", iter,
-							cpu_time_pred);
-					printf("iter %d: gpu_time_dgemm_pred = %f\n", iter,
-							gpu_time_dgemm_pred);
-					printf("iter %d: slack_pred = %f\n", iter,
-							cpu_time_pred - gpu_time_dgemm_pred);
+					
+					//update gpu, cpu stay const
+					gpu_time_hi = gpu_time_hi * ratio_slack_pred * ratio_slack_pred;
+					gpu_time_lo = gpu_time_lo * ratio_slack_pred * ratio_slack_pred;
+					
+					printf("iter %d: gpu_time_hi = %f\n", iter, gpu_time_hi);
+					printf("iter %d: gpu_time_lo = %f\n", iter, gpu_time_lo);
+
 				}
 
 				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
@@ -323,8 +323,22 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 					cudaEventRecord(start_cpu, 0);
 				}
 				
-				
-				if ()
+				//CPU DVFS
+				if(j > jb )
+				{
+					ratio_split_freq = (gpu_time_hi - cpu_time_hi) / (cpu_time_hi * ((cpu_time0_lo / cpu_time0_hi) - 1));
+					seconds_until_interrupt = cpu_time_lo * ratio_split_freq;
+					
+					initialize_handler();
+					SetGPUFreq(324, 324);
+					if(ratio_split_freq < 1) {
+						set_alarm(seconds_until_interrupt);
+					} else {
+						set_alarm(cpu_time_pred);
+					}
+					
+				}
+
 
 				lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
 
