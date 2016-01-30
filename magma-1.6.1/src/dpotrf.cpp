@@ -368,7 +368,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				}
 
 
-				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
+				if (TIME_MEASUREMENT ) {
 					printf("iter %d: cpu_time_cuda = %.6f\n", iter,
 							cpu_time_cuda_temp / 1000);
 					printf("iter %d: gpu_time_dgemm_cuda = %.6f\n", iter,
