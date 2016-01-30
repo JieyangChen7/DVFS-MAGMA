@@ -11,6 +11,7 @@
 #include "common_magma.h"
 #include "../testing/testing_util.cpp"
 #include "cuda_profiler_api.h"
+#include "papi.h"
 
 #define PRECISION_d
 
@@ -338,10 +339,33 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 //					}
 //					
 //				}
+				
+	            float real_time = 0.0;
+				float proc_time = 0.0;
+				long long flpins = 0.0;
+				float mflops = 0.0;
+				//culaInitialize();
+				//PAPI timing start
+				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+					cout << "PAPI ERROR" << endl;
+					return -1;
+				} 
+				
 
 
 				lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
+				
+				
+				
+				 //PAPI timing end
+				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+					cout << "PAPI ERROR" << endl;
+					return -1;
+				}
 
+				printf("iter %d: cpu_time_papi = %.6f\n", iter, real_time);
+				
+				PAPI_shutdown();
 				if (TIME_MEASUREMENT) {
 					cudaEventRecord(stop_cpu, 0);
 					cudaEventSynchronize(stop_cpu);
