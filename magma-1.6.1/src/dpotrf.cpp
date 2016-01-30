@@ -312,6 +312,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 					cudaEventElapsedTime(&gpu_time_dgemm_cuda_temp, start_gpu_dgemm, stop_gpu_dgemm);
 					cudaEventDestroy(start_gpu_dgemm);
 					cudaEventDestroy(stop_gpu_dgemm);
+					printf("iter %d: gpu_time_dgemm_cuda = %.6f\n", iter, gpu_time_dgemm_cuda_temp / 1000);
 				}
 
 				magma_dgetmatrix_async(jb, j, dA(j, 0), ldda, A(j, 0), lda,
@@ -379,10 +380,6 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 
 				if (TIME_MEASUREMENT ) {
-					printf("iter %d: cpu_time_cuda = %.6f\n", iter,
-							cpu_time_cuda_temp / 1000);
-					printf("iter %d: gpu_time_dgemm_cuda = %.6f\n", iter,
-							gpu_time_dgemm_cuda_temp / 1000);
 					printf("\n");
 					
 				}
