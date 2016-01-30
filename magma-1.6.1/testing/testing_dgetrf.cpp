@@ -21,7 +21,7 @@
 #include "testings.h"
 #include "../testing/testing_util.cpp"
 
-#include "cula.h"
+//#include "cula.h"
 //#include "papi.h"
 #include <iostream>
 
