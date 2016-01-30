@@ -244,7 +244,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 			static double gpu_time1_hi = 0.010160;
 			static double gpu_time1_lo = 0.045330;
-			static double cpu_time1_hi = 0.014413; //
+			static double cpu_time1_hi = 0.006937; //
 			static double cpu_time1_lo = 1.043;
 			
 			
@@ -253,8 +253,8 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			static double cpu_time_hi = cpu_time1_hi;
 			static double cpu_time_lo = cpu_time1_lo;
 			
-			SetCPUFreq(2500000);
-			if (0)
+			//SetCPUFreq(2500000);
+			if (1)
 				SetCPUFreq(1200000);
 			if (0)
 				SetGPUFreq(324, 324);
