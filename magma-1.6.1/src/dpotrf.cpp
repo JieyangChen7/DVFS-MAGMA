@@ -237,23 +237,26 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 #define TIME_DIFF_GPU_FREQ 0
 #define ALGORITHMIC_SLACK_PREDICTION 0
 			
-			
+			float real_time = 0.0;
+			float proc_time = 0.0;
+			long long flpins = 0.0;
+			float mflops = 0.0;
 
-			static double gpu_time0_hi = 0.401762;
-			static double gpu_time0_lo = 1.753552;
-			static double cpu_time0_hi = 1.043;
-			static double cpu_time0_lo = 1.043;
+			static double gpu_time1_hi = 0.010160;
+			static double gpu_time1_lo = 1.753552;
+			static double cpu_time1_hi = 0.014413; //
+			static double cpu_time1_lo = 1.043;
 			
 			
-			static double gpu_time_hi = gpu_time0_hi;
-			static double gpu_time_lo = gpu_time0_lo;
-			static double cpu_time_hi = cpu_time0_hi;
-			static double cpu_time_lo = cpu_time0_lo;
+			static double gpu_time_hi = gpu_time1_hi;
+			static double gpu_time_lo = gpu_time1_lo;
+			static double cpu_time_hi = cpu_time1_hi;
+			static double cpu_time_lo = cpu_time1_lo;
 			
 			
 			if (TIME_DIFF_CPU_FREQ)
 				SetCPUFreq(1200000);
-			if (TIME_DIFF_GPU_FREQ)
+			if (1)
 				SetGPUFreq(324, 324);
 
 			//=========================================================
@@ -279,7 +282,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 
 				//prediction update
-				if (j > jb) {
+				if (iter > 1) {
 					ratio_slack_pred = 1.0 - (double) nb / (n - iter * nb);
 					
 					//update gpu, cpu stay const
@@ -306,8 +309,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				if (TIME_MEASUREMENT) {
 					cudaEventRecord(stop_gpu_dgemm, 0);
 					cudaEventSynchronize(stop_gpu_dgemm);
-					cudaEventElapsedTime(&gpu_time_dgemm_cuda_temp,
-							start_gpu_dgemm, stop_gpu_dgemm);
+					cudaEventElapsedTime(&gpu_time_dgemm_cuda_temp, start_gpu_dgemm, stop_gpu_dgemm);
 					cudaEventDestroy(start_gpu_dgemm);
 					cudaEventDestroy(stop_gpu_dgemm);
 				}
@@ -325,7 +327,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				}
 				
 				//CPU DVFS
-//				if(j > jb )
+//				if(iter > 1)
 //				{
 //					ratio_split_freq = (gpu_time_hi - cpu_time_hi) / (cpu_time_hi * ((cpu_time0_lo / cpu_time0_hi) - 1));
 //					seconds_until_interrupt = cpu_time_lo * ratio_split_freq;
@@ -340,41 +342,27 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 //					
 //				}
 				
-	            float real_time = 0.0;
-				float proc_time = 0.0;
-				long long flpins = 0.0;
-				float mflops = 0.0;
-				//culaInitialize();
-				//PAPI timing start
-				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-					//cout << "PAPI ERROR" << endl;
-					return -1;
-				} 
+	            
 				
-
+				if (TIME_MEASUREMENT) {
+					real_time = 0.0;
+					if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+						return -1;
+					} 
+				}
+				
 
 				lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
 				
 				
-				
-				 //PAPI timing end
-				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-					//cout << "PAPI ERROR" << endl;
-					return -1;
-				}
-
-				printf("iter %d: cpu_time_papi = %.6f\n", iter, real_time);
-				
-				PAPI_shutdown();
 				if (TIME_MEASUREMENT) {
-					cudaEventRecord(stop_cpu, 0);
-					cudaEventSynchronize(stop_cpu);
-					cudaEventElapsedTime(&cpu_time_cuda_temp, start_cpu,
-							stop_cpu);
-					cudaEventDestroy(start_cpu);
-					cudaEventDestroy(stop_cpu);
-					total_cpu_time_cuda += cpu_time_cuda_temp;
+					if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+						return -1;
+					}
+					printf("iter %d: cpu_time_papi = %.6f\n", iter, real_time);
+					PAPI_shutdown();
 				}
+			
 
 				if (*info != 0) {
 					*info = *info + j;
@@ -398,8 +386,9 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 					printf("iter %d: gpu_time_dgemm_cuda = %.6f\n", iter,
 							gpu_time_dgemm_cuda_temp / 1000);
 					printf("\n");
-					iter++;
+					
 				}
+				iter++;
 			}               
 			cudaProfilerStop();
 		}
