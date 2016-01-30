@@ -375,10 +375,10 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				}
 			
 
-				if (*info != 0) {
-					*info = *info + j;
-					break;
-				}
+//				if (*info != 0) {
+//					*info = *info + j;
+//					break;
+//				}
 				magma_dsetmatrix_async(jb, jb, A(j, j), lda, dA(j, j), ldda,
 						stream[0]);
 				magma_queue_sync(stream[0]);
