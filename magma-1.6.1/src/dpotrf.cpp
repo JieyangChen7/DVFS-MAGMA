@@ -232,7 +232,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			//double gpu_time_dgemm_this_iter_lowest_freq = gpu_time_dgemm_iter0_lowest_freq;
 			int cpu_switched_flag1 = 0;
 
-#define TIME_MEASUREMENT 1
+#define TIME_MEASUREMENT 0
 #define TIME_DIFF_CPU_FREQ 0
 #define TIME_DIFF_GPU_FREQ 0
 #define ALGORITHMIC_SLACK_PREDICTION 0
