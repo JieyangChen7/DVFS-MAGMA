@@ -253,8 +253,8 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			static double cpu_time_hi = cpu_time1_hi;
 			static double cpu_time_lo = cpu_time1_lo;
 			
-			
-			if (1)
+			SetCPUFreq(2500000);
+			if (0)
 				SetCPUFreq(1200000);
 			if (0)
 				SetGPUFreq(324, 324);
@@ -294,7 +294,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 				}
 
-				if (TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION) {
+				if (TIME_MEASUREMENT) {
 					cudaEventCreate(&start_gpu_dgemm);
 					cudaEventCreate(&stop_gpu_dgemm);
 					cudaEventRecord(start_gpu_dgemm, 0);
@@ -319,12 +319,6 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 				magma_queue_sync(stream[0]);
 
-
-				if (TIME_MEASUREMENT) {
-					cudaEventCreate(&start_cpu);
-					cudaEventCreate(&stop_cpu);
-					cudaEventRecord(start_cpu, 0);
-				}
 				
 				//CPU DVFS
 //				if(iter > 1)
