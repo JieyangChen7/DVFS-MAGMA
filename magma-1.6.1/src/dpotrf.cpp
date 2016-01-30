@@ -347,7 +347,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				//culaInitialize();
 				//PAPI timing start
 				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-					cout << "PAPI ERROR" << endl;
+					//cout << "PAPI ERROR" << endl;
 					return -1;
 				} 
 				
@@ -359,7 +359,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				
 				 //PAPI timing end
 				if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-					cout << "PAPI ERROR" << endl;
+					//cout << "PAPI ERROR" << endl;
 					return -1;
 				}
 
