@@ -73,9 +73,9 @@ int main( int argc, char** argv)
             double init_time = magma_wtime();
             
             /* Initialize the matrix */
-            lapackf77_dlarnv( &ione, ISEED, &n2, h_A );
-            magma_dmake_hpd( N, h_A, lda );
-            lapackf77_dlacpy( MagmaUpperLowerStr, &N, &N, h_A, &lda, h_R, &lda );
+//            lapackf77_dlarnv( &ione, ISEED, &n2, h_A );
+//            magma_dmake_hpd( N, h_A, lda );
+//            lapackf77_dlacpy( MagmaUpperLowerStr, &N, &N, h_A, &lda, h_R, &lda );
             
             init_time = magma_wtime() - init_time;
             printf("init_time = %.6f\n", init_time);
