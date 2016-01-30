@@ -254,8 +254,8 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			static double cpu_time_lo = cpu_time1_lo;
 			
 			//SetCPUFreq(2500000);
-			if (1)
-				SetCPUFreq(1200000);
+//			if (1)
+//				SetCPUFreq(1200000);
 			if (0)
 				SetGPUFreq(324, 324);
 
