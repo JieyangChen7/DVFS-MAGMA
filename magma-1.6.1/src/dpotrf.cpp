@@ -283,11 +283,14 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 
 				//prediction update
 				if (iter > 1) {
-					ratio_slack_pred = 1.0 - (double) nb / (n - iter * nb);
+					double comp_j = (n - j - jb) * jb * j
+					double comp_j_last = (n - (j - jb) - jb) * jb * (j - jb);
 					
+					//ratio_slack_pred = 1.0 - (double) nb / (n - iter * nb);
+					atio_slack_pred = comp_j / comp_j_last;
 					//update gpu, cpu stay const
-					gpu_time_hi = gpu_time_hi * ratio_slack_pred * ratio_slack_pred;
-					gpu_time_lo = gpu_time_lo * ratio_slack_pred * ratio_slack_pred;
+					gpu_time_hi = gpu_time_hi * ratio_slack_pred;
+					gpu_time_lo = gpu_time_lo * ratio_slack_pred;
 					
 					printf("iter %d: gpu_time_hi = %f\n", iter, gpu_time_hi);
 					printf("iter %d: gpu_time_lo = %f\n", iter, gpu_time_lo);
