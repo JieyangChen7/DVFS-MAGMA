@@ -324,7 +324,15 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 						stream[2]);
 
 				magma_queue_sync(stream[0]);
-
+				
+				
+				if (TIME_MEASUREMENT) {
+					//real_time = magma_wtime();
+					if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
+						
+						return -1;
+					} 
+				}
 				
 				//CPU DVFS
 				if(iter > 1)
@@ -345,13 +353,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				
 	            
 				
-				if (TIME_MEASUREMENT) {
-					//real_time = magma_wtime();
-					if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-						
-						return -1;
-					} 
-				}
+				
 				
 
 				lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
