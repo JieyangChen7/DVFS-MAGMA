@@ -245,7 +245,7 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			static double gpu_time1_hi = 0.010160;
 			static double gpu_time1_lo = 0.045330;
 			static double cpu_time1_hi = 0.006937; //
-			static double cpu_time1_lo = 1.043;
+			static double cpu_time1_lo = 0.014511;
 			
 			
 			static double gpu_time_hi = gpu_time1_hi;
@@ -253,8 +253,8 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 			static double cpu_time_hi = cpu_time1_hi;
 			static double cpu_time_lo = cpu_time1_lo;
 			
-			//SetCPUFreq(2500000);
-			if (1)
+			SetCPUFreq(2500000);
+			if (0)
 				SetCPUFreq(1200000);
 			if (0)
 				SetGPUFreq(324, 324);
@@ -289,8 +289,8 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 					gpu_time_hi = gpu_time_hi * ratio_slack_pred * ratio_slack_pred;
 					gpu_time_lo = gpu_time_lo * ratio_slack_pred * ratio_slack_pred;
 					
-//					printf("iter %d: gpu_time_hi = %f\n", iter, gpu_time_hi);
-//					printf("iter %d: gpu_time_lo = %f\n", iter, gpu_time_lo);
+					printf("iter %d: gpu_time_hi = %f\n", iter, gpu_time_hi);
+					printf("iter %d: gpu_time_lo = %f\n", iter, gpu_time_lo);
 
 				}
 
