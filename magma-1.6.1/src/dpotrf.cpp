@@ -324,20 +324,20 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				}
 				
 				//CPU DVFS
-				if(j > jb )
-				{
-					ratio_split_freq = (gpu_time_hi - cpu_time_hi) / (cpu_time_hi * ((cpu_time0_lo / cpu_time0_hi) - 1));
-					seconds_until_interrupt = cpu_time_lo * ratio_split_freq;
-					
-					initialize_handler();
-					SetGPUFreq(324, 324);
-					if(ratio_split_freq < 1) {
-						set_alarm(seconds_until_interrupt);
-					} else {
-						set_alarm(cpu_time_pred);
-					}
-					
-				}
+//				if(j > jb )
+//				{
+//					ratio_split_freq = (gpu_time_hi - cpu_time_hi) / (cpu_time_hi * ((cpu_time0_lo / cpu_time0_hi) - 1));
+//					seconds_until_interrupt = cpu_time_lo * ratio_split_freq;
+//					
+//					initialize_handler();
+//					SetGPUFreq(324, 324);
+//					if(ratio_split_freq < 1) {
+//						set_alarm(seconds_until_interrupt);
+//					} else {
+//						set_alarm(cpu_time_pred);
+//					}
+//					
+//				}
 
 
 				lapackf77_dpotrf(MagmaLowerStr, &jb, A(j, j), &lda, info);
