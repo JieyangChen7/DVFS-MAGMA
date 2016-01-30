@@ -3,7 +3,7 @@
 module load cuda/7.0
 
 case=MAGMA_LU_GPUDVFS
-
+/home/lchen/cpu_h_ivy.sh
 #/apps/power-bench/cpuspeed-set.pl --all 1200000
 #/home/lchen/cpu_l_ivy.sh
 #sleep 9
