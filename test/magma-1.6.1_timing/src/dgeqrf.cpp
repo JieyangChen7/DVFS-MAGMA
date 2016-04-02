@@ -481,13 +481,13 @@ magma_dgeqrf(
 
             if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
             {
-		cudaEventRecord(stop_gpu2, 0);
+                cudaEventRecord(stop_gpu2, 0);
                 cudaEventSynchronize(stop_gpu2);
                 cudaEventElapsedTime(&gpu_time2_cuda_temp, start_gpu2, stop_gpu2);
                 cudaEventDestroy(start_gpu2);
                 cudaEventDestroy(stop_gpu2);
                 total_gpu_time_cuda += gpu_time2_cuda_temp;
-		if(ALGORITHMIC_SLACK_PREDICTION)
+                if(ALGORITHMIC_SLACK_PREDICTION)
                 {   
                     if(!gpu_time2_iter0_flag)
                     {   
@@ -510,16 +510,16 @@ magma_dgeqrf(
 
             if(TIME_MEASUREMENT || ALGORITHMIC_SLACK_PREDICTION)
             {
-		if(cpu_time_cuda_temp/1000 - (gpu_time1_cuda_temp+gpu_time2_cuda_temp)/1000 < 0)
+                if(cpu_time_cuda_temp/1000 - (gpu_time1_cuda_temp+gpu_time2_cuda_temp)/1000 < 0)
                     total_slack_overflow += cpu_time_cuda_temp/1000 - (gpu_time1_cuda_temp+gpu_time2_cuda_temp)/1000;
-		printf("iter %d: slack_cuda = %.6f\n", iter, cpu_time_cuda_temp/1000 - (gpu_time1_cuda_temp+gpu_time2_cuda_temp)/1000);
-		printf("iter %d: cpu_time_cuda = %.6f\n", iter, cpu_time_cuda_temp/1000);
+                printf("iter %d: slack_cuda = %.6f\n", iter, cpu_time_cuda_temp/1000 - (gpu_time1_cuda_temp+gpu_time2_cuda_temp)/1000);
+                printf("iter %d: cpu_time_cuda = %.6f\n", iter, cpu_time_cuda_temp/1000);
                 printf("iter %d: gpu_time1_cuda = %.6f\n", iter, gpu_time1_cuda_temp/1000);
                 printf("iter %d: gpu_time2_cuda = %.6f\n", iter, gpu_time2_cuda_temp/1000);
                 printf("iter %d: upload_copy_time1_cuda = %.6f\n", iter, upload_copy_time1_cuda_temp/1000);
                 printf("iter %d: download_copy_time_cuda = %.6f\n", iter, download_copy_time1_cuda_temp/1000);
                 printf("iter %d: upload_copy_time2_cuda = %.6f\n", iter, upload_copy_time2_cuda_temp/1000);
-		printf("iter %d: download_copy_time_cuda = %.6f\n\n", iter++, download_copy_time2_cuda_temp/1000);
+                printf("iter %d: download_copy_time_cuda = %.6f\n\n", iter++, download_copy_time2_cuda_temp/1000);
             }
         }
 
