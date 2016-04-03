@@ -50,9 +50,9 @@ LIB       = -lacml -lcblas -lcublas -lcudart -lstdc++ -lm -lgfortran -lpapi
 -include make.check-cuda
 
 LIBDIR    = -L$(CUDADIR)/lib64 \
-            -L$(ACMLDIR)/gfortran64_mp/lib \
+            -L$(ACMLDIR)/gfortran64/lib \
             -L$(CBLASDIR)/lib
 
 INC       = -I$(CUDADIR)/include \
-            -I$(ACMLDIR)/gfortran64_mp/include \
+            -I$(ACMLDIR)/gfortran64/include \
 	    -I$(MAGMA_DIR)/FT	
