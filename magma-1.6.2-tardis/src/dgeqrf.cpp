@@ -10,7 +10,7 @@
 
 */
 #include "common_magma.h"
-
+#include "cuda_profiler_api.h"
 /**
     Purpose
     -------
@@ -173,6 +173,7 @@ magma_dgeqrf(
     dT    = dA + n*ldda + nb*lddwork;
 
     if ( (nb > 1) && (nb < k) ) {
+        cudaProfilerStart();
         /* Use blocked code initially.
            Asynchronously send the matrix to the GPU except the first panel. */
         magma_dsetmatrix_async( m, n-nb,
@@ -243,6 +244,7 @@ magma_dgeqrf(
                 old_ib = ib;
             }
         }
+        cudaProfilerStop();
     } else {
         i = 0;
     }
