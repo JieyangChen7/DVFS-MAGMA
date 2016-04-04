@@ -178,7 +178,7 @@ magma_dgeqrf(
         cudaEvent_t start_cpu, stop_cpu;
         cudaEvent_t start_gpu, stop_gpu;
         double gpu_time_pred = 375.033783;
-        double cpu_time_pred = 3605.585938;
+        double cpu_time_pred = 3240.501465;
         int iter = 0;
 
 
