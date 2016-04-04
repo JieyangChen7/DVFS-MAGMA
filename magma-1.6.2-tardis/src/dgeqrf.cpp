@@ -217,7 +217,7 @@ magma_dgeqrf(
                 cudaEventDestroy(start_gpu);
                 cudaEventDestroy(stop_gpu);
 
-                printf("GPU time:%f", gpu_time);
+                printf("GPU time:%f\n", gpu_time);
 
 
 
@@ -248,7 +248,7 @@ magma_dgeqrf(
             cudaEventDestroy(start_cpu);
             cudaEventDestroy(stop_cpu);
 
-            printf("CPU time:%f", cpu_time);
+            printf("CPU time:%f\n", cpu_time);
 
             dpanel_to_q(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
 
