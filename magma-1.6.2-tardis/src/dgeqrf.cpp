@@ -177,8 +177,8 @@ magma_dgeqrf(
         float gpu_time = 0.0;
         cudaEvent_t start_cpu, stop_cpu;
         cudaEvent_t start_gpu, stop_gpu;
-        double gpu_time_pred = 375.033783;
-        double cpu_time_pred = 3240.501465;
+        double gpu_time_pred = 0;
+        double cpu_time_pred = 0;
         int iter = 0;
 
 
@@ -260,6 +260,12 @@ magma_dgeqrf(
             cudaEventDestroy(stop_cpu);
 
             printf("CPU time:%f\n", cpu_time);
+
+
+            if (iter == 1) {
+                cpu_time_pred = cpu_time;
+                gpu_time_pred = gpu_time;
+            }
 
             dpanel_to_q(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
 
