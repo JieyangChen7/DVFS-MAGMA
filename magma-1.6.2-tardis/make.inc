@@ -56,4 +56,4 @@ LIBDIR    = -L$(CUDADIR)/lib64 \
 INC       = -I$(CUDADIR)/include \
             -I$(ACMLDIR)/gfortran64/include \
 	        -I$(MAGMA_DIR)/FT \
-	        -I$(NVML_INC_DIR)
+	        -I$(NVML_INC_PATH)
