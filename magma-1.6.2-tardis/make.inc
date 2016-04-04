@@ -1,59 +1,47 @@
 #//////////////////////////////////////////////////////////////////////////////
-#   -- MAGMA (version 1.6.1) --
+#   -- MAGMA (version 1.3.0) --
 #      Univ. of Tennessee, Knoxville
 #      Univ. of California, Berkeley
 #      Univ. of Colorado, Denver
-#      @date January 2015
+#      November 2012
 #//////////////////////////////////////////////////////////////////////////////
 
-# GPU_TARGET contains one or more of Tesla, Fermi, or Kepler,
-# to specify for which GPUs you want to compile MAGMA:
-#     Tesla  - NVIDIA compute capability 1.x cards (no longer supported in CUDA 6.5)
-#     Fermi  - NVIDIA compute capability 2.x cards
-#     Kepler - NVIDIA compute capability 3.x cards
-# The default is "Fermi Kepler".
-# See http://developer.nvidia.com/cuda-gpus
 #
-#GPU_TARGET = Fermi
+# GPU_TARGET specifies for which GPU you want to compile MAGMA:
+#     "Tesla" (NVIDIA compute capability 1.x cards)
+#     "Fermi" (NVIDIA compute capability 2.x cards)
+# See http://developer.nvidia.com/cuda-gpus
 
-CC        = gcc
-CXX       = g++
+GPU_TARGET = Kepler
+
+CC        = gcc -DCUBLAS_GFORTRAN
 NVCC      = nvcc
-FORT      = gfortran
+FORT      = gfortran -DCUBLAS_GFORTRAN
 
 ARCH      = ar
 ARCHFLAGS = cr
 RANLIB    = ranlib
 
-# Use -fPIC to make shared (.so) and static (.a) library;
-# can be commented out if making only static library.
-#FPIC      = -fPIC
+OPTS      = -O3 -DADD_
+F77OPTS   = -O3 -DADD_
+FOPTS     = -O3 -DADD_ -x f95-cpp-input
+NVOPTS    = -O3 -DADD_ --compiler-options -fno-strict-aliasing -DUNIX
+LDOPTS    = -fPIC -Xlinker -zmuldefs
 
-CFLAGS    = -O3 $(FPIC) -DADD_ -Wall -fopenmp -DMAGMA_SETAFFINITY -DMAGMA_WITH_ACML
-FFLAGS    = -O3 $(FPIC) -DADD_ -Wall -Wno-unused-dummy-argument
-F90FLAGS  = -O3 $(FPIC) -DADD_ -Wall -Wno-unused-dummy-argument -x f95-cpp-input
-NVCCFLAGS = -O3         -DADD_       -Xcompiler "-fno-strict-aliasing $(FPIC)"
-LDFLAGS   =     $(FPIC)              -fopenmp
+#LIB       = -lf77blas -latlas -lcblas -lg2c -llapack -lcublas -lnvidia-ml -lm
+LIB       = -llapack -lf77blas -lgfortran -lcblas -latlas -lcublas -lcudart -lstdc++ -lnvidia-ml -lm -lpthread  -lpapi
 
-# for ACML 4
-#LIB      = -lacml_mp -lacml_mv -lcblas -lcublas -lcudart -lstdc++ -lm
+#-lcula_lapack
 
-# for ACML >= 5
-# requires gcc & gfortran >= 4.6
-LIB       = -lacml -lcblas -lcublas -lcudart -lstdc++ -lm -lgfortran -lpapi -lnvidia-ml
+CUDADIR   = /usr/local/cuda
 
-# define library directories preferably in your environment, or here.
-#ACMLDIR  ?= /opt/acml
-#CBLASDIR ?= /opt/CBLAS
-#CUDADIR  ?= /usr/local/cuda
--include make.check-acml
--include make.check-cuda
+LIBDIR    = -L/usr/lib64 -L/lib64 \
+            -L$(CUDADIR)/lib64 -L/home/lchen/myroot/lib \
+	     -L$(PAPIDIR)/src
 
-LIBDIR    = -L$(CUDADIR)/lib64 \
-            -L$(ACMLDIR)/gfortran64/lib \
-            -L$(CBLASDIR)/lib
+# -L/usr/lib64/atlas
 
 INC       = -I$(CUDADIR)/include \
-            -I$(ACMLDIR)/gfortran64/include \
-	        -I$(MAGMA_DIR)/FT \
-	        -I$(NVML_INC_PATH)
+	     -I$(PAPIDIR)/src \
+	     -I$(CULA_INC_PATH)	
+
