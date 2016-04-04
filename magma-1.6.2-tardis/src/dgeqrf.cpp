@@ -192,6 +192,7 @@ magma_dgeqrf(
         old_i = 0;
         old_ib = nb;
         for (i = 0; i < k-nb; i += nb) {
+            printf("\niter:%d\n", iter);
             ib = min(k-i, nb);
             if (i > 0) {
                 /* download i-th panel */
