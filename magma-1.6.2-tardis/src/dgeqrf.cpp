@@ -173,6 +173,13 @@ magma_dgeqrf(
     dT    = dA + n*ldda + nb*lddwork;
 
     if ( (nb > 1) && (nb < k) ) {
+        float cpu_time = 0.0;
+        float gpu_time = 0.0;
+        cudaEvent_t start_cpu, stop_cpu;
+        cudaEvent_t start_gpu, stop_gpu;
+
+
+
         cudaProfilerStart();
         /* Use blocked code initially.
            Asynchronously send the matrix to the GPU except the first panel. */
@@ -191,11 +198,28 @@ magma_dgeqrf(
                                         dA(i,i), ldda,
                                         A(i,i),  lda, stream[0] );
 
+
+                //start gpu timing
+                cudaEventCreate(&start_gpu);
+                cudaEventCreate(&stop_gpu);
+                cudaEventRecord(start_gpu, 0);
+
                 /* Apply H' to A(i:m,i+2*ib:n) from the left */
                 magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
                                   m-old_i, n-old_i-2*old_ib, old_ib,
                                   dA(old_i, old_i),          ldda, dT,    nb,
                                   dA(old_i, old_i+2*old_ib), ldda, dwork, lddwork);
+
+                //end gpu timing
+                cudaEventRecord(stop_gpu, 0);
+                cudaEventSynchronize(stop_gpu);
+                cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
+                cudaEventDestroy(start_gpu);
+                cudaEventDestroy(stop_gpu);
+
+                printf("GPU time:%f", gpu_time);
+
+
 
                 magma_dgetmatrix_async( i, ib,
                                         dA(0,i), ldda,
@@ -204,12 +228,27 @@ magma_dgeqrf(
             }
 
             magma_int_t rows = m-i;
+
+            //start cpu timing
+            cudaEventCreate(&start_cpu);
+            cudaEventCreate(&stop_cpu);
+            cudaEventRecord(start_cpu, 0);
+
             lapackf77_dgeqrf(&rows, &ib, A(i,i), &lda, tau+i, work, &lwork, info);
             
             /* Form the triangular factor of the block reflector
                H = H(i) H(i+1) . . . H(i+ib-1) */
             lapackf77_dlarft( MagmaForwardStr, MagmaColumnwiseStr,
                               &rows, &ib, A(i,i), &lda, tau+i, work, &ib);
+
+            //end cpu timing
+            cudaEventRecord(stop_cpu, 0);
+            cudaEventSynchronize(stop_cpu);
+            cudaEventElapsedTime(&cpu_time, start_cpu, stop_cpu);
+            cudaEventDestroy(start_cpu);
+            cudaEventDestroy(stop_cpu);
+
+            printf("CPU time:%f", cpu_time);
 
             dpanel_to_q(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
 
