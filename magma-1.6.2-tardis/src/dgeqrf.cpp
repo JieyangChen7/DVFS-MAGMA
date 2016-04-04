@@ -177,7 +177,9 @@ magma_dgeqrf(
         float gpu_time = 0.0;
         cudaEvent_t start_cpu, stop_cpu;
         cudaEvent_t start_gpu, stop_gpu;
-
+        double gpu_time_pred = 374.688538;
+        double cpu_time_pred = 3046.269043;
+        int iter = 0;
 
 
         cudaProfilerStart();
@@ -198,6 +200,14 @@ magma_dgeqrf(
                                         dA(i,i), ldda,
                                         A(i,i),  lda, stream[0] );
 
+
+                if (iter > 1) {
+                    double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+                    cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+                    gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+                    printf("GPU time pred:%f\n", gpu_time_pred);
+                    printf("CPU time pred:%f\n", cpu_time_pred);
+                }
 
                 //start gpu timing
                 cudaEventCreate(&start_gpu);
@@ -282,6 +292,7 @@ magma_dgeqrf(
                 old_i  = i;
                 old_ib = ib;
             }
+            iter++;
         }
         cudaProfilerStop();
     } else {
