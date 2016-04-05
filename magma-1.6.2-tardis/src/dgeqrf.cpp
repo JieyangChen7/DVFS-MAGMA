@@ -13,27 +13,16 @@
 #include "cuda_profiler_api.h"
 
 #include "nvml.h"
+#include <sys/time.h>
+#include <signal.h>
 
-// NVIDIA NVML library function wrapper for GPU DVFS.
-int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
-    nvmlDevice_t device;//int device;
-    nvmlReturn_t result;
-    result = nvmlInit();
-    result = nvmlDeviceGetHandleByIndex(0, &device);//cudaGetDevice(&device);
-    result = nvmlDeviceSetApplicationsClocks(device, clock_mem, clock_core);//(nvmlDevice_t)device
-    if(result != NVML_SUCCESS)
-    {
-        printf("Failed to set GPU core and memory frequencies: %s\n", nvmlErrorString(result));
-        return 1;
-    }
-    else
-    {
-        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_GRAPHICS, &clock_core);
-        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
-        //printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
-        return 0;
-    }
-}
+int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core);
+static void signal_handler(int signal);
+static void set_alarm(double s);
+static void initialize_handler(void);
+
+
+static struct itimerval itv;
 
 /**
     Purpose
@@ -197,14 +186,25 @@ magma_dgeqrf(
     dT    = dA + n*ldda + nb*lddwork;
 
     if ( (nb > 1) && (nb < k) ) {
+
+        double gpu_time0_lowest = 0;
+        double gpu_time0_highest = 0;
+        double cpu_time0 = 0;
+
         float cpu_time = 0.0;
         float gpu_time = 0.0;
+
         cudaEvent_t start_cpu, stop_cpu;
         cudaEvent_t start_gpu, stop_gpu;
-        double gpu_time_pred = 0;
-        double cpu_time_pred = 0;
+
+        double gpu_time_pred = gpu_time0_highest;
+        double cpu_time_pred = cpu_time0;
+
+        double ratio_split_freq = 0;
+        double seconds_until_interrupt = 0;
         int iter = 0;
         SetGPUFreq(2600, 705);
+        bool timing = true;
 
         cudaProfilerStart();
         /* Use blocked code initially.
@@ -216,7 +216,7 @@ magma_dgeqrf(
         old_i = 0;
         old_ib = nb;
         for (i = 0; i < k-nb; i += nb) {
-            printf("\niter:%d\n", iter);
+
             ib = min(k-i, nb);
             if (i > 0) {
                 /* download i-th panel */
@@ -230,14 +230,25 @@ magma_dgeqrf(
                     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
                     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
                     gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-                    printf("GPU time pred:%f\n", gpu_time_pred);
-                    printf("CPU time pred:%f\n", cpu_time_pred);
+                    //printf("GPU time pred:%f\n", gpu_time_pred);
+                    //printf("CPU time pred:%f\n", cpu_time_pred);
+                    ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
+                    gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
+                    seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
+                    initialize_handler();
+                    SetGPUFreq(324, 324);
+                    if (ratio_split_freq < 1)
+                        set_alarm(seconds_until_interrupt);
+                    else
+                        set_alarm(cpu_time_pred);
                 }
 
-                //start gpu timing
-                cudaEventCreate(&start_gpu);
-                cudaEventCreate(&stop_gpu);
-                cudaEventRecord(start_gpu, 0);
+                if (timing) {
+                    //start gpu timing
+                    cudaEventCreate(&start_gpu);
+                    cudaEventCreate(&stop_gpu);
+                    cudaEventRecord(start_gpu, 0);
+                }
 
                 /* Apply H' to A(i:m,i+2*ib:n) from the left */
                 magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
@@ -245,14 +256,15 @@ magma_dgeqrf(
                                   dA(old_i, old_i),          ldda, dT,    nb,
                                   dA(old_i, old_i+2*old_ib), ldda, dwork, lddwork);
 
-                //end gpu timing
-                cudaEventRecord(stop_gpu, 0);
-                cudaEventSynchronize(stop_gpu);
-                cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
-                cudaEventDestroy(start_gpu);
-                cudaEventDestroy(stop_gpu);
-
-                printf("GPU time:%f\n", gpu_time);
+                if (timing) {
+                    //end gpu timing
+                    cudaEventRecord(stop_gpu, 0);
+                    cudaEventSynchronize(stop_gpu);
+                    cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
+                    cudaEventDestroy(start_gpu);
+                    cudaEventDestroy(stop_gpu);
+                    printf("iter:%d GPU time:%f\n", iter, gpu_time);
+                }
 
 
 
@@ -264,10 +276,12 @@ magma_dgeqrf(
 
             magma_int_t rows = m-i;
 
-            //start cpu timing
-            cudaEventCreate(&start_cpu);
-            cudaEventCreate(&stop_cpu);
-            cudaEventRecord(start_cpu, 0);
+            if (timing) {
+                //start cpu timing
+                cudaEventCreate(&start_cpu);
+                cudaEventCreate(&stop_cpu);
+                cudaEventRecord(start_cpu, 0);
+            }
 
             lapackf77_dgeqrf(&rows, &ib, A(i,i), &lda, tau+i, work, &lwork, info);
             
@@ -276,20 +290,20 @@ magma_dgeqrf(
             lapackf77_dlarft( MagmaForwardStr, MagmaColumnwiseStr,
                               &rows, &ib, A(i,i), &lda, tau+i, work, &ib);
 
-            //end cpu timing
-            cudaEventRecord(stop_cpu, 0);
-            cudaEventSynchronize(stop_cpu);
-            cudaEventElapsedTime(&cpu_time, start_cpu, stop_cpu);
-            cudaEventDestroy(start_cpu);
-            cudaEventDestroy(stop_cpu);
+            if (timing) {
+                //end cpu timing
+                cudaEventRecord(stop_cpu, 0);
+                cudaEventSynchronize(stop_cpu);
+                cudaEventElapsedTime(&cpu_time, start_cpu, stop_cpu);
+                cudaEventDestroy(start_cpu);
+                cudaEventDestroy(stop_cpu);
+                printf("iter:%d CPU time:%f\n", iter, cpu_time);
 
-            printf("CPU time:%f\n", cpu_time);
 
-
-            if (iter == 1) {
-                cpu_time_pred = cpu_time;
-                gpu_time_pred = gpu_time;
-            }
+            // if (iter == 1) {
+            //     cpu_time_pred = cpu_time;
+            //     gpu_time_pred = gpu_time;
+            // }
 
             dpanel_to_q(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
 
@@ -351,3 +365,48 @@ magma_dgeqrf(
     
     return *info;
 } /* magma_dgeqrf */
+
+
+
+// NVIDIA NVML library function wrapper for GPU DVFS.
+int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
+    nvmlDevice_t device;//int device;
+    nvmlReturn_t result;
+    result = nvmlInit();
+    result = nvmlDeviceGetHandleByIndex(0, &device);//cudaGetDevice(&device);
+    result = nvmlDeviceSetApplicationsClocks(device, clock_mem, clock_core);//(nvmlDevice_t)device
+    if(result != NVML_SUCCESS)
+    {
+        printf("Failed to set GPU core and memory frequencies: %s\n", nvmlErrorString(result));
+        return 1;
+    }
+    else
+    {
+        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_GRAPHICS, &clock_core);
+        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
+        //printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
+        return 0;
+    }
+}
+
+
+static void signal_handler(int signal) {
+    SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
+    //SetCPUFreq(2500000);
+}
+
+static void set_alarm(double s) {
+    itv.it_value.tv_sec = (suseconds_t)s;
+    itv.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
+    setitimer(ITIMER_REAL, &itv, NULL);
+}
+
+static void initialize_handler(void) {
+    sigset_t sig;
+    struct sigaction act;
+    sigemptyset(&sig);
+    act.sa_handler = signal_handler;
+    act.sa_flags = SA_RESTART;
+    act.sa_mask = sig;
+    sigaction(SIGALRM, &act, NULL);
+}
