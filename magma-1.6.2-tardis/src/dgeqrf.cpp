@@ -204,7 +204,7 @@ magma_dgeqrf(
         double gpu_time_pred = 0;
         double cpu_time_pred = 0;
         int iter = 0;
-        setGPUFreq(2600, 705);
+        SetGPUFreq(2600, 705);
 
         cudaProfilerStart();
         /* Use blocked code initially.
