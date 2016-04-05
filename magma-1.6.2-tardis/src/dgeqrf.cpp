@@ -198,6 +198,7 @@ magma_dgeqrf(
         cudaEvent_t start_gpu, stop_gpu;
 
         double gpu_time_pred = gpu_time0_highest;
+        double gpu_time_pred_lowest = gpu_time0_lowest;
         double cpu_time_pred = cpu_time0;
 
         double ratio_split_freq = 0;
