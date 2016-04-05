@@ -56,4 +56,6 @@ LIBDIR    = -L$(CUDADIR)/lib64 \
             -L$(MKLROOT)/lib/intel64
 
 INC       = -I$(CUDADIR)/include \
-            -I$(MKLROOT)/include
+            -I$(MKLROOT)/include \
+	     -I /home/lchen/NVML/tdk_5.319.85/nvml/include	
+
