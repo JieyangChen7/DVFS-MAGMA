@@ -37,7 +37,7 @@ LDFLAGS   =     $(FPIC)              -fopenmp
 
 # see MKL Link Advisor at http://software.intel.com/sites/products/mkl/
 # gcc with MKL 10.3, sequential version
-LIB       = -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lcublas -lcudart -lstdc++ -lm -lgfortran
+LIB       = -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lcublas -lcudart -lstdc++ -lm -lgfortran -lnvidia-ml
 
 # gcc with MKL 10.3, GNU threads
 #LIB       = -lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lpthread -lcublas -lcudart -lstdc++ -lm -lgfortran
@@ -54,6 +54,7 @@ CUDADIR = /usr/local/cuda
 
 LIBDIR    = -L$(CUDADIR)/lib64 \
             -L$(MKLROOT)/lib/intel64
+		
 
 INC       = -I$(CUDADIR)/include \
             -I$(MKLROOT)/include \
