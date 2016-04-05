@@ -10,19 +10,6 @@
 
 */
 #include "common_magma.h"
-#include "cuda_profiler_api.h"
-
-#include "nvml.h"
-#include <sys/time.h>
-#include <signal.h>
-
-int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core);
-static void signal_handler(int signal);
-static void set_alarm(double s);
-static void initialize_handler(void);
-
-
-static struct itimerval itv;
 
 /**
     Purpose
@@ -186,28 +173,6 @@ magma_dgeqrf(
     dT    = dA + n*ldda + nb*lddwork;
 
     if ( (nb > 1) && (nb < k) ) {
-        
-        double gpu_time0_lowest = 0;
-        double gpu_time0_highest = 0;
-        double cpu_time0 = 0;
-
-        float cpu_time = 0.0;
-        float gpu_time = 0.0;
-
-        cudaEvent_t start_cpu, stop_cpu;
-        cudaEvent_t start_gpu, stop_gpu;
-
-        double gpu_time_pred = gpu_time0_highest;
-        double gpu_time_pred_lowest = gpu_time0_lowest;
-        double cpu_time_pred = cpu_time0;
-
-        double ratio_split_freq = 0;
-        double seconds_until_interrupt = 0;
-        int iter = 0;
-        //SetGPUFreq(2600, 705);
-        bool timing = false;
-
-        //cudaProfilerStart();
         /* Use blocked code initially.
            Asynchronously send the matrix to the GPU except the first panel. */
         magma_dsetmatrix_async( m, n-nb,
@@ -217,60 +182,20 @@ magma_dgeqrf(
         old_i = 0;
         old_ib = nb;
         for (i = 0; i < k-nb; i += nb) {
-            
             ib = min(k-i, nb);
             if (i > 0) {
-                printf("start1 %d\n", iter);
                 /* download i-th panel */
                 magma_queue_sync( stream[1] );
                 magma_dgetmatrix_async( m-i, ib,
                                         dA(i,i), ldda,
                                         A(i,i),  lda, stream[0] );
 
-
-                if (!timing && iter > 1) {
-                    printf("start %d\n", iter);
-                    double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
-                    cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-                    gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-                    //printf("GPU time pred:%f\n", gpu_time_pred);
-                    //printf("CPU time pred:%f\n", cpu_time_pred);
-                    ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
-                    gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
-                    seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
-                    initialize_handler();
-                    SetGPUFreq(324, 324);
-                    if (ratio_split_freq < 1)
-                        set_alarm(seconds_until_interrupt);
-                    else
-                        set_alarm(cpu_time_pred);
-                }
-                printf("start2 %d\n", iter);
-                if (timing) {
-                    //start gpu timing
-                    cudaEventCreate(&start_gpu);
-                    cudaEventCreate(&stop_gpu);
-                    cudaEventRecord(start_gpu, 0);
-                }
-                printf("start3 %d\n", iter);
                 /* Apply H' to A(i:m,i+2*ib:n) from the left */
                 magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
                                   m-old_i, n-old_i-2*old_ib, old_ib,
                                   dA(old_i, old_i),          ldda, dT,    nb,
                                   dA(old_i, old_i+2*old_ib), ldda, dwork, lddwork);
-                printf("start4 %d\n", iter);
-                if (timing) {
-                    //end gpu timing
-                    cudaEventRecord(stop_gpu, 0);
-                    cudaEventSynchronize(stop_gpu);
-                    cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
-                    cudaEventDestroy(start_gpu);
-                    cudaEventDestroy(stop_gpu);
-                    printf("iter:%d GPU time:%f\n", iter, gpu_time);
-                }
 
-
-                printf("start5 %d\n", iter);
                 magma_dgetmatrix_async( i, ib,
                                         dA(0,i), ldda,
                                         A(0,i),  lda, stream[1] );
@@ -278,37 +203,12 @@ magma_dgeqrf(
             }
 
             magma_int_t rows = m-i;
-
-            printf("start6 %d\n", iter);
-            if (timing) {
-                //start cpu timing
-                cudaEventCreate(&start_cpu);
-                cudaEventCreate(&stop_cpu);
-                cudaEventRecord(start_cpu, 0);
-            }
-            printf("start7 %d\n", iter);
             lapackf77_dgeqrf(&rows, &ib, A(i,i), &lda, tau+i, work, &lwork, info);
             
-            printf("start8 %d\n", iter);
             /* Form the triangular factor of the block reflector
                H = H(i) H(i+1) . . . H(i+ib-1) */
             lapackf77_dlarft( MagmaForwardStr, MagmaColumnwiseStr,
                               &rows, &ib, A(i,i), &lda, tau+i, work, &ib);
-            printf("start9 %d\n", iter);
-            if (timing) {
-                //end cpu timing
-                cudaEventRecord(stop_cpu, 0);
-                cudaEventSynchronize(stop_cpu);
-                cudaEventElapsedTime(&cpu_time, start_cpu, stop_cpu);
-                cudaEventDestroy(start_cpu);
-                cudaEventDestroy(stop_cpu);
-                printf("iter:%d CPU time:%f\n", iter, cpu_time);
-            }
-
-            // if (iter == 1) {
-            //     cpu_time_pred = cpu_time;
-            //     gpu_time_pred = gpu_time;
-            // }
 
             dpanel_to_q(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
 
@@ -319,7 +219,7 @@ magma_dgeqrf(
             magma_queue_sync( stream[1] );
             magma_dsetmatrix_async( ib, ib, work, ib, dT, nb, stream[0] );
             magma_queue_sync( stream[0] );
-            printf("start10 %d\n", iter);
+
             if (i + ib < n) {
                 if (i+ib < k-nb) {
                     /* Apply H' to A(i:m,i+ib:i+2*ib) from the left (look-ahead) */
@@ -342,9 +242,7 @@ magma_dgeqrf(
                 old_i  = i;
                 old_ib = ib;
             }
-            iter++;
         }
-        //cudaProfilerStop();
     } else {
         i = 0;
     }
@@ -370,48 +268,3 @@ magma_dgeqrf(
     
     return *info;
 } /* magma_dgeqrf */
-
-
-
-// NVIDIA NVML library function wrapper for GPU DVFS.
-int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
-    nvmlDevice_t device;//int device;
-    nvmlReturn_t result;
-    result = nvmlInit();
-    result = nvmlDeviceGetHandleByIndex(0, &device);//cudaGetDevice(&device);
-    result = nvmlDeviceSetApplicationsClocks(device, clock_mem, clock_core);//(nvmlDevice_t)device
-    if(result != NVML_SUCCESS)
-    {
-        printf("Failed to set GPU core and memory frequencies: %s\n", nvmlErrorString(result));
-        return 1;
-    }
-    else
-    {
-        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_GRAPHICS, &clock_core);
-        nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
-        //printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
-        return 0;
-    }
-}
-
-
-static void signal_handler(int signal) {
-    SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
-    //SetCPUFreq(2500000);
-}
-
-static void set_alarm(double s) {
-    itv.it_value.tv_sec = (suseconds_t)s;
-    itv.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
-    setitimer(ITIMER_REAL, &itv, NULL);
-}
-
-static void initialize_handler(void) {
-    sigset_t sig;
-    struct sigaction act;
-    sigemptyset(&sig);
-    act.sa_handler = signal_handler;
-    act.sa_flags = SA_RESTART;
-    act.sa_mask = sig;
-    sigaction(SIGALRM, &act, NULL);
-}
