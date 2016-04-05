@@ -205,7 +205,7 @@ magma_dgeqrf(
         double seconds_until_interrupt = 0;
         int iter = 0;
         SetGPUFreq(2600, 705);
-        bool timing = true;
+        bool timing = false;
 
         //cudaProfilerStart();
         /* Use blocked code initially.
