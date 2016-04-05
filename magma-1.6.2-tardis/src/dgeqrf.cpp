@@ -188,8 +188,8 @@ magma_dgeqrf(
     if ( (nb > 1) && (nb < k) ) {
         
         double gpu_time0_lowest = 0;
-        double gpu_time0_highest = 0;
-        double cpu_time0 = 0;
+        double gpu_time0_highest = 461.955383;
+        double cpu_time0 = 794.636108;
 
         float cpu_time = 0.0;
         float gpu_time = 0.0;
@@ -204,7 +204,8 @@ magma_dgeqrf(
         double ratio_split_freq = 0;
         double seconds_until_interrupt = 0;
         int iter = 0;
-        SetGPUFreq(2600, 705);
+        //SetGPUFreq(2600, 705);
+        SetGPUFreq(324, 324);
         bool timing = true;
 
         //cudaProfilerStart();
