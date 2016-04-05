@@ -204,7 +204,7 @@ magma_dgeqrf(
         double ratio_split_freq = 0;
         double seconds_until_interrupt = 0;
         int iter = 0;
-        SetGPUFreq(2600, 705);
+        //SetGPUFreq(2600, 705);
         bool timing = false;
 
         //cudaProfilerStart();
