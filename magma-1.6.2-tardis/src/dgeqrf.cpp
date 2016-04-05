@@ -298,7 +298,7 @@ magma_dgeqrf(
                 cudaEventDestroy(start_cpu);
                 cudaEventDestroy(stop_cpu);
                 printf("iter:%d CPU time:%f\n", iter, cpu_time);
-
+            }
 
             // if (iter == 1) {
             //     cpu_time_pred = cpu_time;
