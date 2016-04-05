@@ -29,15 +29,14 @@ NVOPTS    = -O3 -DADD_ --compiler-options -fno-strict-aliasing -DUNIX
 LDOPTS    = -fPIC -Xlinker -zmuldefs
 
 #LIB       = -lf77blas -latlas -lcblas -lg2c -llapack -lcublas -lnvidia-ml -lm
-LIB       = -llapack -lf77blas -lgfortran -lcblas -latlas -lcublas -lcudart -lstdc++ -lnvidia-ml -lm -lpthread  -lpapi
+LIB       = -llapack -lf77blas -lgfortran -lcblas -latlas -lcublas -lcudart -lstdc++ -lnvidia-ml -lm -lpthread 
 
 #-lcula_lapack
 
 CUDADIR   = /usr/local/cuda
 
 LIBDIR    = -L/usr/lib64 -L/lib64 \
-            -L$(CUDADIR)/lib64 -L/home/lchen/myroot/lib \
-	     -L$(PAPIDIR)/src
+            -L$(CUDADIR)/lib64 -L/home/lchen/myroot/lib
 
 # -L/usr/lib64/atlas
 
