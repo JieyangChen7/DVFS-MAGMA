@@ -217,9 +217,10 @@ magma_dgeqrf(
         old_i = 0;
         old_ib = nb;
         for (i = 0; i < k-nb; i += nb) {
-            printf("start %d\n", iter);
+            
             ib = min(k-i, nb);
             if (i > 0) {
+                printf("start1 %d\n", iter);
                 /* download i-th panel */
                 magma_queue_sync( stream[1] );
                 magma_dgetmatrix_async( m-i, ib,
@@ -244,20 +245,20 @@ magma_dgeqrf(
                     else
                         set_alarm(cpu_time_pred);
                 }
-
+                printf("start2 %d\n", iter);
                 if (timing) {
                     //start gpu timing
                     cudaEventCreate(&start_gpu);
                     cudaEventCreate(&stop_gpu);
                     cudaEventRecord(start_gpu, 0);
                 }
-
+                printf("start3 %d\n", iter);
                 /* Apply H' to A(i:m,i+2*ib:n) from the left */
                 magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
                                   m-old_i, n-old_i-2*old_ib, old_ib,
                                   dA(old_i, old_i),          ldda, dT,    nb,
                                   dA(old_i, old_i+2*old_ib), ldda, dwork, lddwork);
-
+                printf("start4 %d\n", iter);
                 if (timing) {
                     //end gpu timing
                     cudaEventRecord(stop_gpu, 0);
@@ -269,7 +270,7 @@ magma_dgeqrf(
                 }
 
 
-
+                printf("start5 %d\n", iter);
                 magma_dgetmatrix_async( i, ib,
                                         dA(0,i), ldda,
                                         A(0,i),  lda, stream[1] );
@@ -278,20 +279,22 @@ magma_dgeqrf(
 
             magma_int_t rows = m-i;
 
+            printf("start6 %d\n", iter);
             if (timing) {
                 //start cpu timing
                 cudaEventCreate(&start_cpu);
                 cudaEventCreate(&stop_cpu);
                 cudaEventRecord(start_cpu, 0);
             }
-
+            printf("start7 %d\n", iter);
             lapackf77_dgeqrf(&rows, &ib, A(i,i), &lda, tau+i, work, &lwork, info);
             
+            printf("start8 %d\n", iter);
             /* Form the triangular factor of the block reflector
                H = H(i) H(i+1) . . . H(i+ib-1) */
             lapackf77_dlarft( MagmaForwardStr, MagmaColumnwiseStr,
                               &rows, &ib, A(i,i), &lda, tau+i, work, &ib);
-
+            printf("start9 %d\n", iter);
             if (timing) {
                 //end cpu timing
                 cudaEventRecord(stop_cpu, 0);
@@ -316,7 +319,7 @@ magma_dgeqrf(
             magma_queue_sync( stream[1] );
             magma_dsetmatrix_async( ib, ib, work, ib, dT, nb, stream[0] );
             magma_queue_sync( stream[0] );
-
+            printf("start10 %d\n", iter);
             if (i + ib < n) {
                 if (i+ib < k-nb) {
                     /* Apply H' to A(i:m,i+ib:i+2*ib) from the left (look-ahead) */
