@@ -186,7 +186,7 @@ magma_dgeqrf(
     dT    = dA + n*ldda + nb*lddwork;
 
     if ( (nb > 1) && (nb < k) ) {
-        printf("start\n");
+        
         double gpu_time0_lowest = 0;
         double gpu_time0_highest = 0;
         double cpu_time0 = 0;
@@ -217,7 +217,7 @@ magma_dgeqrf(
         old_i = 0;
         old_ib = nb;
         for (i = 0; i < k-nb; i += nb) {
-
+            printf("start %d\n", iter);
             ib = min(k-i, nb);
             if (i > 0) {
                 /* download i-th panel */
