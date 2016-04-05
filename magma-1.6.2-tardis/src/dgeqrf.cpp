@@ -227,7 +227,7 @@ magma_dgeqrf(
                                         A(i,i),  lda, stream[0] );
 
 
-                if (iter > 1) {
+                if (!timing && iter > 1) {
                     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
                     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
                     gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
