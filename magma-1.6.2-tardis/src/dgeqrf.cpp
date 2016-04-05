@@ -186,7 +186,7 @@ magma_dgeqrf(
     dT    = dA + n*ldda + nb*lddwork;
 
     if ( (nb > 1) && (nb < k) ) {
-
+        printf("start\n");
         double gpu_time0_lowest = 0;
         double gpu_time0_highest = 0;
         double cpu_time0 = 0;
