@@ -209,9 +209,7 @@ magma_dgeqrf(
         bool timing = false;
         bool dvfs = true;
         bool profile = true;
-        if (profile) {
-            cudaProfilerStart();
-        }
+        cudaProfilerStart();
         /* Use blocked code initially.
            Asynchronously send the matrix to the GPU except the first panel. */
         magma_dsetmatrix_async( m, n-nb,
@@ -344,9 +342,7 @@ magma_dgeqrf(
             }
             iter++;
         }
-        if (profile) {
-            cudaProfilerStop();
-        }
+        cudaProfilerStop();
     } else {
         i = 0;
     }

@@ -1,3 +1,5 @@
+
+#sudo cannot access profile, so we need to modify its permission
 rm profile
 touch profile
 chmod 777 profile
