@@ -43,5 +43,6 @@ LIBDIR    = -L/usr/lib64 -L/lib64 \
 
 INC       = -I$(CUDADIR)/include \
 	     -I$(PAPIDIR)/src \
-	     -I$(CULA_INC_PATH)	
+	     -I$(CULA_INC_PATH) \
+            -I /home/lchen/NVML/tdk_5.319.85/nvml/include	
 

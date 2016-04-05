@@ -12,7 +12,7 @@
 #include "common_magma.h"
 #include "cuda_profiler_api.h"
 
-#include <nvml.h>
+#include "nvml.h"
 
 // NVIDIA NVML library function wrapper for GPU DVFS.
 int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
@@ -34,7 +34,7 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
         return 0;
     }
 }
-       
+
 /**
     Purpose
     -------
