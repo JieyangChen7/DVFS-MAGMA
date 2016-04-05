@@ -206,8 +206,8 @@ magma_dgeqrf(
         int iter = 0;
         //SetGPUFreq(2600, 705);
         //SetGPUFreq(324, 324);
-        bool timing = false;
-        bool dvfs = true;
+        bool timing = true;
+        bool dvfs = false;
         bool profile = true;
         cudaProfilerStart();
         /* Use blocked code initially.
@@ -228,6 +228,14 @@ magma_dgeqrf(
                                         dA(i,i), ldda,
                                         A(i,i),  lda, stream[0] );
 
+
+                if (timing) {
+                    double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+                    cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+                    gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+                    printf("iter:%d GPU time pred:%f\n", iter, gpu_time_pred);
+                    printf("iter:%d CPU time pred:%f\n", iter, cpu_time_pred);
+                }
 
                 if (!timing && dvfs && iter > 1) {
                     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
