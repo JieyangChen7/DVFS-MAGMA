@@ -187,7 +187,7 @@ magma_dgeqrf(
 
     if ( (nb > 1) && (nb < k) ) {
         
-        double gpu_time0_lowest = 0;
+        double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
         double cpu_time0 = 794.636108;
 
@@ -205,9 +205,9 @@ magma_dgeqrf(
         double seconds_until_interrupt = 0;
         int iter = 0;
         //SetGPUFreq(2600, 705);
-        SetGPUFreq(324, 324);
-        bool timing = true;
-
+        //SetGPUFreq(324, 324);
+        bool timing = false;
+        bool dvfs = false;
         //cudaProfilerStart();
         /* Use blocked code initially.
            Asynchronously send the matrix to the GPU except the first panel. */
@@ -228,7 +228,7 @@ magma_dgeqrf(
                                         A(i,i),  lda, stream[0] );
 
 
-                if (!timing && iter > 1) {
+                if (!timing && dvfs && iter > 1) {
                     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
                     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
                     gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
