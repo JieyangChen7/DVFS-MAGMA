@@ -206,8 +206,8 @@ magma_dgeqrf(
         int iter = 0;
         //SetGPUFreq(2600, 705);
         //SetGPUFreq(324, 324);
-        bool timing = false;
-        bool dvfs = true;
+        bool timing = true;
+        bool dvfs = false;
 
         cudaProfilerStart();
         /* Use blocked code initially.
@@ -244,7 +244,7 @@ magma_dgeqrf(
                     seconds_until_interrupt = cpu_time_pred * ratio_split_freq;
                     printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
                     printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
-                    double est_total = gpu_time_pred_lowest * ratio_split_freq + gpu_time_pred * (1 - ratio_split_freq);
+                    double est_total = (1/gpu_time_pred_lowest) * ratio_split_freq *  cpu_time_pred+ (1/gpu_time_pred) * (1 - ratio_split_freq) * cpu_time_pred;
                     printf("iter:%d est_total:%f\n", iter, est_total);
                 }
 
