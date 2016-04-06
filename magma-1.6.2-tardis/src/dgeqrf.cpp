@@ -335,6 +335,48 @@ if (timing) {
                     cudaEventDestroy(stop_dvfs);
                     printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
 
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(324, 324);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+                    //start gpu timing
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(2600, 705);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+
+                    //start gpu timing
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(2600, 705);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
 
                 }
 
