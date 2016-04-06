@@ -242,6 +242,8 @@ magma_dgeqrf(
                     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
                     printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
                     printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
+                    double est_total = gpu_time_pred_lowest * ratio_split_freq + gpu_time_pred * (1 - ratio_split_freq);
+                    printf("iter:%d est_total:%f\n", iter, est_total);
                 }
 
                 if (!timing && dvfs && iter > 1) {
