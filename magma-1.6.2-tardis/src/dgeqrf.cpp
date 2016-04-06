@@ -206,8 +206,8 @@ magma_dgeqrf(
         int iter = 0;
         //SetGPUFreq(2600, 705);
         //SetGPUFreq(324, 324);
-        bool timing = true;
-        bool dvfs = false;
+        bool timing = false;
+        bool dvfs = true;
 
         cudaProfilerStart();
         /* Use blocked code initially.
@@ -233,14 +233,15 @@ magma_dgeqrf(
                     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
                     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
                     gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+                    gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
                     printf("iter:%d GPU time pred:%f\n", iter, gpu_time_pred);
                     printf("iter:%d CPU time pred:%f\n", iter, cpu_time_pred);
                     //ratio_split_freq =  = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
                     
                     ratio_split_freq = ((cpu_time_pred - gpu_time_pred) * gpu_time_pred_lowest) / (cpu_time_pred * (gpu_time_pred_lowest - gpu_time_pred));
-                    gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
+                    
                     //seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
-                    seconds_until_interrupt = gpu_time_pred * ratio_split_freq;
+                    seconds_until_interrupt = cpu_time_pred * ratio_split_freq;
                     printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
                     printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
                     double est_total = gpu_time_pred_lowest * ratio_split_freq + gpu_time_pred * (1 - ratio_split_freq);
@@ -251,11 +252,13 @@ magma_dgeqrf(
                     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
                     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
                     gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+                    gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
                     //printf("GPU time pred:%f\n", gpu_time_pred);
                     //printf("CPU time pred:%f\n", cpu_time_pred);
-                    ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
-                    gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
-                    seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
+                    //ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
+                    ratio_split_freq = ((cpu_time_pred - gpu_time_pred) * gpu_time_pred_lowest) / (cpu_time_pred * (gpu_time_pred_lowest - gpu_time_pred));
+                    seconds_until_interrupt = cpu_time_pred * ratio_split_freq;
+                    //seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
                     initialize_handler();
                     SetGPUFreq(324, 324);
                     if (ratio_split_freq < 1)
