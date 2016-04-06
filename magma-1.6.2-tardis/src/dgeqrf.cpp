@@ -237,7 +237,7 @@ magma_dgeqrf(
                     printf("iter:%d GPU time pred:%f\n", iter, gpu_time_pred);
                     printf("iter:%d CPU time pred:%f\n", iter, cpu_time_pred);
                     
-                    ratio_split_freq =  = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
+                    ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
                     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
                     printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
                     printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
