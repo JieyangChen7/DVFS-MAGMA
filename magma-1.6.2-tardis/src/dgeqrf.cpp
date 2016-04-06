@@ -410,7 +410,7 @@ if (timing) {
                     cudaEventCreate(&stop_dvfs);
                     cudaEventRecord(start_dvfs, 0);
 
-                    SetGPUFreq(324, 324);
+                    SetGPUFreq(2600, 705);
 
                     //end gpu timing
                     cudaEventRecord(stop_dvfs, 0);
