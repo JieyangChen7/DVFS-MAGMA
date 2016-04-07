@@ -24,8 +24,7 @@ static void initialize_handler(void);
 
 static struct itimerval itv;
 
-
-void testDVFS(int iter) {
+void testDVFS(int iter){
 
                     cudaEvent_t start_dvfs, stop_dvfs;
                     float dvfs_time = 0.0;
@@ -306,7 +305,8 @@ magma_dgeqrf(
     dT    = dA + n*ldda + nb*lddwork;
 
     if ( (nb > 1) && (nb < k) ) {
-        
+
+            
         double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
         double cpu_time0 = 794.636108;
@@ -344,14 +344,28 @@ magma_dgeqrf(
             
             ib = min(k-i, nb);
             if (i > 0) {
-                /* download i-th panel */
+	      if (timing) {
+		printf("point 1\n");
+		testDVFS(iter);
+	      }
+
+	        /* download i-th panel */
                 magma_queue_sync( stream[1] );
+
+		if (timing) {
+		  printf("point 2\n");
+		  testDVFS(iter);
+		}
                 magma_dgetmatrix_async( m-i, ib,
                                         dA(i,i), ldda,
                                         A(i,i),  lda, stream[0] );
 
-
-
+ 
+		if (timing) {
+		  printf("point 3\n");
+		  testDVFS(iter);
+		}
+		
                 if (timing) {
                     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
                     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
@@ -384,7 +398,8 @@ magma_dgeqrf(
                 }
 
                 if (timing) {
-                    testDVFS(iter);
+		  printf("point 4\n");
+		  testDVFS(iter);
                 }
 
 
@@ -412,12 +427,25 @@ magma_dgeqrf(
                 }
 
 
-
+		if (timing) {
+		  printf("point 5\n");
+		  testDVFS(iter);
+		}
 
                 magma_dgetmatrix_async( i, ib,
                                         dA(0,i), ldda,
                                         A(0,i),  lda, stream[1] );
-                magma_queue_sync( stream[0] );
+
+		if (timing) {
+		  printf("point 6\n");
+		  testDVFS(iter);
+		}
+		magma_queue_sync( stream[0] );
+
+		if (timing) {
+		  printf("point 7\n");
+		  testDVFS(iter);
+		}
             }
 
             magma_int_t rows = m-i;
@@ -447,7 +475,10 @@ magma_dgeqrf(
                 printf("iter:%d CPU time:%f\n", iter, cpu_time);
             }
 
-
+	    if (timing) {
+	      printf("point 8\n");
+	      testDVFS(iter);
+	    }
         
             // if (iter == 1) {
             //     cpu_time_pred = cpu_time;
@@ -456,25 +487,54 @@ magma_dgeqrf(
 
             dpanel_to_q(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
 
+
+	    if (timing) {
+	      printf("point 9\n");
+	      testDVFS(iter);
+	    }
+	    
             /* download the i-th V matrix */
             magma_dsetmatrix_async( rows, ib, A(i,i), lda, dA(i,i), ldda, stream[0] );
 
+	    if (timing) {
+	      printf("point 10\n");
+	      testDVFS(iter);
+	    }
+	    
             /* download the T matrix */
             magma_queue_sync( stream[1] );
-            magma_dsetmatrix_async( ib, ib, work, ib, dT, nb, stream[0] );
-            magma_queue_sync( stream[0] );
 
-   
+	    if (timing) {
+	      printf("point 11\n");
+	      testDVFS(iter);
+	    }
+            magma_dsetmatrix_async( ib, ib, work, ib, dT, nb, stream[0] );
+
+	    if (timing) {
+	      printf("point 12\n");
+	      testDVFS(iter);
+	    }
+	    
+	    magma_queue_sync( stream[0] );
+
+	    
 
             if (i + ib < n) {
-                if (i+ib < k-nb) {
+	      if (timing) {
+		printf("point 13\n");
+		testDVFS(iter);
+	      }
+	      
+
+	      if (i+ib < k-nb) {
                     /* Apply H' to A(i:m,i+ib:i+2*ib) from the left (look-ahead) */
                     magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
                                       rows, ib, ib,
                                       dA(i, i   ), ldda, dT,    nb,
                                       dA(i, i+ib), ldda, dwork, lddwork);
                 if (timing) {
-                    testDVFS(iter);
+		  printf("point 14\n");
+		  testDVFS(iter);
                 }
 
                     dq_to_panel(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
@@ -488,8 +548,12 @@ magma_dgeqrf(
                                       dA(i, i+ib), ldda, dwork, lddwork);
                     dq_to_panel(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
                 }
-
-                old_i  = i;
+	      if (timing) {
+		printf("point 15\n");
+		testDVFS(iter);
+	      }
+	      
+	      old_i  = i;
                 old_ib = ib;
             }
             iter++;
@@ -527,10 +591,10 @@ magma_dgeqrf(
 
 // NVIDIA NVML library function wrapper for GPU DVFS.
 int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
-    nvmlDevice_t device;//int device;
-    nvmlReturn_t result;
-    result = nvmlInit();
-    result = nvmlDeviceGetHandleByIndex(0, &device);//cudaGetDevice(&device);
+     nvmlDevice_t device;//int device;
+     nvmlReturn_t result;
+     result = nvmlInit();
+     result = nvmlDeviceGetHandleByIndex(0, &device);//cudaGetDevice(&device);
     result = nvmlDeviceSetApplicationsClocks(device, clock_mem, clock_core);//(nvmlDevice_t)device
     if(result != NVML_SUCCESS)
     {
@@ -543,12 +607,13 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
         printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
         return 0;
+     
     }
 }
 
 
 static void signal_handler(int signal) {
-    SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
+  SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     //SetCPUFreq(2500000);
 }
 
