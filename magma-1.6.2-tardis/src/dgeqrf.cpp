@@ -457,7 +457,16 @@ if (timing) {
             magma_dsetmatrix_async( ib, ib, work, ib, dT, nb, stream[0] );
             magma_queue_sync( stream[0] );
 
-    if (timing) {
+   
+
+            if (i + ib < n) {
+                if (i+ib < k-nb) {
+                    /* Apply H' to A(i:m,i+ib:i+2*ib) from the left (look-ahead) */
+                    magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
+                                      rows, ib, ib,
+                                      dA(i, i   ), ldda, dT,    nb,
+                                      dA(i, i+ib), ldda, dwork, lddwork);
+                if (timing) {
                      cudaEventCreate(&start_dvfs);
                     cudaEventCreate(&stop_dvfs);
                     cudaEventRecord(start_dvfs, 0);
@@ -473,13 +482,6 @@ if (timing) {
                     printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
                 }
 
-            if (i + ib < n) {
-                if (i+ib < k-nb) {
-                    /* Apply H' to A(i:m,i+ib:i+2*ib) from the left (look-ahead) */
-                    magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
-                                      rows, ib, ib,
-                                      dA(i, i   ), ldda, dT,    nb,
-                                      dA(i, i+ib), ldda, dwork, lddwork);
                     dq_to_panel(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
                 }
                 else {
