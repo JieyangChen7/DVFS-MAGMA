@@ -26,6 +26,9 @@ static struct itimerval itv;
 
 
 void testDVFS() {
+
+                    cudaEvent_t start_dvfs, stop_dvfs;
+                    float dvfs_time = 0.0;
                     //start gpu timing
                     cudaEventCreate(&start_dvfs);
                     cudaEventCreate(&stop_dvfs);
@@ -310,10 +313,10 @@ magma_dgeqrf(
 
         float cpu_time = 0.0;
         float gpu_time = 0.0;
-        float dvfs_time = 0.0;
+        
         cudaEvent_t start_cpu, stop_cpu;
         cudaEvent_t start_gpu, stop_gpu;
-        cudaEvent_t start_dvfs, stop_dvfs;
+        
 
 
         double gpu_time_pred = gpu_time0_highest;
