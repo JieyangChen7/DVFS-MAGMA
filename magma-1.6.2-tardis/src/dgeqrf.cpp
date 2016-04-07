@@ -441,21 +441,7 @@ if (timing) {
             }
 
 
-        if (timing) {
-                     cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-
-                    SetGPUFreq(2600, 705);
-
-                    //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-                }
+        
             // if (iter == 1) {
             //     cpu_time_pred = cpu_time;
             //     gpu_time_pred = gpu_time;
@@ -494,6 +480,22 @@ if (timing) {
                 old_ib = ib;
             }
             iter++;
+
+            if (timing) {
+                     cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+
+                    SetGPUFreq(2600, 705);
+
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+                }
         }
         cudaProfilerStop();
     } else {
