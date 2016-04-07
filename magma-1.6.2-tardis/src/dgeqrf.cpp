@@ -24,6 +24,123 @@ static void initialize_handler(void);
 
 static struct itimerval itv;
 
+
+void testDVFS() {
+                    //start gpu timing
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+
+                    SetGPUFreq(324, 324);
+
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+                    //start gpu timing
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(2600, 705);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+                                        //start gpu timing
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(324, 324);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+                    //start gpu timing
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(2600, 705);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+                                        //start gpu timing
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(324, 324);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(324, 324);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+                    //start gpu timing
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(2600, 705);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+
+                    //start gpu timing
+                    cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+                    SetGPUFreq(2600, 705);
+                    
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+}
+
 /**
     Purpose
     -------
@@ -263,121 +380,8 @@ magma_dgeqrf(
                         set_alarm(cpu_time_pred);
                 }
 
-if (timing) {
-                    //start gpu timing
-                    cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-
-                    SetGPUFreq(324, 324);
-
-                    //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-
-                    // //start gpu timing
-                    // cudaEventCreate(&start_dvfs);
-                    // cudaEventCreate(&stop_dvfs);
-                    // cudaEventRecord(start_dvfs, 0);
-                    // SetGPUFreq(2600, 705);
-                    
-                    // //end gpu timing
-                    // cudaEventRecord(stop_dvfs, 0);
-                    // cudaEventSynchronize(stop_dvfs);
-                    // cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    // cudaEventDestroy(start_dvfs);
-                    // cudaEventDestroy(stop_dvfs);
-                    // printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-
-                    //                     //start gpu timing
-                    // cudaEventCreate(&start_dvfs);
-                    // cudaEventCreate(&stop_dvfs);
-                    // cudaEventRecord(start_dvfs, 0);
-                    // SetGPUFreq(324, 324);
-                    
-                    // //end gpu timing
-                    // cudaEventRecord(stop_dvfs, 0);
-                    // cudaEventSynchronize(stop_dvfs);
-                    // cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    // cudaEventDestroy(start_dvfs);
-                    // cudaEventDestroy(stop_dvfs);
-                    // printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-
-                    // //start gpu timing
-                    // cudaEventCreate(&start_dvfs);
-                    // cudaEventCreate(&stop_dvfs);
-                    // cudaEventRecord(start_dvfs, 0);
-                    // SetGPUFreq(2600, 705);
-                    
-                    // //end gpu timing
-                    // cudaEventRecord(stop_dvfs, 0);
-                    // cudaEventSynchronize(stop_dvfs);
-                    // cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    // cudaEventDestroy(start_dvfs);
-                    // cudaEventDestroy(stop_dvfs);
-                    // printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-
-                    //                     //start gpu timing
-                    // cudaEventCreate(&start_dvfs);
-                    // cudaEventCreate(&stop_dvfs);
-                    // cudaEventRecord(start_dvfs, 0);
-                    // SetGPUFreq(324, 324);
-                    
-                    // //end gpu timing
-                    // cudaEventRecord(stop_dvfs, 0);
-                    // cudaEventSynchronize(stop_dvfs);
-                    // cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    // cudaEventDestroy(start_dvfs);
-                    // cudaEventDestroy(stop_dvfs);
-                    // printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-
-                    // cudaEventCreate(&start_dvfs);
-                    // cudaEventCreate(&stop_dvfs);
-                    // cudaEventRecord(start_dvfs, 0);
-                    // SetGPUFreq(324, 324);
-                    
-                    // //end gpu timing
-                    // cudaEventRecord(stop_dvfs, 0);
-                    // cudaEventSynchronize(stop_dvfs);
-                    // cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    // cudaEventDestroy(start_dvfs);
-                    // cudaEventDestroy(stop_dvfs);
-                    // printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-
-                    // //start gpu timing
-                    // cudaEventCreate(&start_dvfs);
-                    // cudaEventCreate(&stop_dvfs);
-                    // cudaEventRecord(start_dvfs, 0);
-                    // SetGPUFreq(2600, 705);
-                    
-                    // //end gpu timing
-                    // cudaEventRecord(stop_dvfs, 0);
-                    // cudaEventSynchronize(stop_dvfs);
-                    // cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    // cudaEventDestroy(start_dvfs);
-                    // cudaEventDestroy(stop_dvfs);
-                    // printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-
-
-                    // //start gpu timing
-                    // cudaEventCreate(&start_dvfs);
-                    // cudaEventCreate(&stop_dvfs);
-                    // cudaEventRecord(start_dvfs, 0);
-                    // SetGPUFreq(2600, 705);
-                    
-                    // //end gpu timing
-                    // cudaEventRecord(stop_dvfs, 0);
-                    // cudaEventSynchronize(stop_dvfs);
-                    // cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    // cudaEventDestroy(start_dvfs);
-                    // cudaEventDestroy(stop_dvfs);
-                    // printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-
-
+                if (timing) {
+                    testDVFS();
                 }
 
 
@@ -467,19 +471,7 @@ if (timing) {
                                       dA(i, i   ), ldda, dT,    nb,
                                       dA(i, i+ib), ldda, dwork, lddwork);
                 if (timing) {
-                     cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-
-                    SetGPUFreq(2600, 705);
-
-                    //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+                    testDVFS();
                 }
 
                     dq_to_panel(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
