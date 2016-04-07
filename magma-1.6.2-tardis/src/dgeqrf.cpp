@@ -25,7 +25,7 @@ static void initialize_handler(void);
 static struct itimerval itv;
 
 
-void testDVFS() {
+void testDVFS(int iter) {
 
                     cudaEvent_t start_dvfs, stop_dvfs;
                     float dvfs_time = 0.0;
@@ -384,7 +384,7 @@ magma_dgeqrf(
                 }
 
                 if (timing) {
-                    testDVFS();
+                    testDVFS(iter);
                 }
 
 
@@ -474,7 +474,7 @@ magma_dgeqrf(
                                       dA(i, i   ), ldda, dT,    nb,
                                       dA(i, i+ib), ldda, dwork, lddwork);
                 if (timing) {
-                    testDVFS();
+                    testDVFS(iter);
                 }
 
                     dq_to_panel(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
