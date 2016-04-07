@@ -457,6 +457,22 @@ if (timing) {
             magma_dsetmatrix_async( ib, ib, work, ib, dT, nb, stream[0] );
             magma_queue_sync( stream[0] );
 
+    if (timing) {
+                     cudaEventCreate(&start_dvfs);
+                    cudaEventCreate(&stop_dvfs);
+                    cudaEventRecord(start_dvfs, 0);
+
+                    SetGPUFreq(2600, 705);
+
+                    //end gpu timing
+                    cudaEventRecord(stop_dvfs, 0);
+                    cudaEventSynchronize(stop_dvfs);
+                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+                    cudaEventDestroy(start_dvfs);
+                    cudaEventDestroy(stop_dvfs);
+                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+                }
+
             if (i + ib < n) {
                 if (i+ib < k-nb) {
                     /* Apply H' to A(i:m,i+ib:i+2*ib) from the left (look-ahead) */
@@ -481,21 +497,7 @@ if (timing) {
             }
             iter++;
 
-            if (timing) {
-                     cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
 
-                    SetGPUFreq(2600, 705);
-
-                    //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
-                }
         }
         cudaProfilerStop();
     } else {
