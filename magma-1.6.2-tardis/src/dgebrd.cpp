@@ -235,7 +235,7 @@ magma_dgebrd(
         magmablasGetKernelStream( &stream );
         magma_queue_sync( stream );
 
-        SetGPUFreq(324, 324);
+        SetGPUFreq(2600, 614);
         magma_dlabrd_gpu(nrow, ncol, nb,
                          A(i, i),          lda,    dA(i, i),          ldda,
                          d+i, e+i, tauq+i, taup+i,
