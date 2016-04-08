@@ -24,44 +24,6 @@ static void initialize_handler(void);
 
 static struct itimerval itv;
 
-
-void timer_handler (int signum)
-{
-  //static int count = 0;
-  //printf ("timer expired %d times\n", ++count);
-  SetGPUFreq(2600, 705);
-}
-
-int set_timer (double s)
-{
-  printf("timer:%f",s);
-  struct sigaction sa;
-  struct itimerval timer;
-
-  /* Install timer_handler as the signal handler for SIGVTALRM. */
-  memset (&sa, 0, sizeof (sa));
-  sa.sa_handler = &timer_handler;
-  sigaction (SIGALRM, &sa, NULL);
-
-  /* Configure the timer to expire after 250 msec... */
-  timer.it_value.tv_sec = (suseconds_t)s;
-  timer.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
-
-  //timer.it_value.tv_sec = 0;
-  //timer.it_value.tv_usec = 250000;
-  printf("timer1:%u",timer.it_value.tv_sec);
-  printf("timer2:%u",timer.it_value.tv_usec);
-  /* ... and every 250 msec after that. */
-  timer.it_interval.tv_sec = 0;
-  timer.it_interval.tv_usec = 0;
-  /* Start a virtual timer. It counts down whenever this process is                                    
-     executing. */
-  setitimer (ITIMER_REAL, &timer, NULL);
-
-  /* Do busy work. */
-  //while (1);
-}
-
 void testDVFS(int iter){
 
                     cudaEvent_t start_dvfs, stop_dvfs;
@@ -368,7 +330,7 @@ magma_dgeqrf(
         //SetGPUFreq(324, 324);
         bool timing = false;
         bool timing_dvfs = false;
-        bool dvfs = false;
+        bool dvfs = true;
 
         cudaProfilerStart();
         /* Use blocked code initially.
