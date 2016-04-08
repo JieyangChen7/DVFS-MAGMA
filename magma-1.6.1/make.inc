@@ -1,45 +1,62 @@
 #//////////////////////////////////////////////////////////////////////////////
-#   -- MAGMA (version 1.3.0) --
+#   -- MAGMA (version 1.6.1) --
 #      Univ. of Tennessee, Knoxville
 #      Univ. of California, Berkeley
 #      Univ. of Colorado, Denver
-#      November 2012
+#      @date January 2015
 #//////////////////////////////////////////////////////////////////////////////
 
-#
-# GPU_TARGET specifies for which GPU you want to compile MAGMA:
-#     "Tesla" (NVIDIA compute capability 1.x cards)
-#     "Fermi" (NVIDIA compute capability 2.x cards)
+# GPU_TARGET contains one or more of Tesla, Fermi, or Kepler,
+# to specify for which GPUs you want to compile MAGMA:
+#     Tesla  - NVIDIA compute capability 1.x cards (no longer supported in CUDA 6.5)
+#     Fermi  - NVIDIA compute capability 2.x cards
+#     Kepler - NVIDIA compute capability 3.x cards
+# The default is "Fermi Kepler".
 # See http://developer.nvidia.com/cuda-gpus
+#
+#GPU_TARGET ?= Fermi Kepler
 
-GPU_TARGET = Kepler
-
-CC        = gcc -DCUBLAS_GFORTRAN
+CC        = gcc
+CXX       = g++
 NVCC      = nvcc
-FORT      = gfortran -DCUBLAS_GFORTRAN
+FORT      = gfortran
 
 ARCH      = ar
 ARCHFLAGS = cr
 RANLIB    = ranlib
 
-OPTS      = -O3 -DADD_
-F77OPTS   = -O3 -DADD_
-FOPTS     = -O3 -DADD_ -x f95-cpp-input
-NVOPTS    = -O3 -DADD_ --compiler-options -fno-strict-aliasing -DUNIX
-LDOPTS    = -fPIC -Xlinker -zmuldefs
+# Use -fPIC to make shared (.so) and static (.a) library;
+# can be commented out if making only static library.
+#FPIC      = -fPIC
 
-#LIB       = -lf77blas -latlas -lcblas -lg2c -llapack -lcublas -lnvidia-ml -lm
-LIB       = -llapack -lf77blas -lgfortran -lcblas -latlas -lcublas -lcudart -lstdc++ -lnvidia-ml -lm -lpthread
+CFLAGS    = -O3 $(FPIC) -DADD_ -Wall -fopenmp -DMAGMA_SETAFFINITY -DMAGMA_WITH_MKL
+FFLAGS    = -O3 $(FPIC) -DADD_ -Wall -Wno-unused-dummy-argument
+F90FLAGS  = -O3 $(FPIC) -DADD_ -Wall -Wno-unused-dummy-argument -x f95-cpp-input
+NVCCFLAGS = -O3         -DADD_       -Xcompiler "-fno-strict-aliasing $(FPIC)"
+LDFLAGS   =     $(FPIC)              -fopenmp
 
-#-lcula_lapack
+# see MKL Link Advisor at http://software.intel.com/sites/products/mkl/
+# gcc with MKL 10.3, sequential version
+LIB       = -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lcublas -lcudart -lstdc++ -lm -lgfortran -lnvidia-ml
 
-CUDADIR   = /usr/local/cuda
+# gcc with MKL 10.3, GNU threads
+#LIB       = -lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lpthread -lcublas -lcudart -lstdc++ -lm -lgfortran
 
-LIBDIR    = -L/usr/lib64 -L/lib64 \
-            -L$(CUDADIR)/lib64 -L/home/lchen/myroot/lib
+# gcc with MKL 10.3, Intel threads
+#LIB       = -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lpthread -lcublas -lcudart -lstdc++ -lm -liomp5 -lgfortran
 
-# -L/usr/lib64/atlas
+# define library directories preferably in your environment, or here.
+# for MKL run, e.g.: source /opt/intel/composerxe/mkl/bin/mklvars.sh intel64
+MKLROOT = $(MLK_ROOT)
+CUDADIR = /usr/local/cuda
+-include make.check-mkl
+-include make.check-cuda
+
+LIBDIR    = -L$(CUDADIR)/lib64 \
+            -L$(MKLROOT)/lib/intel64
+		
 
 INC       = -I$(CUDADIR)/include \
-	     -I$(CULA_INC_PATH)	
+            -I$(MKLROOT)/include \
+	     -I /home/lchen/NVML/tdk_5.319.85/nvml/include	
 
