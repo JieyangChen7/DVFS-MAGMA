@@ -373,20 +373,12 @@ extern "C" magma_int_t magma_dgetrf(magma_int_t m, magma_int_t n, double *A,
 				}
 
 				if (j > 1 && j < s * 0.25) {
-					ratio_split_freq =
-							(cpu_time_pred - gpu_time_pred)
-									/ (gpu_time_pred
-											* ((gpu_time_iter0_lowest_freq
-													/ gpu_time_iter0_highest_freq)
-													- 1));
+					ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time_iter0_lowest_freq / gpu_time_iter0_highest_freq) - 1));
 					//printf("iter %d: ratio_split_freq = %f\n", j, ratio_split_freq);
-					gpu_time_this_iter_lowest_freq =
-							gpu_time_this_iter_lowest_freq * ratio_slack_pred
-									* ratio_slack_pred;
+					gpu_time_this_iter_lowest_freq = gpu_time_this_iter_lowest_freq * ratio_slack_pred * ratio_slack_pred;
 					//printf("iter %d: gpu_time_this_iter_lowest_freq = %f\n", j, gpu_time_this_iter_lowest_freq);
 					//gpu_time_this_iter_lowest_freq = gpu_time_this_iter_lowest_freq * ratio_slack_pred_gpu;
-					seconds_until_interrupt = gpu_time_this_iter_lowest_freq
-							* ratio_split_freq;
+					seconds_until_interrupt = gpu_time_this_iter_lowest_freq * ratio_split_freq;
 					//printf("iter %d: seconds_until_interrupt = %f\n", j, seconds_until_interrupt);
 					//double DVFS_overhead_adjustment = 0.6;//0.0014
 					//if(ratio_split_freq < 1) seconds_until_interrupt *= DVFS_overhead_adjustment;//-=
