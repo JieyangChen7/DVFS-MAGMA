@@ -11,6 +11,7 @@
 */
 #include "common_magma.h"
 #include "../testing/testing_util.cpp"
+#include "cuda_profiler_api.h"
 #include <iostream>
 using namespace std;
 
