@@ -619,9 +619,13 @@ static void signal_handler(int signal) {
 }
 
 static void set_alarm(double s) {
+    printf("set timer: %f\n", s);
     itv.it_value.tv_sec = (suseconds_t)s;
     itv.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
-    setitimer(ITIMER_REAL, &itv, NULL);
+    int res = setitimer(ITIMER_REAL, &itv, NULL);
+    if (res != 0) {
+        printf("setitimer error! \n");
+    }
 }
 
 static void initialize_handler(void) {
