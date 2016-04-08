@@ -24,6 +24,37 @@ static void initialize_handler(void);
 
 static struct itimerval itv;
 
+
+void timer_handler (int signum)
+{
+  static int count = 0;
+  printf ("timer expired %d times\n", ++count);
+}
+
+int test ()
+{
+  struct sigaction sa;
+  struct itimerval timer;
+
+  /* Install timer_handler as the signal handler for SIGVTALRM. */
+  memset (&sa, 0, sizeof (sa));
+  sa.sa_handler = &timer_handler;
+  sigaction (SIGALRM, &sa, NULL);
+
+  /* Configure the timer to expire after 250 msec... */
+  timer.it_value.tv_sec = 0;
+  timer.it_value.tv_usec = 250000;
+  /* ... and every 250 msec after that. */
+  timer.it_interval.tv_sec = 0;
+  timer.it_interval.tv_usec = 250000;
+  /* Start a virtual timer. It counts down whenever this process is                                    
+     executing. */
+  setitimer (ITIMER_REAL, &timer, NULL);
+
+  /* Do busy work. */
+  while (1);
+}
+
 void testDVFS(int iter){
 
                     cudaEvent_t start_dvfs, stop_dvfs;
@@ -306,7 +337,7 @@ magma_dgeqrf(
 
     if ( (nb > 1) && (nb < k) ) {
 
-            
+            test();
         double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
         double cpu_time0 = 794.636108;
