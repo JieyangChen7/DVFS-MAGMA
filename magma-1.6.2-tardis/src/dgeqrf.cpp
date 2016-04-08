@@ -47,8 +47,8 @@ int set_timer (double s)
   timer.it_value.tv_sec = (suseconds_t)s;
   timer.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
 
-  timer.it_value.tv_sec = 0;
-  timer.it_value.tv_usec = 250000;
+  //timer.it_value.tv_sec = 0;
+  //timer.it_value.tv_usec = 250000;
   printf("timer1:%u",timer.it_value.tv_sec);
   printf("timer2:%u",timer.it_value.tv_usec);
   /* ... and every 250 msec after that. */
