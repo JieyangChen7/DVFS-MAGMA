@@ -345,7 +345,7 @@ magma_dgeqrf(
             
             ib = min(k-i, nb);
             if (i > 0) {
-    	      if (timing_sdvfs) {
+    	      if (timing_dvfs) {
         		printf("point 1\n");
         		testDVFS(iter);
     	      }
