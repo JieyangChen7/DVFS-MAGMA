@@ -44,10 +44,10 @@ int set_timer (double s)
   sigaction (SIGALRM, &sa, NULL);
 
   /* Configure the timer to expire after 250 msec... */
-  timer.it_value.tv_sec = (suseconds_t)s;
-  timer.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
-  //timer.it_value.tv_sec = 0;
-  //timer.it_value.tv_usec = 250000;
+  //timer.it_value.tv_sec = (suseconds_t)s;
+  //timer.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
+  timer.it_value.tv_sec = 0;
+  timer.it_value.tv_usec = 250000;
   /* ... and every 250 msec after that. */
   timer.it_interval.tv_sec = 0;
   timer.it_interval.tv_usec = 0;
