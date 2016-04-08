@@ -614,6 +614,7 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
 
 
 static void signal_handler(int signal) {
+  printf("timer triger\n");
   SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     //SetCPUFreq(2500000);
 }
