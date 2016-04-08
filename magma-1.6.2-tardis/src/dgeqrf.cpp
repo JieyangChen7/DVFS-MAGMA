@@ -27,12 +27,12 @@ static struct itimerval itv;
 
 void timer_handler (int signum)
 {
-  static int count = 0;
-  printf ("timer expired %d times\n", ++count);
-  //SetGPUFreq(2600, 705);
+  //static int count = 0;
+  //printf ("timer expired %d times\n", ++count);
+  SetGPUFreq(2600, 705);
 }
 
-int set_timer ()
+int set_timer (double s)
 {
   struct sigaction sa;
   struct itimerval timer;
@@ -43,8 +43,10 @@ int set_timer ()
   sigaction (SIGALRM, &sa, NULL);
 
   /* Configure the timer to expire after 250 msec... */
-  timer.it_value.tv_sec = 0;
-  timer.it_value.tv_usec = 250000;
+  timer.it_value.tv_sec = (suseconds_t)s;
+  timer.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
+  //timer.it_value.tv_sec = 0;
+  //timer.it_value.tv_usec = 250000;
   /* ... and every 250 msec after that. */
   timer.it_interval.tv_sec = 0;
   timer.it_interval.tv_usec = 0;
@@ -425,9 +427,10 @@ magma_dgeqrf(
                     initialize_handler();
                     SetGPUFreq(324, 324);
                     if (ratio_split_freq < 1)
-                        set_alarm(seconds_until_interrupt);
+                        set_timer(seconds_until_interrupt);
+                        //set_alarm(seconds_until_interrupt);
                     else
-                        set_alarm(cpu_time_pred);
+                        //set_alarm(cpu_time_pred);
                 }
 
                 if (timing_dvfs) {
