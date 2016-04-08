@@ -55,7 +55,7 @@ int set_timer (double s)
   setitimer (ITIMER_REAL, &timer, NULL);
 
   /* Do busy work. */
-  while (1);
+  //while (1);
 }
 
 void testDVFS(int iter){
