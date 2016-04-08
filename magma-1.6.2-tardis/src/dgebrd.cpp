@@ -235,7 +235,7 @@ magma_dgebrd(
         magmablasGetKernelStream( &stream );
         magma_queue_sync( stream );
 
-        //SetGPUFreq(2600, 614);
+        SetGPUFreq(2600, 666);
         magma_dlabrd_gpu(nrow, ncol, nb,
                          A(i, i),          lda,    dA(i, i),          ldda,
                          d+i, e+i, tauq+i, taup+i,
@@ -243,7 +243,7 @@ magma_dgebrd(
                          work+(ldwrkx*nb), ldwrky, dwork+(ldwrkx*nb), ldwrky); // y, dy
         magma_queue_sync( stream );
 
-        //SetGPUFreq(2600, 705);
+        SetGPUFreq(2600, 705);
         /*  Update the trailing submatrix A(i+nb:m,i+nb:n), using an update
             of the form  A := A - V*Y' - X*U' */
         nrow = m - i - nb;
