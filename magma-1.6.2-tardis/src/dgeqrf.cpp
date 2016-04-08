@@ -27,9 +27,9 @@ static struct itimerval itv;
 
 void timer_handler (int signum)
 {
-  //static int count = 0;
-  //printf ("timer expired %d times\n", ++count);
-  SetGPUFreq(2600, 705);
+  static int count = 0;
+  printf ("timer expired %d times\n", ++count);
+  //SetGPUFreq(2600, 705);
 }
 
 int set_timer (double )
@@ -46,8 +46,8 @@ int set_timer (double )
   timer.it_value.tv_sec = 0;
   timer.it_value.tv_usec = 250000;
   /* ... and every 250 msec after that. */
-  timer.it_interval.tv_sec = 0;
-  timer.it_interval.tv_usec = 250000;
+  //timer.it_interval.tv_sec = 0;
+  //timer.it_interval.tv_usec = 250000;
   /* Start a virtual timer. It counts down whenever this process is                                    
      executing. */
   setitimer (ITIMER_REAL, &timer, NULL);
@@ -338,7 +338,7 @@ magma_dgeqrf(
 
     if ( (nb > 1) && (nb < k) ) {
 
-          //  test();
+            test();
         double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
         double cpu_time0 = 794.636108;
