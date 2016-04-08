@@ -8,8 +8,8 @@ case=MAGMA_LU_GPUDVFS
 #/home/lchen/cpu_l_ivy.sh
 #sleep 9
 
-#/opt/power-bench/mclient -H 130.127.48.185 -d /home/lchen/MAGMA/magma-1.6.2-tardis/results
-#/opt/power-bench/mclient -H 130.127.48.185 -l ${case}.total.pwr
+/opt/power-bench/mclient -H 172.16.10.55 -d /home/lchen/MAGMA/magma-1.6.2-tardis/results
+/opt/power-bench/mclient -H 172.16.10.55 -l ${case}.total.pwr
 
 nvidia-smi -q -d POWER -lms 100 -f /home/lchen/MAGMA/magma-1.6.2-tardis/results/${case}.gpu.pwr 2>&1 1>/dev/null &
 smi_pid=$!
