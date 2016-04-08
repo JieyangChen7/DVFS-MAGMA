@@ -366,9 +366,9 @@ magma_dgeqrf(
         int iter = 0;
         //SetGPUFreq(2600, 705);
         //SetGPUFreq(324, 324);
-        bool timing = true;
+        bool timing = false;
         bool timing_dvfs = false;
-        bool dvfs = true;
+        bool dvfs = false;
 
         cudaProfilerStart();
         /* Use blocked code initially.
@@ -646,7 +646,7 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
     {
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_GRAPHICS, &clock_core);
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
-        printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
+        //printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
         return 0;
      
     }
@@ -654,20 +654,16 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
 
 
 static void signal_handler(int signal) {
-  printf("timer triger\n");
   SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     //SetCPUFreq(2500000);
 }
 
 static void set_alarm(double s) {
     s = s / 1000;
-    printf("set timer: %f\n", s);
     itv.it_value.tv_sec = (suseconds_t)s;
     itv.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
     itv.it_interval.tv_sec = 0;
     itv.it_interval.tv_usec = 0;
-    printf("set timer1: %d\n", itv.it_value.tv_sec);
-    printf("set timer2: %d\n", itv.it_value.tv_usec);
     int res = setitimer(ITIMER_REAL, &itv, NULL);
     if (res != 0) {
         printf("setitimer error! \n");
