@@ -660,8 +660,9 @@ static void signal_handler(int signal) {
 }
 
 static void set_alarm(double s) {
+    s = s / 1000;
     printf("set timer: %f\n", s);
-    itv.it_value.tv_sec = (suseconds_t)s/1000;
+    itv.it_value.tv_sec = (suseconds_t)s;
     itv.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
     itv.it_interval.tv_sec = 0;
     itv.it_interval.tv_usec = 0;
