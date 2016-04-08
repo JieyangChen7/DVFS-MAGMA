@@ -9,7 +9,7 @@
 
 */
 #include "common_magma.h"
-int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core)；
+int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core);
 /**
     Purpose
     -------
