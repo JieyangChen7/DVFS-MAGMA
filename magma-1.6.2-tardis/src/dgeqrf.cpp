@@ -431,11 +431,11 @@ magma_dgeqrf(
                     initialize_handler();
                     SetGPUFreq(324, 324);
                     if (ratio_split_freq < 1)
-                        set_timer(seconds_until_interrupt);
-                        //set_alarm(seconds_until_interrupt);
+                        //set_timer(seconds_until_interrupt);
+                        set_alarm(seconds_until_interrupt);
                     else
-                        set_timer(cpu_time_pred);
-                        //set_alarm(cpu_time_pred);
+                        //set_timer(cpu_time_pred);
+                        set_alarm(cpu_time_pred);
                 }
 
                 if (timing_dvfs) {
