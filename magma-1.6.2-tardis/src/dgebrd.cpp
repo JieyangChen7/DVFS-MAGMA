@@ -231,13 +231,13 @@ magma_dgebrd(
                               dA(i, i+nb), ldda,
                               A( i, i+nb), lda );
         }
-        //SetGPUFreq(324, 324);
+        SetGPUFreq(324, 324);
         magma_dlabrd_gpu(nrow, ncol, nb,
                          A(i, i),          lda,    dA(i, i),          ldda,
                          d+i, e+i, tauq+i, taup+i,
                          work,             ldwrkx, dwork,             ldwrkx,  // x, dx
                          work+(ldwrkx*nb), ldwrky, dwork+(ldwrkx*nb), ldwrky); // y, dy
-        //SetGPUFreq(2600, 705);
+        SetGPUFreq(2600, 705);
         /*  Update the trailing submatrix A(i+nb:m,i+nb:n), using an update
             of the form  A := A - V*Y' - X*U' */
         nrow = m - i - nb;
