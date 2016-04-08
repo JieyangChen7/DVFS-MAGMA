@@ -27,11 +27,12 @@ static struct itimerval itv;
 
 void timer_handler (int signum)
 {
-  static int count = 0;
-  printf ("timer expired %d times\n", ++count);
+  //static int count = 0;
+  //printf ("timer expired %d times\n", ++count);
+  SetGPUFreq(2600, 705);
 }
 
-int test ()
+int set_timer (double )
 {
   struct sigaction sa;
   struct itimerval timer;
@@ -337,7 +338,7 @@ magma_dgeqrf(
 
     if ( (nb > 1) && (nb < k) ) {
 
-            test();
+          //  test();
         double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
         double cpu_time0 = 794.636108;
@@ -654,6 +655,8 @@ static void set_alarm(double s) {
     printf("set timer: %f\n", s);
     itv.it_value.tv_sec = (suseconds_t)s;
     itv.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
+    printf("set timer1: %d\n", itv.it_value.tv_sec);
+    printf("set timer2: %d\n", itv.it_value.tv_usec);
     int res = setitimer(ITIMER_REAL, &itv, NULL);
     if (res != 0) {
         printf("setitimer error! \n");
