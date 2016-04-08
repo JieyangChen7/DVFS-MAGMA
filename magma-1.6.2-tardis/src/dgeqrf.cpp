@@ -32,7 +32,7 @@ void timer_handler (int signum)
   //SetGPUFreq(2600, 705);
 }
 
-int set_timer (double )
+int set_timer ()
 {
   struct sigaction sa;
   struct itimerval timer;
@@ -338,7 +338,7 @@ magma_dgeqrf(
 
     if ( (nb > 1) && (nb < k) ) {
 
-            test();
+            set_timer();
         double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
         double cpu_time0 = 794.636108;
