@@ -34,6 +34,7 @@ void timer_handler (int signum)
 
 int set_timer (double s)
 {
+  printf("timer:%f",s);
   struct sigaction sa;
   struct itimerval timer;
 
