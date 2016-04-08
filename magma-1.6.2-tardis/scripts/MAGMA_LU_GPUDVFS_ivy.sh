@@ -14,7 +14,7 @@ case=MAGMA_LU_GPUDVFS
 nvidia-smi -q -d POWER -lms 100 -f /home/lchen/MAGMA/magma-1.6.2-tardis/results/${case}.gpu.pwr 2>&1 1>/dev/null &
 smi_pid=$!
 #echo $smi_pid
-rapl -c 0,10 -f /home/lchen/MAGMA/magma-1.6.2-tardis/results/${case}.cpu.pwr 2>&1 1>/dev/null &
+/usr/local/bin/rapl -c 0,10 -f /home/lchen/MAGMA/magma-1.6.2-tardis/results/${case}.cpu.pwr 2>&1 1>/dev/null &
 rapl_pid=$!
 #echo $rapl_pid
 
