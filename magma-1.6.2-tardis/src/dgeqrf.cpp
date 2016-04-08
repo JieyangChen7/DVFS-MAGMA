@@ -46,8 +46,8 @@ int set_timer ()
   timer.it_value.tv_sec = 0;
   timer.it_value.tv_usec = 250000;
   /* ... and every 250 msec after that. */
-  //timer.it_interval.tv_sec = 0;
-  //timer.it_interval.tv_usec = 0;
+  timer.it_interval.tv_sec = 0;
+  timer.it_interval.tv_usec = 0;
   /* Start a virtual timer. It counts down whenever this process is                                    
      executing. */
   setitimer (ITIMER_REAL, &timer, NULL);
@@ -338,7 +338,7 @@ magma_dgeqrf(
 
     if ( (nb > 1) && (nb < k) ) {
 
-            set_timer();
+          //  set_timer();
         double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
         double cpu_time0 = 794.636108;
@@ -655,6 +655,8 @@ static void set_alarm(double s) {
     printf("set timer: %f\n", s);
     itv.it_value.tv_sec = (suseconds_t)s;
     itv.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
+    itv.it_interval.tv_sec = 0;
+    itv.it_interval.tv_usec = 0;
     printf("set timer1: %d\n", itv.it_value.tv_sec);
     printf("set timer2: %d\n", itv.it_value.tv_usec);
     int res = setitimer(ITIMER_REAL, &itv, NULL);
