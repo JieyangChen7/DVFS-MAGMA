@@ -632,9 +632,15 @@ static void set_alarm(double s) {
 static void initialize_handler(void) {
     sigset_t sig;
     struct sigaction act;
-    sigemptyset(&sig);
+    int res = sigemptyset(&sig);
+    if (res != 0) {
+        printf("sigemptyset error! \n");
+    }
     act.sa_handler = signal_handler;
     act.sa_flags = SA_RESTART;
     act.sa_mask = sig;
-    sigaction(SIGALRM, &act, NULL);
+    res = sigaction(SIGALRM, &act, NULL);
+    if (res != 0) {
+        printf("sigaction error! \n");
+    }
 }
