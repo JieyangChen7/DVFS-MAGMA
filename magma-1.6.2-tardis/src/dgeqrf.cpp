@@ -47,7 +47,7 @@ int set_timer ()
   timer.it_value.tv_usec = 250000;
   /* ... and every 250 msec after that. */
   timer.it_interval.tv_sec = 0;
-  timer.it_interval.tv_usec = 250000;
+  timer.it_interval.tv_usec = 0;
   /* Start a virtual timer. It counts down whenever this process is                                    
      executing. */
   setitimer (ITIMER_REAL, &timer, NULL);
