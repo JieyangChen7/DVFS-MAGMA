@@ -330,7 +330,7 @@ magma_dgeqrf(
         //SetGPUFreq(324, 324);
         bool timing = false;
         bool timing_dvfs = false;
-        bool dvfs = true;
+        bool dvfs = false;
 
         cudaProfilerStart();
         /* Use blocked code initially.
