@@ -22,7 +22,6 @@
 #include "../testing/testing_util.cpp"
 
 //#include "cula.h"
-//#include "papi.h"
 #include <iostream>
 
 using namespace std;
@@ -235,16 +234,8 @@ int main( int argc, char** argv)
 
             gpu_time = magma_wtime();
             
-//            float real_time = 0.0;
-//			float proc_time = 0.0;
-//			long long flpins = 0.0;
-//			float mflops = 0.0;
 //			//culaInitialize();
-//			//PAPI timing start
-//			if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-//				cout << "PAPI ERROR" << endl;
-//				return -1;
-//			} 
+
             
            magma_dgetrf( M, N, h_A, lda, ipiv, &info);
             
@@ -254,13 +245,7 @@ int main( int argc, char** argv)
 //				cout<<"CULA ERROR:"<<culastatus<<endl;
 //			}
             
-            //PAPI timing end
-//		   if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-//				cout << "PAPI ERROR" << endl;
-//				return -1;
-//			}
-//			cout<<"N="<<N<<"---time:"<<real_time<<"---gflops:"<<(double)gflops/real_time<<endl;
-//			PAPI_shutdown();
+
 			//culaShutdown();
             gpu_time = magma_wtime() - gpu_time;
             gpu_perf = gflops / gpu_time;

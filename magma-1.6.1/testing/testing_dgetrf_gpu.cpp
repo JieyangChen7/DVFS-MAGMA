@@ -20,7 +20,6 @@
 #include "magma_lapack.h"
 #include "testings.h"
 #include "cula.h"
-#include "papi.h"
 #include <iostream>
 
 using namespace std;

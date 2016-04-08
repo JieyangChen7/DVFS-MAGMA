@@ -11,7 +11,6 @@
 #include "common_magma.h"
 #include "../testing/testing_util.cpp"
 #include "cuda_profiler_api.h"
-#include "papi.h"
 
 #define PRECISION_d
 
@@ -332,10 +331,6 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				
 				if (TIME_MEASUREMENT) {
 					//real_time = magma_wtime();
-					if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-						
-						return -1;
-					} 
 				}
 				
 				//CPU DVFS
@@ -365,12 +360,6 @@ extern "C" magma_int_t magma_dpotrf(magma_uplo_t uplo, magma_int_t n, double *A,
 				
 				if (TIME_MEASUREMENT) {
 					//real_time = magma_wtime() - real_time;
-					if (PAPI_flops(&real_time, &proc_time, &flpins, &mflops) < PAPI_OK) {
-						
-						return -1;
-					} 
-					printf("iter %d: cpu_time_papi = %.6f\n", iter, real_time);
-					PAPI_shutdown();
 					
 				}
 			
