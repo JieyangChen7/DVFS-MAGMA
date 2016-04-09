@@ -42,26 +42,41 @@ int main(int argc, char* argv[]){
 		totalen += 0.5*atof(&bf[i]);
 	}
 
-	double pkg1 = 0, pkg2 = 0;
+	double pkg1 = 0, pkg2 = 0, mem1 = 0, mem2 = 0;
 	getline(&bf, &x, cpu);
 	while(getline(&bf, &x, cpu) != -1){
 		int i = 0;
 		while(isspace(bf[i])) i++;
-		while(!isspace(bf[i])) i++;
+		while(!isspace(bf[i])) i++; //#time
+        
 		while(isspace(bf[i])) i++;
-		while(!isspace(bf[i])) i++;
+		while(!isspace(bf[i])) i++; // Core
+        
 		while(isspace(bf[i])) i++;
-		pkg1 += atof(&bf[i]);
-
-		while(!isspace(bf[i])) i++;
+		pkg1 += atof(&bf[i]); //P_PKG
+        while(!isspace(bf[i])) i++; // P_PKG
+        
+        while(isspace(bf[i])) i++;
+        while(!isspace(bf[i])) i++; // P_PP0
+        
+        while(isspace(bf[i])) i++;
+        mem1 += atof(&bf[i]); //P_DRAM
+        while(!isspace(bf[i])) i++; // P_DRAM
+        
 		while(isspace(bf[i])) i++;
-                while(!isspace(bf[i])) i++;
-		while(isspace(bf[i])) i++;
-                while(!isspace(bf[i])) i++;
-		while(isspace(bf[i])) i++;
-                while(!isspace(bf[i])) i++;
+        while(!isspace(bf[i])) i++; //Core
+        
 		while(isspace(bf[i])) i++;
 		pkg2 += atof(&bf[i]);
+        while(!isspace(bf[i])) i++; //P_PKG
+        
+        while(isspace(bf[i])) i++;
+        while(!isspace(bf[i])) i++; // P_PP0
+        
+        while(isspace(bf[i])) i++;
+        mem2 += atof(&bf[i]); //P_DRAM
+        while(!isspace(bf[i])) i++; // P_DRAM
+        
 	}
 	
 	double gpu1 = 0, gpu2 = 0, gpu3 = 0, gpu4 = 0;
@@ -94,8 +109,8 @@ int main(int argc, char* argv[]){
 	//system("rm *.out");
 	int idn = atoi(argv[3]);
 
-	printf("total energy: %f\nCPU1: %f\nCPU2: %f\ntotal CPU: %f\nGPU1: %f\nGPU2: %f\nGPU3: %f\nGPU4: %f\ntotal GPU: %f\n",
-		 totalen, pkg1, pkg2, pkg1+pkg2, gpu1, gpu2, gpu3, gpu4,  gpu1+gpu2+gpu3+gpu4);
+	printf("total energy: %f\nCPU1: %f\nCPU2: %f\ntotal CPU: %f\nRAM: %f\nGPU1: %f\nGPU2: %f\nGPU3: %f\nGPU4: %f\ntotal GPU: %f\n",
+		 totalen, pkg1, pkg2, pkg1+pkg2, mem1+mem2, gpu1, gpu2, gpu3, gpu4,  gpu1+gpu2+gpu3+gpu4);
 	char title[128];
 	if(idn > 0) sprintf(title,"results%i.txt",idn);
 	else sprintf(title,"results.txt");
