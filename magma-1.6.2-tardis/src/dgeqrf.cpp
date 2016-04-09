@@ -351,21 +351,22 @@ magma_dgeqrf(
     	      }
 
 	        /* download i-th panel */
-                magma_queue_sync( stream[1] );
+            magma_queue_sync( stream[1] );
 
-		if (timing_dvfs) {
-		  printf("point 2\n");
-		  testDVFS(iter);
-		}
-                magma_dgetmatrix_async( m-i, ib,
-                                        dA(i,i), ldda,
-                                        A(i,i),  lda, stream[0] );
+    		if (timing_dvfs) {
+    		  printf("point 2\n");
+    		  testDVFS(iter);
+    		}
+
+            magma_dgetmatrix_async( m-i, ib,
+                                    dA(i,i), ldda,
+                                    A(i,i),  lda, stream[0] );
 
  
-		if (timing_dvfs) {
-		  printf("point 3\n");
-		  testDVFS(iter);
-		}
+    		if (timing_dvfs) {
+    		  printf("point 3\n");
+    		  testDVFS(iter);
+    		}
 		
                 // if (timing) {
                 //     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
@@ -449,7 +450,7 @@ magma_dgeqrf(
         		  printf("point 7\n");
         		  testDVFS(iter);
         		}
-                    }
+            }
 
                 magma_int_t rows = m-i;
 
@@ -504,8 +505,8 @@ magma_dgeqrf(
         	      testDVFS(iter);
         	    }
         	    
-                    /* download the T matrix */
-                    magma_queue_sync( stream[1] );
+                /* download the T matrix */
+                magma_queue_sync( stream[1] );
 
         	    if (timing_dvfs) {
         	      printf("point 11\n");
