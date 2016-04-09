@@ -307,9 +307,15 @@ magma_dgeqrf(
     if ( (nb > 1) && (nb < k) ) {
 
           //  set_timer();
+        //20480
         double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
         double cpu_time0 = 794.636108;
+
+        //15360
+        double gpu_time0_lowest = 2103.143311;
+        double gpu_time0_highest = 251.719040;
+        double cpu_time0 = 578.415283;
 
         float cpu_time = 0.0;
         float gpu_time = 0.0;
@@ -327,7 +333,7 @@ magma_dgeqrf(
         double seconds_until_interrupt = 0;
         int iter = 0;
         //SetGPUFreq(2600, 705);
-        //SetGPUFreq(324, 324);
+        SetGPUFreq(324, 324);
         bool timing = true;
         bool timing_dvfs = false;
         bool dvfs = false;
