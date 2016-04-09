@@ -478,9 +478,9 @@ magma_dgeqrf(
                     cudaEventDestroy(stop_cpu);
                     printf("iter:%d CPU time:%f\n", iter, cpu_time);
                     if (gpu_time < cpu_time) {
-                        printf("slack: GPU\n");
+                        printf("slack: +\n");
                     } else {
-                        printf("slack: CPU\n");
+                        printf("slack: -\n");
                     }
                 }
 
