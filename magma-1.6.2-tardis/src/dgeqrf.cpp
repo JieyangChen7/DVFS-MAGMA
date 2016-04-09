@@ -328,9 +328,9 @@ magma_dgeqrf(
         int iter = 0;
         //SetGPUFreq(2600, 705);
         //SetGPUFreq(324, 324);
-        bool timing = false;
+        bool timing = true;
         bool timing_dvfs = false;
-        bool dvfs = true;
+        bool dvfs = false;
 
         cudaProfilerStart();
         /* Use blocked code initially.
