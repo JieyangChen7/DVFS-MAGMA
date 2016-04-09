@@ -53,7 +53,7 @@ kill ${rapl_pid}
 #/home/lchen/cpu_h_ivy.sh
 
 #scp lchen@ivy2:/home/lchen/MAGMA/test/magma-1.6.1_timing/results/MAGMA_LU_GPUDVFS.total.pwr /home/lchen/MAGMA/magma-1.6.1/results/
-#scp lchen@ivy2:/home/lchen/MAGMA/magma-1.6.1/results/MAGMA_LU_GPUDVFS.total.pwr ./MAGMA_LU_GPUDVFS.total.pwr
+scp lchen@172.16.10.55:/home/lchen/MAGMA_LU_GPUDVFS.total.pwr /home/lchen/MAGMA/magma-1.6.2-tardis/results
 
 cd /home/lchen/MAGMA/magma-1.6.2-tardis/results/
 
