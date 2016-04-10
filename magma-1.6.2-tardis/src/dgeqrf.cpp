@@ -308,9 +308,9 @@ magma_dgeqrf(
 
           //  set_timer();
         //20480
-        // double gpu_time0_lowest = 2103.143311;
-        // double gpu_time0_highest = 461.955383;
-        // double cpu_time0 = 794.636108;
+        double gpu_time0_lowest = 2103.143311;
+        double gpu_time0_highest = 461.955383;
+        double cpu_time0 = 794.636108;
 
         //15360
         // double gpu_time0_lowest = 1038.393188;
@@ -323,9 +323,9 @@ magma_dgeqrf(
         // double cpu_time0 = 379.313263;
 
         //5120
-        double gpu_time0_lowest = 68.386719;
-        double gpu_time0_highest = 15.418176;
-        double cpu_time0 = 56.631870;
+        // double gpu_time0_lowest = 68.386719;
+        // double gpu_time0_highest = 15.418176;
+        // double cpu_time0 = 56.631870;
 
         float cpu_time = 0.0;
         float gpu_time = 0.0;
@@ -346,7 +346,8 @@ magma_dgeqrf(
         //SetGPUFreq(324, 324);
         bool timing = false;
         bool timing_dvfs = false;
-        bool dvfs = false;
+        bool dvfs = true;
+        bool relax = true;
 
         cudaProfilerStart();
         /* Use blocked code initially.
@@ -406,15 +407,16 @@ magma_dgeqrf(
 
                     ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
                     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
-
-                    initialize_handler();
-                    SetGPUFreq(324, 324);
-                    if (ratio_split_freq < 1)
-                        //set_timer(seconds_until_interrupt);
-                        set_alarm(seconds_until_interrupt);
-                    else
-                        //set_timer(cpu_time_pred);
-                        set_alarm(cpu_time_pred);
+                    if (relax && ratio_split_freq > 0.05) {
+                        initialize_handler();
+                        SetGPUFreq(324, 324);
+                        if (ratio_split_freq < 1)
+                            //set_timer(seconds_until_interrupt);
+                            set_alarm(seconds_until_interrupt);
+                        else
+                            //set_timer(cpu_time_pred);
+                            set_alarm(cpu_time_pred);
+                    }
                 }
 
                 if (timing_dvfs) {
