@@ -422,6 +422,7 @@ magma_dgeqrf(
                 }
 
                 if (r2h) {
+                    initialize_handler();
                     set_alarm(gpu_time_pred);
                 }
 
@@ -541,7 +542,7 @@ magma_dgeqrf(
                     SetGPUFreq(2600, 705);
                 }
 
-                
+
         	    if (timing_dvfs) {
         	      printf("point 11\n");
         	      testDVFS(iter);
