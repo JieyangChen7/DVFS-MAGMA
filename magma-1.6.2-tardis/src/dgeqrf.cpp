@@ -406,7 +406,7 @@ magma_dgeqrf(
 
 
 
-                if (dvfs && iter > 1 && iter < 0.75*((k-nb)/nb)) {
+                if (dvfs && iter > 1 && iter < 0.5*((k-nb)/nb)) {
                     ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
                     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
                     if (relax && ratio_split_freq > 0.05) {
