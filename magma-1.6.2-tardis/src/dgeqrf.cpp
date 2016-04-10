@@ -348,7 +348,7 @@ magma_dgeqrf(
         bool timing_dvfs = false;
         bool dvfs = false;
         bool relax = false;
-        bool r2h = true;
+        bool r2h = false;
 
         cudaProfilerStart();
         /* Use blocked code initially.
@@ -652,9 +652,9 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
 
 
 static void signal_handler(int signal) {
-    //SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
+    SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     //SetCPUFreq(2500000);
-    SetGPUFreq(324, 324);
+    //SetGPUFreq(324, 324);
 }
 
 static void set_alarm(double s) {
