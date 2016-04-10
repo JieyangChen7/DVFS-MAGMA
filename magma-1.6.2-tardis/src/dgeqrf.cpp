@@ -348,7 +348,7 @@ magma_dgeqrf(
         bool timing_dvfs = false;
         bool dvfs = false;
         bool relax = false;
-        bool r2h = true;
+        bool r2h = false;
 
         cudaProfilerStart();
         /* Use blocked code initially.
