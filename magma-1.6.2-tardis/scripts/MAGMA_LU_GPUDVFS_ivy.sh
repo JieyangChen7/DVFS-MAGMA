@@ -46,7 +46,7 @@ sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/t
 #ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 20480,20480
 #ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 25600,25600
 
-#/opt/power-bench/mclient -H 172.16.10.55 -e log
+/opt/power-bench/mclient -H 172.16.10.55 -e log
 
 kill ${smi_pid}
 kill ${rapl_pid}
