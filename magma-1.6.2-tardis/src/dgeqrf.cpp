@@ -343,7 +343,7 @@ magma_dgeqrf(
         double seconds_until_interrupt = 0;
         int iter = 0;
         //SetGPUFreq(2600, 705);
-        SetGPUFreq(324, 324);
+        //SetGPUFreq(324, 324);
         bool timing = false;
         bool timing_dvfs = false;
         bool dvfs = false;
