@@ -308,9 +308,11 @@ magma_dgeqrf(
 
           //  set_timer();
         //20480
-        // double gpu_time0_lowest = 2103.143311;
-        // double gpu_time0_highest = 461.955383;
-        // double cpu_time0 = 794.636108;
+        double gpu_time0_lowest = 2103.143311;
+        double gpu_time0_highest = 461.955383;
+        double pu_time0 = 0;
+        //double cpu_time0_lowest = 794.636108;
+        //double cpu_time0_highest = 386.132507;
 
         //15360
         // double gpu_time0_lowest = 1038.393188;
@@ -323,9 +325,9 @@ magma_dgeqrf(
         // double cpu_time0 = 379.313263;
 
         //5120
-        double gpu_time0_lowest = 68.386719;
-        double gpu_time0_highest = 15.418176;
-        double cpu_time0 = 56.631870;
+        // double gpu_time0_lowest = 68.386719;
+        // double gpu_time0_highest = 15.418176;
+        // double cpu_time0 = 56.631870;
 
         float cpu_time = 0.0;
         float gpu_time = 0.0;
@@ -406,7 +408,9 @@ magma_dgeqrf(
 
 
 
-                if (dvfs && iter > 1 && iter < 0.25*((k-nb)/nb)) {
+                if (dvfs && iter > 1 && iter < 1*((k-nb)/nb)) {
+
+
                     ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
                     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
                     if (relax && ratio_split_freq > 0.05) {
