@@ -310,7 +310,7 @@ magma_dgeqrf(
         //20480
         double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
-        double pu_time0 = 0;
+        double cpu_time0 = 0;
         //double cpu_time0_lowest = 794.636108;
         //double cpu_time0_highest = 386.132507;
 
