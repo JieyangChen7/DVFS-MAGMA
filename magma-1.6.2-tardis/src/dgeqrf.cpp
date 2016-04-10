@@ -346,8 +346,9 @@ magma_dgeqrf(
         //SetGPUFreq(324, 324);
         bool timing = false;
         bool timing_dvfs = false;
-        bool dvfs = true;
-        bool relax = true;
+        bool dvfs = false;
+        bool relax = false;
+        bool r2h = true;
 
         cudaProfilerStart();
         /* Use blocked code initially.
@@ -385,6 +386,10 @@ magma_dgeqrf(
     		  testDVFS(iter);
     		}
 		
+                double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+                cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+                gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+                gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
                 // if (timing) {
                 //     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
                 //     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
@@ -399,12 +404,9 @@ magma_dgeqrf(
                 //     printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
                 // }
 
-                if (dvfs && iter > 1 && iter < 0.25*((k-nb)/nb)) {
-                    double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
-                    cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-                    gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-                    gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
 
+
+                if (dvfs && iter > 1 && iter < 0.25*((k-nb)/nb)) {
                     ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
                     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
                     if (relax && ratio_split_freq > 0.05) {
@@ -417,6 +419,10 @@ magma_dgeqrf(
                             //set_timer(cpu_time_pred);
                             set_alarm(cpu_time_pred);
                     }
+                }
+
+                if (r2h) {
+                    set_alarm(gpu_time_pred);
                 }
 
                 if (timing_dvfs) {
@@ -531,6 +537,11 @@ magma_dgeqrf(
                 /* download the T matrix */
                 magma_queue_sync( stream[1] );
 
+                if (r2h) {
+                    SetGPUFreq(2600, 705);
+                }
+
+                
         	    if (timing_dvfs) {
         	      printf("point 11\n");
         	      testDVFS(iter);
@@ -640,8 +651,9 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
 
 
 static void signal_handler(int signal) {
-  SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
+  //SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     //SetCPUFreq(2500000);
+    SetGPUFreq(324, 324);
 }
 
 static void set_alarm(double s) {
