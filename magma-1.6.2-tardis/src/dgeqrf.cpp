@@ -318,11 +318,14 @@ magma_dgeqrf(
         // double cpu_time0 = 578.415283;
 
         //10240
-        double gpu_time0_lowest = 453.477356;
-        double gpu_time0_highest = 109.913155;
-        double cpu_time0 = 379.313263;
+        // double gpu_time0_lowest = 453.477356;
+        // double gpu_time0_highest = 109.913155;
+        // double cpu_time0 = 379.313263;
 
         //5120
+        double gpu_time0_lowest = 453.477356;
+        double gpu_time0_highest = 15.418176;
+        double cpu_time0 = 56.631870;
 
         float cpu_time = 0.0;
         float gpu_time = 0.0;
@@ -340,7 +343,7 @@ magma_dgeqrf(
         double seconds_until_interrupt = 0;
         int iter = 0;
         //SetGPUFreq(2600, 705);
-        //SetGPUFreq(324, 324);
+        SetGPUFreq(324, 324);
         bool timing = true;
         bool timing_dvfs = false;
         bool dvfs = false;
