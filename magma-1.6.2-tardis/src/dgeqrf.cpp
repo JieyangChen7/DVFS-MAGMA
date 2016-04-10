@@ -308,14 +308,14 @@ magma_dgeqrf(
 
           //  set_timer();
         //20480
-        double gpu_time0_lowest = 2103.143311;
-        double gpu_time0_highest = 461.955383;
-        double cpu_time0 = 794.636108;
+        // double gpu_time0_lowest = 2103.143311;
+        // double gpu_time0_highest = 461.955383;
+        // double cpu_time0 = 794.636108;
 
         //15360
-        // double gpu_time0_lowest = 1038.393188;
-        // double gpu_time0_highest = 251.719040;
-        // double cpu_time0 = 578.415283;
+        double gpu_time0_lowest = 1038.393188;
+        double gpu_time0_highest = 251.719040;
+        double cpu_time0 = 578.415283;
 
         //10240
         // double gpu_time0_lowest = 453.477356;
@@ -346,8 +346,8 @@ magma_dgeqrf(
         //SetGPUFreq(324, 324);
         bool timing = false;
         bool timing_dvfs = false;
-        bool dvfs = false;
-        bool relax = false;
+        bool dvfs = true;
+        bool relax = true;
         bool r2h = false;
 
         cudaProfilerStart();
@@ -406,7 +406,7 @@ magma_dgeqrf(
 
 
 
-                if (dvfs && iter > 1 && iter < 0.25*((k-nb)/nb)) {
+                if (dvfs && iter > 1 && iter < 1*((k-nb)/nb)) {
                     ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
                     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
                     if (relax && ratio_split_freq > 0.05) {
@@ -652,9 +652,9 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
 
 
 static void signal_handler(int signal) {
-  //SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
+    SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     //SetCPUFreq(2500000);
-    SetGPUFreq(324, 324);
+    //SetGPUFreq(324, 324);
 }
 
 static void set_alarm(double s) {
