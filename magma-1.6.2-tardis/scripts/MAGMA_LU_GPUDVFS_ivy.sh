@@ -51,7 +51,7 @@ ssh -t -t ivy sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH time /home/lchen/MAGMA/m
 kill ${smi_pid}
 kill ${rapl_pid}
 
-#sleep 9
+sleep 9
 #/apps/power-bench/cpuspeed-set.pl --all 2500000
 #/home/lchen/cpu_h_ivy.sh
 
