@@ -438,7 +438,7 @@ magma_dgeqrf(
                     //         else
                     //             set_alarm(gpu_time_pred);
                     //     }
-                    // }
+                     }
                 }
 
                 if (r2h) {
