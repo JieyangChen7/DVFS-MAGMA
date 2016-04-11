@@ -8,6 +8,7 @@ case=MAGMA_LU_GPUDVFS
 #/home/lchen/cpu_l_ivy.sh
 #sleep 9
 
+
 /opt/power-bench/mclient -H 172.16.10.55 -d /home/lchen/MAGMA/magma-1.6.2-tardis/results
 /opt/power-bench/mclient -H 172.16.10.55 -l ${case}.total.pwr
 
@@ -19,23 +20,23 @@ rapl_pid=$!
 #echo $rapl_pid
 
 
-#sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgeqrf -N 20480,20480
+sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgeqrf -N 20480,20480
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgeqrf -N 15360,15360
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgeqrf -N 10240,10240
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgeqrf -N 5120,5120
 
 
-#sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 20480,20480
+sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 20480,20480
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 15360,15360
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 10240,10240
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 5120,5120
 
 
 
-#sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 20480,20480
+sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 20480,20480
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 15360,15360
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 10240,10240
-sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 5120,5120
+#sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 5120,5120
 
 
 #time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgetrf -N 3000,3000 -c
