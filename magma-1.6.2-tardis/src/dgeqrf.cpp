@@ -17,9 +17,11 @@
 #include <signal.h>
 
 int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core);
-static void signal_handler(int signal);
+static void signal_handler_gpu(int signal);
+static void signal_handler_cpu(int signal);
+
 static void set_alarm(double s);
-static void initialize_handler(void);
+static void initialize_handler(int type);
 
 
 static struct itimerval itv;
@@ -310,9 +312,9 @@ magma_dgeqrf(
         //20480
         double gpu_time0_lowest = 2103.143311;
         double gpu_time0_highest = 461.955383;
-        double cpu_time0 = 0;
-        //double cpu_time0_lowest = 794.636108;
-        //double cpu_time0_highest = 386.132507;
+        //double cpu_time0 = 0;
+        double cpu_time0_lowest = 794.636108;
+        double cpu_time0_highest = 386.132507;
 
         //15360
         // double gpu_time0_lowest = 1038.393188;
@@ -339,7 +341,8 @@ magma_dgeqrf(
 
         double gpu_time_pred = gpu_time0_highest;
         double gpu_time_pred_lowest = gpu_time0_lowest;
-        double cpu_time_pred = cpu_time0;
+        double cpu_time_pred = cpu_time0_highest;
+        double cpu_time_pred_lowest = cpu_time0_lowest;
 
         double ratio_split_freq = 0;
         double seconds_until_interrupt = 0;
@@ -348,8 +351,8 @@ magma_dgeqrf(
         //SetGPUFreq(324, 324);
         bool timing = false;
         bool timing_dvfs = false;
-        bool dvfs = false;
-        bool relax = false;
+        bool dvfs = true;
+        bool relax = true;
         bool r2h = false;
 
         cudaProfilerStart();
@@ -390,6 +393,7 @@ magma_dgeqrf(
 		
                 double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
                 cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+                cpu_time_pred_lowest = cpu_time_pred_lowest * ratio_slack_pred;
                 gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
                 gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
                 // if (timing) {
@@ -409,19 +413,31 @@ magma_dgeqrf(
 
 
                 if (dvfs && iter > 1 && iter < 1*((k-nb)/nb)) {
+                    if (cpu_time_pred > gpu_time_pred) { //slack on GPU
 
-
-                    ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
-                    seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
-                    if (relax && ratio_split_freq > 0.05) {
-                        initialize_handler();
-                        SetGPUFreq(324, 324);
-                        if (ratio_split_freq < 1)
-                            //set_timer(seconds_until_interrupt);
-                            set_alarm(seconds_until_interrupt);
-                        else
-                            //set_timer(cpu_time_pred);
-                            set_alarm(cpu_time_pred);
+                        ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
+                        seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
+                        if (relax && ratio_split_freq > 0.05) {
+                            initialize_handler(0);
+                            SetGPUFreq(324, 324);
+                            if (ratio_split_freq < 1)
+                                //set_timer(seconds_until_interrupt);
+                                set_alarm(seconds_until_interrupt);
+                            else
+                                //set_timer(cpu_time_pred);
+                                set_alarm(cpu_time_pred);
+                        }
+                    } else { //slack on CPU
+                        ratio_split_freq = (gpu_time_pred - cpu_time_pred) / (cpu_time_pred * ((cpu_time0_lowest / cpu_time0_highest) - 1));
+                        seconds_until_interrupt = cpu_time_pred_lowest * ratio_split_freq;
+                        if (relax && ratio_split_freq > 0.05) {
+                            initialize_handler(1);
+                            system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+                            if (ratio_split_freq < 1)
+                                set_alarm(seconds_until_interrupt);
+                            else
+                                set_alarm(gpu_time_pred);
+                        }
                     }
                 }
 
@@ -655,10 +671,14 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
 }
 
 
-static void signal_handler(int signal) {
+static void signal_handler_gpu(int signal) {
     SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     //SetCPUFreq(2500000);
     //SetGPUFreq(324, 324);
+}
+
+static void signal_handler_cpu(int signal) {
+    system("echo 2500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
 }
 
 static void set_alarm(double s) {
@@ -673,14 +693,17 @@ static void set_alarm(double s) {
     }
 }
 
-static void initialize_handler(void) {
+static void initialize_handler(int type) {
     sigset_t sig;
     struct sigaction act;
     int res = sigemptyset(&sig);
     if (res != 0) {
         printf("sigemptyset error! \n");
     }
-    act.sa_handler = signal_handler;
+    if (type == 0)//GPU
+        act.sa_handler = signal_handler_gpu;
+    else
+        act.sa_handler = signal_handler_cpu;
     act.sa_flags = SA_RESTART;
     act.sa_mask = sig;
     res = sigaction(SIGALRM, &act, NULL);

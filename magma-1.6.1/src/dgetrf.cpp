@@ -431,8 +431,7 @@ extern "C" magma_int_t magma_dgetrf(magma_int_t m, magma_int_t n, double *A,
 
 				if (CPU_SLACK_RECLAMATION) {
 					if (j > 50 && cpu_switched_flag1) {
-						system(
-								"echo 2500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+						system("echo 2500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
 						cpu_switched_flag1 = 0;
 					}
 				}

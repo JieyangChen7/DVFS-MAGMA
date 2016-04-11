@@ -26,14 +26,14 @@ sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/t
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgeqrf -N 5120,5120
 
 
-sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 20480,20480
+#sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 20480,20480
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 15360,15360
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 10240,10240
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dpotrf -N 5120,5120
 
 
 
-sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 20480,20480
+#sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 20480,20480
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 15360,15360
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 10240,10240
 #sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-1.6.2-tardis/testing/testing_dgetrf -N 5120,5120
