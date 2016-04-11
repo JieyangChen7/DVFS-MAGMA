@@ -428,17 +428,17 @@ magma_dgeqrf(
                                 set_alarm(cpu_time_pred);
                         }
                     } else { //slack on CPU
-                        ratio_split_freq = (gpu_time_pred - cpu_time_pred) / (cpu_time_pred * ((cpu_time0_lowest / cpu_time0_highest) - 1));
-                        seconds_until_interrupt = cpu_time_pred_lowest * ratio_split_freq;
-                        if (relax && ratio_split_freq > 0.05) {
-                            initialize_handler(1);
-                            system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
-                            if (ratio_split_freq < 1)
-                                set_alarm(seconds_until_interrupt);
-                            else
-                                set_alarm(gpu_time_pred);
-                        }
-                    }
+                    //     ratio_split_freq = (gpu_time_pred - cpu_time_pred) / (cpu_time_pred * ((cpu_time0_lowest / cpu_time0_highest) - 1));
+                    //     seconds_until_interrupt = cpu_time_pred_lowest * ratio_split_freq;
+                    //     if (relax && ratio_split_freq > 0.05) {
+                    //         initialize_handler(1);
+                    //         system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+                    //         if (ratio_split_freq < 1)
+                    //             set_alarm(seconds_until_interrupt);
+                    //         else
+                    //             set_alarm(gpu_time_pred);
+                    //     }
+                    // }
                 }
 
                 if (r2h) {
