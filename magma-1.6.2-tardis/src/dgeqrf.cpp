@@ -442,7 +442,7 @@ magma_dgeqrf(
                 }
 
                 if (r2h) {
-                    initialize_handler();
+                    initialize_handler(3);
                     set_alarm(gpu_time_pred);
                 }
 
