@@ -200,7 +200,7 @@ magma_dgeqrf(
 
     double gpu_iter1_low = 2169.965088;
     double gpu_iter1_high = 462.029846;
-    double cpu_iter1_low = 794.636108;
+    double cpu_iter1_low = 1792.011230;
     double cpu_iter1_high = 1489.281006;
 
     double gpu_pred_high = gpu_iter1_high;
@@ -214,7 +214,7 @@ magma_dgeqrf(
     cudaEvent_t start_cpu, stop_cpu;
     cudaEvent_t start_gpu, stop_gpu;
 
-    bool timing = true;
+    bool timing = false;
     bool dvfs = false;
     bool relax = false;
 
@@ -261,7 +261,7 @@ magma_dgeqrf(
                 printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
 
 
-                if (dvfs && iter > 1 && iter < 1*(min_mn-nb)/nb) {
+                if (dvfs && iter > 1 && iter < 0.5*(min_mn-nb)/nb) {
                     if (cpu_pred_high > gpu_pred_high) { //slack on GPU
                         ratio_split_freq = (cpu_pred_high - gpu_pred_high) / (gpu_pred_high * ((gpu_iter1_low / gpu_iter1_high) - 1));
                         seconds_until_interrupt = gpu_pred_low * ratio_split_freq;
