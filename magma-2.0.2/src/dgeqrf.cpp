@@ -185,7 +185,7 @@ magma_dgeqrf(
     double gpu_iter1_low = 2103.143311;
     double gpu_iter1_high = 462.029846;
     double cpu_iter1_low = 794.636108;
-    double cpu_iter1_high = 3801.567383;
+    double cpu_iter1_high = 1010.850525;
 
     double gpu_pred_high = gpu_iter1_high;
     double gpu_pred_low = gpu_iter1_low;
