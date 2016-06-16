@@ -259,8 +259,10 @@ magma_dgeqrf(
                 gpu_pred_high = gpu_pred_high * ratio_slack_pred * ratio_slack_pred;
                 gpu_pred_low = gpu_pred_low * ratio_slack_pred * ratio_slack_pred;
 
-                printf("iter:%d GPU time pred:%f\n", iter, gpu_pred_high);
-                printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
+                if (timing) {
+                    printf("iter:%d GPU time pred:%f\n", iter, gpu_pred_high);
+                    printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
+                }
 
 
                 if (dvfs && iter > 1 && iter < 0.5*(min_mn-nb)/nb) {
