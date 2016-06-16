@@ -1,3 +1,5 @@
+ #include <cstdlib>
+#include <cmath>
 #include "stdio.h"
 #include "nvml.h"
 #include <sys/time.h>
