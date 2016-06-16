@@ -14,6 +14,9 @@
 #include "cuda.h"
 #include "dvfs.h"
 
+#include <sched.h>
+#include <unistd.h>
+
 /**
     Purpose
     -------
