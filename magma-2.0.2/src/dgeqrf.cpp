@@ -235,7 +235,7 @@ magma_dgeqrf(
 
 
                 double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
-                cpu_pred_high = cpu_time_high * ratio_slack_pred;
+                cpu_pred_high = cpu_pred_high * ratio_slack_pred;
                 cpu_pred_low = cpu_pred_low * ratio_slack_pred;
                 gpu_pred_high = gpu_pred_high * ratio_slack_pred * ratio_slack_pred;
                 gpu_pred_low = gpu_pred_low * ratio_slack_pred * ratio_slack_pred;
