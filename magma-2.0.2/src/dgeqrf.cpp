@@ -181,8 +181,21 @@ magma_dgeqrf(
     float cpu_time = 0.0;
     float gpu_time = 0.0;
 
+    double gpu_iter1_low = 2103.143311;
+    double gpu_iter1_high = 461.955383;
+    double cpu_iter1_low = 794.636108;
+    double cpu_iter1_high = 386.132507;
+
+    double gpu_pred_high = gpu_iter1_high;
+    double gpu_pred_low = gpu_iter1_low;
+    double cpu_pred_high = cpu_iter1_high;
+    double cpu_pred_low = cpu_iter1_low;
+
+
     cudaEvent_t start_cpu, stop_cpu;
     cudaEvent_t start_gpu, stop_gpu;
+
+
 
 
     bool timing = true;
@@ -220,6 +233,16 @@ magma_dgeqrf(
                                   dA(old_i, old_i+2*old_ib), ldda, dwork(0), lddwork, queues[1] );
                 
 
+
+                double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+                cpu_pred_high = cpu_time_high * ratio_slack_pred;
+                cpu_pred_low = cpu_pred_low * ratio_slack_pred;
+                gpu_pred_high = gpu_pred_high * ratio_slack_pred * ratio_slack_pred;
+                gpu_pred_low = gpu_pred_low * ratio_slack_pred * ratio_slack_pred;
+
+                printf("iter:%d GPU time pred:%f\n", iter, gpu_pred_high);
+                printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
+
                 if (timing) {
                     //end gpu timing
                     cudaEventRecord(stop_gpu, 0);
@@ -227,6 +250,7 @@ magma_dgeqrf(
                     cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
                     cudaEventDestroy(start_gpu);
                     cudaEventDestroy(stop_gpu);
+
                     printf("iter:%d GPU time:%f\n", iter, gpu_time);
                 }
 

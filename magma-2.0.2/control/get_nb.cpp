@@ -187,7 +187,7 @@ magma_int_t magma_get_dgeqrf_nb( magma_int_t m, magma_int_t n )
     }
     else {                     // 1.x and 2.x Fermi
         if      (minmn <  4096) nb = 64;
-        else                    nb = 256;
+        else                    nb = 128;
     }
     return nb;
 }
