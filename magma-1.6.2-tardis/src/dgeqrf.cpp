@@ -16,134 +16,134 @@
 #include <sys/time.h>
 #include <signal.h>
 
-int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core);
-static void signal_handler_gpu(int signal);
-static void signal_handler_cpu(int signal);
+       int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core);
+       static void signal_handler_gpu(int signal);
+       static void signal_handler_cpu(int signal);
 
-static void set_alarm(double s);
-static void initialize_handler(int type);
+       static void set_alarm(double s);
+       static void initialize_handler(int type);
 
 
-static struct itimerval itv;
+       static struct itimerval itv;
 
-void testDVFS(int iter){
+       void testDVFS(int iter){
 
-                    cudaEvent_t start_dvfs, stop_dvfs;
-                    float dvfs_time = 0.0;
+        cudaEvent_t start_dvfs, stop_dvfs;
+        float dvfs_time = 0.0;
                     //start gpu timing
-                    cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
+        cudaEventCreate(&start_dvfs);
+        cudaEventCreate(&stop_dvfs);
+        cudaEventRecord(start_dvfs, 0);
 
-                    SetGPUFreq(324, 324);
+        SetGPUFreq(324, 324);
 
                     //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+        cudaEventRecord(stop_dvfs, 0);
+        cudaEventSynchronize(stop_dvfs);
+        cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+        cudaEventDestroy(start_dvfs);
+        cudaEventDestroy(stop_dvfs);
+        printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
 
                     //start gpu timing
-                    cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-                    SetGPUFreq(2600, 705);
-                    
+        cudaEventCreate(&start_dvfs);
+        cudaEventCreate(&stop_dvfs);
+        cudaEventRecord(start_dvfs, 0);
+        SetGPUFreq(2600, 705);
+
                     //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+        cudaEventRecord(stop_dvfs, 0);
+        cudaEventSynchronize(stop_dvfs);
+        cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+        cudaEventDestroy(start_dvfs);
+        cudaEventDestroy(stop_dvfs);
+        printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
 
                                         //start gpu timing
-                    cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-                    SetGPUFreq(324, 324);
-                    
+        cudaEventCreate(&start_dvfs);
+        cudaEventCreate(&stop_dvfs);
+        cudaEventRecord(start_dvfs, 0);
+        SetGPUFreq(324, 324);
+
                     //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+        cudaEventRecord(stop_dvfs, 0);
+        cudaEventSynchronize(stop_dvfs);
+        cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+        cudaEventDestroy(start_dvfs);
+        cudaEventDestroy(stop_dvfs);
+        printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
 
                     //start gpu timing
-                    cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-                    SetGPUFreq(2600, 705);
-                    
+        cudaEventCreate(&start_dvfs);
+        cudaEventCreate(&stop_dvfs);
+        cudaEventRecord(start_dvfs, 0);
+        SetGPUFreq(2600, 705);
+
                     //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+        cudaEventRecord(stop_dvfs, 0);
+        cudaEventSynchronize(stop_dvfs);
+        cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+        cudaEventDestroy(start_dvfs);
+        cudaEventDestroy(stop_dvfs);
+        printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
 
                                         //start gpu timing
-                    cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-                    SetGPUFreq(324, 324);
-                    
-                    //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+        cudaEventCreate(&start_dvfs);
+        cudaEventCreate(&stop_dvfs);
+        cudaEventRecord(start_dvfs, 0);
+        SetGPUFreq(324, 324);
 
-                    cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-                    SetGPUFreq(324, 324);
-                    
                     //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+        cudaEventRecord(stop_dvfs, 0);
+        cudaEventSynchronize(stop_dvfs);
+        cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+        cudaEventDestroy(start_dvfs);
+        cudaEventDestroy(stop_dvfs);
+        printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+        cudaEventCreate(&start_dvfs);
+        cudaEventCreate(&stop_dvfs);
+        cudaEventRecord(start_dvfs, 0);
+        SetGPUFreq(324, 324);
+
+                    //end gpu timing
+        cudaEventRecord(stop_dvfs, 0);
+        cudaEventSynchronize(stop_dvfs);
+        cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+        cudaEventDestroy(start_dvfs);
+        cudaEventDestroy(stop_dvfs);
+        printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
 
                     //start gpu timing
-                    cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-                    SetGPUFreq(2600, 705);
-                    
+        cudaEventCreate(&start_dvfs);
+        cudaEventCreate(&stop_dvfs);
+        cudaEventRecord(start_dvfs, 0);
+        SetGPUFreq(2600, 705);
+
                     //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+        cudaEventRecord(stop_dvfs, 0);
+        cudaEventSynchronize(stop_dvfs);
+        cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+        cudaEventDestroy(start_dvfs);
+        cudaEventDestroy(stop_dvfs);
+        printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
 
 
                     //start gpu timing
-                    cudaEventCreate(&start_dvfs);
-                    cudaEventCreate(&stop_dvfs);
-                    cudaEventRecord(start_dvfs, 0);
-                    SetGPUFreq(2600, 705);
-                    
-                    //end gpu timing
-                    cudaEventRecord(stop_dvfs, 0);
-                    cudaEventSynchronize(stop_dvfs);
-                    cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
-                    cudaEventDestroy(start_dvfs);
-                    cudaEventDestroy(stop_dvfs);
-                    printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+        cudaEventCreate(&start_dvfs);
+        cudaEventCreate(&stop_dvfs);
+        cudaEventRecord(start_dvfs, 0);
+        SetGPUFreq(2600, 705);
 
-}
+                    //end gpu timing
+        cudaEventRecord(stop_dvfs, 0);
+        cudaEventSynchronize(stop_dvfs);
+        cudaEventElapsedTime(&dvfs_time, start_dvfs, stop_dvfs);
+        cudaEventDestroy(start_dvfs);
+        cudaEventDestroy(stop_dvfs);
+        printf("iter:%d dvfs time:%f\n", iter, dvfs_time);
+
+    }
 
 /**
     Purpose
@@ -226,95 +226,95 @@ void testDVFS(int iter){
 
     @ingroup magma_dgeqrf_comp
     ********************************************************************/
-extern "C" magma_int_t
-magma_dgeqrf(
-    magma_int_t m, magma_int_t n,
-    double *A,    magma_int_t lda, double *tau,
-    double *work, magma_int_t lwork,
-    magma_int_t *info )
-{
+    extern "C" magma_int_t
+    magma_dgeqrf(
+        magma_int_t m, magma_int_t n,
+        double *A,    magma_int_t lda, double *tau,
+        double *work, magma_int_t lwork,
+        magma_int_t *info )
+    {
     #define  A(i,j) ( A + (i) + (j)*lda )
     #define dA(i,j) (dA + (i) + (j)*ldda)
 
-    double *dA, *dwork, *dT;
-    double c_one = MAGMA_D_ONE;
+        double *dA, *dwork, *dT;
+        double c_one = MAGMA_D_ONE;
 
-    magma_int_t i, k, lddwork, old_i, old_ib;
-    magma_int_t ib, ldda;
+        magma_int_t i, k, lddwork, old_i, old_ib;
+        magma_int_t ib, ldda;
 
     /* Function Body */
-    *info = 0;
-    magma_int_t nb = magma_get_dgeqrf_nb(min(m, n));
+        *info = 0;
+        magma_int_t nb = magma_get_dgeqrf_nb(min(m, n));
 
     // need 2*nb*nb to store T and upper triangle of V simultaneously
-    magma_int_t lwkopt = max(n*nb, 2*nb*nb);
-    work[0] = MAGMA_D_MAKE( (double)lwkopt, 0 );
-    int lquery = (lwork == -1);
-    if (m < 0) {
-        *info = -1;
-    } else if (n < 0) {
-        *info = -2;
-    } else if (lda < max(1,m)) {
-        *info = -4;
-    } else if (lwork < max(1, lwkopt) && ! lquery) {
-        *info = -7;
-    }
-    if (*info != 0) {
-        magma_xerbla( __func__, -(*info) );
-        return *info;
-    }
-    else if (lquery)
-        return *info;
+        magma_int_t lwkopt = max(n*nb, 2*nb*nb);
+        work[0] = MAGMA_D_MAKE( (double)lwkopt, 0 );
+        int lquery = (lwork == -1);
+        if (m < 0) {
+            *info = -1;
+        } else if (n < 0) {
+            *info = -2;
+        } else if (lda < max(1,m)) {
+            *info = -4;
+        } else if (lwork < max(1, lwkopt) && ! lquery) {
+            *info = -7;
+        }
+        if (*info != 0) {
+            magma_xerbla( __func__, -(*info) );
+            return *info;
+        }
+        else if (lquery)
+            return *info;
 
-    k = min(m,n);
-    if (k == 0) {
-        work[0] = c_one;
-        return *info;
-    }
+        k = min(m,n);
+        if (k == 0) {
+            work[0] = c_one;
+            return *info;
+        }
 
     // largest N for larfb is n-nb (trailing matrix lacks 1st panel)
-    lddwork = ((n+31)/32)*32 - nb;
-    ldda    = ((m+31)/32)*32;
+        lddwork = ((n+31)/32)*32 - nb;
+        ldda    = ((m+31)/32)*32;
 
-    magma_int_t ngpu = magma_num_gpus();
-    if ( ngpu > 1 ) {
+        magma_int_t ngpu = magma_num_gpus();
+        if ( ngpu > 1 ) {
         /* call multiple-GPU interface  */
-        return magma_dgeqrf4(ngpu, m, n, A, lda, tau, work, lwork, info);
-    }
+            return magma_dgeqrf4(ngpu, m, n, A, lda, tau, work, lwork, info);
+        }
 
     // allocate space for dA, dwork, and dT
-    if (MAGMA_SUCCESS != magma_dmalloc( &dA, n*ldda + nb*lddwork + nb*nb )) {
+        if (MAGMA_SUCCESS != magma_dmalloc( &dA, n*ldda + nb*lddwork + nb*nb )) {
         /* Switch to the "out-of-core" (out of GPU-memory) version */
-        return magma_dgeqrf_ooc(m, n, A, lda, tau, work, lwork, info);
-    }
+            return magma_dgeqrf_ooc(m, n, A, lda, tau, work, lwork, info);
+        }
 
     /* Define user stream if current stream is NULL */
-    magma_queue_t stream[2];
-    
-    magma_queue_t orig_stream;
-    magmablasGetKernelStream( &orig_stream );
+        magma_queue_t stream[2];
 
-    magma_queue_create( &stream[0] );
-    if (orig_stream == NULL) {
-        magma_queue_create( &stream[1] );
-        magmablasSetKernelStream(stream[1]);
-    }
-    else {
-        stream[1] = orig_stream;
-    }
+        magma_queue_t orig_stream;
+        magmablasGetKernelStream( &orig_stream );
 
-    dwork = dA + n*ldda;
-    dT    = dA + n*ldda + nb*lddwork;
+        magma_queue_create( &stream[0] );
+        if (orig_stream == NULL) {
+            magma_queue_create( &stream[1] );
+            magmablasSetKernelStream(stream[1]);
+        }
+        else {
+            stream[1] = orig_stream;
+        }
 
-    if ( (nb > 1) && (nb < k) ) {
+        dwork = dA + n*ldda;
+        dT    = dA + n*ldda + nb*lddwork;
+
+        if ( (nb > 1) && (nb < k) ) {
 
           //  set_timer();
         //20480
-        double gpu_time0_lowest = 2103.143311;
-        double gpu_time0_highest = 461.955383;
+            double gpu_time0_lowest = 2103.143311;
+            double gpu_time0_highest = 461.955383;
         //double cpu_time0 = 0;
-        double cpu_time0_lowest = 794.636108;
-        double cpu_time0_highest = 386.132507;
+            double cpu_time0_lowest = 794.636108;
+            double cpu_time0_highest = 386.132507;
 
         //15360
         // double gpu_time0_lowest = 1038.393188;
@@ -331,155 +331,137 @@ magma_dgeqrf(
         // double gpu_time0_highest = 15.418176;
         // double cpu_time0 = 56.631870;
 
-        float cpu_time = 0.0;
-        float gpu_time = 0.0;
-        
-        cudaEvent_t start_cpu, stop_cpu;
-        cudaEvent_t start_gpu, stop_gpu;
-        
+            float cpu_time = 0.0;
+            float gpu_time = 0.0;
+
+            cudaEvent_t start_cpu, stop_cpu;
+            cudaEvent_t start_gpu, stop_gpu;
 
 
-        double gpu_time_pred = gpu_time0_highest;
-        double gpu_time_pred_lowest = gpu_time0_lowest;
-        double cpu_time_pred = cpu_time0_highest;
-        double cpu_time_pred_lowest = cpu_time0_lowest;
 
-        double ratio_split_freq = 0;
-        double seconds_until_interrupt = 0;
-        int iter = 0;
+            double gpu_time_pred = gpu_time0_highest;
+            double gpu_time_pred_lowest = gpu_time0_lowest;
+            double cpu_time_pred = cpu_time0_highest;
+            double cpu_time_pred_lowest = cpu_time0_lowest;
+
+            double ratio_split_freq = 0;
+            double seconds_until_interrupt = 0;
+            int iter = 0;
         //SetGPUFreq(2600, 705);
         //SetGPUFreq(324, 324);
-        bool timing = false;
-        bool timing_dvfs = false;
-        bool dvfs = true;
-        bool relax = true;
-        bool r2h = false;
+            bool timing = true;
+            bool timing_dvfs = false;
+            bool dvfs = false;
+            bool relax = false;
+            bool r2h = false;
 
-        cudaProfilerStart();
-        /* Use blocked code initially.
-           Asynchronously send the matrix to the GPU except the first panel. */
-        magma_dsetmatrix_async( m, n-nb,
-                                A(0,nb),  lda,
-                                dA(0,nb), ldda, stream[0] );
+            cudaProfilerStart();
+            /* Use blocked code initially.
+                Asynchronously send the matrix to the GPU except the first panel. */
+            magma_dsetmatrix_async( m, n-nb,
+                A(0,nb),  lda,
+                dA(0,nb), ldda, stream[0] );
 
-        old_i = 0;
-        old_ib = nb;
-        for (i = 0; i < k-nb; i += nb) {
-            
-            ib = min(k-i, nb);
-            if (i > 0) {
-	        /* download i-th panel */
-            magma_queue_sync( stream[1] );
+            old_i = 0;
+            old_ib = nb;
+            for (i = 0; i < k-nb; i += nb) {
 
-            magma_dgetmatrix_async( m-i, ib,
-                                    dA(i,i), ldda,
-                                    A(i,i),  lda, stream[0] );
+                ib = min(k-i, nb);
+                if (i > 0) {
+	               /* download i-th panel */
+                    magma_queue_sync( stream[1] );
 
-
-            double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
-            cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-            cpu_time_pred_lowest = cpu_time_pred_lowest * ratio_slack_pred;
-            gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-            gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
-            // if (timing) {
-            //     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
-            //     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-            //     gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-            //     gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
-            //     printf("iter:%d GPU time pred:%f\n", iter, gpu_time_pred);
-            //     printf("iter:%d CPU time pred:%f\n", iter, cpu_time_pred);
-                
-            //     ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
-            //     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
-            //     printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
-            //     printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
-            // }
+                    magma_dgetmatrix_async( m-i, ib,
+                        dA(i,i), ldda,
+                        A(i,i),  lda, stream[0] );
 
 
+                    double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+                    cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+                    cpu_time_pred_lowest = cpu_time_pred_lowest * ratio_slack_pred;
+                    gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+                    gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
 
-            if (dvfs && iter > 1 && iter < 1*((k-nb)/nb)) {
-                if (cpu_time_pred > gpu_time_pred) { //slack on GPU
-                    ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
-                    seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
-                    // if (relax && ratio_split_freq > 0.05) {
-                    //     initialize_handler(0);
-                    //     SetGPUFreq(324, 324);
-                    //     if (ratio_split_freq < 1)
-                    //         //set_timer(seconds_until_interrupt);
-                    //         set_alarm(seconds_until_interrupt);
-                    //     else
-                    //         //set_timer(cpu_time_pred);
-                    //         set_alarm(cpu_time_pred);
-                    // }
-                } else { //slack on CPU
-                    ratio_split_freq = (gpu_time_pred - cpu_time_pred) / (cpu_time_pred * ((cpu_time0_lowest / cpu_time0_highest) - 1));
-                    seconds_until_interrupt = cpu_time_pred_lowest * ratio_split_freq;
-                    if (relax && ratio_split_freq > 0.05) {
-                        initialize_handler(1);
-                        system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
-                        if (ratio_split_freq < 1)
-                            set_alarm(seconds_until_interrupt);
-                        else
-                            set_alarm(gpu_time_pred);
+
+                    if (timing) {
+                        double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+                        cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+                        gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+                        gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
+                        printf("iter:%d GPU time pred:%f\n", iter, gpu_time_pred);
+                        printf("iter:%d CPU time pred:%f\n", iter, cpu_time_pred);
+
+                        ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
+                        seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
+                        printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
+                        printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
                     }
-                 }
-            }
-
-            if (r2h) {
-                initialize_handler(3);
-                set_alarm(gpu_time_pred);
-            }
-
-            if (timing_dvfs) {
-    		  printf("point 4\n");
-    		  testDVFS(iter);
-            }
 
 
-            if (timing) {
-                //start gpu timing
-                cudaEventCreate(&start_gpu);
-                cudaEventCreate(&stop_gpu);
-                cudaEventRecord(start_gpu, 0);
-            }
 
-            /* Apply H' to A(i:m,i+2*ib:n) from the left */
-            magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
-                              m-old_i, n-old_i-2*old_ib, old_ib,
-                              dA(old_i, old_i),          ldda, dT,    nb,
-                              dA(old_i, old_i+2*old_ib), ldda, dwork, lddwork);
+                    if (dvfs && iter > 1 && iter < 1*((k-nb)/nb)) {
+                        if (cpu_time_pred > gpu_time_pred) { //slack on GPU
+                            ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
+                            seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
+                            if (relax && ratio_split_freq > 0.05) {
+                                initialize_handler(0);
+                                SetGPUFreq(324, 324);
+                                if (ratio_split_freq < 1)
+                                    //set_timer(seconds_until_interrupt);
+                                    set_alarm(seconds_until_interrupt);
+                                else
+                                    //set_timer(cpu_time_pred);
+                                    set_alarm(cpu_time_pred);
+                            }
+                        } else { //slack on CPU
+                            ratio_split_freq = (gpu_time_pred - cpu_time_pred) / (cpu_time_pred * ((cpu_time0_lowest / cpu_time0_highest) - 1));
+                            seconds_until_interrupt = cpu_time_pred_lowest * ratio_split_freq;
+                            if (relax && ratio_split_freq > 0.05) {
+                                initialize_handler(1);
+                                system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+                                if (ratio_split_freq < 1)
+                                    set_alarm(seconds_until_interrupt);
+                                else
+                                    set_alarm(gpu_time_pred);
+                            }
+                        }
+                    }
 
-            if (timing) {
-                //end gpu timing
-                cudaEventRecord(stop_gpu, 0);
-                cudaEventSynchronize(stop_gpu);
-                cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
-                cudaEventDestroy(start_gpu);
-                cudaEventDestroy(stop_gpu);
-                printf("iter:%d GPU time:%f\n", iter, gpu_time);
-            }
+                    if (r2h) {
+                        initialize_handler(3);
+                        set_alarm(gpu_time_pred);
+                    }
 
+                    if (timing) {
+                        //start gpu timing
+                        cudaEventCreate(&start_gpu);
+                        cudaEventCreate(&stop_gpu);
+                        cudaEventRecord(start_gpu, 0);
+                    }
 
-    		if (timing_dvfs) {
-    		  printf("point 5\n");
-    		  testDVFS(iter);
-    		}
+                    /* Apply H' to A(i:m,i+2*ib:n) from the left */
+                    magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
+                      m-old_i, n-old_i-2*old_ib, old_ib,
+                      dA(old_i, old_i),          ldda, dT,    nb,
+                      dA(old_i, old_i+2*old_ib), ldda, dwork, lddwork);
 
-            magma_dgetmatrix_async( i, ib,
-                                    dA(0,i), ldda,
-                                    A(0,i),  lda, stream[1] );
+                    if (timing) {
+                        //end gpu timing
+                        cudaEventRecord(stop_gpu, 0);
+                        cudaEventSynchronize(stop_gpu);
+                        cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
+                        cudaEventDestroy(start_gpu);
+                        cudaEventDestroy(stop_gpu);
+                        printf("iter:%d GPU time:%f\n", iter, gpu_time);
+                    }
 
-    		if (timing_dvfs) {
-    		  printf("point 6\n");
-    		  testDVFS(iter);
-    		}
-    		magma_queue_sync( stream[0] );
+                    magma_dgetmatrix_async( i, ib,
+                        dA(0,i), ldda,
+                        A(0,i),  lda, stream[1] );
 
-    		if (timing_dvfs) {
-    		  printf("point 7\n");
-    		  testDVFS(iter);
-    		}
-        }
+                    magma_queue_sync( stream[0] );
+
+                } //end of i > 0
 
                 magma_int_t rows = m-i;
 
@@ -491,12 +473,11 @@ magma_dgeqrf(
                 }
 
                 lapackf77_dgeqrf(&rows, &ib, A(i,i), &lda, tau+i, work, &lwork, info);
-                
 
                 /* Form the triangular factor of the block reflector
                    H = H(i) H(i+1) . . . H(i+ib-1) */
                 lapackf77_dlarft( MagmaForwardStr, MagmaColumnwiseStr,
-                                  &rows, &ib, A(i,i), &lda, tau+i, work, &ib);
+                  &rows, &ib, A(i,i), &lda, tau+i, work, &ib);
 
                 if (timing) {
                     //end cpu timing
@@ -513,32 +494,18 @@ magma_dgeqrf(
                     }
                 }
 
-        	    if (timing_dvfs) {
-        	      printf("point 8\n");
-        	      testDVFS(iter);
-        	    }
-                
-                    // if (iter == 1) {
-                    //     cpu_time_pred = cpu_time;
-                    //     gpu_time_pred = gpu_time;
-                    // }
+                // if (iter == 1) {
+                //     cpu_time_pred = cpu_time;
+                //     gpu_time_pred = gpu_time;
+                // }
 
-                    dpanel_to_q(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
+                dpanel_to_q(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
 
 
-        	    if (timing_dvfs) {
-        	      printf("point 9\n");
-        	      testDVFS(iter);
-        	    }
-	    
+
                 /* download the i-th V matrix */
                 magma_dsetmatrix_async( rows, ib, A(i,i), lda, dA(i,i), ldda, stream[0] );
 
-        	    if (timing_dvfs) {
-        	      printf("point 10\n");
-        	      testDVFS(iter);
-        	    }
-        	    
                 /* download the T matrix */
                 magma_queue_sync( stream[1] );
 
@@ -546,88 +513,64 @@ magma_dgeqrf(
                     SetGPUFreq(2600, 705);
                 }
 
+                magma_dsetmatrix_async( ib, ib, work, ib, dT, nb, stream[0] );
 
-        	    if (timing_dvfs) {
-        	      printf("point 11\n");
-        	      testDVFS(iter);
-        	    }
-                    magma_dsetmatrix_async( ib, ib, work, ib, dT, nb, stream[0] );
-
-        	    if (timing_dvfs) {
-        	      printf("point 12\n");
-        	      testDVFS(iter);
-        	    }
-        	    
-        	    magma_queue_sync( stream[0] );
-
-	    
+                magma_queue_sync( stream[0] );
 
                 if (i + ib < n) {
-        	      if (timing_dvfs) {
-            		printf("point 13\n");
-            		testDVFS(iter);
-        	      }
-	      
-
-	      if (i+ib < k-nb) {
-                    /* Apply H' to A(i:m,i+ib:i+2*ib) from the left (look-ahead) */
-                    magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
-                                      rows, ib, ib,
-                                      dA(i, i   ), ldda, dT,    nb,
-                                      dA(i, i+ib), ldda, dwork, lddwork);
-                if (timing_dvfs) {
-        		  printf("point 14\n");
-        		  testDVFS(iter);
+                    if (i+ib < k-nb) {
+                        /* Apply H' to A(i:m,i+ib:i+2*ib) from the left (look-ahead) */
+                        magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
+                          rows, ib, ib,
+                          dA(i, i   ), ldda, dT,    nb,
+                          dA(i, i+ib), ldda, dwork, lddwork);
+                        dq_to_panel(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
+                    } else {
+                        /* After last panel, update whole trailing matrix. */
+                        /* Apply H' to A(i:m,i+ib:n) from the left */
+                        magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
+                          rows, n-i-ib, ib,
+                          dA(i, i   ), ldda, dT,    nb,
+                          dA(i, i+ib), ldda, dwork, lddwork);
+                        dq_to_panel(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
+                    }
                 }
 
-                    dq_to_panel(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
-                }
-                else {
-                    /* After last panel, update whole trailing matrix. */
-                    /* Apply H' to A(i:m,i+ib:n) from the left */
-                    magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
-                                      rows, n-i-ib, ib,
-                                      dA(i, i   ), ldda, dT,    nb,
-                                      dA(i, i+ib), ldda, dwork, lddwork);
-                    dq_to_panel(MagmaUpper, ib, A(i,i), lda, work+ib*ib);
-                }
-	      if (timing_dvfs) {
-    		printf("point 15\n");
-    		testDVFS(iter);
-	      }
-	      
-	      old_i  = i;
+                old_i  = i;
                 old_ib = ib;
+                iter++;
             }
-            iter++;
+            
 
 
         }
+
+
         cudaProfilerStop();
-    } else {
-        i = 0;
-    }
-    
-    /* Use unblocked code to factor the last or only block. */
-    if (i < k) {
-        ib = n-i;
-        if (i != 0) {
-            magma_dgetmatrix_async( m, ib, dA(0,i), ldda, A(0,i), lda, stream[1] );
-            magma_queue_sync( stream[1] );
+        } else {
+            i = 0;
         }
-        magma_int_t rows = m-i;
-        lapackf77_dgeqrf(&rows, &ib, A(i,i), &lda, tau+i, work, &lwork, info);
-    }
 
-    magma_queue_destroy( stream[0] );
-    if (orig_stream == NULL) {
-        magma_queue_destroy( stream[1] );
-    }
-    magmablasSetKernelStream( orig_stream );
+            /* Use unblocked code to factor the last or only block. */
+        if (i < k) {
+            ib = n-i;
+            if (i != 0) {
+                magma_dgetmatrix_async( m, ib, dA(0,i), ldda, A(0,i), lda, stream[1] );
+                magma_queue_sync( stream[1] );
+            }
+            magma_int_t rows = m-i;
+            lapackf77_dgeqrf(&rows, &ib, A(i,i), &lda, tau+i, work, &lwork, info);
+        }
 
-    magma_free( dA );
-    
-    return *info;
+        magma_queue_destroy( stream[0] );
+        if (orig_stream == NULL) {
+            magma_queue_destroy( stream[1] );
+        }
+        magmablasSetKernelStream( orig_stream );
+
+        magma_free( dA );
+
+        return *info;
 } /* magma_dgeqrf */
 
 
@@ -650,7 +593,7 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
         //printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
         return 0;
-     
+
     }
 }
 

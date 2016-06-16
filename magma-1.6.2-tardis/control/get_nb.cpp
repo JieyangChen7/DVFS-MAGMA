@@ -169,9 +169,9 @@ magma_int_t magma_get_dgeqrf_nb( magma_int_t m )
 {
     magma_int_t arch = magma_getdevice_arch();
     if ( arch >= 300 ) {       // 3.x Kepler
-        if      (m <  3072) return 64;
-        else if (m < 10240) return 128;
-        else                return 256;
+        if      (m <  3072) return 128;
+        else if (m < 10240) return 256;
+        else                return 512;
     }
     else {                     // 1.x and 2.x Fermi
         if      (m <  4096) return 64;
