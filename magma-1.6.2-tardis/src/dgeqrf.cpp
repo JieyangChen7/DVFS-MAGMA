@@ -368,134 +368,118 @@ magma_dgeqrf(
             
             ib = min(k-i, nb);
             if (i > 0) {
-    	      if (timing_dvfs) {
-        		printf("point 1\n");
-        		testDVFS(iter);
-    	      }
-
 	        /* download i-th panel */
             magma_queue_sync( stream[1] );
-
-    		if (timing_dvfs) {
-    		  printf("point 2\n");
-    		  testDVFS(iter);
-    		}
 
             magma_dgetmatrix_async( m-i, ib,
                                     dA(i,i), ldda,
                                     A(i,i),  lda, stream[0] );
 
- 
+
+            double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+            cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+            cpu_time_pred_lowest = cpu_time_pred_lowest * ratio_slack_pred;
+            gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+            gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
+            // if (timing) {
+            //     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+            //     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
+            //     gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
+            //     gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
+            //     printf("iter:%d GPU time pred:%f\n", iter, gpu_time_pred);
+            //     printf("iter:%d CPU time pred:%f\n", iter, cpu_time_pred);
+                
+            //     ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
+            //     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
+            //     printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
+            //     printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
+            // }
+
+
+
+            if (dvfs && iter > 1 && iter < 1*((k-nb)/nb)) {
+                if (cpu_time_pred > gpu_time_pred) { //slack on GPU
+                    ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
+                    seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
+                    // if (relax && ratio_split_freq > 0.05) {
+                    //     initialize_handler(0);
+                    //     SetGPUFreq(324, 324);
+                    //     if (ratio_split_freq < 1)
+                    //         //set_timer(seconds_until_interrupt);
+                    //         set_alarm(seconds_until_interrupt);
+                    //     else
+                    //         //set_timer(cpu_time_pred);
+                    //         set_alarm(cpu_time_pred);
+                    // }
+                } else { //slack on CPU
+                    ratio_split_freq = (gpu_time_pred - cpu_time_pred) / (cpu_time_pred * ((cpu_time0_lowest / cpu_time0_highest) - 1));
+                    seconds_until_interrupt = cpu_time_pred_lowest * ratio_split_freq;
+                    if (relax && ratio_split_freq > 0.05) {
+                        initialize_handler(1);
+                        system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+                        if (ratio_split_freq < 1)
+                            set_alarm(seconds_until_interrupt);
+                        else
+                            set_alarm(gpu_time_pred);
+                    }
+                 }
+            }
+
+            if (r2h) {
+                initialize_handler(3);
+                set_alarm(gpu_time_pred);
+            }
+
+            if (timing_dvfs) {
+    		  printf("point 4\n");
+    		  testDVFS(iter);
+            }
+
+
+            if (timing) {
+                //start gpu timing
+                cudaEventCreate(&start_gpu);
+                cudaEventCreate(&stop_gpu);
+                cudaEventRecord(start_gpu, 0);
+            }
+
+            /* Apply H' to A(i:m,i+2*ib:n) from the left */
+            magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
+                              m-old_i, n-old_i-2*old_ib, old_ib,
+                              dA(old_i, old_i),          ldda, dT,    nb,
+                              dA(old_i, old_i+2*old_ib), ldda, dwork, lddwork);
+
+            if (timing) {
+                //end gpu timing
+                cudaEventRecord(stop_gpu, 0);
+                cudaEventSynchronize(stop_gpu);
+                cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
+                cudaEventDestroy(start_gpu);
+                cudaEventDestroy(stop_gpu);
+                printf("iter:%d GPU time:%f\n", iter, gpu_time);
+            }
+
+
     		if (timing_dvfs) {
-    		  printf("point 3\n");
+    		  printf("point 5\n");
     		  testDVFS(iter);
     		}
-		
-                double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
-                cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-                cpu_time_pred_lowest = cpu_time_pred_lowest * ratio_slack_pred;
-                gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-                gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
-                // if (timing) {
-                //     double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
-                //     cpu_time_pred = cpu_time_pred * ratio_slack_pred;
-                //     gpu_time_pred = gpu_time_pred * ratio_slack_pred * ratio_slack_pred;
-                //     gpu_time_pred_lowest = gpu_time_pred_lowest * ratio_slack_pred * ratio_slack_pred;
-                //     printf("iter:%d GPU time pred:%f\n", iter, gpu_time_pred);
-                //     printf("iter:%d CPU time pred:%f\n", iter, cpu_time_pred);
-                    
-                //     ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
-                //     seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
-                //     printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
-                //     printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
-                // }
 
+            magma_dgetmatrix_async( i, ib,
+                                    dA(0,i), ldda,
+                                    A(0,i),  lda, stream[1] );
 
+    		if (timing_dvfs) {
+    		  printf("point 6\n");
+    		  testDVFS(iter);
+    		}
+    		magma_queue_sync( stream[0] );
 
-                if (dvfs && iter > 1 && iter < 1*((k-nb)/nb)) {
-                    if (cpu_time_pred > gpu_time_pred) { //slack on GPU
-
-                        ratio_split_freq = (cpu_time_pred - gpu_time_pred) / (gpu_time_pred * ((gpu_time0_lowest / gpu_time0_highest) - 1));
-                        seconds_until_interrupt = gpu_time_pred_lowest * ratio_split_freq;
-                        // if (relax && ratio_split_freq > 0.05) {
-                        //     initialize_handler(0);
-                        //     SetGPUFreq(324, 324);
-                        //     if (ratio_split_freq < 1)
-                        //         //set_timer(seconds_until_interrupt);
-                        //         set_alarm(seconds_until_interrupt);
-                        //     else
-                        //         //set_timer(cpu_time_pred);
-                        //         set_alarm(cpu_time_pred);
-                        // }
-                    } else { //slack on CPU
-                        ratio_split_freq = (gpu_time_pred - cpu_time_pred) / (cpu_time_pred * ((cpu_time0_lowest / cpu_time0_highest) - 1));
-                        seconds_until_interrupt = cpu_time_pred_lowest * ratio_split_freq;
-                        if (relax && ratio_split_freq > 0.05) {
-                            initialize_handler(1);
-                            system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
-                            if (ratio_split_freq < 1)
-                                set_alarm(seconds_until_interrupt);
-                            else
-                                set_alarm(gpu_time_pred);
-                        }
-                     }
-                }
-
-                if (r2h) {
-                    initialize_handler(3);
-                    set_alarm(gpu_time_pred);
-                }
-
-                if (timing_dvfs) {
-        		  printf("point 4\n");
-        		  testDVFS(iter);
-                }
-
-
-                if (timing) {
-                    //start gpu timing
-                    cudaEventCreate(&start_gpu);
-                    cudaEventCreate(&stop_gpu);
-                    cudaEventRecord(start_gpu, 0);
-                }
-
-                /* Apply H' to A(i:m,i+2*ib:n) from the left */
-                magma_dlarfb_gpu( MagmaLeft, MagmaConjTrans, MagmaForward, MagmaColumnwise,
-                                  m-old_i, n-old_i-2*old_ib, old_ib,
-                                  dA(old_i, old_i),          ldda, dT,    nb,
-                                  dA(old_i, old_i+2*old_ib), ldda, dwork, lddwork);
-
-                if (timing) {
-                    //end gpu timing
-                    cudaEventRecord(stop_gpu, 0);
-                    cudaEventSynchronize(stop_gpu);
-                    cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
-                    cudaEventDestroy(start_gpu);
-                    cudaEventDestroy(stop_gpu);
-                    printf("iter:%d GPU time:%f\n", iter, gpu_time);
-                }
-
-
-        		if (timing_dvfs) {
-        		  printf("point 5\n");
-        		  testDVFS(iter);
-        		}
-
-                magma_dgetmatrix_async( i, ib,
-                                        dA(0,i), ldda,
-                                        A(0,i),  lda, stream[1] );
-
-        		if (timing_dvfs) {
-        		  printf("point 6\n");
-        		  testDVFS(iter);
-        		}
-        		magma_queue_sync( stream[0] );
-
-        		if (timing_dvfs) {
-        		  printf("point 7\n");
-        		  testDVFS(iter);
-        		}
-            }
+    		if (timing_dvfs) {
+    		  printf("point 7\n");
+    		  testDVFS(iter);
+    		}
+        }
 
                 magma_int_t rows = m-i;
 
