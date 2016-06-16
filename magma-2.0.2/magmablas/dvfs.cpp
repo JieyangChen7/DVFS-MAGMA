@@ -3,6 +3,7 @@
 #include <sys/time.h>
 #include <signal.h>
 
+static struct itimerval itv;
 
 // NVIDIA NVML library function wrapper for GPU DVFS.
 int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
