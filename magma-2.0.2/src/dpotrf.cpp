@@ -11,7 +11,7 @@
 #include "magma_internal.h"
 #include "cuda_runtime_api.h"
 #include "cuda.h"
-#include "dvfs.h"
+
 
 // === Define what BLAS to use ============================================
     #undef  magma_dtrsm

@@ -257,7 +257,7 @@ magma_dgeqrf(
                                 set_alarm(seconds_until_interrupt);
                             else
                                 //set_timer(cpu_time_pred);
-                                set_alarm(cpu_time_pred);
+                                set_alarm(cpu_pred_high);
                         }
                     } else { //slack on CPU
                         ratio_split_freq = (gpu_pred_high - cpu_pred_high) / (cpu_pred_high * ((cpu_iter1_low / cpu_iter1_high) - 1));
@@ -268,7 +268,7 @@ magma_dgeqrf(
                             if (ratio_split_freq < 1)
                                 set_alarm(seconds_until_interrupt);
                             else
-                                set_alarm(gpu_time_pred);
+                                set_alarm(gpu_pred_high);
                         }
                     }
                 }
