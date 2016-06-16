@@ -4,6 +4,8 @@
 #include "nvml.h"
 #include <sys/time.h>
 #include <signal.h>
+#include <sched.h>
+#include <unistd.h>
 
 static struct itimerval itv;
 
@@ -69,4 +71,27 @@ void initialize_handler(int type) {
     if (res != 0) {
         printf("sigaction error! \n");
     }
+}
+
+
+/*
+ *  Forces computation to be done on a given CPU.
+ *  @param: cpu - core for work to be done on
+ *  @return: 0 if successful, -1 if not
+ */
+int map_cpu(int cpu) {
+    int ret, nprocs;
+    cpu_set_t cpu_mask;
+
+    nprocs = sysconf(_SC_NPROCESSORS_CONF);//return 32, should be 16, does not matter.
+    CPU_ZERO(&cpu_mask);
+    CPU_SET(cpu%nprocs, &cpu_mask);
+
+    ret = sched_setaffinity(0, sizeof(cpu_mask), &cpu_mask);
+    ////int affinity = sched_getcpu();printf("Running on CPU %d\n", affinity);
+    if(ret == -1) {
+        perror("sched_setaffinity");
+        return -1;
+    }
+    return 0;
 }
