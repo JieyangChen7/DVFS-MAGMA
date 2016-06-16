@@ -61,7 +61,7 @@ CFLAGS   += -std=c99
 # gcc with MKL 10.3, Intel threads
 LIB       = -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lpthread -lstdc++ -lm -liomp5 -lgfortran
 
-LIB      += -lcublas -lcusparse -lcudart
+LIB      += -lcublas -lcusparse -lcudart -lnvidia-ml
 
 
 # --------------------
@@ -78,4 +78,5 @@ LIBDIR    = -L$(CUDADIR)/lib64 \
             -L$(MKLROOT)/lib/intel64
 
 INC       = -I$(CUDADIR)/include \
-            -I$(MKLROOT)/include
+            -I$(MKLROOT)/include \
+	    -I /home/lchen/NVML/tdk_5.319.85/nvml/include		
