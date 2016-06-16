@@ -11,7 +11,8 @@
        @generated from src/zgetrf.cpp normal z -> d, Mon May  2 23:30:04 2016
 */
 #include "magma_internal.h"
-
+#include "cuda_runtime_api.h"
+#include "cuda.h"
 
 /**
     Purpose

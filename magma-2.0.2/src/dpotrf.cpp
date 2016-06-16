@@ -9,7 +9,9 @@
        @generated from src/zpotrf.cpp normal z -> d, Mon May  2 23:30:01 2016
 */
 #include "magma_internal.h"
-
+#include "cuda_runtime_api.h"
+#include "cuda.h"
+       
 // === Define what BLAS to use ============================================
     #undef  magma_dtrsm
     #define magma_dtrsm magmablas_dtrsm
