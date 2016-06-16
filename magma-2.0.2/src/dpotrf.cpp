@@ -198,6 +198,32 @@ magma_dpotrf(
             }
         }
         else {
+
+
+            //used for timing CPU and GPU
+            int iter = 0;
+            float cpu_time = 0.0;
+            float gpu_time = 0.0;
+
+            double gpu_iter1_low = 2103.143311;
+            double gpu_iter1_high = 754.506104;
+            double cpu_iter1_low = 794.636108;
+            double cpu_iter1_high = 600.295227;
+
+            double gpu_pred_high = gpu_iter1_high;
+            double gpu_pred_low = gpu_iter1_low;
+            double cpu_pred_high = cpu_iter1_high;
+            double cpu_pred_low = cpu_iter1_low;
+
+            double ratio_split_freq = 0;
+            double seconds_until_interrupt = 0;
+
+            cudaEvent_t start_cpu, stop_cpu;
+            cudaEvent_t start_gpu, stop_gpu;
+
+            bool timing = true;
+            bool dvfs = false;
+            bool relax = false;
             //=========================================================
             // Compute the Cholesky factorization A = L*L'.
             for (j=0; j < n; j += nb) {
@@ -217,6 +243,12 @@ magma_dpotrf(
                                         dA(j,j), ldda,
                                          A(j,j), lda, queues[0] );
                 
+                if (timing) {
+                    //start gpu timing
+                    cudaEventCreate(&start_gpu);
+                    cudaEventCreate(&stop_gpu);
+                    cudaEventRecord(start_gpu, 0);
+                }
                 if (j+jb < n) {
                     magma_dgemm( MagmaNoTrans, MagmaConjTrans,
                                  n-j-jb, jb, j,
@@ -224,7 +256,16 @@ magma_dpotrf(
                                             dA(j,    0), ldda,
                                  c_one,     dA(j+jb, j), ldda, queues[1] );
                 }
-                
+                if (timing) {
+                    //end gpu timing
+                    cudaEventRecord(stop_gpu, 0);
+                    cudaEventSynchronize(stop_gpu);
+                    cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
+                    cudaEventDestroy(start_gpu);
+                    cudaEventDestroy(stop_gpu);
+
+                    printf("iter:%d GPU time:%f\n", iter, gpu_time);
+                }
                 magma_queue_sync( queues[0] );
                 
                 // this could be on any queue; it isn't needed until exit.
@@ -232,7 +273,31 @@ magma_dpotrf(
                                         dA(j, 0), ldda,
                                          A(j, 0), lda, queues[0] );
                 
+                if (timing) {
+                    //start cpu timing
+                    cudaEventCreate(&start_cpu);
+                    cudaEventCreate(&stop_cpu);
+                    cudaEventRecord(start_cpu, 0);
+                }
+
                 lapackf77_dpotrf( MagmaLowerStr, &jb, A(j, j), &lda, info );
+
+                if (timing) {
+                    //end cpu timing
+                    cudaEventRecord(stop_cpu, 0);
+                    cudaEventSynchronize(stop_cpu);
+                    cudaEventElapsedTime(&cpu_time, start_cpu, stop_cpu);
+                    cudaEventDestroy(start_cpu);
+                    cudaEventDestroy(stop_cpu);
+                    printf("iter:%d CPU time:%f\n", iter, cpu_time);
+                    if (gpu_time < cpu_time) {
+                        printf("slack: +\n");
+                    } else {
+                        printf("slack: -\n");
+                    }
+                }
+
+                
                 if (*info != 0) {
                     *info = *info + j;
                     break;

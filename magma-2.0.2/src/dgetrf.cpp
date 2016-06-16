@@ -211,6 +211,32 @@ magma_dgetrf(
         
         lapackf77_dgetrf( &m, &nb, work, &lda, ipiv, &iinfo );
 
+
+        //used for timing CPU and GPU
+        int iter = 0;
+        float cpu_time = 0.0;
+        float gpu_time = 0.0;
+
+        double gpu_iter1_low = 2103.143311;
+        double gpu_iter1_high = 754.506104;
+        double cpu_iter1_low = 794.636108;
+        double cpu_iter1_high = 600.295227;
+
+        double gpu_pred_high = gpu_iter1_high;
+        double gpu_pred_low = gpu_iter1_low;
+        double cpu_pred_high = cpu_iter1_high;
+        double cpu_pred_low = cpu_iter1_low;
+
+        double ratio_split_freq = 0;
+        double seconds_until_interrupt = 0;
+
+        cudaEvent_t start_cpu, stop_cpu;
+        cudaEvent_t start_gpu, stop_gpu;
+
+        bool timing = true;
+        bool dvfs = false;
+        bool relax = false;
+
         for( j = 0; j < s; j++ ) {
             // get j-th panel from device
             cols = maxm - j*nb;
@@ -221,6 +247,13 @@ magma_dgetrf(
                 
                 magma_dgetmatrix_async( m-j*nb, nb, dwork(0), cols, work, lda, queues[1] );
                 
+                if (timing) {
+                    //start gpu timing
+                    cudaEventCreate(&start_gpu);
+                    cudaEventCreate(&stop_gpu);
+                    cudaEventRecord(start_gpu, 0);
+                }
+
                 magma_dtrsm( MagmaRight, MagmaUpper, MagmaNoTrans, MagmaUnit,
                              n - (j+1)*nb, nb,
                              c_one, dAT(j-1,j-1), lddat,
@@ -231,10 +264,87 @@ magma_dgetrf(
                                         dAT(j,  j-1), lddat,
                              c_one,     dAT(j,  j+1), lddat, queues[0] );
                 
+
+
+                double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+                cpu_pred_high = cpu_pred_high * ratio_slack_pred;
+                cpu_pred_low = cpu_pred_low * ratio_slack_pred;
+                gpu_pred_high = gpu_pred_high * ratio_slack_pred * ratio_slack_pred;
+                gpu_pred_low = gpu_pred_low * ratio_slack_pred * ratio_slack_pred;
+
+                printf("iter:%d GPU time pred:%f\n", iter, gpu_pred_high);
+                printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
+
+                if (timing) {
+                    //end gpu timing
+                    cudaEventRecord(stop_gpu, 0);
+                    cudaEventSynchronize(stop_gpu);
+                    cudaEventElapsedTime(&gpu_time, start_gpu, stop_gpu);
+                    cudaEventDestroy(start_gpu);
+                    cudaEventDestroy(stop_gpu);
+
+                    printf("iter:%d GPU time:%f\n", iter, gpu_time);
+                }
+
+                if (dvfs && iter > 1 && iter < 1*(min_mn-nb)/nb) {
+                    if (cpu_pred_high > gpu_pred_high) { //slack on GPU
+                        ratio_split_freq = (cpu_pred_high - gpu_pred_high) / (gpu_pred_high * ((gpu_iter1_low / gpu_iter1_high) - 1));
+                        seconds_until_interrupt = gpu_pred_low * ratio_split_freq;
+                        if (relax && ratio_split_freq > 0.05) {
+                            initialize_handler(0);
+                            SetGPUFreq(324, 324);
+                            if (ratio_split_freq < 1)
+                                //set_timer(seconds_until_interrupt);
+                                set_alarm(seconds_until_interrupt);
+                            else
+                                //set_timer(cpu_time_pred);
+                                set_alarm(cpu_time_pred);
+                        }
+                    } else { //slack on CPU
+                        ratio_split_freq = (gpu_pred_high - cpu_pred_high) / (cpu_pred_high * ((cpu_iter1_low / cpu_iter1_high) - 1));
+                        seconds_until_interrupt = cpu_pred_low * ratio_split_freq;
+                        if (relax && ratio_split_freq > 0.05) {
+                            initialize_handler(1);
+                            system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+                            if (ratio_split_freq < 1)
+                                set_alarm(seconds_until_interrupt);
+                            else
+                                set_alarm(gpu_time_pred);
+                        }
+                    }
+                }
+
                 // do the cpu part
                 rows = m - j*nb;
                 magma_queue_sync( queues[1] );
+
+
+                if (timing) {
+                    //start cpu timing
+                    cudaEventCreate(&start_cpu);
+                    cudaEventCreate(&stop_cpu);
+                    cudaEventRecord(start_cpu, 0);
+                }
+
                 lapackf77_dgetrf( &rows, &nb, work, &lda, ipiv+j*nb, &iinfo );
+
+                if (timing) {
+                    //end cpu timing
+                    cudaEventRecord(stop_cpu, 0);
+                    cudaEventSynchronize(stop_cpu);
+                    cudaEventElapsedTime(&cpu_time, start_cpu, stop_cpu);
+                    cudaEventDestroy(start_cpu);
+                    cudaEventDestroy(stop_cpu);
+                    printf("iter:%d CPU time:%f\n", iter, cpu_time);
+                    if (gpu_time < cpu_time) {
+                        printf("slack: +\n");
+                    } else {
+                        printf("slack: -\n");
+                    }
+                }
+
+
+
             }
             if (*info == 0 && iinfo > 0)
                 *info = iinfo + j*nb;
@@ -274,6 +384,7 @@ magma_dgetrf(
                                         dAT(j+1, j  ), lddat,
                              c_one,     dAT(j+1, j+1), lddat, queues[0] );
             }
+            iter ++;
         }
         
         magma_int_t nb0 = min( m - s*nb, n - s*nb );

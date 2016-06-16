@@ -191,15 +191,15 @@ magma_dgeqrf(
     double cpu_pred_high = cpu_iter1_high;
     double cpu_pred_low = cpu_iter1_low;
 
+    double ratio_split_freq = 0;
+    double seconds_until_interrupt = 0;
 
     cudaEvent_t start_cpu, stop_cpu;
     cudaEvent_t start_gpu, stop_gpu;
 
-
-
-
     bool timing = true;
-
+    bool dvfs = false;
+    bool relax = false;
 
     if ( (nb > 1) && (nb < min_mn) ) {
         /* Use blocked code initially.
@@ -242,6 +242,35 @@ magma_dgeqrf(
 
                 printf("iter:%d GPU time pred:%f\n", iter, gpu_pred_high);
                 printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
+
+
+                if (dvfs && iter > 1 && iter < 1*(min_mn-nb)/nb) {
+                    if (cpu_pred_high > gpu_pred_high) { //slack on GPU
+                        ratio_split_freq = (cpu_pred_high - gpu_pred_high) / (gpu_pred_high * ((gpu_iter1_low / gpu_iter1_high) - 1));
+                        seconds_until_interrupt = gpu_pred_low * ratio_split_freq;
+                        if (relax && ratio_split_freq > 0.05) {
+                            initialize_handler(0);
+                            SetGPUFreq(324, 324);
+                            if (ratio_split_freq < 1)
+                                //set_timer(seconds_until_interrupt);
+                                set_alarm(seconds_until_interrupt);
+                            else
+                                //set_timer(cpu_time_pred);
+                                set_alarm(cpu_time_pred);
+                        }
+                    } else { //slack on CPU
+                        ratio_split_freq = (gpu_pred_high - cpu_pred_high) / (cpu_pred_high * ((cpu_iter1_low / cpu_iter1_high) - 1));
+                        seconds_until_interrupt = cpu_pred_low * ratio_split_freq;
+                        if (relax && ratio_split_freq > 0.05) {
+                            initialize_handler(1);
+                            system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+                            if (ratio_split_freq < 1)
+                                set_alarm(seconds_until_interrupt);
+                            else
+                                set_alarm(gpu_time_pred);
+                        }
+                    }
+                }
 
                 if (timing) {
                     //end gpu timing
