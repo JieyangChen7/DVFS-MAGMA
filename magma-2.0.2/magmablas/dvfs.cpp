@@ -1,4 +1,4 @@
-
+#include "stdio.h"
 #include "nvml.h"
 #include <sys/time.h>
 #include <signal.h>
