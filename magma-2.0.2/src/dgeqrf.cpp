@@ -182,8 +182,8 @@ magma_dgeqrf(
     float cpu_time = 0.0;
     float gpu_time = 0.0;
     magma_set_lapack_numthreads(1);
-    // SetGPUFreq(324, 324);
-    // system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+    SetGPUFreq(324, 324);
+    system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
 
     double gpu_iter1_low = 2103.143311;
     double gpu_iter1_high = 462.029846;
