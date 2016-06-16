@@ -181,11 +181,21 @@ magma_dgeqrf(
     int iter = 0;
     float cpu_time = 0.0;
     float gpu_time = 0.0;
+
+    int affinity = map_cpu(0);
+    if(affinity != 0)
+    {
+        printf("affinity failed\n");
+        return -1;
+    }
+
+
     magma_set_lapack_numthreads(1);
     SetGPUFreq(324, 324);
+
     system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
 
-    double gpu_iter1_low = 2103.143311;
+    double gpu_iter1_low = 2169.965088;
     double gpu_iter1_high = 462.029846;
     double cpu_iter1_low = 794.636108;
     double cpu_iter1_high = 1489.281006;
