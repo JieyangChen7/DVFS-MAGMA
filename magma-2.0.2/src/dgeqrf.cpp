@@ -10,6 +10,7 @@
 
 */
 #include "magma_internal.h"
+#include "cuda_runtime_api.h"
 #include "cuda.h"
 
 /**
