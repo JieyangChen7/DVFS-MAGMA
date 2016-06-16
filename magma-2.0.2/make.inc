@@ -37,13 +37,10 @@ RANLIB    = ranlib
 # can be commented out if making only static library.
 FPIC      = -fPIC
 
-# This assumes ACML >= 5
-# If you have ACML <= 4, remove -DMAGMA_WITH_ACML
-# Also, with ACML 4, testing_zlat2c.cpp and testing_dlat2s.cpp will not compile.
-CFLAGS    = -O3 $(FPIC) -DADD_ -Wall -fopenmp -DMAGMA_WITH_ACML
+CFLAGS    = -O3 $(FPIC) -DADD_ -Wall -Wshadow -fopenmp -DMAGMA_WITH_MKL 
 FFLAGS    = -O3 $(FPIC) -DADD_ -Wall -Wno-unused-dummy-argument
 F90FLAGS  = -O3 $(FPIC) -DADD_ -Wall -Wno-unused-dummy-argument -x f95-cpp-input
-NVCCFLAGS = -O3         -DADD_       -Xcompiler "$(FPIC)"
+NVCCFLAGS = -O3         -DADD_       -Xcompiler "$(FPIC) -Wall -Wno-unused-function"
 LDFLAGS   =     $(FPIC)              -fopenmp
 
 # C++11 (gcc >= 4.7) is not required, but has benefits like atomic operations
@@ -54,13 +51,15 @@ CFLAGS   += -std=c99
 # --------------------
 # libraries
 
-# MAGMA no longer needs -lcblas.
-# LIB for ACML 4. Modify CFLAGS above, too.
-#LIB      = -lacml_mp -lacml_mv -lstdc++ -lm
+# see MKL Link Advisor at http://software.intel.com/sites/products/mkl/
+# gcc with MKL 10.3, sequential version
+#LIB       = -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lstdc++ -lm -lgfortran
 
-# LIB for ACML >= 5
-# requires gcc & gfortran >= 4.6
-LIB       = -lacml_mp           -lstdc++ -lm -lgfortran
+# gcc with MKL 10.3, GNU threads
+#LIB       = -lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lpthread -lstdc++ -lm -lgfortran
+
+# gcc with MKL 10.3, Intel threads
+LIB       = -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lpthread -lstdc++ -lm -liomp5 -lgfortran
 
 LIB      += -lcublas -lcusparse -lcudart
 
@@ -69,13 +68,14 @@ LIB      += -lcublas -lcusparse -lcudart
 # directories
 
 # define library directories preferably in your environment, or here.
-#ACMLDIR  ?= /opt/acml
-#CUDADIR  ?= /usr/local/cuda
--include make.check-acml
+# for MKL run, e.g.: source /opt/intel/composerxe/mkl/bin/mklvars.sh intel64
+#MKLROOT ?= /opt/intel/composerxe/mkl
+#CUDADIR ?= /usr/local/cuda
+-include make.check-mkl
 -include make.check-cuda
 
 LIBDIR    = -L$(CUDADIR)/lib64 \
-            -L$(ACMLDIR)/gfortran64_mp/lib
+            -L$(MKLROOT)/lib/intel64
 
 INC       = -I$(CUDADIR)/include \
-            -I$(ACMLDIR)/gfortran64_mp/include
+            -I$(MKLROOT)/include
