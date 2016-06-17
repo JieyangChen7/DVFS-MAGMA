@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 static struct itimerval itv;
+double interrupt;
 
 // NVIDIA NVML library function wrapper for GPU DVFS.
 int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
@@ -37,11 +38,23 @@ void signal_handler_gpu_high(int signal) {
 }
 
 void signal_handler_gpu_low(int signal) {
+    initialize_handler(1);
+    set_alarm(interrupt);
+    
     SetGPUFreq(324, 324);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
+    
 }
 
 void signal_handler_cpu(int signal) {
     system("echo 2500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+}
+
+void dvfs(double s) {
+    interrupt = s;
+    initialize_handler(0);
+    set_alarm(1);
+
+
 }
 
 void set_alarm(double s) {

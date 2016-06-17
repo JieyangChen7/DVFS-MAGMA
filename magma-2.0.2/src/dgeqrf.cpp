@@ -272,16 +272,14 @@ magma_dgeqrf(
                         // printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
                         // printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
                         if (relax || ratio_split_freq > 0.05) {
-                            initialize_handler(0);
-                            set_alarm(1);
-                            initialize_handler(1);
+                            dvfs(seconds_until_interrupt);
                             //SetGPUFreq(324, 324);
-                            if (ratio_split_freq < 1)
-                                //set_timer(seconds_until_interrupt);
-                                set_alarm(seconds_until_interrupt);
-                            else
-                                //set_timer(cpu_time_pred);
-                                set_alarm(cpu_pred_high);
+                            // if (ratio_split_freq < 1)
+                            //     //set_timer(seconds_until_interrupt);
+                            //     set_alarm(seconds_until_interrupt);
+                            // else
+                            //     //set_timer(cpu_time_pred);
+                            //     set_alarm(cpu_pred_high);
                         }
                     } else { //slack on CPU
                         ratio_split_freq = (gpu_pred_high - cpu_pred_high) / (cpu_pred_high * ((cpu_iter1_low / cpu_iter1_high) - 1));
