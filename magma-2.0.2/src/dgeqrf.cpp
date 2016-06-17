@@ -269,8 +269,8 @@ magma_dgeqrf(
                     if (cpu_pred_high > gpu_pred_high) { //slack on GPU
                         ratio_split_freq = (cpu_pred_high - gpu_pred_high) / (gpu_pred_high * ((gpu_iter1_low / gpu_iter1_high) - 1));
                         seconds_until_interrupt = gpu_pred_low * ratio_split_freq;
-                        printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
-                        printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
+                        // printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
+                        // printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
                         if (relax || ratio_split_freq > 0.05) {
                             initialize_handler(0);
                             SetGPUFreq(324, 324);
