@@ -39,21 +39,30 @@ void signal_handler_gpu_high(int signal) {
 }
 
 void signal_handler_gpu_low(int signal) {
-    initialize_handler(0.001);
+    initialize_handler(1);
     set_alarm(interrupt);
-
     SetGPUFreq(324, 324);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     
 }
 
-void signal_handler_cpu(int signal) {
+void signal_handler_cpu_high(int signal) {
     system("echo 2500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
 }
 
-void dvfs_adjust(double s) {
+void signal_handler_cpu_low(int signal) {
+    initialize_handler(3);
+    set_alarm(interrupt);
+    system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+}
+
+void dvfs_adjust(double s, char type) {
     interrupt = s;
-    initialize_handler(0);
-    set_alarm(1);
+    if (type == 'g') //GPU DVFS
+        initialize_handler(0);
+    else //CPU DVFS
+        initialize_handler(2);
+
+    set_alarm(0.000001);
 
 
 }
@@ -79,10 +88,12 @@ void initialize_handler(int type) {
     }
     if (type == 0)//GPU
         act.sa_handler = signal_handler_gpu_low;
-    else if (type == 1) 
+    else if (type == 1) //GPU
         act.sa_handler = signal_handler_gpu_high;
-    else
-        act.sa_handler = signal_handler_cpu;
+    else if (type == 2) //CPU
+        act.sa_handler = signal_handler_cpu_low;
+    else //CPU
+        act.sa_handler = signal_handler_cpu_high;
     act.sa_flags = SA_RESTART;
     act.sa_mask = sig;
     res = sigaction(SIGALRM, &act, NULL);
