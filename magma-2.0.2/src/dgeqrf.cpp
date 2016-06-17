@@ -379,10 +379,13 @@ magma_dgeqrf(
                 
                 old_i  = i;
                 old_ib = ib;
-                iter ++;
+                
             }
-            cudaProfilerStop();
+            iter ++;
+
         }
+
+        cudaProfilerStop();
     } else {
         i = 0;
     }
