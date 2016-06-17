@@ -286,7 +286,7 @@ magma_dgeqrf(
                         }
                     } else { //slack on CPU
                         ratio_split_freq = (gpu_pred_high - cpu_pred_high) / (cpu_pred_high * ((cpu_iter1_low / cpu_iter1_high) - 1));
-                        seconds_until_interrupt = cpu_pred_low * ratio_split_freq;
+                        time_until_interrupt = cpu_pred_low * ratio_split_freq;
                         if (relax && ratio_split_freq > 0.05 || !relax) {
                             dvfs_adjust(time_until_interrupt*0.7, 'c');
                             // initialize_handler(1);

@@ -5,4 +5,4 @@ void signal_handler_cpu(int signal);
 void set_alarm(double s);
 void initialize_handler(int type);
 int map_cpu(int cpu);
-void dvfs_adjust(double s);
+void dvfs_adjust(double s, char type);
