@@ -195,16 +195,17 @@ magma_dgeqrf(
 
 
     magma_set_lapack_numthreads(1);
-    // SetGPUFreq(324, 324);
+    SetGPUFreq(324, 324);
+    system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
 
-    // system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
-    SetGPUFreq(2600, 705);
-    system("echo 2500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
+    
+    // SetGPUFreq(2600, 705);
+    // system("echo 2500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
 
     double gpu_iter1_low = 2169.965088;
-    double gpu_iter1_high = 462.029846;
+    double gpu_iter1_high = 478.825226;
     double cpu_iter1_low = 1792.011230;
-    double cpu_iter1_high = 1489.281006;
+    double cpu_iter1_high = 1413.732788;
 
     double gpu_pred_high = gpu_iter1_high;
     double gpu_pred_low = gpu_iter1_low;
