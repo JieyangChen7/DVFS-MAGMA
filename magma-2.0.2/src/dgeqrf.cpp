@@ -272,7 +272,7 @@ magma_dgeqrf(
                         // printf("iter:%d seconds_until_interrupt:%f\n", iter, seconds_until_interrupt);
                         // printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
                         if (relax || ratio_split_freq > 0.05) {
-                            dvfs(seconds_until_interrupt);
+                            dvfs_adjust(seconds_until_interrupt);
                             //SetGPUFreq(324, 324);
                             // if (ratio_split_freq < 1)
                             //     //set_timer(seconds_until_interrupt);

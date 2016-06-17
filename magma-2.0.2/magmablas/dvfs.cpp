@@ -50,7 +50,7 @@ void signal_handler_cpu(int signal) {
     system("echo 2500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
 }
 
-void dvfs(double s) {
+void dvfs_adjust(double s) {
     interrupt = s;
     initialize_handler(0);
     set_alarm(1);
