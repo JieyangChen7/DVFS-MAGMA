@@ -12,8 +12,8 @@ case=MAGMA_LU_GPUDVFS
 #/opt/power-bench/mclient -H 172.16.10.55 -d /home/lchen/MAGMA/magma-2.0.2/DVFS_testing
 #/opt/power-bench/mclient -H 172.16.10.55 -l ${case}.total.pwr
 
-/opt/power-bench/mclient -H 130.127.48.185 -d /home/lchen/MAGMA/magma-2.0.2/DVFS_testing
-/opt/power-bench/mclient -H 130.127.48.185 -l ${case}.total.pwr
+/opt/power-bench/mclient -H 172.16.10.2 -d /home/lchen/MAGMA/magma-2.0.2/DVFS_testing
+/opt/power-bench/mclient -H 172.16.10.2 -l ${case}.total.pwr
 
 nvidia-smi -q -d POWER -lms 100 -f /home/lchen/MAGMA/magma-2.0.2/DVFS_testing/${case}.gpu.pwr 2>&1 1>/dev/null &
 smi_pid=$!
@@ -64,7 +64,7 @@ sudo env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /home/lchen/MAGMA/magma-2.0.2/testing/
 #ssh -t -t ivy sudo time /home/lchen/MAGMA/magma-1.6.1/testing/testing_dgeqrf -N 25600,25600
 
 #/opt/power-bench/mclient -H 172.16.10.55 -e log
-/opt/power-bench/mclient -H 130.127.48.185 -e log
+/opt/power-bench/mclient -H 172.16.10.2 -e log
 
 kill ${smi_pid}
 kill ${rapl_pid}
@@ -74,7 +74,7 @@ kill ${rapl_pid}
 #/home/lchen/cpu_h_ivy.sh
 
 #scp lchen@ivy2:/home/lchen/MAGMA/test/magma-1.6.1_timing/results/MAGMA_LU_GPUDVFS.total.pwr /home/lchen/MAGMA/magma-1.6.1/results/
-scp lchen@130.127.48.185:/home/lchen/MAGMA_LU_GPUDVFS.total.pwr /home/lchen/MAGMA/magma-2.0.2/DVFS_testing
+scp lchen@172.16.10.2:/home/lchen/MAGMA_LU_GPUDVFS.total.pwr /home/lchen/MAGMA/magma-2.0.2/DVFS_testing
 
 cd /home/lchen/MAGMA/magma-2.0.2/DVFS_testing
 
