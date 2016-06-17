@@ -267,7 +267,7 @@ magma_dgeqrf(
                 }
 
 
-                if (dvfs && iter > 1 && iter < 0.5*(min_mn-nb)/nb) {
+                if (dvfs && iter > 1 && iter < 0.25*(min_mn-nb)/nb) {
                     if (cpu_pred_high > gpu_pred_high) { //slack on GPU
                         ratio_split_freq = (cpu_pred_high - gpu_pred_high) / (gpu_pred_high * ((gpu_iter1_low / gpu_iter1_high) - 1));
                         seconds_until_interrupt = gpu_pred_low * ratio_split_freq;
