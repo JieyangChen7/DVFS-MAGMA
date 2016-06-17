@@ -273,7 +273,7 @@ magma_dgeqrf(
                         // printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
                         if (relax || ratio_split_freq > 0.05) {
                             initialize_handler(0);
-                            set_alarm(0);
+                            set_alarm(1);
                             initialize_handler(1);
                             //SetGPUFreq(324, 324);
                             if (ratio_split_freq < 1)
