@@ -25,7 +25,7 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
     {
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_GRAPHICS, &clock_core);
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
-        //rintf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
+        printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz\n", clock_core, clock_mem);
         return 0;
 
     }
