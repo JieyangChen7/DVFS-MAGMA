@@ -297,7 +297,7 @@ magma_dgetrf(
                             SetGPUFreq(324, 324);
                             if (ratio_split_freq < 1)
                                 //set_timer(seconds_until_interrupt);
-                                set_alarm(seconds_until_interrupt);
+                                set_alarm(seconds_until_interrupt*0.8);
                             else
                                 //set_timer(cpu_time_pred);
                                 set_alarm(cpu_pred_high);
