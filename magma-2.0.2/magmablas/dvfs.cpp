@@ -39,7 +39,7 @@ void signal_handler_gpu_high(int signal) {
 }
 
 void signal_handler_gpu_low(int signal) {
-    initialize_handler(1);
+    initialize_handler(0.001);
     set_alarm(interrupt);
 
     SetGPUFreq(324, 324);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
