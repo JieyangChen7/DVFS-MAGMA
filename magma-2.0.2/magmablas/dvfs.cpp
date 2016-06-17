@@ -32,11 +32,12 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
 }
 
 
-void signal_handler_gpu(int signal) {
+void signal_handler_gpu_high(int signal) {
     SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
+}
 
-    //SetCPUFreq(2500000);
-    //SetGPUFreq(324, 324);
+void signal_handler_gpu_low(int signal) {
+    SetGPUFreq(324, 324);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
 }
 
 void signal_handler_cpu(int signal) {
@@ -63,7 +64,9 @@ void initialize_handler(int type) {
         printf("sigemptyset error! \n");
     }
     if (type == 0)//GPU
-        act.sa_handler = signal_handler_gpu;
+        act.sa_handler = signal_handler_gpu_low;
+    else if (type == 1) 
+        act.sa_handler = signal_handler_gpu_high;
     else
         act.sa_handler = signal_handler_cpu;
     act.sa_flags = SA_RESTART;
