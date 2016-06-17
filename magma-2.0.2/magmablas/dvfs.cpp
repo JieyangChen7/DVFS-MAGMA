@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <sched.h>
 #include <unistd.h>
+#include "dvfs.h"
 
 static struct itimerval itv;
 double interrupt;
@@ -40,7 +41,7 @@ void signal_handler_gpu_high(int signal) {
 void signal_handler_gpu_low(int signal) {
     initialize_handler(1);
     set_alarm(interrupt);
-    
+
     SetGPUFreq(324, 324);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     
 }
