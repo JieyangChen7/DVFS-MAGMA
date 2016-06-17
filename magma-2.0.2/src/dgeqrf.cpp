@@ -13,6 +13,7 @@
 #include "cuda_runtime_api.h"
 #include "cuda.h"
 #include "dvfs.h"
+#include "cuda_profiler_api.h"
 
 #include <sched.h>
 #include <unistd.h>
@@ -220,6 +221,7 @@ magma_dgeqrf(
     bool dvfs = true;
     bool relax = false;
 
+    cudaProfilerStart();
     if ( (nb > 1) && (nb < min_mn) ) {
         /* Use blocked code initially.
            Asynchronously send the matrix to the GPU except the first panel. */
@@ -379,6 +381,7 @@ magma_dgeqrf(
                 old_ib = ib;
                 iter ++;
             }
+            cudaProfilerStop();
         }
     } else {
         i = 0;
