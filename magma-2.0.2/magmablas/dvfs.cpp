@@ -25,7 +25,7 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
     {
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_GRAPHICS, &clock_core);
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
-        //printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
+        printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz", clock_core, clock_mem);
         return 0;
 
     }
@@ -34,6 +34,7 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
 
 void signal_handler_gpu(int signal) {
     SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
+
     //SetCPUFreq(2500000);
     //SetGPUFreq(324, 324);
 }
