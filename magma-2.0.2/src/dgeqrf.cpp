@@ -219,7 +219,7 @@ magma_dgeqrf(
     cudaEvent_t start_gpu, stop_gpu;
 
     bool timing = false;
-    bool dvfs = true;
+    bool dvfs = false;
     bool relax = false;
 
     cudaProfilerStart();
