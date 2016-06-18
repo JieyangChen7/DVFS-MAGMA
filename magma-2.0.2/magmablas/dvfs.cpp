@@ -71,6 +71,10 @@ void set_alarm(double s) {
     s = s / 1000;
     itv.it_value.tv_sec = (suseconds_t)s;
     itv.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
+
+    printf("sec:%d\n", itv.it_value.tv_sec);
+    printf("usec:%d\n", itv.it_value.tv_usec);
+
     itv.it_interval.tv_sec = 0;
     itv.it_interval.tv_usec = 0;
     int res = setitimer(ITIMER_REAL, &itv, NULL);
