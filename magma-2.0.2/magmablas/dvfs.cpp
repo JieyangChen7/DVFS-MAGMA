@@ -62,7 +62,7 @@ void dvfs_adjust(double s, char type) {
     else //CPU DVFS
         initialize_handler(2);
 
-    set_alarm(0.000001);
+    set_alarm(0.00001);
 
 
 }
