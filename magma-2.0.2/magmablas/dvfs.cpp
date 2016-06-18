@@ -27,7 +27,7 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
     {
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_GRAPHICS, &clock_core);
         nvmlDeviceGetApplicationsClock(device, NVML_CLOCK_MEM, &clock_mem);
-        printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz\n", clock_core, clock_mem);
+        //printf("GPU core frequency is now set to %d MHz; GPU memory frequency is now set to %d MHz\n", clock_core, clock_mem);
         return 0;
 
     }
@@ -72,8 +72,8 @@ void set_alarm(double s) {
     itv.it_value.tv_sec = (suseconds_t)s;
     itv.it_value.tv_usec = (suseconds_t) ((s-floor(s))*1000000.0);
 
-    printf("sec:%d\n", itv.it_value.tv_sec);
-    printf("usec:%d\n", itv.it_value.tv_usec);
+    // printf("sec:%d\n", itv.it_value.tv_sec);
+    // printf("usec:%d\n", itv.it_value.tv_usec);
 
     itv.it_interval.tv_sec = 0;
     itv.it_interval.tv_usec = 0;
