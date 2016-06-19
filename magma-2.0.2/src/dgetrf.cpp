@@ -235,9 +235,16 @@ magma_dgetrf(
         cudaEvent_t start_cpu, stop_cpu;
         cudaEvent_t start_gpu, stop_gpu;
 
-        bool timing = true;
-        bool dvfs = false;
-        bool relax = false;
+        // switches for different modes
+        bool timing = false; //for initial setting only, greatly impact performance
+        bool dvfs = false; //turn on dvfs energy saving
+        bool relax = false; //turn on relax scheme
+        bool r2h = false; // turn on race to halt
+
+        //these parameters need to be tuned in future works.
+        double dvfs_converage = 0.5;
+        double prediction_offset_gpu = 0.65;
+        double prediction_offset_cpu = 0.65;
 
         for( j = 0; j < s; j++ ) {
             // get j-th panel from device
@@ -274,9 +281,44 @@ magma_dgetrf(
                 gpu_pred_high = gpu_pred_high * ratio_slack_pred * ratio_slack_pred;
                 gpu_pred_low = gpu_pred_low * ratio_slack_pred * ratio_slack_pred;
 
-                printf("iter:%d GPU time pred:%f\n", iter, gpu_pred_high);
-                printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
+                if (timing) {
+                    printf("iter:%d GPU time pred:%f\n", iter, gpu_pred_high);
+                    printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
+                }
 
+                if (iter < dvfs_converage*(min_mn-nb)/nb) {
+                    if (cpu_pred_high > gpu_pred_high) { //slack on GPU
+                        ratio_split_freq = (cpu_pred_high - gpu_pred_high) / (gpu_pred_high * ((gpu_iter1_low / gpu_iter1_high) - 1));
+                        time_until_interrupt = gpu_pred_low * ratio_split_freq;
+                         //printf("iter:%d time_until_interrupt:%f\n", iter, time_until_interrupt);
+                        // printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
+                        if (dvfs) {
+                            if ((!relax) || (relax && ratio_split_freq > 0.05)) {
+                                if (ratio_split_freq < 1)
+                                    dvfs_adjust(time_until_interrupt*prediction_offset, 'g');
+                                else
+                                    dvfs_adjust(cpu_pred_high, 'g');
+                            }
+                        } else if (r2h) {
+                            r2h_adjust(gpu_pred_high, cpu_pred_high - gpu_pred_high, 'g');
+                        }
+                    } else { //slack on CPU
+                        ratio_split_freq = (gpu_pred_high - cpu_pred_high) / (cpu_pred_high * ((cpu_iter1_low / cpu_iter1_high) - 1));
+                        time_until_interrupt = cpu_pred_low * ratio_split_freq;
+                        if (dvfs) {
+                            if ((!relax) || (relax && ratio_split_freq > 0.05)) {
+                                if (ratio_split_freq < 1)
+                                    dvfs_adjust(time_until_interrupt*prediction_offset, 'c');
+                                else
+                                    dvfs_adjust(gpu_pred_high, 'c');
+                            }
+                        } else if (r2h) {
+                            r2h_adjust(cpu_pred_high, gpu_pred_high - cpu_pred_high, 'c');
+                        }
+                    }
+                }
+
+                
                 if (timing) {
                     //end gpu timing
                     cudaEventRecord(stop_gpu, 0);
@@ -286,34 +328,6 @@ magma_dgetrf(
                     cudaEventDestroy(stop_gpu);
 
                     printf("iter:%d GPU time:%f\n", iter, gpu_time);
-                }
-
-                if (dvfs && iter > 1 && iter < 1*s) {
-                    if (cpu_pred_high > gpu_pred_high) { //slack on GPU
-                        ratio_split_freq = (cpu_pred_high - gpu_pred_high) / (gpu_pred_high * ((gpu_iter1_low / gpu_iter1_high) - 1));
-                        seconds_until_interrupt = gpu_pred_low * ratio_split_freq;
-                        if (relax && ratio_split_freq > 0.05) {
-                            initialize_handler(0);
-                            SetGPUFreq(324, 324);
-                            if (ratio_split_freq < 1)
-                                //set_timer(seconds_until_interrupt);
-                                set_alarm(seconds_until_interrupt*0.8);
-                            else
-                                //set_timer(cpu_time_pred);
-                                set_alarm(cpu_pred_high);
-                        }
-                    } else { //slack on CPU
-                        ratio_split_freq = (gpu_pred_high - cpu_pred_high) / (cpu_pred_high * ((cpu_iter1_low / cpu_iter1_high) - 1));
-                        seconds_until_interrupt = cpu_pred_low * ratio_split_freq;
-                        if (relax && ratio_split_freq > 0.05) {
-                            initialize_handler(1);
-                            system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
-                            if (ratio_split_freq < 1)
-                                set_alarm(seconds_until_interrupt);
-                            else
-                                set_alarm(gpu_pred_high);
-                        }
-                    }
                 }
 
                 // do the cpu part

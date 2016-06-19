@@ -11,6 +11,7 @@
 #include "magma_internal.h"
 #include "cuda_runtime_api.h"
 #include "cuda.h"
+#include "dvfs.h"
 
 
 // === Define what BLAS to use ============================================
@@ -224,9 +225,17 @@ magma_dpotrf(
             cudaEvent_t start_cpu, stop_cpu;
             cudaEvent_t start_gpu, stop_gpu;
 
-            bool timing = true;
-            bool dvfs = false;
-            bool relax = false;
+            // switches for different modes
+            bool timing = false; //for initial setting only, greatly impact performance
+            bool dvfs = false; //turn on dvfs energy saving
+            bool relax = false; //turn on relax scheme
+            bool r2h = false; // turn on race to halt
+
+            //these parameters need to be tuned in future works.
+            double dvfs_converage = 0.5;
+            double prediction_offset_gpu = 0.65;
+            double prediction_offset_cpu = 0.65;
+
             //=========================================================
             // Compute the Cholesky factorization A = L*L'.
             for (j=0; j < n; j += nb) {
@@ -259,6 +268,52 @@ magma_dpotrf(
                                             dA(j,    0), ldda,
                                  c_one,     dA(j+jb, j), ldda, queues[1] );
                 }
+
+
+                double ratio_slack_pred = 1.0 - (double)nb/(m-iter*nb);
+                cpu_pred_high = cpu_pred_high * ratio_slack_pred;
+                cpu_pred_low = cpu_pred_low * ratio_slack_pred;
+                gpu_pred_high = gpu_pred_high * ratio_slack_pred * ratio_slack_pred;
+                gpu_pred_low = gpu_pred_low * ratio_slack_pred * ratio_slack_pred;
+
+                if (timing) {
+                    printf("iter:%d GPU time pred:%f\n", iter, gpu_pred_high);
+                    printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
+                }
+
+                if (iter < dvfs_converage*(min_mn-nb)/nb) {
+                    if (cpu_pred_high > gpu_pred_high) { //slack on GPU
+                        ratio_split_freq = (cpu_pred_high - gpu_pred_high) / (gpu_pred_high * ((gpu_iter1_low / gpu_iter1_high) - 1));
+                        time_until_interrupt = gpu_pred_low * ratio_split_freq;
+                         //printf("iter:%d time_until_interrupt:%f\n", iter, time_until_interrupt);
+                        // printf("iter:%d ratio_split_freq:%f\n", iter, ratio_split_freq);
+                        if (dvfs) {
+                            if ((!relax) || (relax && ratio_split_freq > 0.05)) {
+                                if (ratio_split_freq < 1)
+                                    dvfs_adjust(time_until_interrupt*prediction_offset, 'g');
+                                else
+                                    dvfs_adjust(cpu_pred_high, 'g');
+                            }
+                        } else if (r2h) {
+                            r2h_adjust(gpu_pred_high, cpu_pred_high - gpu_pred_high, 'g');
+                        }
+                    } else { //slack on CPU
+                        ratio_split_freq = (gpu_pred_high - cpu_pred_high) / (cpu_pred_high * ((cpu_iter1_low / cpu_iter1_high) - 1));
+                        time_until_interrupt = cpu_pred_low * ratio_split_freq;
+                        if (dvfs) {
+                            if ((!relax) || (relax && ratio_split_freq > 0.05)) {
+                                if (ratio_split_freq < 1)
+                                    dvfs_adjust(time_until_interrupt*prediction_offset, 'c');
+                                else
+                                    dvfs_adjust(gpu_pred_high, 'c');
+                            }
+                        } else if (r2h) {
+                            r2h_adjust(cpu_pred_high, gpu_pred_high - cpu_pred_high, 'c');
+                        }
+                    }
+                }
+
+
                 if (timing) {
                     //end gpu timing
                     cudaEventRecord(stop_gpu, 0);
@@ -267,7 +322,7 @@ magma_dpotrf(
                     cudaEventDestroy(start_gpu);
                     cudaEventDestroy(stop_gpu);
 
-                    printf("iter:%d GPU time:%f\n", iter, gpu_time);
+                    //printf("iter:%d GPU time:%f\n", iter, gpu_time);
                 }
                 magma_queue_sync( queues[0] );
                 
@@ -292,12 +347,12 @@ magma_dpotrf(
                     cudaEventElapsedTime(&cpu_time, start_cpu, stop_cpu);
                     cudaEventDestroy(start_cpu);
                     cudaEventDestroy(stop_cpu);
-                    printf("iter:%d CPU time:%f\n", iter, cpu_time);
-                    if (gpu_time < cpu_time) {
-                        printf("slack: +\n");
-                    } else {
-                        printf("slack: -\n");
-                    }
+                    // printf("iter:%d CPU time:%f\n", iter, cpu_time);
+                    // if (gpu_time < cpu_time) {
+                    //     printf("slack: +\n");
+                    // } else {
+                    //     printf("slack: -\n");
+                    // }
                 }
 
                 

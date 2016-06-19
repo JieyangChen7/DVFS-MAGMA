@@ -34,22 +34,22 @@ int SetGPUFreq(unsigned int clock_mem, unsigned int clock_core) {
 }
 
 
-void signal_handler_gpu_high(int signal) {
+void restore_gpu_handler (int signal) {
     SetGPUFreq(2600, 705);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
 }
 
-void signal_handler_gpu_low(int signal) {
+void dvfs_gpu_handler (int signal) {
     initialize_handler(1);
     set_alarm(interrupt);
     SetGPUFreq(324, 324);//SetGPUFreq(2600, 758);//758 is not stable, it changes to 705 if temp. is high.
     
 }
 
-void signal_handler_cpu_high(int signal) {
+void restore_cpu_handler(int signal) {
     system("echo 2500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
 }
 
-void signal_handler_cpu_low(int signal) {
+void dvfs_cpu_handler(int signal) {
     initialize_handler(3);
     set_alarm(interrupt);
     system("echo 1200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed");
@@ -63,8 +63,16 @@ void dvfs_adjust(double s, char type) {
         initialize_handler(2);
 
     set_alarm(0.001);
+}
 
+void r2h_adjust(double s1, double s2, char type) {
+    interrupt = s2;
+    if (type == 'g') //GPU DVFS
+        initialize_handler(0);
+    else //CPU DVFS
+        initialize_handler(2);
 
+    set_alarm(s1);
 }
 
 void set_alarm(double s) {
@@ -90,14 +98,15 @@ void initialize_handler(int type) {
     if (res != 0) {
         printf("sigemptyset error! \n");
     }
-    if (type == 0)//GPU
-        act.sa_handler = signal_handler_gpu_low;
-    else if (type == 1) //GPU
-        act.sa_handler = signal_handler_gpu_high;
-    else if (type == 2) //CPU
-        act.sa_handler = signal_handler_cpu_low;
-    else //CPU
-        act.sa_handler = signal_handler_cpu_high;
+    if (type == 0)
+        act.sa_handler = dvfs_handler_gpu;
+    else if (type == 1)
+        act.sa_handler = restore_gpu_handler;
+    else if (type == 2) 
+        act.sa_handler = dvfs_handler_cpu;
+    else if (type == 3) 
+        act.sa_handler = restore_cpu_handler;
+
     act.sa_flags = SA_RESTART;
     act.sa_mask = sig;
     res = sigaction(SIGALRM, &act, NULL);
