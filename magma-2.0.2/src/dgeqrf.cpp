@@ -287,7 +287,7 @@ magma_dgeqrf(
                         if (dvfs) {
                             if ((!relax) || (relax && ratio_split_freq > 0.05)) {
                                 if (ratio_split_freq < 1)
-                                    dvfs_adjust(time_until_interrupt*prediction_offset, 'g');
+                                    dvfs_adjust(time_until_interrupt*prediction_offset_gpu, 'g');
                                 else
                                     dvfs_adjust(cpu_pred_high, 'g');
                             }
@@ -300,7 +300,7 @@ magma_dgeqrf(
                         if (dvfs) {
                             if ((!relax) || (relax && ratio_split_freq > 0.05)) {
                                 if (ratio_split_freq < 1)
-                                    dvfs_adjust(time_until_interrupt*prediction_offset, 'c');
+                                    dvfs_adjust(time_until_interrupt*prediction_offset_cpu, 'c');
                                 else
                                     dvfs_adjust(gpu_pred_high, 'c');
                             }

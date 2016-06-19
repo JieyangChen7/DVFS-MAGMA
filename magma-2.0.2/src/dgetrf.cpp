@@ -230,7 +230,7 @@ magma_dgetrf(
         double cpu_pred_low = cpu_iter1_low;
 
         double ratio_split_freq = 0;
-        double seconds_until_interrupt = 0;
+        double time_until_interrupt = 0;
 
         cudaEvent_t start_cpu, stop_cpu;
         cudaEvent_t start_gpu, stop_gpu;
@@ -286,7 +286,7 @@ magma_dgetrf(
                     printf("iter:%d CPU time pred:%f\n", iter, cpu_pred_high);
                 }
 
-                if (iter < dvfs_converage*(min_mn-nb)/nb) {
+                if (iter < dvfs_converage*s) {
                     if (cpu_pred_high > gpu_pred_high) { //slack on GPU
                         ratio_split_freq = (cpu_pred_high - gpu_pred_high) / (gpu_pred_high * ((gpu_iter1_low / gpu_iter1_high) - 1));
                         time_until_interrupt = gpu_pred_low * ratio_split_freq;
@@ -295,7 +295,7 @@ magma_dgetrf(
                         if (dvfs) {
                             if ((!relax) || (relax && ratio_split_freq > 0.05)) {
                                 if (ratio_split_freq < 1)
-                                    dvfs_adjust(time_until_interrupt*prediction_offset, 'g');
+                                    dvfs_adjust(time_until_interrupt*prediction_offset_gpu, 'g');
                                 else
                                     dvfs_adjust(cpu_pred_high, 'g');
                             }
@@ -308,7 +308,7 @@ magma_dgetrf(
                         if (dvfs) {
                             if ((!relax) || (relax && ratio_split_freq > 0.05)) {
                                 if (ratio_split_freq < 1)
-                                    dvfs_adjust(time_until_interrupt*prediction_offset, 'c');
+                                    dvfs_adjust(time_until_interrupt*prediction_offset_cpu, 'c');
                                 else
                                     dvfs_adjust(gpu_pred_high, 'c');
                             }
@@ -318,7 +318,7 @@ magma_dgetrf(
                     }
                 }
 
-                
+
                 if (timing) {
                     //end gpu timing
                     cudaEventRecord(stop_gpu, 0);
