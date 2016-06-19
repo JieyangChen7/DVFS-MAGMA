@@ -99,11 +99,11 @@ void initialize_handler(int type) {
         printf("sigemptyset error! \n");
     }
     if (type == 0)
-        act.sa_handler = dvfs_handler_gpu;
+        act.sa_handler = dvfs_gpu_handler;
     else if (type == 1)
         act.sa_handler = restore_gpu_handler;
     else if (type == 2) 
-        act.sa_handler = dvfs_handler_cpu;
+        act.sa_handler = dvfs_cpu_handler;
     else if (type == 3) 
         act.sa_handler = restore_cpu_handler;
 
